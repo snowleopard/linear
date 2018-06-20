@@ -1,0 +1,71 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{todonotes}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+\author{}
+\title{Range Queries and Dense Linear Operators}
+\maketitle
+
+
+\begin{abstract}
+We revisit the classical problem of computing range queries over an idempotent semigroup and its natural special case, computing a dense linear operator. Specifically, we are interested in the minimum number of semigroup operations needed to answer all the queries. For commutative semigroups, we show that the special case is strictly easier: while for range queries a~superlinear lower bound is known, a dense linear operator can be computed by linear size circuits. We then study the role of commutativity in these problems: it turns out to be unimportant for range queries, but crucial for dense operators. Moreover, without commutativity both problems are equivalent.\todo{Андрей, допиши про applications, пожалуйста}
+\end{abstract}
+
+\tableofcontents
+
+\section{General Setting}
+\subsection{Range Queries Problem}
+{\em Range queries} is a~classical problem in data structures and algorithms that is stated as follows. For a~fixed semigroup with operator~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of group elements. Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operator to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it into a~data structure so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $j-i+1$, the time of naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the offline version of range queries and are interested in the minimum number of semigroup operations needed to answer all the queries.
+
+\todo[inline]{tell about dense linear operators}
+
+\subsection{Applications}
+\todo[inline]{Andrey, convince the reader that the problem is important. Show many applications. Emphasize applications of dense linear operators. One relevant link: \url{http://www.leptonica.com/grayscale-morphology.html}}
+
+
+\subsection{Computational Model}
+We assume that the input consists of $n$~formal variables $x_1, x_2, \dotsc, x_n$ (rather than actual group elements). We are interested in the minimum number of semigroup operations needed to answer all the queries. Hence, we use the following natural {\em circuit} model. For a~given set of queries $(l_1,r_1), \dotsc, (l_m,r_m)$, a~circuit computing all these queries is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They are labeled with $x_1, \dotsc, x_n$ and are called {\em input gates}. All other nodes have positive in-degree and are called {\em gates}. Finally, some $m$~gates have out-degree~0 and are labeled as {\em output gates}. The {\em size} of a~circuit is its number of edges (also called {\em wires}). Each gate of a~circuit computes a~function defined in a~natural way: input gates compute just $x_1, \dotsc, x_n$; any other gate of in-degree~$r$ computes a~function $f_1 \circ f_2 \circ \dotsb \circ f_r$ where $f_1, \dotsc, f_r$ are functions computed at its predecessors (therefore, we assume that there is an underlying order on the incoming wires for each gate).
+
+For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and $(l_2,r_2)=(2,5)$ over $x_1, \dotsc, x_5$.
+\begin{center}
+\begin{tikzpicture}
+%\draw[help lines] (0,0) grid (10,6);
+\foreach \x/\y/\n/\t in {0/4/x1/x_1, 1/4/x2/x_2, 2/4/x3/x_3, 3/4/x4/x_4, 4/4/x5/x_5, 2/3/a/~, 1/2/b/1, 3/2/c/2}
+  \node[inner sep=0mm,circle,draw,minimum size=6mm] (\n) at (\x,\y) {$\t$};
+\foreach \s/\t in {x2/a, x3/a, x4/a, a/b, x1/b, a/c, x5/c}
+  \draw[->] (\s) -- (\t);
+\end{tikzpicture}
+\end{center}
+
+
+
+\subsection{Overview of Known Approaches}
+\todo[inline]{Sasha: prefix sums, sparse table, segment trees, Yao, BFC, etc}
+
+\subsection{Overview of New Results}
+\todo[inline]{Sasha, write this}
+
+
+
+\section{Commutative Semigroups}
+\todo[inline]{Ваня, давай!}
+
+\subsection{Matrices with Constant Maximum Number of Zeros in Each Row}
+
+\subsection{Matrices with Constant Average Number of Zeros in Each Row}
+
+\section{Non-commutative Semigroups}
+\todo[inline]{Володя, жарь!}
+
+\section{Applications}
+\todo[inline]{Андрей, фигарь!}
+
+
+\end{document}
