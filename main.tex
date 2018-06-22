@@ -49,6 +49,17 @@ For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and 
 
 
 \subsection{Overview of Known Approaches}
+In this subsection, we give a brief overview of known algorithms for the range queries problem. We say that an algorithm has type $(f(n), g(n))$ if it spends $f(n)$ time on preprocessing the input sequence, and then answers any query in time $g(n)$. Hence, a~naive algorithm that just skips the preprocessing stage and answers a~query directly has type $(O(1), O(n))$.
+
+\begin{description}
+\item[Prefix sums.] In case, a~semigroup operation has an {\em easily computable inverse}, it is easy to design an $(O(n), O(1))$ algorithm. We illustrate this for a~group $(\mathbb{Z}, +)$. Given $x_1, \dotsc, x_n$, we compute $(n+1)$ prefix sums:
+\(S_0=0,\, S_1=x_1,\, S_2=x_1+x_2, \dotsc, S_n=x_1+\dotsb+x_n\,.\)  
+This can be done in time $O(n)$ since $S_i=S_{i-1}+x_i$. Then, the answer to any query $(l,r)$ is just $S_r-S_{l-1}$.
+
+\item[Sparse table.] This data structure works for {\em bands} (i.e., idempotent semigroups: $x \circ x = x$ for every~$x$) and has type $(O(n\log n), O(1))$. We illustrate its main idea on $(\mathbb{Z}, \min)$. One precomputes answers to $O(n\log n)$ queries---namely, those whose length is a~power of~2. More formally, for all $0 \le k \le \log_2n$ and $1 \le i \le n-2^k+1$, let $S_{k,i}$ be the answer to a~query $(i, i+2^k-1)$:
+\[S_{k,i}=x_i \circ x_{i+1} \circ \dotsb \circ x_{i+2^k-1} \, .\]
+\end{description}
+
 \todo[inline]{Sasha: prefix sums, sparse table, segment trees, Yao, BFC, etc}
 
 \subsection{Overview of New Results}
