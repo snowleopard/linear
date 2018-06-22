@@ -1,19 +1,27 @@
-\documentclass[11pt,letterpaper]{article}
+\documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[english,russian]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{fullpage}
-\usepackage{todonotes}
-\usepackage[hidelinks]{hyperref}
 \usepackage{amsthm}
-
+\usepackage{fullpage}
+\usepackage{tikz}
+\usepackage{todonotes}
+\usepackage{algorithmic}
 
 \newtheorem{lemma}{Lemma}
 \newtheorem{theorem}{Theorem}
 \newtheorem{claim}{Claim}
 
+\newcommand{\pr}{\operatorname{Prob}}
+\newcommand{\maj}{\ensuremath{\operatorname{MAJ}}}
+\newcommand{\majn}{\ensuremath{\maj_n}}
+\newcommand{\eps}{\varepsilon}
+
+\newcommand{\nb}[1]{\textcolor{red}{\bf !}\marginpar{\parbox{20mm}{\scriptsize\raggedright\textcolor{red}{#1}}}}
+
+\newcommand{\diff}{\operatorname{diff}}
+\newcommand{\steps}{\texttt{steps}}
 
 \newcommand{\lef}{\texttt{left}}
 \newcommand{\righ}{\texttt{right}}
@@ -27,75 +35,6 @@
 \newcommand{\var}{\texttt{Var}}
 
 \begin{document}
-\author{}
-\title{Range Queries and Dense Linear Operators}
-\maketitle
-
-
-\begin{abstract}
-We revisit the classical problem of computing range queries over an idempotent semigroup and its natural special case, computing a dense linear operator. Specifically, we are interested in the minimum number of semigroup operations needed to answer all the queries. For commutative semigroups, we show that the special case is strictly easier: while for range queries a~superlinear lower bound is known, a dense linear operator can be computed by linear size circuits. We then study the role of commutativity in these problems: it turns out to be unimportant for range queries, but crucial for dense operators. Moreover, without commutativity both problems are equivalent.\todo{Андрей, допиши про applications, пожалуйста}
-\end{abstract}
-
-\tableofcontents
-
-\section{General Setting}
-\subsection{Range Queries Problem}
-{\em Range queries} is a~classical problem in data structures and algorithms that is stated as follows. For a~fixed semigroup with operator~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of group elements. Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operator to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it into a~data structure so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $j-i+1$, the time of naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the offline version of range queries and are interested in the minimum number of semigroup operations needed to answer all the queries.
-
-\todo[inline]{tell about dense linear operators}
-
-\subsection{Applications}
-\todo[inline]{Andrey, convince the reader that the problem is important. Show many applications. Show various semigroups arising in real life: $(\mathbb{Z}, +)$, $(\mathbb{Z}, \min)$, Boolean, etc. Emphasize applications of dense linear operators. One relevant link: \url{http://www.leptonica.com/grayscale-morphology.html}}
-
-
-\subsection{Computational Model}
-We assume that the input consists of $n$~formal variables $x_1, x_2, \dotsc, x_n$ (rather than actual group elements). We are interested in the minimum number of semigroup operations needed to answer all the queries. Hence, we use the following natural {\em circuit} model. For a~given set of queries $(l_1,r_1), \dotsc, (l_m,r_m)$, a~circuit computing all these queries is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They are labeled with $x_1, \dotsc, x_n$ and are called {\em input gates}. All other nodes have positive in-degree and are called {\em gates}. Finally, some $m$~gates have out-degree~0 and are labeled as {\em output gates}. The {\em size} of a~circuit is its number of edges (also called {\em wires}). Each gate of a~circuit computes a~function defined in a~natural way: input gates compute just $x_1, \dotsc, x_n$; any other gate of in-degree~$r$ computes a~function $f_1 \circ f_2 \circ \dotsb \circ f_r$ where $f_1, \dotsc, f_r$ are functions computed at its predecessors (therefore, we assume that there is an underlying order on the incoming wires for each gate).
-
-For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and $(l_2,r_2)=(2,5)$ over $x_1, \dotsc, x_5$.
-\begin{center}
-\begin{tikzpicture}
-%\draw[help lines] (0,0) grid (10,6);
-\foreach \x/\y/\n/\t in {0/4/x1/x_1, 1/4/x2/x_2, 2/4/x3/x_3, 3/4/x4/x_4, 4/4/x5/x_5, 2/3/a/~, 1/2/b/1, 3/2/c/2}
-  \node[inner sep=0mm,circle,draw,minimum size=6mm] (\n) at (\x,\y) {$\t$};
-\foreach \s/\t in {x2/a, x3/a, x4/a, a/b, x1/b, a/c, x5/c}
-  \draw[->] (\s) -- (\t);
-\end{tikzpicture}
-\end{center}
-
-\todo[inline]{mention rectifier networks}
-
-
-
-\subsection{Overview of Known Approaches}
-In this subsection, we give a brief overview of known algorithms for the range queries problem. We say that an algorithm has type $(f(n), g(n))$ if it spends $f(n)$ time on preprocessing the input sequence, and then answers any query in time $g(n)$. Hence, a~naive algorithm that just skips the preprocessing stage and answers a~query directly has type $(O(1), O(n))$.
-
-\begin{description}
-\item[Prefix sums.] In case, a~semigroup operation has an {\em easily computable inverse}, it is easy to design an $(O(n), O(1))$ algorithm. We illustrate this for a~group $(\mathbb{Z}, +)$. Given $x_1, \dotsc, x_n$, we compute $(n+1)$ prefix sums:
-\(S_0=0,\, S_1=x_1,\, S_2=x_1+x_2, \dotsc, S_n=x_1+\dotsb+x_n\,.\)  
-This can be done in time $O(n)$ since $S_i=S_{i-1}+x_i$. Then, the answer to any query $(l,r)$ is just $S_r-S_{l-1}$.
-
-\item[Sparse table.] This data structure works for {\em bands} (i.e., idempotent semigroups: $x \circ x = x$ for every~$x$) and has type $(O(n\log n), O(1))$. We illustrate its main idea on $(\mathbb{Z}, \min)$. One precomputes answers to $O(n\log n)$ queries---namely, those whose length is a~power of~2. More formally, for all $0 \le k \le \log_2n$ and $1 \le i \le n-2^k+1$, let $S_{k,i}$ be the answer to a~query $(i, i+2^k-1)$:
-\[S_{k,i}=x_i \circ x_{i+1} \circ \dotsb \circ x_{i+2^k-1} \, .\]
-\end{description}
-
-\todo[inline]{Sasha: prefix sums, sparse table, segment trees, Yao, BFC, etc}
-
-\subsection{Overview of New Results}
-\todo[inline]{Sasha, write this}
-
-
-
-\section{Commutative Semigroups}
-\todo[inline]{Ваня, давай!}
-
-
-
-\subsection{Matrices with Constant Maximum Number of Zeros in Each Row}
-
-\subsection{Matrices with Constant Average Number of Zeros in Each Row}
-
-\section{Non-commutative Semigroups}
-\todo[inline]{Володя, жарь!}
 
 \begin{theorem}
 Intervals are computable by $O(n)$-size circuit iff non-commutative dense matrices are computable by $O(n)$-size circuit.
@@ -248,10 +187,48 @@ Observe, that the circuit still computes the outputs correctly. The changes are 
 
 Now, observe that $\num(g)$ has increased (by the first coordinate). There are no new gates with smaller $\lef$. Among gates with the minimal $\lef$ there are no new gates with smaller $\gap$. Among gates with minimal $(\lef,\gap)$ all gates have larger $\num$ then $g$. Thus $\tup(C)$ increased and we are done.
 
-\section{Applications}
-\todo[inline]{Андрей, фигарь!}
 
 \bibliographystyle{plain}
 \bibliography{text.bib}
 
 \end{document}
+
+
+%old unfinished piece, most likely not needed
+
+
+We will need the following two lemmas on free idempotent semigroups.
+
+\begin{lemma} \label{lem:commutativity}
+Suppose words $a,b,c,d,e$ are pairwise disjoint. Then if for some $P$ and $Q$ we have $PcdbcQ=bcd$, then $PbccdQ=bcd$. More generally, if for some $P$ and $Q$ we have $PcdbcQ=abcde$, then $PbccdQ=abcde$.
+\end{lemma}
+
+\begin{lemma} \label{lem:permutation}
+Suppose words $a, b_1,\ldots, b_k,c_1, \ldots, c_{k-1}, d$ are pairwise disjoint. Then if for some $P$ and $Q$ we have $Pb_1\ldots b_kQ=b_1c_1\ldots c_{k-1}b_k$, then $PQ=b_1c_1\ldots c_{k-1}b_k$. More generally, if for some $P$ and $Q$ we have $Pb_1\ldots b_kQ=ab_1c_1\ldots c_{k-1}b_kd$, then $PQ=ab_1c_1\ldots c_{k-1}b_kd$.
+\end{lemma}
+
+Suppose that we have a circuit that outputs several clauses such that their variables are ordered in the increasing order and each variable occurs in each clause at most once (note, that our computation of dense matrix is a special case). We will show that we can always reconstruct such a circuit without increase in the size to a very structured form.
+
+By an interval we denote the product of consecutive variables $x_ix_{i+1}\ldots x_j$. We denote this interval by $[i,j]$. We call a gate a generalized interval if it is either an interval, or a product of variables in the increasing order (possibly with gaps) that forms a consecutive subsequence of some output gate and is used in the computation of this output gates (there is a path from this gate to this output). We call a circuit in which all gates are generalized interval a generalized interval circuit.
+
+\begin{lemma}
+Each circuit $C$ computing outputs with variables in the increasing order can be reconstructed into a generalized interval circuit without increase in the size.
+\end{lemma} 
+
+\begin{proof}
+We will argue by induction on the number of the first non-generalized interval gate in $C$. Consider the first non-generalized interval $h$ in $C$. Then $h=fg$ for some gates $f$ and $g$ in $C$ and $f$ and $g$ are generalized intervals. Now we consider cases.
+
+First consider the following case. One of $f$ and $g$, let's say $f$, was not an interval. Then it has gaps and is on the computational path to some outputs, for which it computes a consecutive subsequence of variables. So, we consider the case when $h$ is not on the paths to any of these outputs. Consider any output $r$ that uses $h$ Then $b$ is not a consecutive subsequence of variables in $r$ and so $f=b_1\ldots b_k$ and $r=ab_1c_1\ldots c_{k-1}b_k d$ for some $k$, $b_1\ldots, b_k$, $c_1,\ldots, c_{k-1}$, $a$, $d$. Thus we have
+$$
+Pb_1\ldots b_kgQ=ab_1c_1\ldots c_{k-1}b_k d.
+$$
+Then, by Lemma~\ref{lem:permutation} we have
+$$
+PgQ=ab_1c_1\ldots c_{k-1}b_k d.
+$$
+This means that if we substitute $h$ by $g$ in the circuit the output $r$ is still computed correctly. Since this is true for all outputs of $h$, we can do this substitution in $C$ and reduce the size of the circuit.
+
+Now we consider the second case. This is the case when even if one of $f$ and $g$ (or both) is not an interval, $h$ lies on the paths from $f$ and $g$ to the outputs for which they are consecutive subsequences of variables. This means that even $f$ contains gaps, $g$ does not contain any variables of this gap. Symmetrically, $f$ does not contain gap variables of~$g$. 
+
+Thus, if we restrict ourselves to variables of $h$, both $f$ and $g$ are intervals. If they are not intersecting, then 
+\end{proof}
