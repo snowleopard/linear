@@ -34,14 +34,14 @@
 
 
 \begin{abstract}
-We revisit the classical problem of computing range queries over an idempotent semigroup and its natural special case, computing a dense linear operator. Specifically, we are interested in the minimum number of semigroup operations needed to answer all the queries. For commutative semigroups, we show that the special case is strictly easier: while for range queries a~superlinear lower bound is known, a dense linear operator can be computed by linear size circuits. We then study the role of commutativity in these problems: it turns out to be unimportant for range queries, but crucial for dense operators. Moreover, without commutativity both problems are equivalent.\todo{Андрей, допиши про applications, пожалуйста}
+We revisit the classical problem of computing range queries over an semigroup and its natural special case, computing a dense linear operator. We are interested in the minimum number of semigroup operations needed to answer all the queries. For commutative semigroups, we show that the special case is strictly easier: while for range queries a~superlinear lower bound is known, a dense linear operator can be computed by linear size circuits. We then study the role of commutativity in these problems: it turns out to be unimportant for range queries, but crucial for dense operators. Moreover, without commutativity both problems are equivalent.\todo{Андрей, допиши про applications, пожалуйста}
 \end{abstract}
 
 \tableofcontents
 
 \section{Range Queries}
 \subsection{Problem Statement}
-{\em Range queries} is a~classical problem in data structures and algorithms that is stated as follows. For a~fixed semigroup with operator~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of group elements. Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operator to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it into a~data structure so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $j-i+1$, the time of naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the offline version of range queries and are interested in the minimum number of semigroup operations needed to answer all the queries.
+{\em Range queries} is a~classical problem in data structures and algorithms that is stated as follows. For a~fixed semigroup with operation~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of semigroup elements. Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operator to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it into a~data structure so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $r-l+1$, the time of naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the {\em offline} version of range queries, where one is given a~sequence together with all the queries, and are interested in the minimum number of semigroup operations needed to answer all the queries.
 
 \todo[inline]{tell about dense linear operators}
 
@@ -53,12 +53,12 @@ We revisit the classical problem of computing range queries over an idempotent s
 
 
 \subsection{Overview of Known Approaches}
-In this subsection, we give a brief overview of known algorithms for the range queries problem. We say that an algorithm has type $(f(n), g(n))$ if it spends $f(n)$ time on preprocessing the input sequence, and then answers any query in time $g(n)$. 
+In this subsection, we give a~brief overview of a~rich variety of known algorithms for the range queries problem. We say that an algorithm has type $(f(n), g(n))$ if it spends $f(n)$ time on preprocessing the input sequence, and then answers any query in time $g(n)$. 
 
 \begin{description}
-\item[No preprocessing.] A~naive algorithm that just skips the preprocessing stage and answers a~query $(l,r)$ directly in time $O(r-l+1)$. It therefore has type $(O(1), O(n))$.
+\item[No preprocessing.] A~naive algorithm skips the preprocessing stage and answers a~query $(l,r)$ directly in time $O(r-l+1)$. It therefore has type $(O(1), O(n))$.
 
-\item[Full preprocessing.] One may also precompute the answers to all possible queries to be able to answer any subsequent query immediately. Using dynamic programming, it is possible to precompute the answers to all $\Theta(n^2)$ queries in time $O(n^2)$: for this, it is enough to process the queries in order of increasing length. This gives an $(O(n^2), O(1))$ algorithm.
+\item[Full preprocessing.] One may precompute the answers to all possible queries to be able to answer any subsequent query immediately. Using dynamic programming, it is possible to precompute the answers to all $\Theta(n^2)$ queries in time $O(n^2)$: for this, it is enough to process the queries in order of increasing length. This gives an $(O(n^2), O(1))$ algorithm.
 
 \item[Fixed length queries (sliding window).] In case one is promised that all the queries are going to have the same length~$m$, it is possible to do an~$O(n)$ time preprocessing and then to answer any query in time $O(1)$. For this, one partitions the input sequence of size~$n$ into $\frac nm$ blocks of size~$m$. For each block, one computes all its prefixes and suffixes in time $O(m)$. The overall running time is $O(\frac nm \cdot m)=O(n)$. Then, each query of length~$m$ touches at most two consecutive blocks and can be answered by taking a~precomputed suffix of the left block and a~precomputed prefix of the right block in time $O(1)$. This, in particular, implies that, given a~sequence of length~$n$ and an integer $1 \le m \le n$, one may slide a~window of length~$m$ through the sequence and to output the answer to all such window queries in time $O(n)$.
 
@@ -66,28 +66,70 @@ In this subsection, we give a brief overview of known algorithms for the range q
 \(S_0=0,\, S_1=x_1,\, S_2=x_1+x_2, \dotsc, S_n=x_1+\dotsb+x_n\,.\)  
 This can be done in time $O(n)$ since $S_i=S_{i-1}+x_i$. Then, the answer to any query $(l,r)$ is just $S_r-S_{l-1}$.
 
+Note that the algorithm above solves a~{\em static} version of the problem. For the {\em dynamic} version, where one is allowed to change the elements of the input sequence, there is a~data structure known as Fenwick's tree~\cite{DBLP:journals/spe/Fenwick94}. It allows to change any element as well as to retrieve any prefix sum in time $O(\log n)$.
+
 
 
 \item[Sparse table.] This data structure works for {\em bands} (i.e., idempotent semigroups: $x \circ x = x$ for every~$x$) and has type $(O(n\log n), O(1))$. We illustrate its main idea on $(\mathbb{Z}, \min)$. One precomputes answers to $O(n\log n)$ queries---namely, those whose length is a~power of~2. More formally, for all $0 \le k \le \log_2n$ and $1 \le i \le n-2^k+1$, let $S_{k,i}$ be the answer to a~query $(i, i+2^k-1)$:
-\[S_{k,i}=x_i \circ x_{i+1} \circ \dotsb \circ x_{i+2^k-1} \, .\]
+\(S_{k,i}=x_i \circ x_{i+1} \circ \dotsb \circ x_{i+2^k-1} \, .\)
 Since any range of length $2^k$ consists of two ranges of length $2^{k-1}$, one can compute all $S_{k,i}$'s in time $O(n\log n)$ using dynamic programming. Then, any range $(l,r)$ can be covered by two precomputed ranges: if $k$~is the smallest integer such that $2^k \ge (r-l+1)/2$, then the answer to this query is $S_{k,l} \circ S_{k,r-2^k+1}$ (idempotency is required since we are covering the range, but not partitioning it). This gives an $(O(n\log n), O(1))$ algorithm.
 
 
-\item[Segment tree.] The segment tree data structure is also based on dynamic programming ideas and works for any semigroup. Consider the following complete binary tree with $O(n)$ nodes: the root is labeled by a~query $(1,n)$, the two children of each inner node $(l,r)$ are labeled by the left and right halves of the current query (i.e., $(l,m)$ and $(m+1,r)$ where $m=(l+r)/2$), the leaves are labeled by length one queries. Going from leaves to the root, one can precompute the answers to all the queries in this tree in time $O(n)$. Then, it is possible to show that any query $(l,r)$ can be  partitioned into $O(\log n)$ queries that are stored in the tree. This gives an $(O(n), O(\log n))$ algorithm. It should be noted that the segment tree can also be used to solve the {\em dynamic} version of the range queries problem efficiently: to change the value of one of the elements of the input sequence, one needs to adjust the answers to $O(\log n)$ queries stored in the tree. A~similar data structure is Fenwick's tree~\cite{}.
+\item[Segment tree.] The segment tree data structure is also based on dynamic programming ideas and works for any semigroup. Consider the following complete binary tree with $O(n)$ nodes: the root is labeled by a~query $(1,n)$, the two children of each inner node $(l,r)$ are labeled by the left and right halves of the current query (i.e., $(l,m)$ and $(m+1,r)$ where $m=(l+r)/2$), the leaves are labeled by length one queries. Going from leaves to the root, one can precompute the answers to all the queries in this tree in time $O(n)$. Then, it is possible to show that any query $(l,r)$ can be  partitioned into $O(\log n)$ queries that are stored in the tree. This gives an $(O(n), O(\log n))$ algorithm. It should be noted that the segment tree can also be used to solve the dynamic version of the range queries problem efficiently: to change the value of one of the elements of the input sequence, one needs to adjust the answers to $O(\log n)$ queries stored in the tree. 
 
-\item[Algorithm by Bender and Farach-Colton.] This algorithm is designed specifically for the range minimum query problem (RMQ, i.e., a~semigroup $(\mathbb{Z}, \min)$) and has type $(O(n), O(1))$. Its main idea is to first reduce RMQ to LCA, the least common ancestor problem, where one is given a~rooted tree and a~bunch of queries of the form ``what is the lowest common ancestor of the given two nodes?'' One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries; we also partition the input sequence into blocks and build a~segment tree out of these blocks. All the details can be found in~\cite{DBLP:conf/latin/BenderF00}.
+\item[Algorithm by Alon and Schieber.] Alon and Schieber~\cite{Alon87optimalpreprocessing} showed that, for any semigroup, it is possible to preprocess the input sequence in time $O(n)$ so that to further answer any query in time $O(\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function. In fact, they studied a~more general question: what is the minimum number of semigroup operations needed at the preprocessing stage for being able to then answer any query in at most $k$~steps? The proved matching lower and upper bounds for every~$k$. As a~special case, they show how to preprocess the input sequence in time $O(n\log n)$ so that to answer any subsequent query by applying at most one semigroup operation. This algorithm generalizes the sparse table data structure (as it does not require the semigroup to be idempotent) and is easy to describe. It is based on the divide-and-conquer paradigm. Let $m=n/2$. We precompute answers to all queries of the form $(i,m)$ and $(m+1,j)$, where $1 \le i \le m$ and $m+1 \le j \le n$ (i.e., suffixes of the left half and prefixes of the right half). This allows to answer in a~single step any query that intersects the middle of the sequence, i.e., queries $(l,r)$ such that $l \le m \le r$. All the remaining preprocessing boils down to answering queries that lie entirely in either left or right half. This can be done recursively for the halves. The corresponding recurrence relation $T(n)=2T(n/2)+O(n)$ implies an upper bound $O(n\log n)$ on preprocessing time (and hence, the number of semigroup operations).
+
+
+
+\item[Algorithm by Bender and Farach-Colton.] The algorithm by Bender and Farach-Colton~\cite{DBLP:conf/latin/BenderF00} is designed specifically for the range minimum query problem (RMQ, i.e., a~semigroup $(\mathbb{Z}, \min)$) and has type $(O(n), O(1))$. Its main idea is to first reduce RMQ to LCA, the least common ancestor problem, where one is given a~rooted tree and a~bunch of queries of the form ``what is the lowest common ancestor of the given two nodes?'' One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks. 
 \end{description}
 
-\todo[inline]{Sasha: prefix sums, sparse table, segment trees, Yao, BFC, etc}
+\todo[inline]{Sasha: Yao}
 
 \subsection{Overview of New Results}
 \todo[inline]{Sasha, write this}
 
+Thus, there are two conceptual messages in this paper:
+\begin{enumerate}
+\item For commutative semigroups, it is straightforward to compute a~linear operator $Ax$ with a~dense matrix~$A$ by a~linear size circuit. It turns out that this is also true in case $A$~is a~complement of a~dense matrix, though the corresponding circuits are already non-trivial.
+\item For non-commutative groups,
+\todo[inline]{to be written}
+\end{enumerate}
+
 \section{General Setting}
 \subsection{Semigroups}
+\todo[inline]{introduce semigroups, then state the needed lemmas}
+
+We need the following notations and facts on free idempotent semigroups~\cite{GreenR52}.
+
+Let $W$ be a word in a free idempotent semigroup with generators $\{a_1,\ldots, a_n\}$ (we will also call them variables and letters). Denote by $\var(W)$ the set of generators that are present in $W$. The initial mark of $W$ is the generator that is present in $W$ such that its first appearance is farthest to the right. Let $U$ be the prefix of $W$ consisting of letters preceding the initial mark. That is, $U$ is the maximal prefix of $W$ with smaller number of generators. We call $U$ the initial of $W$. Analogously we define terminal mark of $W$ and the terminal of $W$.
+
+\begin{lemma}[\cite{GreenR52}] \label{lem:GR}
+If $W\sim W'$ in the semigroup, then their initial mark are the same, terminal marks are the same, $U \sim U'$ in the semigroup where $U$ and $U'$ are initials of $W$ and $W'$ respectively, $V\sim V'$ in the semigroup where $V$ and $V'$ are terminals of $W$ and $W'$ respectively.
+\end{lemma}
+
+\begin{lemma} \label{lem:prefix_equivalence}
+Suppose $W\sim W'$ in the semigroup and $W$ and $W'$ consists of $k$ generators. Suppose $U$ and $U'$ are minimal (maximal) prefixes consisting of $l\leq k$ generators. Then $U\sim U'$.
+\end{lemma}
+
+\begin{proof}
+The proof is by induction on the decreasing $l$. Consider the maximal prefixes first. For $l=k$ and maximal prefixes we just have $U= W$ and $U'=W'$. Suppose the statement is true for some $l$, denote the corresponding prefixes by $U$ and $U'$ respectively. Then note that the maximal prefixes with $l-1$ letters are initials of $U$ and $U'$. And the statement follows by Lemma~\ref{lem:GR}.
+
+The proof of the statement for minimal prefixes is completely analogous. Note that on the step of induction the prefixes differs from the previous case by one letter that are  initial marks of the corresponding prefixes. So these additional letters are also equal by Lemma~\ref{lem:GR}.
+\end{proof}
+
+The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
+\begin{lemma} \label{lem:variables_order}
+Suppose $W \sim W'$. Let us write down the letters of $W$ in the order in which they appear first time in $W$ when we read it from left to right. Let's do the same for $W'$. Then we obtain exactly the same sequences of letters.
+
+The same is true if we read the words from right to left.
+\end{lemma}
+
 
 \subsection{Computational Model}
 We assume that the input consists of $n$~formal variables $x_1, x_2, \dotsc, x_n$ (rather than actual group elements). We are interested in the minimum number of semigroup operations needed to answer all the queries. Hence, we use the following natural {\em circuit} model. For a~given set of queries $(l_1,r_1), \dotsc, (l_m,r_m)$, a~circuit computing all these queries is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They are labeled with $x_1, \dotsc, x_n$ and are called {\em input gates}. All other nodes have positive in-degree and are called {\em gates}. Finally, some $m$~gates have out-degree~0 and are labeled as {\em output gates}. The {\em size} of a~circuit is its number of edges (also called {\em wires}). Each gate of a~circuit computes a~function defined in a~natural way: input gates compute just $x_1, \dotsc, x_n$; any other gate of in-degree~$r$ computes a~function $f_1 \circ f_2 \circ \dotsb \circ f_r$ where $f_1, \dotsc, f_r$ are functions computed at its predecessors (therefore, we assume that there is an underlying order on the incoming wires for each gate).
+
+\todo[inline]{сказать подробнее, что значит, что схема считает функции}
 
 For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and $(l_2,r_2)=(2,5)$ over $x_1, \dotsc, x_5$.
 \begin{center}
@@ -150,30 +192,6 @@ $$
 $$ 
 This is not extremely impressive, since to obtain $xyz$ we multiply by $xyz$, but the point is that this is possible in principle. So, to prove the lemma some more work is needed.
 
-We need the following notations and facts on free idempotent semigroups~\cite{GreenR52}.
-
-Let $W$ be a word in a free idempotent semigroup with generators $\{a_1,\ldots, a_n\}$ (we will also call them variables and letters). Denote by $\var(W)$ the set of generators that are present in $W$. The initial mark of $W$ is the generator that is present in $W$ such that its first appearance is farthest to the right. Let $U$ be the prefix of $W$ consisting of letters preceding the initial mark. That is, $U$ is the maximal prefix of $W$ with smaller number of generators. We call $U$ the initial of $W$. Analogously we define terminal mark of $W$ and the terminal of $W$.
-
-\begin{lemma}[\cite{GreenR52}] \label{lem:GR}
-If $W\sim W'$ in the semigroup, then their initial mark are the same, terminal marks are the same, $U \sim U'$ in the semigroup where $U$ and $U'$ are initials of $W$ and $W'$ respectively, $V\sim V'$ in the semigroup where $V$ and $V'$ are terminals of $W$ and $W'$ respectively.
-\end{lemma}
-
-\begin{lemma} \label{lem:prefix_equivalence}
-Suppose $W\sim W'$ in the semigroup and $W$ and $W'$ consists of $k$ generators. Suppose $U$ and $U'$ are minimal (maximal) prefixes consisting of $l\leq k$ generators. Then $U\sim U'$.
-\end{lemma}
-
-\begin{proof}
-The proof is by induction on the decreasing $l$. Consider the maximal prefixes first. For $l=k$ and maximal prefixes we just have $U= W$ and $U'=W'$. Suppose the statement is true for some $l$, denote the corresponding prefixes by $U$ and $U'$ respectively. Then note that the maximal prefixes with $l-1$ letters are initials of $U$ and $U'$. And the statement follows by Lemma~\ref{lem:GR}.
-
-The proof of the statement for minimal prefixes is completely analogous. Note that on the step of induction the prefixes differs from the previous case by one letter that are  initial marks of the corresponding prefixes. So these additional letters are also equal by Lemma~\ref{lem:GR}.
-\end{proof}
-
-The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
-\begin{lemma} \label{lem:variables_order}
-Suppose $W \sim W'$. Let us write down the letters of $W$ in the order in which they appear first time in $W$ when we read it from left to right. Let's do the same for $W'$. Then we obtain exactly the same sequences of letters.
-
-The same is true if we read the words from right to left.
-\end{lemma}
 
 So, we consider the free idempotent semigroup with generators $\{a_1,\ldots, a_n\}$.
 We consider the generators to be ordered from $a_1$ to $a_n$ in the increasing order. We want to compute $B \cdot \vec{a}$, where $\vec{a}=(a_1,\ldots, a_n)$ and $B$ is a boolean matrix. 
