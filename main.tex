@@ -57,7 +57,7 @@ matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 \todo[inline]{tell about dense linear operators}
 
 \subsection{Applications}
-\todo[inline]{Andrey, convince the reader that the problem is important. Show many applications. Show various semigroups arising in real life: $(\mathbb{Z}, +)$, $(\mathbb{Z}, \min)$, Boolean, etc. Emphasize applications of dense linear operators. One relevant link: \url{http://www.leptonica.com/grayscale-morphology.html}}
+\todo[inline]{Andrey, convince the reader that the problem is important. Show many applications. Show various semigroups arising in real life: $(\mathbb{Z}, +)$, $(\mathbb{Z}, \min)$, Boolean, etc. Emphasize applications of dense linear operators. One relevant link: \url{http://www.leptonica.com/grayscale-morphology.html} Also, need to mention 2d range queries and computational geometry}
 
 
 
@@ -95,7 +95,7 @@ Since any range of length $2^k$ consists of two ranges of length $2^{k-1}$, one 
 \item[Algorithm by Bender and Farach-Colton.] The algorithm by Bender and Farach-Colton~\cite{DBLP:conf/latin/BenderF00} is designed specifically for the range minimum query problem (RMQ, i.e., a~semigroup $(\mathbb{Z}, \min)$) and has type $(O(n), O(1))$. Its main idea is to first reduce RMQ to LCA, the least common ancestor problem, where one is given a~rooted tree and a~bunch of queries of the form ``what is the lowest common ancestor of the given two nodes?'' One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
 \end{description}
 
-\todo[inline]{Sasha: Yao}
+\todo[inline]{Sasha: Yao~\cite{DBLP:conf/stoc/Yao82}}
 
 \subsection{Overview of New Results}
 \todo[inline]{Sasha, write this}
