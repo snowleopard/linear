@@ -34,7 +34,18 @@
 
 
 \begin{abstract}
-We revisit the classical problem of computing range queries over an semigroup and its natural special case, computing a dense linear operator. We are interested in the minimum number of semigroup operations needed to answer all the queries. For commutative semigroups, we show that the special case is strictly easier: while for range queries a~superlinear lower bound is known, a dense linear operator can be computed by linear size circuits. We then study the role of commutativity in these problems: it turns out to be unimportant for range queries, but crucial for dense operators. Moreover, without commutativity both problems are equivalent.\todo{Андрей, допиши про applications, пожалуйста}
+We revisit the classical problem of computing range queries over a semigroup and
+its natural special case~--~computing a dense linear operator. We are interested
+in the minimum number of semigroup operations needed to answer all the queries.
+For commutative semigroups, we show that the special case is strictly easier:
+while for range queries a~superlinear lower bound is known, a dense linear
+operator can be computed by linear size circuits. We then study the role of
+commutativity in these problems: it turns out to be unimportant for range
+queries, but crucial for dense operators. Moreover, without commutativity both
+problems are equivalent. To highlight potential applications of the presented
+linear size constructions, we show how they can be used to (i) obtain linear
+size representations of dense graphs, and (ii) multiply dense $n\times n$
+matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 \end{abstract}
 
 \tableofcontents
@@ -53,7 +64,7 @@ We revisit the classical problem of computing range queries over an semigroup an
 
 
 \subsection{Overview of Known Approaches}
-In this subsection, we give a~brief overview of a~rich variety of known algorithms for the range queries problem. We say that an algorithm has type $(f(n), g(n))$ if it spends $f(n)$ time on preprocessing the input sequence, and then answers any query in time $g(n)$. 
+In this subsection, we give a~brief overview of a~rich variety of known algorithms for the range queries problem. We say that an algorithm has type $(f(n), g(n))$ if it spends $f(n)$ time on preprocessing the input sequence, and then answers any query in time $g(n)$.
 
 \begin{description}
 \item[No preprocessing.] A~naive algorithm skips the preprocessing stage and answers a~query $(l,r)$ directly in time $O(r-l+1)$. It therefore has type $(O(1), O(n))$.
@@ -63,7 +74,7 @@ In this subsection, we give a~brief overview of a~rich variety of known algorith
 \item[Fixed length queries (sliding window).] In case one is promised that all the queries are going to have the same length~$m$, it is possible to do an~$O(n)$ time preprocessing and then to answer any query in time $O(1)$. For this, one partitions the input sequence of size~$n$ into $\frac nm$ blocks of size~$m$. For each block, one computes all its prefixes and suffixes in time $O(m)$. The overall running time is $O(\frac nm \cdot m)=O(n)$. Then, each query of length~$m$ touches at most two consecutive blocks and can be answered by taking a~precomputed suffix of the left block and a~precomputed prefix of the right block in time $O(1)$. This, in particular, implies that, given a~sequence of length~$n$ and an integer $1 \le m \le n$, one may slide a~window of length~$m$ through the sequence and to output the answer to all such window queries in time $O(n)$.
 
 \item[Prefix sums.] In case, a~semigroup operation has an {\em easily computable inverse}, it is easy to design an $(O(n), O(1))$ algorithm. We illustrate this for a~group $(\mathbb{Z}, +)$. Given $x_1, \dotsc, x_n$, we compute $(n+1)$ prefix sums:
-\(S_0=0,\, S_1=x_1,\, S_2=x_1+x_2, \dotsc, S_n=x_1+\dotsb+x_n\,.\)  
+\(S_0=0,\, S_1=x_1,\, S_2=x_1+x_2, \dotsc, S_n=x_1+\dotsb+x_n\,.\)
 This can be done in time $O(n)$ since $S_i=S_{i-1}+x_i$. Then, the answer to any query $(l,r)$ is just $S_r-S_{l-1}$.
 
 Note that the algorithm above solves a~{\em static} version of the problem. For the {\em dynamic} version, where one is allowed to change the elements of the input sequence, there is a~data structure known as Fenwick's tree~\cite{DBLP:journals/spe/Fenwick94}. It allows to change any element as well as to retrieve any prefix sum in time $O(\log n)$.
@@ -75,13 +86,13 @@ Note that the algorithm above solves a~{\em static} version of the problem. For 
 Since any range of length $2^k$ consists of two ranges of length $2^{k-1}$, one can compute all $S_{k,i}$'s in time $O(n\log n)$ using dynamic programming. Then, any range $(l,r)$ can be covered by two precomputed ranges: if $k$~is the smallest integer such that $2^k \ge (r-l+1)/2$, then the answer to this query is $S_{k,l} \circ S_{k,r-2^k+1}$ (idempotency is required since we are covering the range, but not partitioning it). This gives an $(O(n\log n), O(1))$ algorithm.
 
 
-\item[Segment tree.] The segment tree data structure is also based on dynamic programming ideas and works for any semigroup. Consider the following complete binary tree with $O(n)$ nodes: the root is labeled by a~query $(1,n)$, the two children of each inner node $(l,r)$ are labeled by the left and right halves of the current query (i.e., $(l,m)$ and $(m+1,r)$ where $m=(l+r)/2$), the leaves are labeled by length one queries. Going from leaves to the root, one can precompute the answers to all the queries in this tree in time $O(n)$. Then, it is possible to show that any query $(l,r)$ can be  partitioned into $O(\log n)$ queries that are stored in the tree. This gives an $(O(n), O(\log n))$ algorithm. It should be noted that the segment tree can also be used to solve the dynamic version of the range queries problem efficiently: to change the value of one of the elements of the input sequence, one needs to adjust the answers to $O(\log n)$ queries stored in the tree. 
+\item[Segment tree.] The segment tree data structure is also based on dynamic programming ideas and works for any semigroup. Consider the following complete binary tree with $O(n)$ nodes: the root is labeled by a~query $(1,n)$, the two children of each inner node $(l,r)$ are labeled by the left and right halves of the current query (i.e., $(l,m)$ and $(m+1,r)$ where $m=(l+r)/2$), the leaves are labeled by length one queries. Going from leaves to the root, one can precompute the answers to all the queries in this tree in time $O(n)$. Then, it is possible to show that any query $(l,r)$ can be  partitioned into $O(\log n)$ queries that are stored in the tree. This gives an $(O(n), O(\log n))$ algorithm. It should be noted that the segment tree can also be used to solve the dynamic version of the range queries problem efficiently: to change the value of one of the elements of the input sequence, one needs to adjust the answers to $O(\log n)$ queries stored in the tree.
 
 \item[Algorithm by Alon and Schieber.] Alon and Schieber~\cite{Alon87optimalpreprocessing} showed that, for any semigroup, it is possible to preprocess the input sequence in time $O(n)$ so that to further answer any query in time $O(\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function. In fact, they studied a~more general question: what is the minimum number of semigroup operations needed at the preprocessing stage for being able to then answer any query in at most $k$~steps? The proved matching lower and upper bounds for every~$k$. As a~special case, they show how to preprocess the input sequence in time $O(n\log n)$ so that to answer any subsequent query by applying at most one semigroup operation. This algorithm generalizes the sparse table data structure (as it does not require the semigroup to be idempotent) and is easy to describe. It is based on the divide-and-conquer paradigm. Let $m=n/2$. We precompute answers to all queries of the form $(i,m)$ and $(m+1,j)$, where $1 \le i \le m$ and $m+1 \le j \le n$ (i.e., suffixes of the left half and prefixes of the right half). This allows to answer in a~single step any query that intersects the middle of the sequence, i.e., queries $(l,r)$ such that $l \le m \le r$. All the remaining preprocessing boils down to answering queries that lie entirely in either left or right half. This can be done recursively for the halves. The corresponding recurrence relation $T(n)=2T(n/2)+O(n)$ implies an upper bound $O(n\log n)$ on preprocessing time (and hence, the number of semigroup operations).
 
 
 
-\item[Algorithm by Bender and Farach-Colton.] The algorithm by Bender and Farach-Colton~\cite{DBLP:conf/latin/BenderF00} is designed specifically for the range minimum query problem (RMQ, i.e., a~semigroup $(\mathbb{Z}, \min)$) and has type $(O(n), O(1))$. Its main idea is to first reduce RMQ to LCA, the least common ancestor problem, where one is given a~rooted tree and a~bunch of queries of the form ``what is the lowest common ancestor of the given two nodes?'' One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks. 
+\item[Algorithm by Bender and Farach-Colton.] The algorithm by Bender and Farach-Colton~\cite{DBLP:conf/latin/BenderF00} is designed specifically for the range minimum query problem (RMQ, i.e., a~semigroup $(\mathbb{Z}, \min)$) and has type $(O(n), O(1))$. Its main idea is to first reduce RMQ to LCA, the least common ancestor problem, where one is given a~rooted tree and a~bunch of queries of the form ``what is the lowest common ancestor of the given two nodes?'' One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
 \end{description}
 
 \todo[inline]{Sasha: Yao}
@@ -167,7 +178,7 @@ In a~special case of the Boolean semigroup $(\{0,1\}, \lor)$, such circuits are 
 Intervals are computable by $O(n)$-size circuit iff non-commutative dense matrices are computable by $O(n)$-size circuit.
 \end{theorem}
 
-To show the theorem we introduce an intermediate problem: computing non-commutative intervals by $O(n)$-size circuit. 
+To show the theorem we introduce an intermediate problem: computing non-commutative intervals by $O(n)$-size circuit.
 
 Clearly, this problem subsumes both of our problems. Indeed, if we can compute non-commutative intervals, we can compute commutative intervals by the same circuit.
 On the other hand, if we can compute non-commutative intervals, then given non-commutative dense matrix we can split it into intervals, compute them separately, then join them together in $O(n)$.
@@ -175,11 +186,11 @@ On the other hand, if we can compute non-commutative intervals, then given non-c
 Thus, it remains to show the following two lemmas.
 
 \begin{lemma} \label{lem:dense_matrices}
-If we can compute non-commutative dense matrices by a linear size circuit, we can also compute non-commutative intervals. 
+If we can compute non-commutative dense matrices by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
 \begin{lemma} \label{lem:intervals}
-If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals. 
+If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
 \section{Proof of Lemma~\ref{lem:dense_matrices}}
@@ -189,12 +200,12 @@ The intuition why this might be true is that it seems that the best way to compu
 But some analysis of all these things is needed since idempotency is tricky. For example, it is possible to simulate commutativity: if we have the product $xy$ and would like to have $yx$ we can just multiply by $x$ from the left and by $y$ from the right. Then we have $xyxy=xy$. We can use this to put some variables inside of already produced products. If we have $xz$ and would like to obtain $xyz$ we can just multiply by $xyz$ from the left and by $xyz$ from the right. Then we have
 $$
 (xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz.
-$$ 
+$$
 This is not extremely impressive, since to obtain $xyz$ we multiply by $xyz$, but the point is that this is possible in principle. So, to prove the lemma some more work is needed.
 
 
 So, we consider the free idempotent semigroup with generators $\{a_1,\ldots, a_n\}$.
-We consider the generators to be ordered from $a_1$ to $a_n$ in the increasing order. We want to compute $B \cdot \vec{a}$, where $\vec{a}=(a_1,\ldots, a_n)$ and $B$ is a boolean matrix. 
+We consider the generators to be ordered from $a_1$ to $a_n$ in the increasing order. We want to compute $B \cdot \vec{a}$, where $\vec{a}=(a_1,\ldots, a_n)$ and $B$ is a boolean matrix.
 
 We will show that any circuit computing $B \cdot \vec{a}$ can be reconstructed into another circuit that we will call \emph{an interval circuit} without increase in the size of the circuit. In this circuit we require that each gate computes a word that is equivalent to a word consisting of increasing sequence of letters. Note that as a consequence we have that if in an interval circuit we multiply two gates $f$ and $h$, then the increasing sequences of letters computed by $f$ and $h$ are matching, that is some suffix of $f$ is equal to some suffix of $h$. Otherwise, the product is not equal to an increasing sequence of variables.
 
@@ -202,16 +213,16 @@ Once we show that any circuit solving our problem can be reconstructed into an i
 
 %For each gate $g$ of the circuit we will consider the word $W_g$ computed in this gate. This word is defined recursively as a concatenation of the words corresponding to input gates. For each gate $g$ we say that the letter $a$ is \emph{good} in $W_g$ if $a$ is present in $W_g$ and $W_g$ will not be multiplied on the left by words containing larger or equal letters then $a$.
 
-To reconstruct a circuit into a linear one we need to introduce some notation. Consider a circuit $C$ and its gate $g$. 
+To reconstruct a circuit into a linear one we need to introduce some notation. Consider a circuit $C$ and its gate $g$.
 We will identify gates and words that they are computing. We will treat the results of the computation of the gates as words to which gates apply concatenation operation. That is, we consider these words before we apply any equivalences in the semigroup to them.
-Suppose letter $a_i$ is contained in $g$. We say that $a_i$ is \emph{good} in $g$ if there is a path in $C$ from $g$ to some output, on which the word is never multiplied from the left by words with letters greater or equal to $a_i$. 
+Suppose letter $a_i$ is contained in $g$. We say that $a_i$ is \emph{good} in $g$ if there is a path in $C$ from $g$ to some output, on which the word is never multiplied from the left by words with letters greater or equal to $a_i$.
 
 Note that if $a_i$ and $a_{i'}$ are contained in $g$, $i<i'$ and $a_i$ is good in $g$, then $a_{i'}$ is also good in $g$. That is, the set of all good letters in $g$ is closed upwards.
 
-Consider the largest good letter in $g$ (if there is one), denote it by $a_k$ (if there are good letters in $g$, then $a_k$ is actually just the largest letter in $g$). Consider the first occurrence of $a_k$ in $g$. 
+Consider the largest good letter in $g$ (if there is one), denote it by $a_k$ (if there are good letters in $g$, then $a_k$ is actually just the largest letter in $g$). Consider the first occurrence of $a_k$ in $g$.
 
 \begin{claim}
-All first occurrences of other good letters in $g$ must be to the left of $a_k$. 
+All first occurrences of other good letters in $g$ must be to the left of $a_k$.
 \end{claim}
 
 \begin{proof}
@@ -221,7 +232,7 @@ Suppose that some good letter $a_i$ has the first occurrence to the right of $a_
 Consider for the gate $g$ two words, $\mmin_g$ and $\mmax_g$. Both this words are products of variables in the increasing order: $\mmin_g$ is the product of good letters of $g$ in the increasing order, $\mmax_g$ is the product (in the increasing order) of all letters that has first occurrences before $a_k$. Note that $\mmin_g$ is a suffix of $\mmax_g$. If there are no good letters in $g$ we just let $\mmin_g=\mmax_g=\lambda$ (the empty word).
 
 For the word $W$ that has the form of the product of variables in the increasing order we call $a_j$ a \emph{gap variable} if it is not contained in $W$ and there are $a_i$ and $a_l$ contained in $W$ such that $i<j<l$.
- 
+
 We will show how given a circuit $C$ to construct an interval circuit $C'$ that for each gate $g$ of $C$ computes some intermediate product $P_g$ between $\mmin_g$ and $\mmax_g$: we will have that $\mmin_g$ is a suffix of $P_g$ and $P_g$ is a suffix of $\mmax_g$. The size of $C'$ is at most the size of $C$.
 Note that for an output gate $g$ we have $\mmin_g=\mmax_g=g$, so the circuit $C'$ computes the correct outputs.
 
@@ -264,27 +275,27 @@ For the proof of this lemma we will show that any computation of commutative int
 
 Thus it remains to show that each non-commutative circuit can be reconstructed into an interval circuit. For this we will need some notation.
 
-Suppose we have some circuit $C$. For each gate $g$ denote by $\lef(g)$ the smallest index of the variable in $g$ (the leftmost variable). Analogously denote by $\righ(g)$ the largest index of the variable in $g$. Denote by $\gap(g)$ the smallest $i$ such that $x_i$ is not in $g$, but there are some $j,k$ such that $j<i<k$ and $x_j$ and $x_k$ (the smallest index of the variable that is in the gap in $g$). 
+Suppose we have some circuit $C$. For each gate $g$ denote by $\lef(g)$ the smallest index of the variable in $g$ (the leftmost variable). Analogously denote by $\righ(g)$ the largest index of the variable in $g$. Denote by $\gap(g)$ the smallest $i$ such that $x_i$ is not in $g$, but there are some $j,k$ such that $j<i<k$ and $x_j$ and $x_k$ (the smallest index of the variable that is in the gap in $g$).
 %If there is no such variable (that is, $g$ computes an interval), then $\gap(g)=n+1$.
 Next, fix some ordering of gates in $C$ (the ordering should be proper, that is inputs to any gate should have smaller numbers). Denote by $\num(g)$ the number of a gate in this ordering. Finally, by $\out(g)$ denote the out-degree of $g$.
 
-For each gate that computes a non-interval consider the tuple 
+For each gate that computes a non-interval consider the tuple
 $$
 \tup(g)=(\lef(g),\gap(g),\num(g),-\out(g)).
 $$ For the circuit $C$ consider $\tup(C) = \min_g \tup(g)$, where the minimum is considered in the lexicographic order and is taken over all non-interval gates. If there are no non-interval gates we let $\tup(C)=\infty$. This is our semi-invariant, we will show that if we have a circuits that is not an interval circuit, we can reconstruct it to increase  its $\tup$ (in the lexicographic order) without increasing its size. Since $\tup$ ranges over a finite set, we can reconstruct the circuit repeatedly and end up with an interval circuit.
 
 Now we are ready to describe a reconstruction. Consider a circuit $C$ that is not an interval circuit. And consider a gate $g$ such that $\tup(g)=\tup(C)$ (it is clearly unique). Denote by $a$ and $b$ two inputs of $g$. Let $i=\lef(g)$ and $j=\gap(g)$, that is $x_i$ is the variable with the smallest index in $g$ and $x_j$ is the first gap variable of $g$ (it is not contained in $g$).
 
-The variable $x_i$ is contained in at least one of $a$ and $b$. Consider the gate among $a$ and $b$ that contains $x_i$. It also contain all variables between $x_i$ and $x_j$ (but not $x_j$), since the converse would contradict minimality of $g$ (by the second coordinate of $\tup$). But this gate cannot have $x_j$ as a gap variable: it would also contradict minimality of $g$ (by the third coordinate of $\gap$). Thus this gate is exactly the interval $[x_i,x_j)$ (by this we denote the product of variables from $x_i$ to $x_j$ excluding $x_j$). In particular, only one of $a$ and $b$ contains $x_i$: otherwise they are both $[x_i,x_j)$ and $x_j$ is not a gap variable for $g$. 
+The variable $x_i$ is contained in at least one of $a$ and $b$. Consider the gate among $a$ and $b$ that contains $x_i$. It also contain all variables between $x_i$ and $x_j$ (but not $x_j$), since the converse would contradict minimality of $g$ (by the second coordinate of $\tup$). But this gate cannot have $x_j$ as a gap variable: it would also contradict minimality of $g$ (by the third coordinate of $\gap$). Thus this gate is exactly the interval $[x_i,x_j)$ (by this we denote the product of variables from $x_i$ to $x_j$ excluding $x_j$). In particular, only one of $a$ and $b$ contains $x_i$: otherwise they are both $[x_i,x_j)$ and $x_j$ is not a gap variable for $g$.
 
-From now on we assume that $a$ contains $x_i$, that is $a=[x_i,x_j)$. 
+From now on we assume that $a$ contains $x_i$, that is $a=[x_i,x_j)$.
 %Note that then $b$ contains all variables to the right of $x_j$, in particular the variable with the largest index in $g$.
 
 Now we consider all gates $h_1,\ldots, h_k$ that have edges leading from $g$. Denote by $f_1,\ldots, f_k$ their other inputs. If $k$ is equal to $0$, we can remove $g$ and reduce the circuit. Now we consider cases.
 
 Case 1. Suppose that there is $l$ such that $\lef(f_l) \leq \lef(g)$. Then $f_l$ contains all variables in $[x_i,x_j)$ (the contrapositive contradicts the minimality of $g$ by the second coordinate of $\gap$). Thus $f_l$ contains $a$. Then, we can restructure the circuit by feeding $b$ to $h_l$ instead of $g$. This does not change the clause computed by $h_l$ and reduces $\out(g)$. Thus $\tup(C)$ increases and we are done.
 
-Case 2. Suppose that for all $l$ we have $\lef(f_l)>\lef(g)$. Consider $l$ such that $f_l$ has the minimal $\righ(f_l)$ (if there are several such $l$ pick among them the one with the minimal $\num(f_l)$). Now we restructure the circuit in the following way. We feed $f_l$ to $g$ instead of $a$. We feed $a$ to $h_l$ instead of $f_l$. We feed $h_l$ to all other $h_p$'s instead of $g$. It is not hard to see that all these reconstructions are valid, that is, do not create cycles. Note that they might require reordering of the circuit gates, since we create edges between previously incomparable $h$-gates. But the reording changes only for the gates with $\num$ greater than $\num(g)$. 
+Case 2. Suppose that for all $l$ we have $\lef(f_l)>\lef(g)$. Consider $l$ such that $f_l$ has the minimal $\righ(f_l)$ (if there are several such $l$ pick among them the one with the minimal $\num(f_l)$). Now we restructure the circuit in the following way. We feed $f_l$ to $g$ instead of $a$. We feed $a$ to $h_l$ instead of $f_l$. We feed $h_l$ to all other $h_p$'s instead of $g$. It is not hard to see that all these reconstructions are valid, that is, do not create cycles. Note that they might require reordering of the circuit gates, since we create edges between previously incomparable $h$-gates. But the reording changes only for the gates with $\num$ greater than $\num(g)$.
 
 Observe, that the circuit still computes the outputs correctly. The changes are in the gates $h_1\ldots, h_k$ (and also in $g$, but $h_1,\ldots, h_k$ are all of its outputs). $h_l$ does not change. Other $h_p$'s might have changed, they now additionally include variables of $f_l$. But note that all of these variables are in between of $\lef(h_p)$ and $\righ(h_p)$, so they must be presented in the output gates connected to $h_p$ anyway.
 
