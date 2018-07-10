@@ -59,8 +59,7 @@ matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 \subsection{Applications}
 \todo[inline]{Andrey, convince the reader that the problem is important. Show many applications. Show various semigroups arising in real life: $(\mathbb{Z}, +)$, $(\mathbb{Z}, \min)$, Boolean, etc. Emphasize applications of dense linear operators. One relevant link: \url{http://www.leptonica.com/grayscale-morphology.html} Also, need to mention 2d range queries and computational geometry}
 
-
-
+In string algorithms, it is possible to preprocess a~given string in $O(n)$ time (where $n$ is its length) so that to then find the longest common prefix of any two suffixes of the original string in constant time. This is done by first constructing the suffix array and the longest common prefix array of the string and then using  an efficient RMQ algorithm.
 
 
 \subsection{Overview of Known Approaches}
