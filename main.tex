@@ -162,6 +162,17 @@ In a~special case of the Boolean semigroup $(\{0,1\}, \lor)$, such circuits are 
 \section{Commutative Semigroups}
 \todo[inline]{Ваня, давай!}
 
+We start with an almost trivial special case. 
+
+\begin{lemma}
+Let $S$~be {\em any} semigroup (not necessarily commutative) and let $A \in \{0,1\}^{n \times n}$ contain at most one zero in every row. Then $C(Ax) \le O(n)$.
+\end{lemma}
+\begin{proof}
+We first precompute all prefixes and suffixes of $x_1, \dotsc, x_n$. Namely, let $p_i=x_1x_2\dotsb x_i$. All $p_i$'s can be computed in $(n-1)$ binary gates as follows:
+\[p_1=x_1, p_2=p_1x_2, p_3=p_2x_3, \dotsc, p_i=p_{i-1}x_i, \dotsc, p_n=p_{n-1}x_n \, .\]
+Similarly, in $(n-1)$ binary gates we compute all suffixes $s_j$ (for all $1 \le j \le n$) where $s_j=x_jx_{j+1}\dotsc x_n$. From these prefixes and suffixes all the outputs can be computed as follows: if a~row of~$A$ contains no zeros, the corresponding output is~$p_n$; if a~row contains a~zero in position~$i$, the output is $p_{i-1}s_{i+1}$ (for $i=1$ and $i=n$ we just omit the redundant term).
+\end{proof}
+
 
 
 \subsection{Matrices with Constant Maximum Number of Zeros in Each Row}
