@@ -106,7 +106,7 @@ Thus, there are two conceptual messages in this paper:
 
 \section{General Setting}
 \subsection{Semigroups}
-\todo[inline]{introduce semigroups, then state the needed lemmas}
+\todo[inline]{Volodya, introduce semigroups, mention faithful semigroups (and why we need them), polish the needed lemmas}
 
 We need the following notations and facts on free idempotent semigroups~\cite{GreenR52}.
 
@@ -135,9 +135,7 @@ The same is true if we read the words from right to left.
 
 
 \subsection{Computational Model}
-We assume that the input consists of $n$~formal variables $x_1, x_2, \dotsc, x_n$ (rather than actual group elements). We are interested in the minimum number of semigroup operations needed to answer all the queries. Hence, we use the following natural {\em circuit} model. For a~given set of queries $(l_1,r_1), \dotsc, (l_m,r_m)$, a~circuit computing all these queries is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They are labeled with $x_1, \dotsc, x_n$ and are called {\em input gates}. All other nodes have positive in-degree and are called {\em gates}. Finally, some $m$~gates have out-degree~0 and are labeled as {\em output gates}. The {\em size} of a~circuit is its number of edges (also called {\em wires}). Each gate of a~circuit computes a~function defined in a~natural way: input gates compute just $x_1, \dotsc, x_n$; any other gate of in-degree~$r$ computes a~function $f_1 \circ f_2 \circ \dotsb \circ f_r$ where $f_1, \dotsc, f_r$ are functions computed at its predecessors (therefore, we assume that there is an underlying order on the incoming wires for each gate).
-
-\todo[inline]{сказать подробнее, что значит, что схема считает функции}
+We assume that the input consists of $n$~formal variables $x_1, \dotsc, x_n$. We are interested in the minimum number of semigroup operations needed to compute all the given words $w_1, \dotsc, w_m$ (e.g., for the range queries problem, each word has a~form $x_lx_{l+1}\dotsb x_r$). We use the following natural {\em circuit} model. A~circuit computing all these queries is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They are labeled with $x_1, \dotsc, x_n$ and are called {\em input gates}. All other nodes have positive in-degree and are called {\em gates}. Finally, some $m$~gates have out-degree~0 and are labeled as {\em output gates}. The {\em size} of a~circuit is its number of edges (also called {\em wires}). Each gate of a~circuit computes a~word defined in a~natural way: input gates compute just $x_1, \dotsc, x_n$; any other gate of in-degree~$r$ computes a~word $f_1 \circ f_2 \circ \dotsb \circ f_r$ where $f_1, \dotsc, f_r$ are words computed at its predecessors (therefore, we assume that there is an underlying order on the incoming wires for each gate). We say that the circuit computes the words $w_1, \dotsc, w_m$ if the words computed at the output gates are equivalent to $w_1, \dotsc, w_m$.
 
 For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and $(l_2,r_2)=(2,5)$ over $x_1, \dotsc, x_5$.
 \begin{center}
@@ -150,7 +148,7 @@ For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and 
 \end{tikzpicture}
 \end{center}
 
-A~{\em binary circuit} is a~circuit having no gates of fan-in more than two. It is not difficult to see that any circuit can be converted into a~binary circuit of size at most twice the size of the original circuit. For this, one just replaces every gate of fan-in~$k$, for $k>2$, by a~binary tree with $2k-2$ wires (such a~tree contains$k$~leaves hence $k-1$ inner nodes and $2k-2$ edges).
+A~{\em binary circuit} is a~circuit having no gates of fan-in more than two. It is not difficult to see that any circuit can be converted into a~binary circuit of size at most twice the size of the original circuit. For this, one just replaces every gate of fan-in~$k$, for $k>2$, by a~binary tree with $2k-2$ wires (such a~tree contains $k$~leaves hence $k-1$ inner nodes and $2k-2$ edges).
 
 Clearly, in the binary circuit the number of gates does not exceed its size (i.e., the number of wires). And the number of gates in a~binary circuit is exactly the minimum number of semigroup operations needed to compute the corresponding function.
 
