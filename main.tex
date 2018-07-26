@@ -54,10 +54,62 @@ matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 \subsection{Problem Statement}
 {\em Range queries} is a~classical problem in data structures and algorithms. For a~fixed semigroup with operation~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of semigroup elements. Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operation to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $r-l+1$, the time of a~naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the {\em offline} version, where one is given a~sequence together with all the queries, and are interested in the minimum number of semigroup operations needed to answer all the queries.
 
+\todo[inline]{AM: In fact, we don't need to know the sequence
+$x_1, x_2, \dotsc, x_n$ upfront. We need only the queries, and as a result we
+produce a circuit that is good for any possible sequence. I think it may be
+worth highlighting this, since we solve a harder problem than just the offline
+version of RQ.}
 \todo[inline]{tell about dense linear operators}
 
 \subsection{Applications}
-\todo[inline]{Andrey, convince the reader that the problem is important. Show many applications. Show various semigroups arising in real life: $(\mathbb{Z}, +)$, $(\mathbb{Z}, \min)$, Boolean, etc. Emphasize applications of dense linear operators. One relevant link: \url{http://www.leptonica.com/grayscale-morphology.html} Also, need to mention 2d range queries and computational geometry}
+Commutative (or \emph{abelian}) semigroups are ubiquitous. Below we list a few
+notable examples, starting with the most basic one, which is, arguably, known
+to every person on the planet.
+
+\begin{itemize}
+  \item Integer numbers form commutative semigroups with many operators. For
+  example, the order in which numbers are \emph{added} is irrelevant, hence
+  $(\mathbb{Z}, +)$ is a commutative semigroup. So are $(\mathbb{Z}, \times)$,
+  $(\mathbb{Z}, \min)$ and $(\mathbb{Z}, \max)$. On the other hand, it does
+  matter in which order numbers are \emph{subtracted}, hence $(\mathbb{Z}, -)$
+  is not a commutative semigroup: $1-2 \neq 2-1$. In fact, $(\mathbb{Z}, -)$
+  is not even a semigroup, since subtraction is non-associative:
+  $1-(2-3) \neq (1-2)-3$.
+
+  \item Boolean values form commutative semigroups $(\mathbb{B}, \vee)$,
+  $(\mathbb{B}, \wedge)$, $(\mathbb{B}, \oplus)$ and $(\mathbb{B}, \equiv)$.
+
+  \item Any commutative semigroup $(S, \circ)$ can be \emph{lifted} to the set
+  $\hat{S}$ of `containers' of elements $S$, e.g. vectors or matrices,
+  obtaining a commutative semigroup $(\hat{S}, \hat{\circ})$, where the lifted
+  operation $\hat{\circ}$ is applied to the contents of containers element-wise.
+  The \emph{average semigroup} $(\mathbb{Z} \times \mathbb{Z}, \circ)$ is a
+  simple yet non entirely trivial example of such lifting. By defining
+  $(t_1, c_1) \circ (t_2, c_2) = (t_1 + t_2, c_1 + c_2)$, we can aggregate
+  partial \emph{totals} and \emph{counts} of a set of numbers, which allows us
+  to efficiently calculate their average as $\textit{avg}(t, c) = \frac{t}{c}$.
+  The average semigroup is commutative.
+
+  \item Set union and intersection are commutative and associative operations
+  giving rise to many set-based commutative semigroups. Here we highlight the
+  example that motivated our research: \emph{graph overlay},
+  defined\footnote{This definition coincides with that of
+  \emph{graph union}~\cite{1969_graph_theory_harary}, which typically
+  assumes that the two graphs are non-overlapping. Graph overlay does not have
+  this assumption and therefore forms a semigroup.} as
+  $(V_1, E_1) + (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2)$, comes from an
+  algebra of graphs used in functional programming~\cite{mokhov2017algebraic}.
+  We will use the commutative semigroup $(G_V,+)$, where $G_V$ is the set of
+  directed unweighted graphs on the set of vertices $V$, for finding compact
+  algebraic representations for \emph{dense graphs}, i.e. complements of sparse
+  graphs, in Section~\ref{sec-dense-graph}.
+\end{itemize}
+
+\subsubsection{Dense graph representation}\label{sec-dense-graph}
+
+\subsubsection{Boring matrix multiplication}\label{sec-boring-matrices}
+
+\todo[inline]{Andrey, convince the reader that the problem is important. Show many applications. Emphasize applications of dense linear operators. One relevant link: \url{http://www.leptonica.com/grayscale-morphology.html} Also, need to mention 2d range queries and computational geometry}
 
 In string algorithms, it is possible to preprocess a~given string in $O(n)$ time (where $n$ is its length) so that to then find the longest common prefix of any two suffixes of the original string in constant time. This is done by first constructing the suffix array and the longest common prefix array of the string and then using  an efficient RMQ algorithm.
 
