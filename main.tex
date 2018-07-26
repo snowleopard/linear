@@ -130,7 +130,51 @@ to every person on the planet.
   in Section~\ref{sec-dense-graph}.
 \end{itemize}
 
-\subsubsection{Commutative semirings and other distributive structures}
+\subsubsection{Semirings and other distributive structures}
+
+A commutative semigroup $(S, \circ)$ can often be extended to a \emph{semiring}
+$(S, \circ, \bullet)$ by introducing another associative (but not necessarily
+commutative) operation $\bullet$ that \emph{distributes} over $\circ$, that is
+\[
+x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)\\
+\]
+\[
+(x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z)
+\]
+hold for all $x$, $y$ and $z$ in $S$. Since $\circ$ and $\bullet$ behave
+similarly to numeric addition and multiplication, it is common to give $\bullet$
+a higher precedence to avoid unnecessary parentheses, and even omit~$\bullet$~from
+formulas altogether, replacing it by juxtaposition. This gives a terser and
+more convenient notation, e.g. the left distributivity law becomes:
+$x (y \circ z) = x y \circ x z$. We will use this notation throughout the rest
+of the paper, insofar as this does not lead to ambiguity.
+
+Most definitions of semirings also require the two operations to have
+identities: the \emph{additive identity}, denoted by 0, such that
+$0 \circ x = x \circ 0=x$, and the \emph{multiplicative identity}, denoted by 1,
+such that $1x=x1=x$. Furthermore, 0 is typically required to be
+\emph{annihilating}: $0x=x0=0$.
+
+Let us revisit our semigroup examples and extend them to semirings:
+
+\begin{itemize}
+  \item The most basic and widely known semiring is that of integer numbers with
+  addition and multiplication: $(\mathbb{Z}, +, \times)$. Interestingly, integer
+  addition can also play the role of multiplication when combined with the
+  $\max$ operation, resulting in the \emph{tropical semiring}
+  $(\mathbb{Z}, \max, +)$, which is also known as the \emph{max-plus algebra}.
+
+  \item Boolean values form the semiring $(\mathbb{B}, \vee, \wedge)$. Note that
+  $(\mathbb{B}, \wedge, \vee)$ is a semiring too thanks to the duality between
+  the operations $\vee$ and $\wedge$.
+
+  \item A semiring $(S, \circ, \bullet)$ can also be lifted to the set $\hat{S}$
+  of `containers' of elements $S$, most commonly matrices, obtaining the semiring
+  $(\hat{S}, \hat{\circ}, \hat{\bullet})$. Matrices over tropical semirings, for
+  example, are used for solving various path-finding problems on graphs.
+\end{itemize}
+
+\todo[inline]{Introduce the algebra of graphs}
 
 \subsection{Applications}
 
