@@ -34,6 +34,14 @@
 
 
 \begin{abstract}
+\todo[inline]{AM: I don't think we should put Range Queries at the front of the
+paper. I think this distracts from the two main points that we'd like to make:
+(i) dense/boring matrices are as ``easy'' as sparse matrices, and
+(ii) commutativity is central to obtaining linear constructions. We could still
+mention in the abstract that in non-commutative settings the problems that we
+are solving become equivalent to classic Range Queries, from which we derive
+the superlinear lower bound.}
+
 We revisit the classical problem of computing range queries over a semigroup and
 its natural special case~--~computing a dense linear operator. We are interested
 in the minimum number of semigroup operations needed to answer all the queries.
@@ -61,7 +69,13 @@ worth highlighting this, since we solve a harder problem than just the offline
 version of RQ.}
 \todo[inline]{tell about dense linear operators}
 
-\subsection{Applications}
+\subsection{Background}
+
+This section presents standard notions of commutative semigroups and semirings,
+providing several examples, some of which motivated this research.
+
+\subsubsection{Commutative semigroups}
+
 Commutative (or \emph{abelian}) semigroups are ubiquitous. Below we list a few
 notable examples, starting with the most basic one, which is, arguably, known
 to every person on the planet.
@@ -106,6 +120,10 @@ to every person on the planet.
   algebraic representations for \emph{dense graphs}, i.e. complements of sparse
   graphs, in Section~\ref{sec-dense-graph}.
 \end{itemize}
+
+\subsubsection{Commutative semirings and other distributive structures}
+
+\subsection{Applications}
 
 \subsubsection{Boring matrix multiplication}\label{sec-boring-matrices}
 
