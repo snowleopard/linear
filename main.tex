@@ -29,7 +29,7 @@
 \begin{document}
 \sloppy
 \author{}
-\title{Range Queries and Dense Linear Operators}
+\title{Computing Dense Linear Operators by Linear Size Circuits: Commutativity is Essential}
 \maketitle
 
 
@@ -40,7 +40,7 @@ paper. I think this distracts from the two main points that we'd like to make:
 (ii) commutativity is central to obtaining linear constructions. We could still
 mention in the abstract that in non-commutative settings the problems that we
 are solving become equivalent to classic Range Queries, from which we derive
-the superlinear lower bound.}
+the superlinear lower bound.~--- AK: I do agree. Adjusted the title.}
 
 We revisit the classical problem of computing range queries over a semigroup and
 its natural special case~--~computing a dense linear operator. We are interested
@@ -66,8 +66,8 @@ matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 $x_1, x_2, \dotsc, x_n$ upfront. We need only the queries, and as a result we
 produce a circuit that is good for any possible sequence. I think it may be
 worth highlighting this, since we solve a harder problem than just the offline
-version of RQ.}
-\todo[inline]{tell about dense linear operators}
+version of RQ.~--- AK: Sure! Volodya, could you do this?}
+\todo[inline]{Volodya, introduce dense linear operators as a~special case. Mention its importance.}
 
 \subsection{Background}
 
@@ -184,12 +184,16 @@ Let us revisit our semigroup examples and extend them to semirings:
   is the identity for both graph overlay and connect operations:
   $\varepsilon + x = x + \varepsilon = x$ and $\varepsilon x = x \varepsilon = x$,
   and consequently the annihilation zero property does not hold, which makes
-  this algebraic structure not a semiring according to many standard definitions.
+  this algebraic structure not a~semiring according to many standard definitions.
   We refer the reader to~\cite{mokhov2017algebraic} for further details about the
   algebraic properties and applications of this algebra of graphs.
 \end{itemize}
 
+\todo[inline]{Andrey, Chazelle and Rosenberg also mention powerset as an idempotent and commutative semigroup. Should we also mention it?}
+
 \subsection{Applications}
+
+\todo[inline]{Andrey, should we also split this subsection into applications of range queries and applications of dense linear operators?}
 
 \subsubsection{Boring matrix multiplication}\label{sec-boring-matrices}
 
@@ -200,6 +204,8 @@ Let us revisit our semigroup examples and extend them to semirings:
 \end{itemize}
 
 \subsubsection{Dense graph representation}\label{sec-dense-graph}
+
+
 
 \begin{itemize}
   \item Algebra of graphs
@@ -244,6 +250,8 @@ Since any range of length $2^k$ consists of two ranges of length $2^{k-1}$, one 
 \item[Algorithm by Bender and Farach-Colton.] The algorithm by Bender and Farach-Colton~\cite{DBLP:conf/latin/BenderF00} is designed specifically for the range minimum query problem (RMQ, i.e., a~semigroup $(\mathbb{Z}, \min)$) and has type $(O(n), O(1))$. Its main idea is to first reduce RMQ to LCA, the least common ancestor problem, where one is given a~rooted tree and a~bunch of queries of the form ``what is the lowest common ancestor of the given two nodes?'' One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
 \end{description}
 
+\todo[inline]{Sasha, mention latest results as well as block/hybrid approaches}
+
 \subsection{Overview of New Results}
 \todo[inline]{Sasha, write this}
 
@@ -256,7 +264,7 @@ Thus, there are two conceptual messages in this paper:
 
 \section{General Setting}
 \subsection{Semigroups}
-\todo[inline]{Volodya, introduce semigroups, mention faithful semigroups (and why we need them), polish the needed lemmas}
+\todo[inline]{Volodya, introduce semigroups, mention faithful semigroups (and why we need them), polish the needed lemmas. Also, mention idempotent and commutative groups and unify notation (should we always use {\em word} instead of {\em product}? or should we say that we use both terms?). Mention faithful semigroups}
 
 We need the following notations and facts on free idempotent semigroups~\cite{GreenR52}.
 
@@ -328,7 +336,24 @@ Similarly, in $(n-1)$ binary gates we compute all suffixes $s_j$ (for all $1 \le
 \subsection{Matrices with Constant Average Number of Zeros in Each Row}
 
 \section{Non-commutative Semigroups}
-\todo[inline]{Volodya, go!}
+In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. We do this by showing that, in the non-commutative case, the dense linear operator problem has linear size circuits iff the range queries problem has linear size circuits. We then use a~lower bound $\Omega(n\alpha(n))$ for the latter problem (over faithful semigroups) by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}. 
+
+The equivalence between two problems is not difficult to prove for free semigroups. To make it more interesting, we prove the equivalence for idempotent semigroups. Hence, {\em throughout the whole section we assume that the semigroup under consideration is idempotent and faithful.}
+
+\begin{theorem}
+There exists dense matrices~$A$ such that $Ax$ cannot be computed by linear size circuits.
+\end{theorem}
+
+\begin{center}
+\begin{tikzpicture}
+\draw[help lines] (0,0) grid (16,6);
+\tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=38mm,above right]
+
+\node[v] at (0,0) {non-commutative range queries problem has $O(n)$ size circuits};
+\end{tikzpicture}
+\end{center}
+
+
 
 \begin{theorem}
 Intervals are computable by $O(n)$-size circuit iff non-commutative dense matrices are computable by $O(n)$-size circuit.
