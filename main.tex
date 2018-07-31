@@ -118,10 +118,11 @@ to every person on the planet.
   \item Set union and intersection are commutative and associative operations
   giving rise to many set-based commutative semigroups. Here we highlight the
   example that motivated our research: the \emph{graph overlay} operation,
-  defined\footnote{This definition coincides with that of
-  \emph{graph union}~\cite{1969_graph_theory_harary}, which typically
-  assumes that the two graphs are non-overlapping. Graph overlay does not have
-  this assumption and therefore forms a semigroup.} as
+  defined\footnote{This definition coincides with that of the
+  \emph{graph union} operation~\cite{1969_graph_theory_harary}. Graph union
+  typically requires that given graphs are non-overlapping, hence it is not
+  closed on the set of all graphs. Graph overlay does not have such a
+  requirement, and is therefore closed and forms semigroup.} as
   $(V_1, E_1) + (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2)$,~where~$(V, E)$ is
   a standard set-based representation for directed unweighted graphs, comes from
   an algebra of graphs used in functional programming~\cite{mokhov2017algebraic}.
@@ -150,7 +151,7 @@ more convenient notation, e.g. the left distributivity law becomes:
 $x (y \circ z) = x y \circ x z$. We will use this notation throughout the rest
 of the paper, insofar as this does not lead to ambiguity.
 
-Most definitions of semirings also require the two operations to have
+Most definitions of semirings also require that the two operations have
 identities: the \emph{additive identity}, denoted by 0, such that
 $0 \circ x = x \circ 0=x$, and the \emph{multiplicative identity}, denoted by 1,
 such that $1x=x1=x$. Furthermore, 0 is typically required to be
@@ -176,21 +177,26 @@ Let us revisit our semigroup examples and extend them to semirings:
 
   \item One way to extend the graph semigroup $(G_U,+)$ to a semiring is by
   introducing the \emph{graph connect} operation\footnote{The definition
-  coincides with that of \emph{graph join}~\cite{1969_graph_theory_harary}, but
-  the latter typically assumes that the two graphs are non-overlapping. The
-  connect operation does not have this assumption and can therefore be used to
-  form a semiring.}:
+  coincides with that of \emph{graph join}~\cite{1969_graph_theory_harary}, but,
+  just like graph union, graph join requires that given graphs are
+  non-overlapping. The connect operation has no such requirement and can be used
+  to form a semiring.}:
   $(V_1, E_1) (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2 \cup V_1 \times V_2)$.
   It is worth noting that the empty graph $\varepsilon = (\emptyset, \emptyset)$
   is the identity for both graph overlay and connect operations:
   $\varepsilon + x = x + \varepsilon = x$ and $\varepsilon x = x \varepsilon = x$,
-  and consequently the annihilation zero property does not hold, which makes
+  and consequently the annihilating zero property does not hold, which makes
   this algebraic structure not a~semiring according to many standard definitions.
   We refer the reader to~\cite{mokhov2017algebraic} for further details about the
   algebraic properties and applications of this algebra of graphs.
 \end{itemize}
 
-\todo[inline]{Andrey, Chazelle and Rosenberg also mention powerset as an idempotent and commutative semigroup. Should we also mention it?}
+\todo[inline]{Andrey, Chazelle and Rosenberg also mention powerset as an
+idempotent and commutative semigroup. Should we also mention it? AM: Yes, I
+think we can add it too. I wonder if we could also come up with a good
+application based on powerset semirings. Furthermore, if in addition to
+commutativity we also have idempotence, do we gain anything? Could we get a
+smaller constant in our linear construction?}
 
 \subsection{Applications}
 
@@ -216,15 +222,16 @@ by an $n\times n$ matrix can be thought of as multiplication by $n$ vectors).
 Note that these complexity bounds are exact, as they match the time required to
 read the input.
 
-A 0-1 matrix is \emph{dense} if most of its elements are 1. To be more precise,
-we further assume that a dense 0-1 matrix has $O(n)$ zero elements. The main
-result of this paper provides an $\Theta(n)$ time algorithm for multiplying a
-0-1~dense matrix by a vector in an arbitrary semiring and, as a consequence, a
+A \emph{0-1 matrix} is a matrix whose elements belong to the set $\{0,1\}$. A
+0-1 matrix is \emph{dense} if most of its elements are 1. To be more precise, we
+further assume that a dense 0-1 matrix has $O(n)$ zero elements. The main result
+of this paper allows us to obtain an $\Theta(n)$ time algorithm for multiplying
+a 0-1~dense matrix by a vector in an arbitrary semiring and, as a consequence, a
 $\Theta(n^2)$ time algorithm for multiplying a 0-1 dense matrix by an arbitrary
 matrix.
 
 By combining the algorithms for sparse and dense matrix multiplication, one can
-obtain an efficient algorithm for multiplication of so-called \emph{boring}
+obtain an efficient algorithm for the multiplication of so-called \emph{boring}
 matrices.
 
 A matrix is \emph{boring} if most of its elements are equal to some element from
@@ -389,7 +396,7 @@ Similarly, in $(n-1)$ binary gates we compute all suffixes $s_j$ (for all $1 \le
 \subsection{Matrices with Constant Average Number of Zeros in Each Row}
 
 \section{Non-commutative Semigroups}
-In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. We do this by showing that, in the non-commutative case, the dense linear operator problem has linear size circuits iff the range queries problem has linear size circuits. We then use a~lower bound $\Omega(n\alpha(n))$ for the latter problem (over faithful semigroups) by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}. 
+In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. We do this by showing that, in the non-commutative case, the dense linear operator problem has linear size circuits iff the range queries problem has linear size circuits. We then use a~lower bound $\Omega(n\alpha(n))$ for the latter problem (over faithful semigroups) by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
 The equivalence between two problems is not difficult to prove for free semigroups. To make it more interesting, we prove the equivalence for idempotent semigroups. Hence, {\em throughout the whole section we assume that the semigroup under consideration is idempotent and faithful.}
 
