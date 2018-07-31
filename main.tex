@@ -103,9 +103,10 @@ to every person on the planet.
   \item Any commutative semigroup $(S, \circ)$ can be \emph{lifted} to the set
   $\hat{S}$ of `containers' of elements $S$, e.g. vectors or matrices,
   obtaining a commutative semigroup $(\hat{S}, \hat{\circ})$, where the lifted
-  operation $\hat{\circ}$ is applied to the contents of containers element-wise.
-  In Section~\ref{sec-boring-matrices} we will see that dense matrices over
-  commutative semigroups can be efficiently multiplied.
+  operation~$\hat{\circ}$ is applied to the contents of containers element-wise.
+  The lifting operator $\hat{\cdot}$ can often be omitted for clarity if there
+  is no ambiguity. In Section~\ref{sec-boring-matrices} we will see that dense
+  matrices over commutative semigroups can be efficiently multiplied.
 
   The \emph{average semigroup} $(\mathbb{Z} \times \mathbb{Z}, \circ)$ is a
   simple yet not entirely trivial example of semigroup lifting. By defining
@@ -191,13 +192,65 @@ Let us revisit our semigroup examples and extend them to semirings:
 
 \subsection{Applications}
 
+In this section we demonstrate two applications of the presented linear-size
+construction for a dense linear operator: fast multiplication of \emph{boring}
+matrices over arbitrary semirings (Section~\ref{sec-boring-matrices}) and
+compact algebraic representation of dense graphs
+(Section~\ref{sec-dense-graph}).
+
 \subsubsection{Boring matrix multiplication}\label{sec-boring-matrices}
 
-\begin{itemize}
-  \item Matrices over semirings
-  \item Dense matrices
-  \item Boring matrices
-\end{itemize}
+Throughout this section we consider $n \times n$ matrices over an arbitrary
+semiring $(S, \circ, \bullet)$, where the operations $\circ$ and $\bullet$ have
+identities 0 and 1, respectively.
+
+A matrix is \emph{sparse} if most of its elements are 0. To be more precise, we
+further assume that a sparse matrix has $O(n)$ non-zero elements. Sparse
+matrices arise in many applications, and can be multiplied by arbitrary vectors
+in $\Theta(n)$ time and arbitrary matrices in $\Theta(n^2)$ time (multiplication
+by an $n\times n$ matrix can be thought of as multiplication by $n$ vectors).
+Note that these complexity bounds are exact, as they match the time required to
+read the input.
+
+A 0-1 matrix is \emph{dense} if most of its elements are 1. To be more precise,
+we further assume that a dense 0-1 matrix has $O(n)$ zero elements. The main
+result of this paper provides an $\Theta(n)$ time algorithm for multiplying a
+0-1~dense matrix by a vector in an arbitrary semiring and, as a consequence, a
+$\Theta(n^2)$ time algorithm for multiplying a 0-1 dense matrix by an arbitrary
+matrix.
+
+By combining the algorithms for sparse and dense matrix multiplication, one can
+obtain an efficient algorithm for multiplication of so-called \emph{boring}
+matrices.
+
+A matrix is \emph{boring} if most of its elements are equal to some element from
+the semiring $b$. To be more precise, we further assume that a boring matrix has
+$O(n)$ elements that are not equal to~$b$. Boring matrices are a natural
+generalisation of sparse and dense matrices: both are just special cases with
+$b=0$ and $b=1$, respectively.
+
+To multiply a boring matrix $M$ by a vector $\mathbf{v}$, we decompose the
+matrix into two components $M_0$ and $M_1$, such that $M = M_0 \circ b M_1$,
+$M_0$ is sparse, and $M_1$ is dense\footnote{Note that here the operations
+$\circ$ and $\bullet$ (the latter is represented by juxtaposition) are lifted to
+matrices.}. Now we can compute $M \mathbf{v}$ thanks to various semiring laws:
+
+\[
+\begin{array}{rcll}
+M \mathbf{v} & = & (M_0 \circ b M_1) \mathbf{v} & \text{(sparse-dense decomposition)}\\
+ & = & M_0 \mathbf{v} \circ (b M_1) \mathbf{v} & \text{(distributivity and commutativity)}\\
+ & = & M_0 \mathbf{v} \circ b (M_1 \mathbf{v}) & \text{(associativity)}\\
+\end{array}
+\]
+
+\noindent
+$M_0 \mathbf{v}$ and $M_1 \mathbf{v}$ can be computed in linear time using
+sparse and dense matrix-vector multiplication; the results are further combined
+using scalar multiplication by $b$ and vector addition $\circ$, both of which
+take linear time too.
+
+
+\todo[inline]{Count the number of triangles in a dense graph.}
 
 \subsubsection{Dense graph representation}\label{sec-dense-graph}
 
