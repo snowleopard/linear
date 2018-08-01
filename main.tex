@@ -389,35 +389,55 @@ Similarly, in $(n-1)$ binary gates we compute all suffixes $s_j$ (for all $1 \le
 \subsection{Matrices with Constant Average Number of Zeros in Each Row}
 
 \section{Non-commutative Semigroups}
-In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. We do this by showing that, in the non-commutative case, the dense linear operator problem has linear size circuits iff the range queries problem has linear size circuits. We then use a~lower bound $\Omega(n\alpha(n))$ for the latter problem (over faithful semigroups) by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}. 
+In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. 
 
-The equivalence between two problems is not difficult to prove for free semigroups. To make it more interesting, we prove the equivalence for idempotent semigroups. Hence, {\em throughout the whole section we assume that the semigroup under consideration is idempotent and faithful.}
-
-\begin{theorem}
-There exists dense matrices~$A$ such that $Ax$ cannot be computed by linear size circuits.
+\begin{theorem}\label{thm:noncommlowerbound}
+There are no linear size circuits for the non-commutative dense linear operator problem: there exist dense matrices~$A$ such that $Ax$ cannot be computed by linear size circuits.
 \end{theorem}
+
+We prove this theorem by establishing the following equivalence. The equivalence between two problems is not difficult to prove for free semigroups. To make it more interesting, we prove the equivalence for idempotent semigroups. Hence, {\em throughout the whole section we assume that the semigroup under consideration is idempotent and faithful.}
+
+\begin{theorem}\label{thm:equivalence}
+Commutative range queries problem has $O(n)$ size circuits iff non-commutative dense linear operator has $O(n)$ size circuits.
+\end{theorem}
+
+Using this theorem, it is straightforward to prove 
+Theorem~\ref{thm:noncommlowerbound}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:noncommlowerbound}]
+By Theorem~\ref{thm:equivalence}, if non-commutative dense linear operator problem has linear size circuit, then the commutative range queries problem also does. However, the latter problem does not have linear size circuits as proved by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}.
+\end{proof}
+
+Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing the following equivalences.
 
 \begin{center}
 \begin{tikzpicture}
-\draw[help lines] (0,0) grid (16,6);
-\tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=38mm,above right]
+%\draw[help lines] (0,0) grid (16,6);
+\tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=30mm,above right,minimum height=20mm]
 
-\node[v] at (0,0) {non-commutative range queries problem has $O(n)$ size circuits};
+\node[v] (a) at (0,0) {commutative range queries problem has $O(n)$ size circuits};
+
+\node[v] (b) at (6.5,0) {non-commutative range queries problem has $O(n)$ size circuits};
+
+\node[v] (c) at (13,0) {non-commutative dense linear operator problem has $O(n)$ size circuits};
+
+\path (a.10) edge[->] node[above] {Lemma~\ref{lem:intervals}} (b.170);
+\path (b.190) edge[->] node[below] {special case} (a.-10);
+\path (b.10) edge[->] node[above] {straightforward} (c.170);
+\path (c.190) edge[->] node[below] {Lemma~\ref{lem:dense_matrices}} (b.-10);
 \end{tikzpicture}
 \end{center}
 
 
 
-\begin{theorem}
-Intervals are computable by $O(n)$-size circuit iff non-commutative dense matrices are computable by $O(n)$-size circuit.
-\end{theorem}
 
-To show the theorem we introduce an intermediate problem: computing non-commutative intervals by $O(n)$-size circuit.
 
-Clearly, this problem subsumes both of our problems. Indeed, if we can compute non-commutative intervals, we can compute commutative intervals by the same circuit.
-On the other hand, if we can compute non-commutative intervals, then given non-commutative dense matrix we can split it into intervals, compute them separately, then join them together in $O(n)$.
-
-Thus, it remains to show the following two lemmas.
+%To show the theorem we introduce an intermediate problem: computing non-commutative intervals by $O(n)$-size circuit.
+%
+%Clearly, this problem subsumes both of our problems. Indeed, if we can compute non-commutative intervals, we can compute commutative intervals by the same circuit.
+%On the other hand, if we can compute non-commutative intervals, then given non-commutative dense matrix we can split it into intervals, compute them separately, then join them together in $O(n)$.
+%
+%Thus, it remains to show the following two lemmas.
 
 \begin{lemma} \label{lem:dense_matrices}
 If we can compute non-commutative dense matrices by a linear size circuit, we can also compute non-commutative intervals.
