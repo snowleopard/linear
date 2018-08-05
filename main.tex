@@ -5,7 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{fullpage}
-\usepackage{todonotes}
+\usepackage[colorinlistoftodos]{todonotes}
 \usepackage[hidelinks]{hyperref}
 \usepackage{amsthm}
 
@@ -27,6 +27,8 @@
 \newcommand{\var}{\texttt{Var}}
 
 \begin{document}
+\listoftodos
+
 \sloppy
 \author{}
 \title{Computing Dense Linear Operators by Linear Size Circuits: Commutativity is Essential}
@@ -40,7 +42,9 @@ paper. I think this distracts from the two main points that we'd like to make:
 (ii) commutativity is central to obtaining linear constructions. We could still
 mention in the abstract that in non-commutative settings the problems that we
 are solving become equivalent to classic Range Queries, from which we derive
-the superlinear lower bound.~--- AK: I do agree. Adjusted the title.}
+the superlinear lower bound}
+
+\todo[inline]{AK: Andrey, I do agree. Adjusted the title. Please adjust title/abstract further.}
 
 We revisit the classical problem of computing range queries over a semigroup and
 its natural special case~--~computing a dense linear operator. We are interested
@@ -59,17 +63,35 @@ matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 \tableofcontents
 
 \section{Range Queries}
+\todo[inline]{Andrey, Volodya, currently, I'm not very happy with the paper structure: 1. The first section is too long; we start proving new results on the ninth page only; we definitely need to move some parts to the appendix for the conference version; and we may want to do this even for preprint version; 2. Definitions on algebraic structures are given in the first section as well as in the second. Please, suggest ways to improve the structure. Perhaps the intro part should be one-two pages long starting with a brief problem statement and ending with our new result statement. Specifically, I suggest to move to the Appendix the following sections: \ref{subseq:rmqapp}, \ref{subsec:algstr}, and \ref{subsec:approaches}}
+
+
 \subsection{Problem Statement}
-{\em Range queries} is a~classical problem in data structures and algorithms. For a~fixed semigroup with operation~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of semigroup elements. Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operation to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $r-l+1$, the time of a~naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the {\em offline} version, where one is given a~sequence together with all the queries, and are interested in the minimum number of semigroup operations needed to answer all the queries.
+{\em Range queries} is a~classical problem in data structures and algorithms having a~variety of applications in fields like bioinformatics and string algorithms, computational geometry, image analysis, real-time systems, and others. For a~fixed semigroup with operation~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of semigroup elements. Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operation to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $r-l+1$, the time of a~naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the {\em offline} version, where one is given a~sequence together with all the queries, and are interested in the minimum number of semigroup operations needed to answer all the queries. Moreover, we study a~more general problem: we assume that $x_1, \dotsc, x_n$ are formal variables rather than actual semigroup algorithms. That is, we study the circuit size of the corresponding computation problem (the formal definition of the computational model is given later in the text).
 
 \todo[inline]{AM: In fact, we don't need to know the sequence
 $x_1, x_2, \dotsc, x_n$ upfront. We need only the queries, and as a result we
 produce a circuit that is good for any possible sequence. I think it may be
 worth highlighting this, since we solve a harder problem than just the offline
-version of RQ.~--- AK: Sure! Volodya, could you do this?}
+version of RQ.}
+\todo[inline]{AK: Andrey, done! Please check and remove these todo items.}
+
 \todo[inline]{Volodya, introduce dense linear operators as a~special case. Mention its importance.}
 
-\subsection{Background}
+\subsection{Applications of the Range Queries Problem}\label{subseq:rmqapp}
+There are many natural applications of the range queries problem for a~collection of records in a~database: computing the total population of cities that are at most some distance away from a~given point, computing an average salary in a~given period of time, finding the minimum depth on a~given subrectangle on a~sea map, etc. Below, we review some of the less straightforward applications where efficient algorithms for the range queries problem are usually combined with other algorithmic ideas.
+\begin{description}
+\item[String algorithms and computational biology.]
+It is possible to preprocess a~given string in $O(n)$ time (where $n$ is its length) so that to then find the longest common prefix of any two suffixes of the original string in constant time. This is done by first constructing the suffix array and the longest common prefix array of the string and then using an efficient RMQ algorithm.
+
+\item[Computational geometry.] Algorithms for the range queries problems can be used together with the scanning line technique{\todo{Sasha, check the name}} to solve efficiently various problems like: given a~set of segments on a~line, compute the number of intersecting pairs of segments; or, given a~set of rectangles and a~set of points on a~plane, compute, for each each rectangle, the number of points it contains. 
+
+\item[Image analysis]. TBW
+%One relevant link: \url{http://www.leptonica.com/grayscale-morphology.html} Also, need to mention 2d range queries and computational geometry
+
+\end{description}
+
+\subsection{Algebraic Structures}\label{subsec:algstr}
 
 This section presents standard notions of commutative semigroups and semirings,
 providing several examples, some of which motivated this research.
@@ -88,7 +110,10 @@ notable examples, starting with the most basic one, which is, arguably, known
 to every person on the planet.
 
 \begin{itemize}
-  \item Integer numbers form commutative semigroups with many operators. For
+  \item Integer numbers form commutative semigroups with many operators
+  {\todo{Andrey, should we use the word operator to
+   refer to $Ax$ and the word operation to refer to $\circ$? 
+   Do I get the convention right?}}. For
   example, the order in which numbers are \emph{added} is irrelevant, hence
   $(\mathbb{Z}, +)$ is a commutative semigroup. So are $(\mathbb{Z}, \times)$,
   $(\mathbb{Z}, \min)$ and $(\mathbb{Z}, \max)$. On the other hand, it does
@@ -104,7 +129,9 @@ to every person on the planet.
   $\hat{S}$ of `containers' of elements $S$, e.g. vectors or matrices,
   obtaining a commutative semigroup $(\hat{S}, \hat{\circ})$, where the lifted
   operation~$\hat{\circ}$ is applied to the contents of containers element-wise.
-  The lifting operator $\hat{\cdot}$ can often be omitted for clarity if there
+  The lifting operator $\hat{\cdot}$
+  {\todo{Andrey,  $\circ$?}} 
+  can often be omitted for clarity if there
   is no ambiguity. In Section~\ref{sec-boring-matrices} we will see that dense
   matrices over commutative semigroups can be efficiently multiplied.
 
@@ -117,7 +144,9 @@ to every person on the planet.
 
   \item Set union and intersection are commutative and associative operations
   giving rise to many set-based commutative semigroups. Here we highlight the
-  example that motivated our research: the \emph{graph overlay} operation,
+  example 
+  {\todo{Andrey, should it be AN example instead of THE example?}}  
+  that motivated our research: the \emph{graph overlay} operation,
   defined\footnote{This definition coincides with that of the
   \emph{graph union} operation~\cite{1969_graph_theory_harary}. Graph union
   typically requires that given graphs are non-overlapping, hence it is not
@@ -143,13 +172,15 @@ x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)\\
 \[
 (x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z)
 \]
-hold for all $x$, $y$ and $z$ in $S$. Since $\circ$ and $\bullet$ behave
+hold for all $x$, $y$, and $z$ in~$S$. Since $\circ$ and $\bullet$~behave
 similarly to numeric addition and multiplication, it is common to give $\bullet$
 a higher precedence to avoid unnecessary parentheses, and even omit~$\bullet$~from
 formulas altogether, replacing it by juxtaposition. This gives a terser and
 more convenient notation, e.g. the left distributivity law becomes:
 $x (y \circ z) = x y \circ x z$. We will use this notation throughout the rest
 of the paper, insofar as this does not lead to ambiguity.
+
+\todo[inline]{Andrey, Volodya, concerning juxtaposition. In the current text, we use heavily $xy$ as a shortcut for $x \circ y$ (rather than for $x \bullet y$). How to avoid this clash?}
 
 Most definitions of semirings also require that the two operations have
 identities: the \emph{additive identity}, denoted by 0, such that
@@ -198,10 +229,8 @@ application based on powerset semirings. Furthermore, if in addition to
 commutativity we also have idempotence, do we gain anything? Could we get a
 smaller constant in our linear construction?}
 
-\subsection{Applications}
-
-\todo[inline]{Andrey, should we also split this subsection into applications of range queries and applications of dense linear operators?}
-
+\subsection{Applications of New Results}
+\todo[inline]{Andrey, please move this section after the section stating our results}
 In this section we demonstrate two applications of the presented linear-size
 construction for a dense linear operator: fast multiplication of \emph{boring}
 matrices over arbitrary semirings (Section~\ref{sec-boring-matrices}) and
@@ -230,6 +259,8 @@ a 0-1~dense matrix by a vector in an arbitrary semiring and, as a consequence, a
 $\Theta(n^2)$ time algorithm for multiplying a 0-1 dense matrix by an arbitrary
 matrix.
 
+\todo[inline]{Andrey, Volodya, should we check whether it is known already?}
+
 By combining the algorithms for sparse and dense matrix multiplication, one can
 obtain an efficient algorithm for the multiplication of so-called \emph{boring}
 matrices.
@@ -254,6 +285,8 @@ M \mathbf{v} & = & (M_0 \circ b M_1) \mathbf{v} & \text{(sparse-dense decomposit
 \end{array}
 \]
 
+\todo[inline]{Andrey, could you show how commutativity is used here?}
+
 \noindent
 $M_0 \mathbf{v}$ and $M_1 \mathbf{v}$ can be computed in linear time using
 sparse and dense matrix-vector multiplication; the results are further combined
@@ -262,6 +295,7 @@ take linear time too.
 
 
 \todo[inline]{Count the number of triangles in a dense graph.}
+\todo[inline]{AK: Andrey, we should mention that counting triangles is not difficult even without our results}
 
 \subsubsection{Dense graph representation}\label{sec-dense-graph}
 
@@ -273,12 +307,10 @@ take linear time too.
   \item Compact representation of dense graphs
 \end{itemize}
 
-\todo[inline]{Andrey, convince the reader that the problem is important. Show many applications. Emphasize applications of dense linear operators. One relevant link: \url{http://www.leptonica.com/grayscale-morphology.html} Also, need to mention 2d range queries and computational geometry}
-
-In string algorithms, it is possible to preprocess a~given string in $O(n)$ time (where $n$ is its length) so that to then find the longest common prefix of any two suffixes of the original string in constant time. This is done by first constructing the suffix array and the longest common prefix array of the string and then using  an efficient RMQ algorithm.
 
 
-\subsection{Overview of Known Approaches}
+
+\subsection{Overview of Known Approaches}\label{subsec:approaches}
 In this subsection, we give a~brief overview of a~rich variety of known algorithms for the range queries problem. We say that an algorithm has type $(f(n), g(n))$ if it spends $f(n)$ time on preprocessing the input sequence, and then answers any query in time $g(n)$.
 
 \begin{description}
@@ -296,24 +328,27 @@ Note that the algorithm above solves a~{\em static} version of the problem. For 
 
 
 
-\item[Sparse table.] This data structure works for {\em bands} (i.e., idempotent semigroups: $x \circ x = x$ for every~$x$) and has type $(O(n\log n), O(1))$. We illustrate its main idea on $(\mathbb{Z}, \min)$. One precomputes answers to $O(n\log n)$ queries---namely, those whose length is a~power of~2. More formally, for all $0 \le k \le \log_2n$ and $1 \le i \le n-2^k+1$, let $S_{k,i}$ be the answer to a~query $(i, i+2^k-1)$:
+\item[Sparse table.] This data structure works for idempotent semigroups ({\em bands}) and has type $(O(n\log n), O(1))$. We illustrate its main idea on $(\mathbb{Z}, \min)$. One precomputes answers to $O(n\log n)$ queries---namely, those whose length is a~power of~2. More formally, for all $0 \le k \le \log_2n$ and $1 \le i \le n-2^k+1$, let $S_{k,i}$ be the answer to a~query $(i, i+2^k-1)$:
 \(S_{k,i}=x_i \circ x_{i+1} \circ \dotsb \circ x_{i+2^k-1} \, .\)
 Since any range of length $2^k$ consists of two ranges of length $2^{k-1}$, one can compute all $S_{k,i}$'s in time $O(n\log n)$ using dynamic programming. Then, any range $(l,r)$ can be covered by two precomputed ranges: if $k$~is the smallest integer such that $2^k \ge (r-l+1)/2$, then the answer to this query is $S_{k,l} \circ S_{k,r-2^k+1}$ (idempotency is required since we are covering the range, but not partitioning it). This gives an $(O(n\log n), O(1))$ algorithm.
 
 
 \item[Segment tree.] The segment tree data structure is also based on dynamic programming ideas and works for any semigroup. Consider the following complete binary tree with $O(n)$ nodes: the root is labeled by a~query $(1,n)$, the two children of each inner node $(l,r)$ are labeled by the left and right halves of the current query (i.e., $(l,m)$ and $(m+1,r)$ where $m=(l+r)/2$), the leaves are labeled by length one queries. Going from leaves to the root, one can precompute the answers to all the queries in this tree in time $O(n)$. Then, it is possible to show that any query $(l,r)$ can be  partitioned into $O(\log n)$ queries that are stored in the tree. This gives an $(O(n), O(\log n))$ algorithm. It should be noted that the segment tree can also be used to solve the dynamic version of the range queries problem efficiently: to change the value of one of the elements of the input sequence, one needs to adjust the answers to $O(\log n)$ queries stored in the tree.
 
-\item[Algorithms by Yao and by Alon and Schieber.] Yao~\cite{DBLP:conf/stoc/Yao82} showed that, for any semigroup, it is possible to preprocess the input sequence in time $O(n)$ so that to further answer any query in time $O(\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function and proved a~matching lower bound. Later, Alon and Schieber~\cite{Alon87optimalpreprocessing} reproved this result by studying a~more specific question: what is the minimum number of semigroup operations needed at the preprocessing stage for being able to then answer any query in at most $k$~steps? They proved matching lower and upper bounds for every~$k$. As a~special case, they show how to preprocess the input sequence in time $O(n\log n)$ so that to answer any subsequent query by applying at most one semigroup operation. This algorithm generalizes the sparse table data structure (as it does not require the semigroup to be idempotent) and is easy to describe. It is based on the divide-and-conquer paradigm. Let $m=n/2$. We precompute answers to all queries of the form $(i,m)$ and $(m+1,j)$, where $1 \le i \le m$ and $m+1 \le j \le n$ (i.e., suffixes of the left half and prefixes of the right half). This allows to answer in a~single step any query that intersects the middle of the sequence, i.e., queries $(l,r)$ such that $l \le m \le r$. All the remaining preprocessing boils down to answering queries that lie entirely in either left or right half. This can be done recursively for the halves. The corresponding recurrence relation $T(n)=2T(n/2)+O(n)$ implies an upper bound $O(n\log n)$ on preprocessing time (and hence, the number of semigroup operations).
+\item[Algorithms by Yao and by Alon and Schieber.] Yao~\cite{DBLP:conf/stoc/Yao82} showed that, for any semigroup, it is possible to preprocess the input sequence in time $O(n)$ so that to further answer any query in time $O(\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function and proved a~matching lower bound. Later, Alon and Schieber~\cite{Alon87optimalpreprocessing} studied a~more specific question: what is the minimum number of semigroup operations needed at the preprocessing stage for being able to then answer any query in at most $k$~steps? They proved matching lower and upper bounds for every~$k$. As a~special case, they show how to preprocess the input sequence in time $O(n\log n)$ so that to answer any subsequent query by applying at most one semigroup operation. This algorithm generalizes the sparse table data structure (as it does not require the semigroup to be idempotent) and is particularly easy to describe. It is based on the divide-and-conquer paradigm. Let $m=n/2$. We precompute answers to all queries of the form $(i,m)$ and $(m+1,j)$, where $1 \le i \le m$ and $m+1 \le j \le n$ (i.e., suffixes of the left half and prefixes of the right half). This allows to answer in a~single step any query that intersects the middle of the sequence, i.e., queries $(l,r)$ such that $l \le m \le r$. All the remaining preprocessing boils down to answering queries that lie entirely in either left or right half. This can be done recursively for the halves. The corresponding recurrence relation $T(n)=2T(n/2)+O(n)$ implies an upper bound $O(n\log n)$ on preprocessing time (and hence, the number of semigroup operations).
 
 
 
-\item[Algorithm by Bender and Farach-Colton.] The algorithm by Bender and Farach-Colton~\cite{DBLP:conf/latin/BenderF00} is designed specifically for the range minimum query problem (RMQ, i.e., a~semigroup $(\mathbb{Z}, \min)$) and has type $(O(n), O(1))$. Its main idea is to first reduce RMQ to LCA, the least common ancestor problem, where one is given a~rooted tree and a~bunch of queries of the form ``what is the lowest common ancestor of the given two nodes?'' One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
+\item[$(O(n), O(1))$-type algorithms.]
+%Algorithm by Bender and Farach-Colton.]
+There is a~sequence of $(O(n), O(1))$-type algorithms designed specifically to the range minimum query problem and a~related problem called least common ancestor (LCA) \cite{}.{\todo{Sasha, give links}} Here, we briefly sketch the algorithm by Bender and Farach-Colton~\cite{DBLP:conf/latin/BenderF00}. 
+Its main idea is to first reduce RMQ to LCA. One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
 \end{description}
 
-\todo[inline]{Sasha, mention latest results as well as block/hybrid approaches}
+\todo[inline]{Sasha, mention block/hybrid approaches}
 
 \subsection{Overview of New Results}
-\todo[inline]{Sasha, write this}
+\todo[inline]{Andrey, please write this}
 
 Thus, there are two conceptual messages in this paper:
 \begin{enumerate}
@@ -324,7 +359,7 @@ Thus, there are two conceptual messages in this paper:
 
 \section{General Setting}
 \subsection{Semigroups}
-\todo[inline]{Volodya, introduce semigroups, mention faithful semigroups (and why we need them), polish the needed lemmas. Also, mention idempotent and commutative groups and unify notation (should we always use {\em word} instead of {\em product}? or should we say that we use both terms?). Mention faithful semigroups}
+\todo[inline]{Volodya, introduce semigroups, mention faithful semigroups (and why we need them), polish the needed lemmas. Also, mention idempotent and commutative groups and unify notation (should we always use {\em word} instead of {\em product}? or should we say that we use both terms?). Mention faithful semigroups. This should somehow be merged with subsection~\ref{subsec:algstr}}
 
 We need the following notations and facts on free idempotent semigroups~\cite{GreenR52}.
 
@@ -355,7 +390,8 @@ The same is true if we read the words from right to left.
 \subsection{Computational Model}
 We assume that the input consists of $n$~formal variables $x_1, \dotsc, x_n$. We are interested in the minimum number of semigroup operations needed to compute all the given words $w_1, \dotsc, w_m$ (e.g., for the range queries problem, each word has a~form $x_lx_{l+1}\dotsb x_r$). We use the following natural {\em circuit} model. A~circuit computing all these queries is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They are labeled with $x_1, \dotsc, x_n$ and are called {\em input gates}. All other nodes have positive in-degree and are called {\em gates}. Finally, some $m$~gates have out-degree~0 and are labeled as {\em output gates}. The {\em size} of a~circuit is its number of edges (also called {\em wires}). Each gate of a~circuit computes a~word defined in a~natural way: input gates compute just $x_1, \dotsc, x_n$; any other gate of in-degree~$r$ computes a~word $f_1 \circ f_2 \circ \dotsb \circ f_r$ where $f_1, \dotsc, f_r$ are words computed at its predecessors (therefore, we assume that there is an underlying order on the incoming wires for each gate). We say that the circuit computes the words $w_1, \dotsc, w_m$ if the words computed at the output gates are equivalent to $w_1, \dotsc, w_m$.
 
-For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and $(l_2,r_2)=(2,5)$ over $x_1, \dotsc, x_5$.
+For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and $(l_2,r_2)=(2,5)$ over $x_1, \dotsc, x_5$ or, equivalently, the function $Ax$ where $A=\begin{pmatrix}1&1&1&1&0\\0&1&1&1&1\end{pmatrix}$ and $x=(x_1, \dotsc, x_5)^T$.
+
 \begin{center}
 \begin{tikzpicture}
 %\draw[help lines] (0,0) grid (10,6);
@@ -375,7 +411,7 @@ In a~special case of the Boolean semigroup $(\{0,1\}, \lor)$, such circuits are 
 
 
 
-\section{Commutative Semigroups}
+\section{Commutative Case}
 \todo[inline]{Vanya, go!}
 
 We start with an almost trivial special case.
@@ -395,7 +431,7 @@ Similarly, in $(n-1)$ binary gates we compute all suffixes $s_j$ (for all $1 \le
 
 \subsection{Matrices with Constant Average Number of Zeros in Each Row}
 
-\section{Non-commutative Semigroups}
+\section{Non-commutative Case}
 
 In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. 
 
@@ -408,7 +444,7 @@ There are no linear size circuits for the non-commutative dense linear operator 
 We prove this theorem by establishing the following equivalence. The equivalence between two problems is not difficult to prove for free semigroups. To make it more interesting, we prove the equivalence for idempotent semigroups. Hence, {\em throughout the whole section we assume that the semigroup under consideration is idempotent and faithful.}
 
 \begin{theorem}\label{thm:equivalence}
-Commutative range queries problem has $O(n)$ size circuits iff non-commutative dense linear operator has $O(n)$ size circuits.
+Commutative range queries problem has $O(n)$ size circuits iff non-commutative dense linear operator problem has $O(n)$ size circuits.
 \end{theorem}
 
 Using this theorem, it is straightforward to prove 
@@ -450,90 +486,120 @@ Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing t
 %Thus, it remains to show the following two lemmas.
 
 \begin{lemma} \label{lem:dense_matrices}
-If we can compute non-commutative dense matrices by a linear size circuit, we can also compute non-commutative intervals.
+If the non-commutative dense linear operator problem has $O(n)$ size circuits then the non-commutative range queries also does.
+%If we can compute non-commutative dense matrices by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
 \begin{lemma} \label{lem:intervals}
-If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
+If the commutative version of the range queries problem has $O(n)$ size circuits then the non-commutative version also does.
+%If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
-\section{Proof of Lemma~\ref{lem:dense_matrices}}
+\subsection{Dense Linear Operator to Range Queries}
+In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the correct order. This is shown in Lemma~\ref{lemma:correctorder}. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeros in positions $l-1$ and $r+1$ (hence, this row consists of three queries: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the right order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it. 
 
-The intuition why this might be true is that it seems that the best way to compute rows of dense matrix is to construct clauses with the correct order of variables. If this is true, then the idea is that we can extend each interval by variables on both sides (with small gaps on each side of the interval), thus obtaining a dense matrix. Then we can try to extract the computation of the intervals from the computation of the dense matrix. Since all rows of the matrix are hopefully computed by consecutively adding the variables in the correct order, we might be able to do that.
+It should be mentioned, at the same time, that idempotency is tricky. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
+This is not extremely impressive, since to get $xyz$ we multiply by $xyz$, but the point is that this is possible in principle.
 
-But some analysis of all these things is needed since idempotency is tricky. For example, it is possible to simulate commutativity: if we have the product $xy$ and would like to have $yx$ we can just multiply by $x$ from the left and by $y$ from the right. Then we have $xyxy=xy$. We can use this to put some variables inside of already produced products. If we have $xz$ and would like to obtain $xyz$ we can just multiply by $xyz$ from the left and by $xyz$ from the right. Then we have
-$$
-(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz.
-$$
-This is not extremely impressive, since to obtain $xyz$ we multiply by $xyz$, but the point is that this is possible in principle. So, to prove the lemma some more work is needed.
+We proceed to the formal proofs. The proof of Lemma~\ref{lem:dense_matrices} follows from the following two lemmas. A~binary circuit is called an~{\em increasing} circuit if each of its gates computes a~word that is equivalent to a~word composed out of increasing variables.
+Note that if a~gate in an~increasing circuit is fed by two gates~$G$ and~$H$, then the increasing sequences of variables computed by~$G$ and~$H$ are matching in a~sense that some suffix of~$G$ (possibly an empty suffix) is equal to some prefix of~$H$. Otherwise, the result is not equal to an increasing sequence of variables, due to Lemma~\ref{lem:variables_order}.
+
+\begin{lemma}\label{lemma:correctorder}
+Given a~binary circuit computing~$Ax$, one may transform it into an~increasing circuit of the same size computing the same function.
+\end{lemma}
+
+\begin{lemma}\label{lemma:matrixranges}
+Given a~range circuit computing~$Ax$, one may transform it into an~increasing circuit of the same size computing all ranges of~$A$.
+\end{lemma}
+
+\begin{proof}[Proof of Lemma~\ref{lem:dense_matrices}]
+Given $n$~ranges, pack them into a~matrix $A \in \{0,1\}^{n \times n}$ with at most $2n$ zeros. Take an $O(n)$ size circuit computing $Ax$ and convert it into a~binary circuit. Then, transform it into an~increasing circuit using Lemma~\ref{lemma:matrixranges}. Finally, extract the answers to all the ranges from this circuit using Lemma~\ref{lemma:matrixranges}.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lemma:matrixranges}]
+Take an~increasing circuit computing $Ax$ and process all its gates in some topological ordering. If the current gate~$G$ computes a~range, we just proceed to the next gate. Otherwise we remove~$G$ and take care of all the wires going out of~$G$: if $G$ is used as as the left operand in another gate~$H$, we replace the $G \to H$ wire by the $L \to H$ wire, where $L$ is the left parent of~$G$; the case when $G$~is used as the right operand is treated similarly.
+\todo[inline]{Volodya, could you complete this proof by showing that the resulting circuit indeed computes all the ranges?}
 
 
-So, we consider the free idempotent semigroup with generators $\{a_1,\ldots, a_n\}$.
-We consider the generators to be ordered from $a_1$ to $a_n$ in the increasing order. We want to compute $B \cdot \vec{a}$, where $\vec{a}=(a_1,\ldots, a_n)$ and $B$ is a boolean matrix.
+%Then, once the interval circuit is trying to multiply intervals that have gaps  between them, we just not multiply them. Later on if we try to do something with the product we have not computed we use the left of its inputs in case we try to multiply from the left, and the right input if we are multiplying from the right. So, if we need to solve an interval problem, for each interval we skip one variable on each side and add all other variables to the interval. This turn our problem into the super-dense matrix. We compute this matrix, then deduce the computation of intervals as described above.
+\end{proof}
 
-We will show that any circuit computing $B \cdot \vec{a}$ can be reconstructed into another circuit that we will call \emph{an interval circuit} without increase in the size of the circuit. In this circuit we require that each gate computes a word that is equivalent to a word consisting of increasing sequence of letters. Note that as a consequence we have that if in an interval circuit we multiply two gates $f$ and $h$, then the increasing sequences of letters computed by $f$ and $h$ are matching, that is some suffix of $f$ is equal to some suffix of $h$. Otherwise, the product is not equal to an increasing sequence of variables.
 
-Once we show that any circuit solving our problem can be reconstructed into an interval one, it is easy to reduce an interval problem to our problem. Note, that given a circuit computing $B \cdot \vec{a}$ for a super-dense matrix $B$ we can construct a circuit computing all intervals of this matrix. Indeed, first reconstruct a circuit into an interval one. Then, once the interval circuit is trying to multiply intervals that have gaps  between them, we just not multiply them. Later on if we try to do something with the product we have not computed we use the left of its inputs in case we try to multiply from the left, and the right input if we are multiplying from the right. So, if we need to solve an interval problem, for each interval we skip one variable on each side and add all other variables to the interval. This turn our problem into the super-dense matrix. We compute this matrix, then deduce the computation of intervals as described above.
+
+
+
+% to construct clauses with the correct order of variables. If this is true, then the idea is that we can extend each interval by variables on both sides (with small gaps on each side of the interval), thus obtaining a dense matrix. Then we can try to extract the computation of the intervals from the computation of the dense matrix. Since all rows of the matrix are hopefully computed by consecutively adding the variables in the correct order, we might be able to do that.
+
+
+
+%So, we consider the free idempotent semigroup with generators $\{a_1,\ldots, a_n\}$.
+%We consider the generators to be ordered from $a_1$ to $a_n$ in the increasing order. We want to compute $B \cdot \vec{a}$, where $\vec{a}=(a_1,\ldots, a_n)$ and $B$ is a boolean matrix.
+
+%We will show that any circuit computing $B \cdot \vec{a}$ can be reconstructed into another circuit that we will call \emph{an interval circuit} without increase in the size of the circuit. In this circuit we require that each gate computes a word that is equivalent to a word consisting of increasing sequence of letters. Note that as a consequence we have that if in an interval circuit we multiply two gates $f$ and $h$, then the increasing sequences of letters computed by $f$ and $h$ are matching, that is some suffix of $f$ is equal to some suffix of $h$. Otherwise, the product is not equal to an increasing sequence of variables.
+
+%Once we show that any circuit solving our problem can be reconstructed into an interval one, it is easy to reduce an interval problem to our problem. Note, that given a circuit computing $B \cdot \vec{a}$ for a super-dense matrix $B$ we can construct a circuit computing all intervals of this matrix. Indeed, first reconstruct a circuit into an interval one. Then, once the interval circuit is trying to multiply intervals that have gaps  between them, we just not multiply them. Later on if we try to do something with the product we have not computed we use the left of its inputs in case we try to multiply from the left, and the right input if we are multiplying from the right. So, if we need to solve an interval problem, for each interval we skip one variable on each side and add all other variables to the interval. This turn our problem into the super-dense matrix. We compute this matrix, then deduce the computation of intervals as described above.
 
 %For each gate $g$ of the circuit we will consider the word $W_g$ computed in this gate. This word is defined recursively as a concatenation of the words corresponding to input gates. For each gate $g$ we say that the letter $a$ is \emph{good} in $W_g$ if $a$ is present in $W_g$ and $W_g$ will not be multiplied on the left by words containing larger or equal letters then $a$.
 
-To reconstruct a circuit into a linear one we need to introduce some notation. Consider a circuit $C$ and its gate $g$.
-We will identify gates and words that they are computing. We will treat the results of the computation of the gates as words to which gates apply concatenation operation. That is, we consider these words before we apply any equivalences in the semigroup to them.
-Suppose letter $a_i$ is contained in $g$. We say that $a_i$ is \emph{good} in $g$ if there is a path in $C$ from $g$ to some output, on which the word is never multiplied from the left by words with letters greater or equal to $a_i$.
+%To reconstruct a circuit into a linear one we need to introduce some notation. Consider a circuit $C$ and its gate $g$.
+%We will identify gates and words that they are computing. We will treat the results of the computation of the gates as words to which gates apply concatenation operation. That is, we consider these words before we apply any equivalences in the semigroup to them.
 
-Note that if $a_i$ and $a_{i'}$ are contained in $g$, $i<i'$ and $a_i$ is good in $g$, then $a_{i'}$ is also good in $g$. That is, the set of all good letters in $g$ is closed upwards.
+\begin{proof}[Proof of Lemma~\ref{lemma:correctorder}]
+Consider a~binary circuit~${\cal C}$ computing~$Ax$ and its gate~$G$ together with a~variable~$x_i$ it depends on.
+We say that $x_i$ is \emph{good} in~$G$ if there is 
+a~path in~${\cal C}$ from $G$ to an output gate, on which the word is never multiplied from the left by words containing variables greater than or equal to $x_i$.
+Note that if $x_i$ and $x_{i'}$ are both contained in $G$, $i<i'$, and $x_i$ is good in~$G$, then $x_{i'}$ is good in~$G$, too. That is, the set of all good variables in~$G$ is closed upwards.
 
-Consider the largest good letter in $g$ (if there is one), denote it by $a_k$ (if there are good letters in $g$, then $a_k$ is actually just the largest letter in $g$). Consider the first occurrence of $a_k$ in $g$.
+Consider the largest good variable in $G$ (if there is one), denote it by $x_k$ (if there are good variables in~$G$, then $x_k$ is actually just the largest variable in~$G${\todo{Volodya, why do we need this remark? The largest one is clearly unique. What am I missing?}}). Let us focus on the first occurrence of $x_k$ in~$G$.
 
 \begin{claim}
-All first occurrences of other good letters in $g$ must be to the left of $a_k$.
+All first occurrences of other good variables in~$G$ must be to the left of the first occurrence of $x_k$.
 \end{claim}
 
 \begin{proof}
-Suppose that some good letter $a_i$ has the first occurrence to the right of $a_k$. Consider an output $c$ such that there is a path from $g$ to $c$ and along this path there are no multiplications of $g$ from the left by words containing letters greater than $a_i$. Then we have $c \sim LgR$, where all letters of $L$ are smaller then $a_i$. Then in $c$ letter $a_i$ appears before $a_k$ when we read from left to right, and in $RgL$ we have that $a_k$ appears before $a_i$. This contradicts Lemma~\ref{lem:variables_order}.
+Suppose that a~good variable $x_i$ has the first occurrence to the right of (the first occurrence of) $x_k$. Consider an output gate $H$ such that there is a~path from~$G$ to~$H$ and along this path there are no multiplications of $G$ from the left by words containing variables greater than~$x_i$. Then we have $H \sim LGR$, where all variables of~$L$ are smaller then~$x_i$. Then in $H$ the variable $x_i$ appears before $x_k$ when we read from left to right, but at the same time we have that $x_k$ appears before $x_i$. This contradicts Lemma~\ref{lem:variables_order}.
 \end{proof}
 
-Consider for the gate $g$ two words, $\mmin_g$ and $\mmax_g$. Both this words are products of variables in the increasing order: $\mmin_g$ is the product of good letters of $g$ in the increasing order, $\mmax_g$ is the product (in the increasing order) of all letters that has first occurrences before $a_k$. Note that $\mmin_g$ is a suffix of $\mmax_g$. If there are no good letters in $g$ we just let $\mmin_g=\mmax_g=\lambda$ (the empty word).
+Now, for a~gate~$G$, define two words $\mmin_G$ and $\mmax_G$. Both these words are products of variables in the increasing order: $\mmin_G$ is the product of good letters of $G$ in the increasing order, $\mmax_G$ is the product (in the increasing order) of all letters that has first occurrences before (the first occurrence of) $x_k$. Note that $\mmin_G$ is 
+a~suffix of $\mmax_G$. If there are no good letters in $G$ we just let $\mmin_g=\mmax_g=\lambda$ (the empty word).
+%
+For the word~$W$ that has the form of the product of variables in the increasing order, we call $x_j$ a~\emph{gap variable} if it is not contained in $W$ 
+while $W$~contains variables $x_i$ and $x_k$ with $i < j < k$.
 
-For the word $W$ that has the form of the product of variables in the increasing order we call $a_j$ a \emph{gap variable} if it is not contained in $W$ and there are $a_i$ and $a_l$ contained in $W$ such that $i<j<l$.
+Below we show how for a~given circuit~${\cal C}$ to construct an increasing circuit~${\cal C}'$ that for each gate~$G$ of~$C$ computes some intermediate product $P_G$ between $\mmin_G$ and $\mmax_G$: $\mmin_g$ is a~suffix of $P_G$ and $P_G$ is a~suffix of $\mmax_g$. The size of~${\cal C}'$ is at most the size of~${\cal C}$. For an output gate~$G$, $\mmin_g=\mmax_g=g$ hence the circuit ${\cal C}'$ computes the correct outputs.
 
-We will show how given a circuit $C$ to construct an interval circuit $C'$ that for each gate $g$ of $C$ computes some intermediate product $P_g$ between $\mmin_g$ and $\mmax_g$: we will have that $\mmin_g$ is a suffix of $P_g$ and $P_g$ is a suffix of $\mmax_g$. The size of $C'$ is at most the size of $C$.
-Note that for an output gate $g$ we have $\mmin_g=\mmax_g=g$, so the circuit $C'$ computes the correct outputs.
+To construct ${\cal C}'$, we process the gates of~${\cal C}$ in a~topological ordering. If $G$~is an input gate, everything is straightforward: in this case $\mmax_G$ is either $\lambda$ or $x_j$. Assume now that $G$ is an internal gate with predecessors~$F$ and~$H$. 
+Consider the set of good variables in~$G$. If there are none, we let $P_G=\lambda$. If all first occurrences of good variable of $G$ are lying in one of the predecessors ($F$~and~$H$), then they are good in the corresponding input gate. We then set $P_G$ to $P_F$ or $P_H$.
 
-The construction of $C'$ is by induction on the number of gate. For the case of input gate $g$ everything is obvious: $\mmax_g$ is either $\lambda$, or $a_j$ for some variable $a_j$. Both of these are easy to compute.
-
-For the step of induction consider a gate $g=f\cdot h$ computed as a product of two previous gates.
-
-Consider the good letters in $g$. If there are none, we can just let $P_g=\lambda$ and there is no computation needed.
-
-If all first occurrences of good letters of $g$ are lying in one of the input gates $f$ and $h$, then they are good in the corresponding input gate. So we can set $P_g$ to $P_f$ or $P_h$ and there is no computation needed.
-
-The only remaining case is that some good letters have their first occurrence in $f$ and some in $h$. Then the largest letter $a_k$ of $g$ has the first occurrence in $h$ and all letters of $f$ are smaller than $a_k$.
+The only remaining case is that some good variables have their first occurrence in~$F$ while some others have their first occurrence in~$H$. Then the largest variable $x_k$ of~$G$ has the first occurrence in $H$ and all variables of~$F$ are smaller than~$x_k$.
 
 \begin{claim} \label{cl: h is good}
-There are no gap letters for $\mmax_h$ in $f$.
+There are no gap variables for $\mmax_H$ in~$F$.
 \end{claim}
 
 \begin{proof}
-Suppose that some letter $a_i$ in $f$ is a gap letter for $\mmax_h$. Consider an output $c$ such that there is a path from $g$ to $c$ and along this path there are no multiplications of $g$ from the left by words containing letters greater than $a_k$. Then we have $c \sim LgR$, where all letters of $L$ are smaller then $a_k$. Consider the prefix $P$ of $c$ preceding the letter $a_k$ and the prefix $Q$ of $Lg$ preceding the letter $a_k$.
-Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. But then the letters of $P$ and $Q$ appear in the same order if we read the words from right to left. But this is not true (the letters in $P$ are in the decreasing order and in $Q$ the letter $a_i$ is not on its place), so we get a contradiction.
+Suppose that some variable $x_i$ in~$F$ is a~gap variable for $\mmax_H$. Consider an output $C$ such that there is a path from~$G$ to~$C$ and along this path there are no multiplications of $G$ from the left by words containing variables greater than~$x_k$. Then we have $C \sim LGR$ where all variables of $L$ are smaller then~$x_k$. Consider the prefix $P$ of $C$ preceding the variable~$x_k$ and the prefix~$Q$ of $LG$ preceding the letter $x_k$.
+Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. But then the variables of~$P$ and~$Q$ appear in the same order if we read the words from right to left. But this is not true (the letters in~$P$ are in the decreasing order and in~$Q$ the variable $a_i$ is not on its place), a~contradiction.
 \end{proof}
 
 \begin{claim}\label{cl: f is good}
-There are no gap letters for $\mmax_f$ in $h$.
+There are no gap variables for $\mmax_F$ in~$H$.
 \end{claim}
 
 \begin{proof}
-Suppose that some letter $a_i$ in $h$ is a gap letter for $\mmax_f$. Consider an output $c$ such that there is a path from $g$ to $c$ and along this path there are no multiplications of $g$ from the left by words containing letters greater than $a_l$, the largest letter of $f$. Then we have $c \sim LgR$, where all letters of $L$ are smaller then $a_l$. Consider the prefix $P$ of $c$ preceding the letter $a_l$ and the prefix $Q$ of $Lg$ preceding the letter $a_l$.
-Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. But then the letters of $P$ and $Q$ appear in the same order if we read the words from right to left. But this is not true(the letters in $P$ are in the decreasing order and in $Q$ the letter $a_i$ is not on its place), so we get a contradiction.
+Suppose that a~variable $x_i$ in~$H$ is a~gap variable for $\mmax_F$. Consider an output~$C$ such that there is a~path from~$G$ to~$C$ and along this path there are no multiplications of~$G$ from the left by words containing variables greater than $x_l$, the largest letter of~$F$. Then we have $C \sim LGR$, where all variables of~$L$ are smaller then $x_l$. Consider the prefix~$P$ of~$C$ preceding $x_l$ and the prefix $Q$ of $LG$ preceding $x_l$.
+Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. But then the variables of~$P$ and~$Q$ appear in the same order if we read the words from right to left. But this is not true (the variables in~$P$ are in the decreasing order and in~$Q$ the variable $x_i$ is not on its place), a~contradiction.
 \end{proof}
 
-Consider $P_f$ and $P_h$. From two Claims~\ref{cl: h is good} and~\ref{cl: f is good} we know that they are intervals in the same sequence of variables $\var(P_f)\cup \var(P_h)$. We know that the largest letter of $P_h$ is greater than all letters of $P_f$. Then either $P_f$ is contained in $P_h$, and then we can let $P_g=P_h$ (it contains all good letters of $g$), or we have $P_f =PQ$ and $P_h=QR$ for some words $P, Q, R$. In the latter case we can let $P_g = P_f \cdot P_h = PQQR=PQR$. Clearly, $\mmin_g$ is the suffix of $P_g$ and $P_g$ itself is the suffix of $\mmax_g$. So, we are done.
+We are now ready to complete the proof of Lemma~\ref{lemma:correctorder}.
+Consider $P_F$ and $P_H$. By Claims~\ref{cl: h is good} and~\ref{cl: f is good}, we know that they are ranges in the same sequence of variables $\var(P_F)\cup \var(P_H)$. We know that the largest variables of $P_H$ is greater than all variables of $P_f$. Then either $P_F$ is contained in $P_H$, and then we can let $P_G=P_H$ (it contains all good variables of~$G$), or we have $P_F =PQ$ and $P_H=QR$ for some words $P, Q, R$. In this case we let $P_G = P_F \cdot P_H = PQQR=PQR$. Clearly, $\mmin_G$ is the suffix of $P_G$ and $P_G$ itself is the suffix of $\mmax_G$. 
+\end{proof}
 
 
 
-
-\section{Proof of Lemma~\ref{lem:intervals}}
+\subsection{Non-commutative Range Queries to Commutative Range Queries}
+%{Proof of Lemma~\ref{lem:intervals}}
+\todo[inline]{Volodya, could you polish this? For this, wrap it to a proof, use capital letters for gates, use ${\cal C}$ to denote a circuit, etc}
 
 For the proof of this lemma we will show that any computation of commutative intervals can be reconstructed without increase in the number of gates in such a way that each gate computes an interval (still commutatively; let's call this an interval circuit). It is easy to see that then this circuit can be reconstructed as a non-commutative circuit each gate of which computes the same interval with the variables in the right order. Indeed, we need to make sure that each gate computes an interval in such a way that all variables are in the right order and this is easy to do by induction. Each gate computes an OR of two intervals $a$ and $b$. If one of them is contained in the other, we simplify the circuit, since the gate just computes the same interval as one of its inputs. It is impossible that $a$ and $b$ are non-intersecting and have a gap between them, since then our gate does not compute an interval (in the interval circuit). So, if $a$ and  $b$ are non-intersecting, then they are consecutive and we just need to multiply then in the right order. If the intervals are intersecting, we just multiply then in the right order and apply idempotency (like this: $(x_1x_2x_3)(x_2x_3x_4)=x_1(x_2x_3)(x_2x_3)x_4=x_1x_2x_3x_4$).
 
