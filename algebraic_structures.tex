@@ -1,0 +1,137 @@
+\subsection{Algebraic Structures}\label{subsec:algstr}
+
+This section presents standard notions of commutative semigroups and semirings,
+providing several examples, some of which motivated this research.
+
+\subsubsection{Commutative semigroups}
+
+A \emph{semigroup} $(S, \circ)$ is an algebraic structure, where the operation
+$\circ$ is \emph{closed}, i.e. $\circ : S\times S \rightarrow S$, and
+\emph{associative}, i.e.
+$x \circ (y \circ z) = (x \circ y) \circ z$ for all $x$, $y$ and $z$ in $S$.
+\emph{Commutative} (or \emph{abelian}) semigroups introduce one extra
+requirement: $x \circ y = y \circ x$ for all $x$ and $y$ in $S$.
+
+Commutative semigroups are ubiquitous. Below we list a few
+notable examples, starting with the most basic one, which is, arguably, known
+to every person on the planet.
+
+\begin{itemize}
+  \item Integer numbers form commutative semigroups with many operators
+  {\todo{Andrey, should we use the word operator to
+   refer to $Ax$ and the word operation to refer to $\circ$? 
+   Do I get the convention right?}}. For
+  example, the order in which numbers are \emph{added} is irrelevant, hence
+  $(\mathbb{Z}, +)$ is a commutative semigroup. So are $(\mathbb{Z}, \times)$,
+  $(\mathbb{Z}, \min)$ and $(\mathbb{Z}, \max)$. On the other hand, it does
+  matter in which order numbers are \emph{subtracted}, hence $(\mathbb{Z}, -)$
+  is not a commutative semigroup: $1-2 \neq 2-1$. In fact, $(\mathbb{Z}, -)$
+  is not even a semigroup, since subtraction is non-associative:
+  $1-(2-3) \neq (1-2)-3$.
+
+  \item Boolean values form commutative semigroups $(\mathbb{B}, \vee)$,
+  $(\mathbb{B}, \wedge)$, $(\mathbb{B}, \oplus)$ and $(\mathbb{B}, \equiv)$.
+
+  \item Any commutative semigroup $(S, \circ)$ can be \emph{lifted} to the set
+  $\hat{S}$ of `containers' of elements $S$, e.g. vectors or matrices,
+  obtaining a commutative semigroup $(\hat{S}, \hat{\circ})$, where the lifted
+  operation~$\hat{\circ}$ is applied to the contents of containers element-wise.
+  The lifting operator $\hat{\cdot}$
+  {\todo{Andrey,  $\circ$?}} 
+  can often be omitted for clarity if there
+  is no ambiguity. In Section~\ref{sec-boring-matrices} we will see that dense
+  matrices over commutative semigroups can be efficiently multiplied.
+
+  The \emph{average semigroup} $(\mathbb{Z} \times \mathbb{Z}, \circ)$ is a
+  simple yet not entirely trivial example of semigroup lifting. By defining
+  $(t_1, c_1) \circ (t_2, c_2) = (t_1 + t_2, c_1 + c_2)$, we can aggregate
+  partial \emph{totals} and \emph{counts} of a set of numbers, which allows us
+  to efficiently calculate their average as $\textit{avg}(t, c) = \frac{t}{c}$.
+  The average semigroup is commutative.
+
+  \item Set union and intersection are commutative and associative operations
+  giving rise to many set-based commutative semigroups. Here we highlight the
+  example 
+  {\todo{Andrey, should it be AN example instead of THE example?}}  
+  that motivated our research: the \emph{graph overlay} operation,
+  defined\footnote{This definition coincides with that of the
+  \emph{graph union} operation~\cite{1969_graph_theory_harary}. Graph union
+  typically requires that given graphs are non-overlapping, hence it is not
+  closed on the set of all graphs. Graph overlay does not have such a
+  requirement, and is therefore closed and forms semigroup.} as
+  $(V_1, E_1) + (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2)$,~where~$(V, E)$ is
+  a standard set-based representation for directed unweighted graphs, comes from
+  an algebra of graphs used in functional programming~\cite{mokhov2017algebraic}.
+  We will use the commutative semigroup $(G_U,+)$, where $G_U$ are graphs whose
+  vertices come from the universe $U$, for finding compact algebraic
+  representations for \emph{dense graphs}, i.e. complements of sparse graphs,
+  in Section~\ref{sec-dense-graph}.
+\end{itemize}
+
+\subsubsection{Semirings and other distributive structures}
+
+A commutative semigroup $(S, \circ)$ can often be extended to a \emph{semiring}
+$(S, \circ, \bullet)$ by introducing another associative (but not necessarily
+commutative) operation $\bullet$ that \emph{distributes} over $\circ$, that is
+\[
+x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)\\
+\]
+\[
+(x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z)
+\]
+hold for all $x$, $y$, and $z$ in~$S$. Since $\circ$ and $\bullet$~behave
+similarly to numeric addition and multiplication, it is common to give $\bullet$
+a higher precedence to avoid unnecessary parentheses, and even omit~$\bullet$~from
+formulas altogether, replacing it by juxtaposition. This gives a terser and
+more convenient notation, e.g. the left distributivity law becomes:
+$x (y \circ z) = x y \circ x z$. We will use this notation throughout the rest
+of the paper, insofar as this does not lead to ambiguity.
+
+\todo[inline]{Andrey, Volodya, concerning juxtaposition. In the current text, we use heavily $xy$ as a shortcut for $x \circ y$ (rather than for $x \bullet y$). How to avoid this clash?}
+
+Most definitions of semirings also require that the two operations have
+identities: the \emph{additive identity}, denoted by 0, such that
+$0 \circ x = x \circ 0=x$, and the \emph{multiplicative identity}, denoted by 1,
+such that $1x=x1=x$. Furthermore, 0 is typically required to be
+\emph{annihilating}: $0x=x0=0$.
+
+Let us revisit our semigroup examples and extend them to semirings:
+
+\begin{itemize}
+  \item The most basic and widely known semiring is that of integer numbers with
+  addition and multiplication: $(\mathbb{Z}, +, \times)$. Interestingly, integer
+  addition can also play the role of multiplication when combined with the
+  $\max$ operation, resulting in the \emph{tropical semiring}
+  $(\mathbb{Z}, \max, +)$, which is also known as the \emph{max-plus algebra}.
+
+  \item Boolean values form the semiring $(\mathbb{B}, \vee, \wedge)$. Note that
+  $(\mathbb{B}, \wedge, \vee)$ is a semiring too thanks to the duality between
+  the operations $\vee$ and $\wedge$.
+
+  \item A semiring $(S, \circ, \bullet)$ can also be lifted to the set $\hat{S}$
+  of `containers' of elements $S$, most commonly matrices, obtaining the semiring
+  $(\hat{S}, \hat{\circ}, \hat{\bullet})$. Matrices over tropical semirings, for
+  example, are used for solving various path-finding problems on graphs.
+
+  \item One way to extend the graph semigroup $(G_U,+)$ to a semiring is by
+  introducing the \emph{graph connect} operation\footnote{The definition
+  coincides with that of \emph{graph join}~\cite{1969_graph_theory_harary}, but,
+  just like graph union, graph join requires that given graphs are
+  non-overlapping. The connect operation has no such requirement and can be used
+  to form a semiring.}:
+  $(V_1, E_1) (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2 \cup V_1 \times V_2)$.
+  It is worth noting that the empty graph $\varepsilon = (\emptyset, \emptyset)$
+  is the identity for both graph overlay and connect operations:
+  $\varepsilon + x = x + \varepsilon = x$ and $\varepsilon x = x \varepsilon = x$,
+  and consequently the annihilating zero property does not hold, which makes
+  this algebraic structure not a~semiring according to many standard definitions.
+  We refer the reader to~\cite{mokhov2017algebraic} for further details about the
+  algebraic properties and applications of this algebra of graphs.
+\end{itemize}
+
+\todo[inline]{Andrey, Chazelle and Rosenberg also mention powerset as an
+idempotent and commutative semigroup. Should we also mention it? AM: Yes, I
+think we can add it too. I wonder if we could also come up with a good
+application based on powerset semirings. Furthermore, if in addition to
+commutativity we also have idempotence, do we gain anything? Could we get a
+smaller constant in our linear construction?}

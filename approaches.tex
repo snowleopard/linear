@@ -1,0 +1,36 @@
+\subsection{Overview of Known Approaches}\label{subsec:approaches}
+In this subsection, we give a~brief overview of a~rich variety of known algorithms for the range queries problem. We say that an algorithm has type $(f(n), g(n))$ if it spends $f(n)$ time on preprocessing the input sequence, and then answers any query in time $g(n)$.
+
+\begin{description}
+\item[No preprocessing.] A~naive algorithm skips the preprocessing stage and answers a~query $(l,r)$ directly in time $O(r-l+1)$. It therefore has type $(O(1), O(n))$.
+
+\item[Full preprocessing.] One may precompute the answers to all possible queries to be able to answer any subsequent query immediately. Using dynamic programming, it is possible to precompute the answers to all $\Theta(n^2)$ queries in time $O(n^2)$: for this, it is enough to process the queries in order of increasing length. This gives an $(O(n^2), O(1))$ algorithm.
+
+\item[Fixed length queries (sliding window).] In case one is promised that all the queries are going to have the same length~$m$, it is possible to do an~$O(n)$ time preprocessing and then to answer any query in time $O(1)$. For this, one partitions the input sequence of size~$n$ into $\frac nm$ blocks of size~$m$. For each block, one computes all its prefixes and suffixes in time $O(m)$. The overall running time is $O(\frac nm \cdot m)=O(n)$. Then, each query of length~$m$ touches at most two consecutive blocks and can be answered by taking a~precomputed suffix of the left block and a~precomputed prefix of the right block in time $O(1)$. This, in particular, implies that, given a~sequence of length~$n$ and an integer $1 \le m \le n$, one may slide a~window of length~$m$ through the sequence and to output the answer to all such window queries in time $O(n)$.
+
+\item[Prefix sums.] In case, a~semigroup operation has an {\em easily computable inverse}, it is easy to design an $(O(n), O(1))$ algorithm. We illustrate this for a~group $(\mathbb{Z}, +)$. Given $x_1, \dotsc, x_n$, we compute $(n+1)$ prefix sums:
+\(S_0=0,\, S_1=x_1,\, S_2=x_1+x_2, \dotsc, S_n=x_1+\dotsb+x_n\,.\)
+This can be done in time $O(n)$ since $S_i=S_{i-1}+x_i$. Then, the answer to any query $(l,r)$ is just $S_r-S_{l-1}$.
+
+Note that the algorithm above solves a~{\em static} version of the problem. For the {\em dynamic} version, where one is allowed to change the elements of the input sequence, there is a~data structure known as Fenwick's tree~\cite{DBLP:journals/spe/Fenwick94}. It allows to change any element as well as to retrieve any prefix sum in time $O(\log n)$.
+
+
+
+\item[Sparse table.] This data structure works for idempotent semigroups ({\em bands}) and has type $(O(n\log n), O(1))$. We illustrate its main idea on $(\mathbb{Z}, \min)$. One precomputes answers to $O(n\log n)$ queries---namely, those whose length is a~power of~2. More formally, for all $0 \le k \le \log_2n$ and $1 \le i \le n-2^k+1$, let $S_{k,i}$ be the answer to a~query $(i, i+2^k-1)$:
+\(S_{k,i}=x_i \circ x_{i+1} \circ \dotsb \circ x_{i+2^k-1} \, .\)
+Since any range of length $2^k$ consists of two ranges of length $2^{k-1}$, one can compute all $S_{k,i}$'s in time $O(n\log n)$ using dynamic programming. Then, any range $(l,r)$ can be covered by two precomputed ranges: if $k$~is the smallest integer such that $2^k \ge (r-l+1)/2$, then the answer to this query is $S_{k,l} \circ S_{k,r-2^k+1}$ (idempotency is required since we are covering the range, but not partitioning it). This gives an $(O(n\log n), O(1))$ algorithm.
+
+
+\item[Segment tree.] The segment tree data structure is also based on dynamic programming ideas and works for any semigroup. Consider the following complete binary tree with $O(n)$ nodes: the root is labeled by a~query $(1,n)$, the two children of each inner node $(l,r)$ are labeled by the left and right halves of the current query (i.e., $(l,m)$ and $(m+1,r)$ where $m=(l+r)/2$), the leaves are labeled by length one queries. Going from leaves to the root, one can precompute the answers to all the queries in this tree in time $O(n)$. Then, it is possible to show that any query $(l,r)$ can be  partitioned into $O(\log n)$ queries that are stored in the tree. This gives an $(O(n), O(\log n))$ algorithm. It should be noted that the segment tree can also be used to solve the dynamic version of the range queries problem efficiently: to change the value of one of the elements of the input sequence, one needs to adjust the answers to $O(\log n)$ queries stored in the tree.
+
+\item[Algorithms by Yao and by Alon and Schieber.] Yao~\cite{DBLP:conf/stoc/Yao82} showed that, for any semigroup, it is possible to preprocess the input sequence in time $O(n)$ so that to further answer any query in time $O(\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function and proved a~matching lower bound. Later, Alon and Schieber~\cite{Alon87optimalpreprocessing} studied a~more specific question: what is the minimum number of semigroup operations needed at the preprocessing stage for being able to then answer any query in at most $k$~steps? They proved matching lower and upper bounds for every~$k$. As a~special case, they show how to preprocess the input sequence in time $O(n\log n)$ so that to answer any subsequent query by applying at most one semigroup operation. This algorithm generalizes the sparse table data structure (as it does not require the semigroup to be idempotent) and is particularly easy to describe. It is based on the divide-and-conquer paradigm. Let $m=n/2$. We precompute answers to all queries of the form $(i,m)$ and $(m+1,j)$, where $1 \le i \le m$ and $m+1 \le j \le n$ (i.e., suffixes of the left half and prefixes of the right half). This allows to answer in a~single step any query that intersects the middle of the sequence, i.e., queries $(l,r)$ such that $l \le m \le r$. All the remaining preprocessing boils down to answering queries that lie entirely in either left or right half. This can be done recursively for the halves. The corresponding recurrence relation $T(n)=2T(n/2)+O(n)$ implies an upper bound $O(n\log n)$ on preprocessing time (and hence, the number of semigroup operations).
+
+
+
+\item[$(O(n), O(1))$-type algorithms.]
+%Algorithm by Bender and Farach-Colton.]
+There is a~sequence of $(O(n), O(1))$-type algorithms designed specifically to the range minimum query problem and a~related problem called least common ancestor (LCA) \cite{}.{\todo{Sasha, give links}} Here, we briefly sketch the algorithm by Bender and Farach-Colton~\cite{DBLP:conf/latin/BenderF00}. 
+Its main idea is to first reduce RMQ to LCA. One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
+\end{description}
+
+\todo[inline]{Sasha, mention block/hybrid approaches}
