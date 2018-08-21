@@ -251,7 +251,7 @@ are already not at all straightforward.
 
 We prove a~sequence of more and more general results. In the first result, which is almost trivial,  commutativity is not even needed.
 
-\begin{lemma}
+\begin{lemma}\label{lemma:easy}
 Let $S$~be {\em any} semigroup (not necessarily commutative) and let $A \in \{0,1\}^{n \times n}$ contain at most one zero in every row. Then $C(Ax) \le O(n)$.
 \end{lemma}
 \begin{proof}
@@ -278,7 +278,7 @@ circuits.
 Let $A \in \{0,1\}^{n \times n}$ contain at most two zeros in every row. Then $C(Ax) \le O(n)$.
 \end{lemma}
 \begin{proof}[Proof sketch]
-Consider the following undirected graph: the set of vertices is $[n]$; two nodes $i$ and $j$ are joined by an edge, if there is a row having zeros in columns $i$ and $j$. The graph has $n$ edges and hence it contains a cut $(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into two parts ($L$ and $R$). Let now also split the rows into two parts: the top part $T$ contains all columns that have exactly one zero in both $L$ and $R$; the bottom part $B$ contains all the remaining rows. What is nice about the top part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$ gates. For the bottom part, let’s cut all-1 columns out of it and make a recursive call. The corresponding recurrence relation is $C(n) \le an + C(n/2)$ implying $C(n)=O(n)$.
+Consider the following undirected graph: the set of nodes is $[n]$; two nodes $i$ and $j$ are joined by an edge, if there is a~row having zeros in columns~$i$ and~$j$. The graph has $n$~edges and hence it contains a cut $(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into two parts ($L$ and $R$). Let now also split the rows into two parts: the top part $T$ contains all columns that have exactly one zero in both $L$ and $R$; the bottom part $B$ contains all the remaining rows. What is nice about the top part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$ gates. For the bottom part, let’s cut all-1 columns out of it and make a recursive call. The corresponding recurrence relation is $C(n) \le an + C(n/2)$ implying $C(n)=O(n)$.
 \todo[inline]{Andrey, rewrite this proof}
 \end{proof}
 
