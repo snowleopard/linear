@@ -81,13 +81,13 @@ matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 \todo[inline]{Volodya, introduce dense linear operators as a~special case. Mention its importance.}
 
 \subsection{Overview of New Results}
-\todo[inline]{Andrey, write this}
+\todo[inline]{Andrey, write this subsection}
 
 Thus, there are two conceptual messages in this paper:
 \begin{enumerate}
 \item For commutative semigroups, it is straightforward to compute a~linear operator $Ax$ with a~dense matrix~$A$ by a~linear size circuit. It turns out that this is also true in case $A$~is a~complement of a~dense matrix, though the corresponding circuits are already non-trivial.
 \item For non-commutative groups,
-\todo[inline]{to be written}
+\todo[inline]{Andrey, write this item}
 \end{enumerate}
 
 
@@ -105,6 +105,7 @@ compact algebraic representation of dense graphs
 Throughout this section we consider $n \times n$ matrices over an arbitrary
 semiring $(S, \circ, \bullet)$, where the operations $\circ$ and $\bullet$ have
 identities 0 and 1, respectively.
+\todo[inline]{Andrey, fix the notation. In particular, we should probably avoid using juxtaposition for $\bullet$ as we use it for $\circ$}
 
 A matrix is \emph{sparse} if most of its elements are 0. To be more precise, we
 further assume that a sparse matrix has $O(n)$ non-zero elements. Sparse
@@ -161,7 +162,7 @@ take linear time too.
 \todo[inline]{AK: Andrey, we should mention that counting triangles is not difficult even without our results}
 
 \subsubsection{Dense graph representation}\label{sec-dense-graph}
-
+\todo[inline]{Andrey, write this}
 
 
 \begin{itemize}
@@ -178,7 +179,7 @@ take linear time too.
 
 \section{General Setting}
 \subsection{Semigroups}
-\todo[inline]{Volodya, introduce semigroups, mention faithful semigroups (and why we need them), polish the needed lemmas. Also, mention idempotent and commutative groups and unify notation (should we always use {\em word} instead of {\em product}? or should we say that we use both terms?). Mention faithful semigroups. This should somehow be merged with subsection~\ref{subsec:algstr}}
+\todo[inline]{Volodya, introduce semigroups, mention faithful semigroups (and why we need them), polish the needed lemmas. Also, mention idempotent and commutative groups and unify notation (should we always use {\em word} instead of {\em product}? or should we say that we use both terms?). Mention faithful semigroups. Do not use letters, elements, and generators together. I suggest to stick to letters or group elements (and avoid using generators completely).}
 
 We need the following notations and facts on free idempotent semigroups~\cite{GreenR52}.
 
@@ -249,7 +250,9 @@ when~$A$ has~$k$ zeroes (rather than ones) and the
 corresponding semigroup is commutative. The resulting circuits 
 are already not at all straightforward.  
 
-We prove a~sequence of more and more general results. In the first result, which is almost trivial,  commutativity is not even needed.
+We prove a~sequence of more and more general result. In the first result, which is almost trivial,  commutativity is not even needed.
+
+%\subsection{Constant Maximum Row Density}
 
 \begin{lemma}\label{lemma:easy}
 Let $S$~be {\em any} semigroup (not necessarily commutative) and let $A \in \{0,1\}^{n \times n}$ contain at most one zero in every row. Then $C(Ax) \le O(n)$.
@@ -283,7 +286,10 @@ Consider the following undirected graph: the set of nodes is $[n]$; two nodes $i
 \todo[inline]{Andrey, polish this proof. Make sure that we use the same notation as in the rest of the paper. (I just copied this proof from stackexchange)}
 \end{proof}
 
-We now proceed to the most general case.
+It is possible to generalize the previous lemma to the case of
+any constant number of zeros in every row. Below we prove 
+an even more general result.
+
 \begin{theorem}\label{thm:main}
 A~matrix $A \in \{0,1\}^{n \times n}$ with $k$~zeros can 
 be computed by a~circuit of size $O(n+k)$.
@@ -380,7 +386,8 @@ with an $O(n)$ size circuit.
 Now consider any range of length at least $\log n$. Note that it 
 cannot lie entirely inside the block. Hence, any such range can be 
 decomposed into three subranges: a~suffix of a~block, a~range 
-of blocks, and a~prefix of a~block. For example, for $n=16$, 
+of blocks, and a~prefix of a~block
+(where any of the three components may be empty). For example, for $n=16$, 
 a~range $(2,13)$ is decomposed into a~suffix $(3,4)$ of the
 first block, 
 a~range $(2,3)$ of blocks, and a~prefix $(13,13)$ of 
@@ -390,9 +397,13 @@ the last block:
 \foreach \x in {1,...,16}
   \node at (\x,2) {\x};
 \draw[draw=white,fill=gray!20!white] (2.5,0.5) rectangle (13.5,1.5);  
+\foreach \x in {1,...,15}
+  \draw (\x+0.5,0.5) -- (\x+0.5,1.5);
 \draw (0.5,0.5) rectangle (16.5,1.5);
 \foreach \x in {4,8,12}
-  \draw (\x+0.5,0.4) -- (\x+0.5,1.6);
+  \draw[line width=.5mm] (\x+0.5,0.4) -- (\x+0.5,1.6);
+\foreach \x/\i in {2/1, 6/2, 10/3, 14/4}
+  \node at (\x+0.5,0) {$B_{\i}$};
 \end{tikzpicture}
 \end{center}
 It remains to note that all these three components are already precomputed.
@@ -490,7 +501,7 @@ If the commutative version of the range queries problem has $O(n)$ size circuits
 %If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
-\subsection{Dense Linear Operator to Range Queries}
+\subsection{Reducing Dense Linear Operator to Range Queries}
 In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the correct order. This is shown in Lemma~\ref{lemma:correctorder}. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeros in positions $l-1$ and $r+1$ (hence, this row consists of three queries: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the right order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it. 
 
 It should be mentioned, at the same time, that idempotency is tricky. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
@@ -597,7 +608,7 @@ Consider $P_F$ and $P_H$. By Claims~\ref{cl: h is good} and~\ref{cl: f is good},
 
 
 
-\subsection{Non-commutative Range Queries to Commutative Range Queries}
+\subsection{Reducing Non-commutative Range Queries to Commutative Range Queries}
 %{Proof of Lemma~\ref{lem:intervals}}
 \todo[inline]{Volodya, could you polish this? For this, wrap it to a proof, use capital letters for gates, use ${\cal C}$ to denote a circuit, etc}
 
