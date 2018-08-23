@@ -8,6 +8,7 @@
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[hidelinks]{hyperref}
 \usepackage{amsthm}
+\usepackage{tikz}
 
 
 \newtheorem{lemma}{Lemma}
@@ -418,7 +419,7 @@ In a~special case of the Boolean semigroup $(\{0,1\}, \lor)$, such circuits are 
 
 We start with an almost trivial special case.
 
-\begin{lemma}
+\begin{lemma}\label{lem:com_case_one_zero}
 Let $S$~be {\em any} semigroup (not necessarily commutative) and let $A \in \{0,1\}^{n \times n}$ contain at most one zero in every row. Then $C(Ax) \le O(n)$.
 \end{lemma}
 \begin{proof}
@@ -430,6 +431,41 @@ Similarly, in $(n-1)$ binary gates we compute all suffixes $s_j$ (for all $1 \le
 
 
 \subsection{Matrices with Constant Maximum Number of Zeros in Each Row}
+
+\begin{lemma}\label{lem:com_case_k_zero}
+Let S be a commutative semigroup and let $A \in \{0,1\}^{n \times m}$ contain at most $k$ zeros at every row. Then $\exists \alpha_k: ~ C(Ax) \leq \alpha_k (n+m)$.
+\end{lemma}
+
+\begin{proof}
+We will prove this by induction on $k$. The base case is provided by Lemma \ref{lem:com_case_one_zero}.
+
+Suppose we already know that Lemma \ref{lem:com_case_k_zero} is true for all $k' \leq k$. We will prove that it is true for the case $k$. In order to do this we will partition our matrix into $3$ submatrix. We will randomly color each column into red or blue color. Let $R$ be the set of red columns and $B$ be the set of blue. Let $X$ be set of all rows with exactly $k-1$ zeroes and $Y$ be the rest. We will consider following submatrices separatelly: $R \times X$, $B \times X$, $R \sqcup B \times Y$.
+
+\begin{center}
+    
+\begin{tikzpicture}
+
+\draw (0,0) -- (4,0) -- (4,4) -- (0,4) -- (0,0);
+
+\draw (0,0) -- (2.5,0) -- (2.5,3) -- (0,3) -- (0,0);
+
+\draw (4,0) -- (2.5,0) -- (2.5,3) -- (4,3) -- (4,0);
+
+\end{tikzpicture}
+
+\end{center}
+
+By induction hypotheses we know that we can multiply a vector by $R \times X$ using $\alpha_{k-1}(|R|+|X|)$ gates. We can multiply a vector by $B \times X$ using $\alpha_{1} (|B| + |X|)$. To multiply a vector by $R \sqcup B \times X$ we can multiply it by submatrices separately and then combine it using additional $|X|$ gates. Together this gives us following relation:
+
+\[ C((R \sqcup B \times X \sqcup Y)x ) \leq C((R \times X)x) + C((B \times X)x) + |X| + C((R \sqcup B \times Y)x) \leq \]
+
+\[\leq \alpha_{k-1}(|X| + |R|) + \alpha_{1}(|X| + |B|) + |X| + C((R \sqcup B \times Y)x) \leq 3 \alpha_{k-1} |X| + \alpha_{k-1} n + C((R \sqcup B \times Y)x)\]
+
+
+
+\end{proof}
+
+
 
 \subsection{Matrices with Constant Average Number of Zeros in Each Row}
 
