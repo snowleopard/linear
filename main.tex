@@ -62,7 +62,7 @@ size representations of dense graphs, and (ii) multiply dense $n\times n$
 matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 \end{abstract}
 
-\tableofcontents
+%\tableofcontents
 
 \section{Range Queries}
 %\todo[inline]{Andrey, Volodya, currently, I'm not very happy with the paper structure: 1. The first section is too long; we start proving new results on the ninth page only; we definitely need to move some parts to the appendix for the conference version; and we may want to do this even for preprint version; 2. Definitions on algebraic structures are given in the first section as well as in the second. Please, suggest ways to improve the structure. Perhaps the intro part should be one-two pages long starting with a brief problem statement and ending with our new result statement. Specifically, I suggest to move to the Appendix the following sections: \ref{subseq:rmqapp}, \ref{subsec:algstr}, and \ref{subsec:approaches}}
@@ -268,8 +268,9 @@ the redundant term).
 
 In the rest of the section, we assume that the underlying semigroup is commutative.
 Allowing at most two zeros per row already leads to a~non-trivial 
-problem. We give a~sketch of its solution as below we prove a~more general results.
- It is interesting to compare the following lemma 
+problem. We give a~sketch of its solution as 
+below we prove a~more general results.
+It is interesting to compare the following lemma 
 with Corollary~\ref{cor:noncommutativetwo} that states that in 
 the non-commutative setting we cannot hope for linear size 
 circuits. 
@@ -278,38 +279,152 @@ circuits.
 Let $A \in \{0,1\}^{n \times n}$ contain at most two zeros in every row. Then $C(Ax) \le O(n)$.
 \end{lemma}
 \begin{proof}[Proof sketch]
-Consider the following undirected graph: the set of nodes is $[n]$; two nodes $i$ and $j$ are joined by an edge, if there is a~row having zeros in columns~$i$ and~$j$. The graph has $n$~edges and hence it contains a cut $(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into two parts ($L$ and $R$). Let now also split the rows into two parts: the top part $T$ contains all columns that have exactly one zero in both $L$ and $R$; the bottom part $B$ contains all the remaining rows. What is nice about the top part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$ gates. For the bottom part, let’s cut all-1 columns out of it and make a recursive call. The corresponding recurrence relation is $C(n) \le an + C(n/2)$ implying $C(n)=O(n)$.
-\todo[inline]{Andrey, rewrite this proof}
+Consider the following undirected graph: the set of nodes is $[n]$; two nodes $i$ and $j$ are joined by an edge, if there is a~row having zeros in columns~$i$ and~$j$. The graph has $n$~edges and hence it contains a cut $(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into two parts ($L$ and $R$). Let now also split the rows into two parts: the top part $T$~contains all columns that have exactly one zero in both $L$ and $R$; the bottom part $B$ contains all the remaining rows. What is nice about the top part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$ gates (using Lemma~\ref{lemma:easy}). For the bottom part, let us cut all-1 columns out of it and make a recursive call. The corresponding recurrence relation is $C(n) \le an + C(n/2)$ implying $C(n)=O(n)$.
+\todo[inline]{Andrey, polish this proof. Make sure that we use the same notation as in the rest of the paper. (I just copied this proof from stackexchange)}
 \end{proof}
 
 We now proceed to the most general case.
-\begin{theorem}
+\begin{theorem}\label{thm:main}
 A~matrix $A \in \{0,1\}^{n \times n}$ with $k$~zeros can 
 be computed by a~circuit of size $O(n+k)$.
 \end{theorem}
-\begin{proof}
-Denote the set of rows and the set of columns of~$A$ by~$R$ and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows having at least $\log n$ zeros and $R_1=R \setminus R_0$. We compute the matrices $R_0 \times C$ and $R_1 \times C$ separately.
+
+We build the required circuit out of the basic building blocks described below. We first show how to use these blocks and then prove their existence.
+
+\begin{lemma}\label{lemma:decompose}
+There exists a~binary~circuit of size $O(n\log n)$ such that
+any range can be computed in a~single additional binary gate 
+using two gates of the circuit.
+\end{lemma}
+
+\begin{lemma}\label{lemma:blocks}
+There exists a~binary circuit of size $O(n)$ such that any range 
+of length at least $\log n$ can be computed in two binary 
+additional gates from the gates of the circuit.
+\end{lemma}
+
+\begin{lemma}\label{lemma:permute}
+Let $A \in \{0,1\}^n$ contains at most $\log n$ zeroes in 
+every row. Then there exists a~permutation of the rows of~$A$
+such that the total length of all ranges of length 
+at most $\log n$ is $O(\log^4 n)$.
+\end{lemma}
+
+
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+We first take a~permutation of the columns of the matrix 
+guaranteed by Lemma~\ref{lemma:permute}. At this stage, 
+we use commutativity of the ground semigroup essentially.
+We will compute all the ranges of~$A$. From these ranges, 
+it takes $O(n+k)$ additional wires to compute all the outputs.
+
+Denote the set of rows and the set of columns of~$A$ by~$R$
+and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
+having at least $\log n$ zeros and $R_1=R \setminus R_0$. We 
+compute the matrices $R_0 \times C$ and $R_1 \times C$ 
+separately. In a~few words, $R_0 \times C$ is easy to compute 
+as it has a~small number of rows (at most $k/\log n$). $R_1 \times C$ is easy since it has a~small number of zeroes in 
+every row (at most $\log n$).
 
 \emph{Computing $R_0 \times C$.} Thanks to 
 Observation~\ref{obs:transpose}, it suffices 
-to compute $C \times R_0$. Let 
-$|R_0|=t$. Clearly, $t \le k/\log n$. Since $C \times R_0$ 
-contains at most~$k$ zeroes, it contains at most $O(n+k)$ 
-ranges and it is enough to compute all of them. We compute all 
-of them in the divide-and-conquer fashion. Namely, assume that 
-the columns have indices $1, \dotsc, t$ and split them into two 
-halves: $1, \dotsc, t/2$ and $t/2+1,\dotsc, t$. Using $O(t)$
-gates one can compute all suffixes of the left half and all 
-prefixes of the right half. Using these precomputed suffixes and 
-prefixes one can answer any query $(l,r)$ such that $l \le t/2 
-\le r$ in a~single additional gate. It remains to answer all the queries that lie entirely in one of the halves. We do this by constructing recursively circuits for both halves. The resulting recurrence relation $T(t) \le 2T(t/2)+O(t)$ implies that the resulting circuit has size at most
-\[O(n+k+t\log t)=O\left(n+k+\frac{k}{\log n} \cdot \log k\right)=O(n+k)\, ,\]
+to compute $C \times R_0$. 
+Let $|R_0|=t$. Clearly, $t \le k/\log n$. 
+Using Lemma~\ref{lemma:decompose}, one can compute all
+ranges of $C \times R_0$ by a~circuit of size
+\[O(t\log t+k)=O\left(\frac{k}{\log n} \cdot \log k+k\right)=O(k+n)\, ,\]
 since $k \le n^2$.
 
-\emph{Computing $R_1 \times C$.}
-\todo[inline]{TBW}
+\emph{Computing $R_1 \times C$.} Each row of 
+$R_1 \times C$ contains at most $\log n$ zeros. Moreover,
+thanks to Lemma~\ref{lemma:permute}, the total length of all 
+ranges of length at most $\log n$ is $O(\log^4n)$. Hence, all 
+such short ranges can be computed by a~circuit of size~
+$O(\log^4n)=O(n)$. It remains to compute all the ranges of 
+length at least~$\log n$. This can be done using Lemma~\ref{lemma:blocks}.
 \end{proof}
 
+\begin{proof}[Proof of Lemma~\ref{lemma:decompose}]
+We adopt the divide-and-conquer construction by~Alon and Schieber~\cite{Alon87optimalpreprocessing}.
+Split the input range $(1,n)$ into two half-ranges of 
+length~$n/2$:
+$(1,n/2)$ and $(n/2+1,n)$. 
+Compute all suffixes of the left half and all prefixes of 
+the right half.
+Using these precomputed suffixes and 
+prefixes one can answer any query $(l,r)$ such that $l \le n/2 
+\le r$ in a~single additional gate. It remains to be able to answer 
+queries that lie entirely in one of the halves. We do this by 
+constructing recursively circuits for both halves. The resulting 
+recurrence relation $T(n) \le 2T(n/2)+O(n)$ implies that the
+resulting circuit has size at most $O(n\log n)$.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lemma:blocks}]
+We use the block decomposition technique for 
+constructing the required circuit.
+Partition the input range $(1,n)$ into $n/\log n$ ranges 
+of length $\log n$ and call them blocks. Compute the range
+corresponding to each block (in total size $O(n)$). 
+%and denote 
+%the results by $b_1, \dotsc, b_{n/\log n}$. 
+Now, build a~circuit from Lemma~\ref{lemma:decompose} on 
+top of these blocks. The size of this circuit is $O(n)$ since the 
+number of blocks is $n/\log n$. 
+
+Now, compute all prefixes and all suffixes of every block. Since
+the block partition the input range $(1,n)$, this also can be done 
+with an $O(n)$ size circuit.
+
+Now consider any range of length at least $\log n$. Note that it 
+cannot lie entirely inside the block. Hence, any such range can be 
+decomposed into three subranges: a~suffix of a~block, a~range 
+of blocks, and a~prefix of a~block. For example, for $n=16$, 
+a~range $(2,13)$ is decomposed into a~suffix $(3,4)$ of the
+first block, 
+a~range $(2,3)$ of blocks, and a~prefix $(13,13)$ of 
+the last block:
+\begin{center}
+\begin{tikzpicture}
+\foreach \x in {1,...,16}
+  \node at (\x,2) {\x};
+\draw[draw=white,fill=gray!20!white] (2.5,0.5) rectangle (13.5,1.5);  
+\draw (0.5,0.5) rectangle (16.5,1.5);
+\foreach \x in {4,8,12}
+  \draw (\x+0.5,0.4) -- (\x+0.5,1.6);
+\end{tikzpicture}
+\end{center}
+It remains to note that all these three components are already precomputed.
+\end{proof}
+
+\begin{proof}[(Probabilistic) Proof of Lemma~\ref{lemma:permute}.]
+Permute the columns randomly and compute the expectation of 
+the total length of ranges of length at least $\log n$. Call such ranges short. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that it belongs to a~segment of length $\log n$? There are two cases to consider.
+\begin{enumerate}
+\item The cell lies close to the border, i.e., it is belongs to 
+the first $\log n$ cells or in the last~$\log n$ cells 
+(the number of such cells is $2\log n$). Then, 
+this cell belongs to a~short range, if there is at least one zero 
+in $\log n$ cells close to it (on the side opposite to the border).
+Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeros may be anywhere. 
+The probability is then at most
+\[\log n \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}}=\log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
+\item It is not close to the border (the number of such cells is $n-2\log n$). Then, there must be a~zero on both sides of the
+cell. The probability is then at most
+\[\log^2 n \cdot \frac{\binom{n}{t}}{\binom{n}{t-2}}=\log^2n \cdot \frac{t(t-1)}{(n-t+1)(n-t+2)}=O\left(\frac{\log^4 n}{n^2}\right) \, .\]
+\end{enumerate}
+Hence, the expected total length of short ranges in one row is
+\[O\left( 2\log n \cdot \frac{\log^2 n}{n} + (n-2\log n) \cdot \frac{\log^4 n}{n^2}\right)=O\left(\frac{\log^4 n}{n}\right) \, .\]
+Multiplying this by the number of rows gives the desired upper bound.
+\end{proof}
+
+We complement this proof by presenting a~constructive solution.
+
+\begin{proof}[(Constructive) Proof of Lemma~\ref{lemma:permute}]
+
+\todo[inline]{Volodya, write this}
+\end{proof}
 
 \section{Non-commutative Case}
 
@@ -520,7 +635,7 @@ Now, observe that $\num(g)$ has increased (by the first coordinate). There are n
 %\todo[inline]{Andrey, go!}
 
 \section{Acknowledgments}
-We thank Paweł Gawrychowski for pointing us out to the paper~\cite{}.
+We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
 \bibliographystyle{plain}
 \bibliography{text}
