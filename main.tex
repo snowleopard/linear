@@ -400,7 +400,7 @@ It remains to note that all these three components are already precomputed.
 
 \begin{proof}[(Probabilistic) Proof of Lemma~\ref{lemma:permute}.]
 Permute the columns randomly and compute the expectation of 
-the total length of ranges of length at least $\log n$. Call such ranges short. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that it belongs to a~segment of length $\log n$? There are two cases to consider.
+the total length of ranges of length at most $\log n$. Call such ranges short. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that it belongs to a~segment of length $\log n$? There are two cases to consider.
 \begin{enumerate}
 \item The cell lies close to the border, i.e., it is belongs to 
 the first $\log n$ cells or in the last~$\log n$ cells 
