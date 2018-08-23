@@ -402,10 +402,10 @@ It remains to note that all these three components are already precomputed.
 Permute the columns randomly and compute the expectation of 
 the total length of ranges of length at most $\log n$. Call such ranges short. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that it belongs to a~segment of length $\log n$? There are two cases to consider.
 \begin{enumerate}
-\item The cell lies close to the border, i.e., it is belongs to 
-the first $\log n$ cells or in the last~$\log n$ cells 
+\item The cell lies close to the border, i.e., it belongs to 
+the first $\log n$ cells or to the last~$\log n$ cells 
 (the number of such cells is $2\log n$). Then, 
-this cell belongs to a~short range, if there is at least one zero 
+this cell belongs to a~short range iff there is at least one zero 
 in $\log n$ cells close to it (on the side opposite to the border).
 Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeros may be anywhere. 
 The probability is then at most
