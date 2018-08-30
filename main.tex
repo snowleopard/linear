@@ -59,7 +59,7 @@ queries, but crucial for dense operators. Moreover, without commutativity both
 problems are equivalent. To highlight potential applications of the presented
 linear size constructions, we show how they can be used to (i) obtain linear
 size representations of dense graphs, and (ii) multiply dense $n\times n$
-matrices over an arbitrary commutative semiring in $O(n^2)$ time.
+matrices over an arbitrary semiring in $O(n^2)$ time.
 \end{abstract}
 
 %\tableofcontents
@@ -69,14 +69,7 @@ matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 
 
 \subsection{Problem Statement}
-{\em Range queries} is a~classical problem in data structures and algorithms having a~variety of applications in fields like bioinformatics and string algorithms, computational geometry, image analysis, real-time systems, and others (we briefly review some of the applications in Subsection~\ref{subseq:rmqapp} as well as a~rich variety of algebraic techniques for the range queries problem in Subsection~\ref{subsec:approaches}). For a~fixed semigroup with operation~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of semigroup elements (we provide an overview of frequently used semigroups and other algebraic structures in Subsection~\ref{subsec:algstr}). Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operation to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $r-l+1$, the time of a~naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the {\em offline} version, where one is given a~sequence together with all the queries, and are interested in the minimum number of semigroup operations needed to answer all the queries. Moreover, we study a~more general problem: we assume that $x_1, \dotsc, x_n$ are formal variables rather than actual semigroup algorithms. That is, we study the circuit size of the corresponding computation problem (the formal definition of the computational model is given later in the text).
-
-%\todo[inline]{AM: In fact, we don't need to know the sequence
-%$x_1, x_2, \dotsc, x_n$ upfront. We need only the queries, and as a result we
-%produce a circuit that is good for any possible sequence. I think it may be
-%worth highlighting this, since we solve a harder problem than just the offline
-%version of RQ.}
-%\todo[inline]{AK: Andrey, done! Please check and remove these todo items.}
+{\em Range queries} is a~classical problem in data structures and algorithms having a~variety of applications in fields like bioinformatics and string algorithms, computational geometry, image analysis, real-time systems, and others (we briefly review some of the applications in Subsection~\ref{subseq:rmqapp} as well as a~rich variety of algebraic techniques for the range queries problem in Subsection~\ref{subsec:approaches}). For a~fixed semigroup with operation~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of semigroup elements (we provide an overview of frequently used semigroups and other algebraic structures in Subsection~\ref{subsec:algstr}). Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operation to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $r-l+1$, the time of a~naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the {\em offline} version, where one is given a~sequence together with all the queries, and are interested in the minimum number of semigroup operations needed to answer all the queries. Moreover, we study a~more general problem: we assume that $x_1, \dotsc, x_n$ are formal variables rather than actual semigroup values. That is, we study the circuit size of the corresponding computation problem (the formal definition of the computational model is given later in the text).
 
 \todo[inline]{Volodya, introduce dense linear operators as a~special case. Mention its importance.}
 
@@ -85,7 +78,7 @@ matrices over an arbitrary commutative semiring in $O(n^2)$ time.
 
 Thus, there are two conceptual messages in this paper:
 \begin{enumerate}
-\item For commutative semigroups, it is straightforward to compute a~linear operator $Ax$ with a~dense matrix~$A$ by a~linear size circuit. It turns out that this is also true in case $A$~is a~complement of a~dense matrix, though the corresponding circuits are already non-trivial.
+\item For commutative semigroups, it is straightforward to compute a~linear operator $Ax$ with a~sparse matrix~$A$ by a~linear size circuit. It turns out that this is also true in case $A$~is a~complement of a~sparse matrix, though the corresponding circuits are already non-trivial.
 \item For non-commutative groups,
 \todo[inline]{Andrey, write this item}
 \end{enumerate}
@@ -222,7 +215,7 @@ For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and 
 \end{tikzpicture}
 \end{center}
 
-For a~0/1-matrix~$A$, by $C(A)$ we denote the minimum 
+For a~0/1-matrix~$A$, by $C(A)$ we denote the minimum
 number of gates in a~circuit computing the function $Ax$.
 \begin{observation}\label{obs:transpose}
 For any $0/1$-matrix~$A$, $C(A)=C(A^T)$.
@@ -243,12 +236,12 @@ In a~special case of the Boolean semigroup $(\{0,1\}, \lor)$, such circuits are 
 
 \section{Commutative Case}
 It is easy to see that a~matrix $A \in \{0,1\}^{n \times n}$
-with~$k$ ones can be computed by a~circuit of size $O(n+k)$. 
-The corresponding circuit is straightforward. The main goal of 
-this section is to prove the same lower bound for the case 
-when~$A$ has~$k$ zeroes (rather than ones) and the 
-corresponding semigroup is commutative. The resulting circuits 
-are already not at all straightforward.  
+with~$k$ ones can be computed by a~circuit of size $O(n+k)$.
+The corresponding circuit is straightforward. The main goal of
+this section is to prove the same lower bound for the case
+when~$A$ has~$k$ zeroes (rather than ones) and the
+corresponding semigroup is commutative. The resulting circuits
+are already not at all straightforward.
 
 We prove a~sequence of more and more general result. In the first result, which is almost trivial,  commutativity is not even needed.
 
@@ -260,23 +253,23 @@ Let $S$~be {\em any} semigroup (not necessarily commutative) and let $A \in \{0,
 \begin{proof}
 We first precompute all prefixes and suffixes of $x_1, \dotsc, x_n$. Namely, let $p_i=x_1x_2\dotsb x_i$. All $p_i$'s can be computed in $(n-1)$ binary gates as follows:
 \[p_1=x_1, p_2=p_1x_2, p_3=p_2x_3, \dotsc, p_i=p_{i-1}x_i, \dotsc, p_n=p_{n-1}x_n \, .\]
-Similarly, in $(n-1)$ binary gates we compute all suffixes $s_j$ 
-(for all $1 \le j \le n$) where $s_j=x_jx_{j+1}\dotsc x_n$. From 
-these prefixes and suffixes all the outputs can be computed as 
-follows: if a~row of~$A$ contains no zeros, the corresponding 
-output is~$p_n$; if a~row contains a~zero in position~$i$, the 
-output is $p_{i-1}s_{i+1}$ (for $i=1$ and $i=n$ we just omit 
+Similarly, in $(n-1)$ binary gates we compute all suffixes $s_j$
+(for all $1 \le j \le n$) where $s_j=x_jx_{j+1}\dotsc x_n$. From
+these prefixes and suffixes all the outputs can be computed as
+follows: if a~row of~$A$ contains no zeros, the corresponding
+output is~$p_n$; if a~row contains a~zero in position~$i$, the
+output is $p_{i-1}s_{i+1}$ (for $i=1$ and $i=n$ we just omit
 the redundant term).
 \end{proof}
 
 In the rest of the section, we assume that the underlying semigroup is commutative.
-Allowing at most two zeros per row already leads to a~non-trivial 
-problem. We give a~sketch of its solution as 
+Allowing at most two zeros per row already leads to a~non-trivial
+problem. We give a~sketch of its solution as
 below we prove a~more general results.
-It is interesting to compare the following lemma 
-with Corollary~\ref{cor:noncommutativetwo} that states that in 
-the non-commutative setting we cannot hope for linear size 
-circuits. 
+It is interesting to compare the following lemma
+with Corollary~\ref{cor:noncommutativetwo} that states that in
+the non-commutative setting we cannot hope for linear size
+circuits.
 
 \begin{lemma}
 Let $A \in \{0,1\}^{n \times n}$ contain at most two zeros in every row. Then $C(Ax) \le O(n)$.
@@ -287,11 +280,11 @@ Consider the following undirected graph: the set of nodes is $[n]$; two nodes $i
 \end{proof}
 
 It is possible to generalize the previous lemma to the case of
-any constant number of zeros in every row. Below we prove 
+any constant number of zeros in every row. Below we prove
 an even more general result.
 
 \begin{theorem}\label{thm:main}
-A~matrix $A \in \{0,1\}^{n \times n}$ with $k$~zeros can 
+A~matrix $A \in \{0,1\}^{n \times n}$ with $k$~zeros can
 be computed by a~circuit of size $O(n+k)$.
 \end{theorem}
 
@@ -299,104 +292,104 @@ We build the required circuit out of the basic building blocks described below. 
 
 \begin{lemma}\label{lemma:decompose}
 There exists a~binary~circuit of size $O(n\log n)$ such that
-any range can be computed in a~single additional binary gate 
+any range can be computed in a~single additional binary gate
 using two gates of the circuit.
 \end{lemma}
 
 \begin{lemma}\label{lemma:blocks}
-There exists a~binary circuit of size $O(n)$ such that any range 
-of length at least $\log n$ can be computed in two binary 
+There exists a~binary circuit of size $O(n)$ such that any range
+of length at least $\log n$ can be computed in two binary
 additional gates from the gates of the circuit.
 \end{lemma}
 
 \begin{lemma}\label{lemma:permute}
-Let $A \in \{0,1\}^n$ contains at most $\log n$ zeroes in 
+Let $A \in \{0,1\}^n$ contains at most $\log n$ zeroes in
 every row. Then there exists a~permutation of the rows of~$A$
-such that the total length of all ranges of length 
+such that the total length of all ranges of length
 at most $\log n$ is $O(\log^4 n)$.
 \end{lemma}
 
 
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
-We first take a~permutation of the columns of the matrix 
-guaranteed by Lemma~\ref{lemma:permute}. At this stage, 
+We first take a~permutation of the columns of the matrix
+guaranteed by Lemma~\ref{lemma:permute}. At this stage,
 we use commutativity of the ground semigroup essentially.
-We will compute all the ranges of~$A$. From these ranges, 
+We will compute all the ranges of~$A$. From these ranges,
 it takes $O(n+k)$ additional wires to compute all the outputs.
 
 Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
-having at least $\log n$ zeros and $R_1=R \setminus R_0$. We 
-compute the matrices $R_0 \times C$ and $R_1 \times C$ 
-separately. In a~few words, $R_0 \times C$ is easy to compute 
-as it has a~small number of rows (at most $k/\log n$). $R_1 \times C$ is easy since it has a~small number of zeroes in 
+having at least $\log n$ zeros and $R_1=R \setminus R_0$. We
+compute the matrices $R_0 \times C$ and $R_1 \times C$
+separately. In a~few words, $R_0 \times C$ is easy to compute
+as it has a~small number of rows (at most $k/\log n$). $R_1 \times C$ is easy since it has a~small number of zeroes in
 every row (at most $\log n$).
 
-\emph{Computing $R_0 \times C$.} Thanks to 
-Observation~\ref{obs:transpose}, it suffices 
-to compute $C \times R_0$. 
-Let $|R_0|=t$. Clearly, $t \le k/\log n$. 
+\emph{Computing $R_0 \times C$.} Thanks to
+Observation~\ref{obs:transpose}, it suffices
+to compute $C \times R_0$.
+Let $|R_0|=t$. Clearly, $t \le k/\log n$.
 Using Lemma~\ref{lemma:decompose}, one can compute all
 ranges of $C \times R_0$ by a~circuit of size
 \[O(t\log t+k)=O\left(\frac{k}{\log n} \cdot \log k+k\right)=O(k+n)\, ,\]
 since $k \le n^2$.
 
-\emph{Computing $R_1 \times C$.} Each row of 
+\emph{Computing $R_1 \times C$.} Each row of
 $R_1 \times C$ contains at most $\log n$ zeros. Moreover,
-thanks to Lemma~\ref{lemma:permute}, the total length of all 
-ranges of length at most $\log n$ is $O(\log^4n)$. Hence, all 
+thanks to Lemma~\ref{lemma:permute}, the total length of all
+ranges of length at most $\log n$ is $O(\log^4n)$. Hence, all
 such short ranges can be computed by a~circuit of size~
-$O(\log^4n)=O(n)$. It remains to compute all the ranges of 
+$O(\log^4n)=O(n)$. It remains to compute all the ranges of
 length at least~$\log n$. This can be done using Lemma~\ref{lemma:blocks}.
 \end{proof}
 
 \begin{proof}[Proof of Lemma~\ref{lemma:decompose}]
 We adopt the divide-and-conquer construction by~Alon and Schieber~\cite{Alon87optimalpreprocessing}.
-Split the input range $(1,n)$ into two half-ranges of 
+Split the input range $(1,n)$ into two half-ranges of
 length~$n/2$:
-$(1,n/2)$ and $(n/2+1,n)$. 
-Compute all suffixes of the left half and all prefixes of 
+$(1,n/2)$ and $(n/2+1,n)$.
+Compute all suffixes of the left half and all prefixes of
 the right half.
-Using these precomputed suffixes and 
-prefixes one can answer any query $(l,r)$ such that $l \le n/2 
-\le r$ in a~single additional gate. It remains to be able to answer 
-queries that lie entirely in one of the halves. We do this by 
-constructing recursively circuits for both halves. The resulting 
+Using these precomputed suffixes and
+prefixes one can answer any query $(l,r)$ such that $l \le n/2
+\le r$ in a~single additional gate. It remains to be able to answer
+queries that lie entirely in one of the halves. We do this by
+constructing recursively circuits for both halves. The resulting
 recurrence relation $T(n) \le 2T(n/2)+O(n)$ implies that the
 resulting circuit has size at most $O(n\log n)$.
 \end{proof}
 
 \begin{proof}[Proof of Lemma~\ref{lemma:blocks}]
-We use the block decomposition technique for 
+We use the block decomposition technique for
 constructing the required circuit.
-Partition the input range $(1,n)$ into $n/\log n$ ranges 
+Partition the input range $(1,n)$ into $n/\log n$ ranges
 of length $\log n$ and call them blocks. Compute the range
-corresponding to each block (in total size $O(n)$). 
-%and denote 
-%the results by $b_1, \dotsc, b_{n/\log n}$. 
-Now, build a~circuit from Lemma~\ref{lemma:decompose} on 
-top of these blocks. The size of this circuit is $O(n)$ since the 
-number of blocks is $n/\log n$. 
+corresponding to each block (in total size $O(n)$).
+%and denote
+%the results by $b_1, \dotsc, b_{n/\log n}$.
+Now, build a~circuit from Lemma~\ref{lemma:decompose} on
+top of these blocks. The size of this circuit is $O(n)$ since the
+number of blocks is $n/\log n$.
 
 Now, compute all prefixes and all suffixes of every block. Since
-the block partition the input range $(1,n)$, this also can be done 
+the block partition the input range $(1,n)$, this also can be done
 with an $O(n)$ size circuit.
 
-Now consider any range of length at least $\log n$. Note that it 
-cannot lie entirely inside the block. Hence, any such range can be 
-decomposed into three subranges: a~suffix of a~block, a~range 
+Now consider any range of length at least $\log n$. Note that it
+cannot lie entirely inside the block. Hence, any such range can be
+decomposed into three subranges: a~suffix of a~block, a~range
 of blocks, and a~prefix of a~block
-(where any of the three components may be empty). For example, for $n=16$, 
+(where any of the three components may be empty). For example, for $n=16$,
 a~range $(2,13)$ is decomposed into a~suffix $(3,4)$ of the
-first block, 
-a~range $(2,3)$ of blocks, and a~prefix $(13,13)$ of 
+first block,
+a~range $(2,3)$ of blocks, and a~prefix $(13,13)$ of
 the last block:
 \begin{center}
 \begin{tikzpicture}
 \foreach \x in {1,...,16}
   \node at (\x,2) {\x};
-\draw[draw=white,fill=gray!20!white] (2.5,0.5) rectangle (13.5,1.5);  
+\draw[draw=white,fill=gray!20!white] (2.5,0.5) rectangle (13.5,1.5);
 \foreach \x in {1,...,15}
   \draw (\x+0.5,0.5) -- (\x+0.5,1.5);
 \draw (0.5,0.5) rectangle (16.5,1.5);
@@ -410,15 +403,15 @@ It remains to note that all these three components are already precomputed.
 \end{proof}
 
 \begin{proof}[(Probabilistic) Proof of Lemma~\ref{lemma:permute}.]
-Permute the columns randomly and compute the expectation of 
+Permute the columns randomly and compute the expectation of
 the total length of ranges of length at most $\log n$. Call such ranges short. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that it belongs to a~segment of length $\log n$? There are two cases to consider.
 \begin{enumerate}
-\item The cell lies close to the border, i.e., it belongs to 
-the first $\log n$ cells or to the last~$\log n$ cells 
-(the number of such cells is $2\log n$). Then, 
-this cell belongs to a~short range iff there is at least one zero 
+\item The cell lies close to the border, i.e., it belongs to
+the first $\log n$ cells or to the last~$\log n$ cells
+(the number of such cells is $2\log n$). Then,
+this cell belongs to a~short range iff there is at least one zero
 in $\log n$ cells close to it (on the side opposite to the border).
-Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeros may be anywhere. 
+Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeros may be anywhere.
 The probability is then at most
 \[\log n \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}}=\log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
 \item It is not close to the border (the number of such cells is $n-2\log n$). Then, there must be a~zero on both sides of the
@@ -439,7 +432,7 @@ We complement this proof by presenting a~constructive solution.
 
 \section{Non-commutative Case}
 
-In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. 
+In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators.
 
 %In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. We do this by showing that, in the non-commutative case, the dense linear operator problem has linear size circuits iff the range queries problem has linear size circuits. We then use a~lower bound $\Omega(n\alpha(n))$ for the latter problem (over faithful semigroups) by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
@@ -453,7 +446,7 @@ We prove this theorem by establishing the following equivalence. The equivalence
 Commutative range queries problem has $O(n)$ size circuits iff non-commutative dense linear operator problem has $O(n)$ size circuits.
 \end{theorem}
 
-Using this theorem, it is straightforward to prove 
+Using this theorem, it is straightforward to prove
 Theorem~\ref{thm:noncommlowerbound}.
 
 \begin{proof}[Proof of Theorem~\ref{thm:noncommlowerbound}]
@@ -502,7 +495,7 @@ If the commutative version of the range queries problem has $O(n)$ size circuits
 \end{lemma}
 
 \subsection{Reducing Dense Linear Operator to Range Queries}
-In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the correct order. This is shown in Lemma~\ref{lemma:correctorder}. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeros in positions $l-1$ and $r+1$ (hence, this row consists of three queries: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the right order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it. 
+In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the correct order. This is shown in Lemma~\ref{lemma:correctorder}. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeros in positions $l-1$ and $r+1$ (hence, this row consists of three queries: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the right order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
 
 It should be mentioned, at the same time, that idempotency is tricky. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
 This is not extremely impressive, since to get $xyz$ we multiply by $xyz$, but the point is that this is possible in principle.
@@ -557,7 +550,7 @@ Take an~increasing circuit computing $Ax$ and process all its gates in some topo
 
 \begin{proof}[Proof of Lemma~\ref{lemma:correctorder}]
 Consider a~binary circuit~${\cal C}$ computing~$Ax$ and its gate~$G$ together with a~variable~$x_i$ it depends on.
-We say that $x_i$ is \emph{good} in~$G$ if there is 
+We say that $x_i$ is \emph{good} in~$G$ if there is
 a~path in~${\cal C}$ from $G$ to an output gate, on which the word is never multiplied from the left by words containing variables greater than or equal to $x_i$.
 Note that if $x_i$ and $x_{i'}$ are both contained in $G$, $i<i'$, and $x_i$ is good in~$G$, then $x_{i'}$ is good in~$G$, too. That is, the set of all good variables in~$G$ is closed upwards.
 
@@ -571,15 +564,15 @@ All first occurrences of other good variables in~$G$ must be to the left of the 
 Suppose that a~good variable $x_i$ has the first occurrence to the right of (the first occurrence of) $x_k$. Consider an output gate $H$ such that there is a~path from~$G$ to~$H$ and along this path there are no multiplications of $G$ from the left by words containing variables greater than~$x_i$. Then we have $H \sim LGR$, where all variables of~$L$ are smaller then~$x_i$. Then in $H$ the variable $x_i$ appears before $x_k$ when we read from left to right, but at the same time we have that $x_k$ appears before $x_i$. This contradicts Lemma~\ref{lem:variables_order}.
 \end{proof}
 
-Now, for a~gate~$G$, define two words $\mmin_G$ and $\mmax_G$. Both these words are products of variables in the increasing order: $\mmin_G$ is the product of good letters of $G$ in the increasing order, $\mmax_G$ is the product (in the increasing order) of all letters that has first occurrences before (the first occurrence of) $x_k$. Note that $\mmin_G$ is 
+Now, for a~gate~$G$, define two words $\mmin_G$ and $\mmax_G$. Both these words are products of variables in the increasing order: $\mmin_G$ is the product of good letters of $G$ in the increasing order, $\mmax_G$ is the product (in the increasing order) of all letters that has first occurrences before (the first occurrence of) $x_k$. Note that $\mmin_G$ is
 a~suffix of $\mmax_G$. If there are no good letters in $G$ we just let $\mmin_g=\mmax_g=\lambda$ (the empty word).
 %
-For the word~$W$ that has the form of the product of variables in the increasing order, we call $x_j$ a~\emph{gap variable} if it is not contained in $W$ 
+For the word~$W$ that has the form of the product of variables in the increasing order, we call $x_j$ a~\emph{gap variable} if it is not contained in $W$
 while $W$~contains variables $x_i$ and $x_k$ with $i < j < k$.
 
 Below we show how for a~given circuit~${\cal C}$ to construct an increasing circuit~${\cal C}'$ that for each gate~$G$ of~$C$ computes some intermediate product $P_G$ between $\mmin_G$ and $\mmax_G$: $\mmin_g$ is a~suffix of $P_G$ and $P_G$ is a~suffix of $\mmax_g$. The size of~${\cal C}'$ is at most the size of~${\cal C}$. For an output gate~$G$, $\mmin_g=\mmax_g=g$ hence the circuit ${\cal C}'$ computes the correct outputs.
 
-To construct ${\cal C}'$, we process the gates of~${\cal C}$ in a~topological ordering. If $G$~is an input gate, everything is straightforward: in this case $\mmax_G$ is either $\lambda$ or $x_j$. Assume now that $G$ is an internal gate with predecessors~$F$ and~$H$. 
+To construct ${\cal C}'$, we process the gates of~${\cal C}$ in a~topological ordering. If $G$~is an input gate, everything is straightforward: in this case $\mmax_G$ is either $\lambda$ or $x_j$. Assume now that $G$ is an internal gate with predecessors~$F$ and~$H$.
 Consider the set of good variables in~$G$. If there are none, we let $P_G=\lambda$. If all first occurrences of good variable of $G$ are lying in one of the predecessors ($F$~and~$H$), then they are good in the corresponding input gate. We then set $P_G$ to $P_F$ or $P_H$.
 
 The only remaining case is that some good variables have their first occurrence in~$F$ while some others have their first occurrence in~$H$. Then the largest variable $x_k$ of~$G$ has the first occurrence in $H$ and all variables of~$F$ are smaller than~$x_k$.
@@ -603,7 +596,7 @@ Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. But then the vari
 \end{proof}
 
 We are now ready to complete the proof of Lemma~\ref{lemma:correctorder}.
-Consider $P_F$ and $P_H$. By Claims~\ref{cl: h is good} and~\ref{cl: f is good}, we know that they are ranges in the same sequence of variables $\var(P_F)\cup \var(P_H)$. We know that the largest variables of $P_H$ is greater than all variables of $P_f$. Then either $P_F$ is contained in $P_H$, and then we can let $P_G=P_H$ (it contains all good variables of~$G$), or we have $P_F =PQ$ and $P_H=QR$ for some words $P, Q, R$. In this case we let $P_G = P_F \cdot P_H = PQQR=PQR$. Clearly, $\mmin_G$ is the suffix of $P_G$ and $P_G$ itself is the suffix of $\mmax_G$. 
+Consider $P_F$ and $P_H$. By Claims~\ref{cl: h is good} and~\ref{cl: f is good}, we know that they are ranges in the same sequence of variables $\var(P_F)\cup \var(P_H)$. We know that the largest variables of $P_H$ is greater than all variables of $P_f$. Then either $P_F$ is contained in $P_H$, and then we can let $P_G=P_H$ (it contains all good variables of~$G$), or we have $P_F =PQ$ and $P_H=QR$ for some words $P, Q, R$. In this case we let $P_G = P_F \cdot P_H = PQQR=PQR$. Clearly, $\mmin_G$ is the suffix of $P_G$ and $P_G$ itself is the suffix of $\mmax_G$.
 \end{proof}
 
 
