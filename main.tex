@@ -36,30 +36,23 @@
 \title{Computing Dense Linear Operators by Linear Size Circuits: Commutativity is Essential}
 \maketitle
 
-
 \begin{abstract}
-%\todo[inline]{AM: I don't think we should put Range Queries at the front of the
-%paper. I think this distracts from the two main points that we'd like to make:
-%(i) dense/boring matrices are as ``easy'' as sparse matrices, and
-%(ii) commutativity is central to obtaining linear constructions. We could still
-%mention in the abstract that in non-commutative settings the problems that we
-%are solving become equivalent to classic Range Queries, from which we derive
-%the superlinear lower bound}
+We study the complexity of \emph{dense} 0/1 matrices, i.e. $n \times n$ matrices
+that contain $O(n)$ zeros. More specifically, we are interested in the
+complexity of computing the dense linear operator $\mathbf{y} = A\mathbf{x}$,
+where $A$ is a dense matrix, and~$\mathbf{x}$ is a vector over an arbitrary
+semigroup: How many semigroup operations are needed to simultaneously compute
+all values of the resulting vector~$\mathbf{y}$?
 
-%\todo[inline]{AK: Andrey, I do agree. Adjusted the title. Please adjust title/abstract further.}
+Our two main results are: (i) we present a linear-size solution for the case
+when the semigroup is commutative, and (ii) we prove that the non-commutative
+case is strictly harder and is equivalent to the classic Range Queries
+problem~--~the corresponding $O(n\alpha(n))$-size circuits are readily obtained
+by applying the Yao's Range Queries algorithm.
 
-We revisit the classical problem of computing range queries over a semigroup and
-its natural special case~--~computing a dense linear operator. We are interested
-in the minimum number of semigroup operations needed to answer all the queries.
-For commutative semigroups, we show that the special case is strictly easier:
-while for range queries a~superlinear lower bound is known, a dense linear
-operator can be computed by linear size circuits. We then study the role of
-commutativity in these problems: it turns out to be unimportant for range
-queries, but crucial for dense operators. Moreover, without commutativity both
-problems are equivalent. To highlight potential applications of the presented
-linear size constructions, we show how they can be used to (i) obtain linear
-size representations of dense graphs, and (ii) multiply dense $n\times n$
-matrices over an arbitrary semiring in $O(n^2)$ time.
+As a simple application of the presented linear-size construction, we show how
+to multiply dense $n\times n$ matrices over an arbitrary semiring in $O(n^2)$
+time.
 \end{abstract}
 
 %\tableofcontents
