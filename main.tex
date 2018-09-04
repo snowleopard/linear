@@ -69,22 +69,24 @@ only partially correct. Consider a \emph{dense linear operator}
 \mathbf{y} = A\mathbf{x},
 \]
 where $A$ is a dense matrix and~$\mathbf{x}=(x_1, \cdots, x_n)$ is a vector over
-an arbitrary semigroup $(S, \circ)$. Our goal is to simultaneously compute all
-elements of the resulting vector $\mathbf{y}=(y_1, \cdots, y_n)$, such that
+an arbitrary semigroup\footnote{See Section~\ref{subsec:algstr} for definitions
+and examples of algebraic structures used in this paper.} $(S, \circ)$. Our goal
+is to simultaneously compute all elements of the resulting vector
+$\mathbf{y}=(y_1, \cdots, y_n)$, where
 
 \begin{equation}\label{eq-sum}
 y_i = \sum_{A_{ij}=1} x_j
 \end{equation}
 
 \noindent
-for all $1 \le i \le n$, where the ``summation'' is over the semigroup operation
+for all $1 \le i \le n$, and the ``summation'' is over the semigroup operation
 $\circ$. What is the size of the smallest circuit comprising 2-input gates
 $\circ$ that computes $\mathbf{y}$?
 
 Note that if $A$ is sparse, i.e. contains $O(n)$ ones, then~(\ref{eq-sum})
 directly yields a linear-size circuit. Furthermore, if the summation is over a
 \emph{commutative group} rather than just a semigroup, then the dense case can
-be reduced to the sparse one by subtracting $y_i$ from the sum
+be reduced to the sparse one by \emph{subtracting} $y_i$ from the sum
 $x_1 \circ \cdots \circ x_n$.
 
 A natural solution that first comes to mind in the semigroup case is to split
@@ -113,26 +115,20 @@ construction.
 
 \section{Background}\label{sec-background}
 
-...
+In this section we review basic algebraic structures used in this paper, as well
+as the classic Range Queries problem that turns out to be inherently related to
+dense linear operators.
 
-\subsection{Problem Statement}
-{\em Range queries} is a~classical problem in data structures and algorithms having a~variety of applications in fields like bioinformatics and string algorithms, computational geometry, image analysis, real-time systems, and others (we briefly review some of the applications in Subsection~\ref{subseq:rmqapp} as well as a~rich variety of algebraic techniques for the range queries problem in Subsection~\ref{subsec:approaches}). For a~fixed semigroup with operation~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of semigroup elements (we provide an overview of frequently used semigroups and other algebraic structures in Subsection~\ref{subsec:algstr}). Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operation to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $r-l+1$, the time of a~naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the {\em offline} version, where one is given a~sequence together with all the queries, and are interested in the minimum number of semigroup operations needed to answer all the queries. Moreover, we study a~more general problem: we assume that $x_1, \dotsc, x_n$ are formal variables rather than actual semigroup values. That is, we study the circuit size of the corresponding computation problem (the formal definition of the computational model is given later in the text).
+\input algebraic_structures
 
-\todo[inline]{Volodya, introduce dense linear operators as a~special case. Mention its importance.}
+\subsection{Range Queries problem}
+
+{\em Range Queries} is a~classical problem in data structures and algorithms
+having a~variety of applications in fields like bioinformatics and string
+algorithms, computational geometry, image analysis, real-time systems, and
+others (we briefly review some of the applications in Subsection~\ref{subseq:rmqapp} as well as a~rich variety of algebraic techniques for the range queries problem in Subsection~\ref{subsec:approaches}). For a~fixed semigroup with operation~$\circ$, one is given a~sequence $x_1, x_2, \dotsc, x_n$ of semigroup elements (we provide an overview of frequently used semigroups and other algebraic structures in Subsection~\ref{subsec:algstr}). Then, a~range query is specified by two indices $(l,r)$ such that $1 \le l \le r \le n$. The answer to such a~query is the result of applying the semigroup operation to the corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The range queries problem is then to simply answer all given range queries. There are two regimes: online and offline. In the {\em online regime}, one is given a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it so that to answer efficiently any subsequent query. By saying efficiently one usually means in time independent of the length of the range (i.e., $r-l+1$, the time of a~naive answer), say, in time $O(\log n)$ or $O(1)$. In this paper, we focus on the {\em offline} version, where one is given a~sequence together with all the queries, and are interested in the minimum number of semigroup operations needed to answer all the queries. Moreover, we study a~more general problem: we assume that $x_1, \dotsc, x_n$ are formal variables rather than actual semigroup values. That is, we study the circuit size of the corresponding computation problem (the formal definition of the computational model is given later in the text).
 
 \section{Applications}\label{sec-applications}
-
-\subsection{Overview of New Results}
-\todo[inline]{Andrey, write this subsection}
-
-Thus, there are two conceptual messages in this paper:
-\begin{enumerate}
-\item For commutative semigroups, it is straightforward to compute a~linear operator $Ax$ with a~sparse matrix~$A$ by a~linear size circuit. It turns out that this is also true in case $A$~is a~complement of a~sparse matrix, though the corresponding circuits are already non-trivial.
-\item For non-commutative groups,
-\todo[inline]{Andrey, write this item}
-\end{enumerate}
-
-
 
 \subsection{Applications of New Results}
 \todo[inline]{Andrey, please move this section after the section stating our results}
@@ -206,18 +202,11 @@ take linear time too.
 \subsubsection{Dense graph representation}\label{sec-dense-graph}
 \todo[inline]{Andrey, write this}
 
-
 \begin{itemize}
   \item Algebra of graphs
   \item Dense graphs
   \item Compact representation of dense graphs
 \end{itemize}
-
-
-
-
-
-
 
 \section{General Setting}
 \subsection{Semigroups}
@@ -677,9 +666,6 @@ Observe, that the circuit still computes the outputs correctly. The changes are 
 
 Now, observe that $\num(g)$ has increased (by the first coordinate). There are no new gates with smaller $\lef$. Among gates with the minimal $\lef$ there are no new gates with smaller $\gap$. Among gates with minimal $(\lef,\gap)$ all gates have larger $\num$ then $g$. Thus $\tup(C)$ increased and we are done.
 
-%\section{Applications}
-%\todo[inline]{Andrey, go!}
-
 \section{Acknowledgments}
 We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
@@ -689,7 +675,11 @@ We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journal
 \section{Appendix}
 \input range_queries_applications
 \input approaches
+<<<<<<< HEAD
 \input algebraic_structures
 \input constructive
+=======
+
+>>>>>>> origin/master
 
 \end{document}
