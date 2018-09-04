@@ -38,7 +38,7 @@
 
 \begin{abstract}
 We study the complexity of \emph{dense matrices}, i.e. 0/1 matrices of size
-$n \times n$ with $O(n)$ zeros. More specifically, we are interested in
+$n \times n$ with $O(n)$ zeroes. More specifically, we are interested in
 the complexity of computing the \emph{dense linear operator} $A\mathbf{x}$,
 where $A$ is a dense matrix and~$\mathbf{x}$ is a vector over an arbitrary
 semigroup: How many semigroup operations are needed to simultaneously compute
@@ -57,8 +57,43 @@ semiring by an $O(n^2)$-size circuit.
 
 %\tableofcontents
 
+\section{Introduction}
+
+Our main object of study in this paper are \emph{dense matrices}, which we
+define as 0/1 matrices of size $n \times n$ that contain $O(n)$ zeroes. Being
+opposite to \emph{sparse matrices}, they might intuitively seem harder in terms
+of computational complexity, but as we show in this paper, this intuition is
+only partially correct. Consider a \emph{dense linear operator}
+\[
+\mathbf{y} = A\mathbf{x},
+\]
+where $A$ is a dense matrix and~$\mathbf{x}=(x_1, \cdots, x_n)$ is a vector over
+an arbitrary semigroup $(S, \circ)$. Our goal is to simultaneously compute all
+elements of the resulting vector $\mathbf{y}=(y_1, \cdots, y_n)$, such that
+
+\[
+y_i = \sum_{A_{ij}=1} x_j
+\]
+
+\noindent
+for all $1 \le i \le n$, where the ``summation'' is over the semigroup operation
+$\circ$. What is the smallest circuit comprising 2-input gates $\circ$ that
+computes $\mathbf{y}$?
+
+A natural solution that first comes to mind is to split the rows of the matrix
+$A$ into ranges of consecutive ones, thus obtaining $O(n)$ ranges overall, and
+then apply the classic \emph{Range Queries} algorithm by
+Yao~\cite{DBLP:conf/stoc/Yao82} to compute all ranges by a circuit of size
+$O(n\alpha(n))$ and subsequently combine them with $O(n)$ additional gates.
+
+Can we do better? In general, the answer is ``No''. However, if the semigroup is
+\emph{commutative}, the answer is, remarkably, ``Yes''! We present a linear-size
+circuit construction for dense linear operators in Section~\ref{sec-commutative}.
+Furthermore, in Section~\ref{sec-non-commutative} we prove that the
+non-commutative case is equivalent to the Range Queries problem, hence
+separating the complexity of the two cases.
+
 \section{Range Queries}
-%\todo[inline]{Andrey, Volodya, currently, I'm not very happy with the paper structure: 1. The first section is too long; we start proving new results on the ninth page only; we definitely need to move some parts to the appendix for the conference version; and we may want to do this even for preprint version; 2. Definitions on algebraic structures are given in the first section as well as in the second. Please, suggest ways to improve the structure. Perhaps the intro part should be one-two pages long starting with a brief problem statement and ending with our new result statement. Specifically, I suggest to move to the Appendix the following sections: \ref{subseq:rmqapp}, \ref{subsec:algstr}, and \ref{subsec:approaches}}
 
 
 \subsection{Problem Statement}
@@ -224,10 +259,7 @@ Clearly, in the binary circuit the number of gates does not exceed its size (i.e
 
 In a~special case of the Boolean semigroup $(\{0,1\}, \lor)$, such circuits are known as {\em rectifier networks}. An overview of known lower and upper bounds for such circuits is given by Jukna in \cite[Section~13.6]{DBLP:books/daglib/0028687}.
 
-
-
-
-\section{Commutative Case}
+\section{Commutative Case}\label{sec-commutative}
 It is easy to see that a~matrix $A \in \{0,1\}^{n \times n}$
 with~$k$ ones can be computed by a~circuit of size $O(n+k)$.
 The corresponding circuit is straightforward. The main goal of
@@ -423,7 +455,7 @@ We complement this proof by presenting a~constructive solution.
 \todo[inline]{Volodya, write this}
 \end{proof}
 
-\section{Non-commutative Case}
+\section{Non-commutative Case}\label{sec-non-commutative}
 
 In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators.
 
