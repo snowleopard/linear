@@ -33,6 +33,7 @@
 
 \sloppy
 \author{}
+\date{}
 \title{Complexity of Dense Linear Operators}
 \maketitle
 
@@ -41,7 +42,7 @@ We study the complexity of \emph{dense matrices}, i.e. 0/1 matrices of size
 $n \times n$ with $O(n)$ zeroes. More specifically, we are interested in
 the complexity of computing the \emph{dense linear operator} $A\mathbf{x}$,
 where $A$ is a dense matrix and~$\mathbf{x}$ is a vector over an arbitrary
-semigroup: How many semigroup operations are needed to simultaneously compute
+semigroup: How many semigroup operations are required to simultaneously compute
 all values of the resulting vector?
 
 Our two main results are: (i) we present a linear-size construction for the case
@@ -52,7 +53,7 @@ obtained by applying the Yao's Range Queries algorithm.
 
 As a simple application of the presented linear-size construction, we show that
 an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
-semiring by an $O(n^2)$-size circuit.
+semiring in $O(n^2)$ time.
 \end{abstract}
 
 %\tableofcontents
@@ -71,31 +72,44 @@ where $A$ is a dense matrix and~$\mathbf{x}=(x_1, \cdots, x_n)$ is a vector over
 an arbitrary semigroup $(S, \circ)$. Our goal is to simultaneously compute all
 elements of the resulting vector $\mathbf{y}=(y_1, \cdots, y_n)$, such that
 
-\[
+\begin{equation}\label{eq-sum}
 y_i = \sum_{A_{ij}=1} x_j
-\]
+\end{equation}
 
 \noindent
 for all $1 \le i \le n$, where the ``summation'' is over the semigroup operation
-$\circ$. What is the smallest circuit comprising 2-input gates $\circ$ that
-computes $\mathbf{y}$?
+$\circ$. What is the size of the smallest circuit comprising 2-input gates
+$\circ$ that computes $\mathbf{y}$?
 
-A natural solution that first comes to mind is to split the rows of the matrix
-$A$ into ranges of consecutive ones, thus obtaining $O(n)$ ranges overall, and
-then apply the classic \emph{Range Queries} algorithm by
-Yao~\cite{DBLP:conf/stoc/Yao82} to compute all ranges by a circuit of size
-$O(n\alpha(n))$ and subsequently combine them with $O(n)$ additional gates.
+Note that if $A$ is sparse, i.e. contains $O(n)$ ones, then~(\ref{eq-sum})
+directly yields a linear-size circuit. Furthermore, if the summation is over a
+\emph{commutative group} rather than just a semigroup, then the dense case can
+be reduced to the sparse one by subtracting $y_i$ from the sum
+$x_1 \circ \cdots \circ x_n$.
+
+A natural solution that first comes to mind in the semigroup case is to split
+the rows of the matrix $A$ into ranges of consecutive ones, thus obtaining
+$O(n)$ ranges overall, and then apply the classic \emph{Range Queries} algorithm
+by Yao~\cite{DBLP:conf/stoc/Yao82} to compute all ranges by a circuit of size
+$O(n\alpha(n))$ and subsequently combine the results with $O(n)$ additional
+gates.
 
 Can we do better? In general, the answer is ``No''. However, if the semigroup is
 \emph{commutative}, the answer is, remarkably, ``Yes''! We present a linear-size
 circuit construction for dense linear operators in Section~\ref{sec-commutative}.
 Furthermore, in Section~\ref{sec-non-commutative} we prove that the
-non-commutative case is equivalent to the Range Queries problem, hence
-separating the complexity of the two cases.
+non-commutative case is equivalent to the Range Queries problem that, as shown
+by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}, requires
+$\Theta(n\alpha(n))$ gates, hence separating the complexity of the two cases.
 
-We provide basic definitions used throughout the paper in
-Section~\ref{sec-background}, and highlight applications of the presented
-linear-size construction in Section~\ref{sec-applications}.
+Section~\ref{sec-background} provides basic definitions used throughout the
+paper. Section~\ref{sec-applications} highlights applications of the
+presented linear-size construction. In particular, we show that an $n\times n$
+matrix can be multiplied by a dense matrix over an arbitrary semiring in
+$O(n^2)$ time. While trivial to achieve in the case of a \emph{ring} by reducing
+to sparse matrix multiplication via subtraction, the semiring case is more
+challenging, but can still be solved using our dense linear operator
+construction.
 
 \section{Background}\label{sec-background}
 
