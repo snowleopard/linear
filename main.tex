@@ -50,7 +50,7 @@ Our two main results are: (i) we present a linear-size construction for the case
 when the semigroup is commutative, and (ii) we prove that the non-commutative
 case is strictly harder and is equivalent to the classic Range Queries
 problem~--~the corresponding $O(n\alpha(n))$-size circuits can be readily
-obtained by applying the Yao's Range Queries algorithm.
+obtained by applying the Yao's Range Queries algorithm, where $\alpha(n)$ is the inverse Ackermann function, and we show that this circuit is optimal. We note that our positive result work in particular for computation of linear operators over Boolean and tropical semiring\todo{V: added}.
 
 As a simple application of the presented linear-size construction, we show that
 an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
@@ -98,7 +98,7 @@ A natural solution that first comes to mind in the semigroup case is to split
 the rows of the matrix $A$ into ranges of consecutive ones, thus obtaining
 $O(n)$ ranges overall, and then apply the classic \emph{Range Queries} algorithm
 by Yao~\cite{DBLP:conf/stoc/Yao82} to compute all ranges by a circuit of size
-$O(n\alpha(n))$ and subsequently combine the results with $O(n)$ additional
+$O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function\todo{V: added}, and subsequently combine the results with $O(n)$ additional
 gates.
 
 Can we do better? In general, the answer is ``No''. However, if the semigroup is
@@ -249,7 +249,7 @@ Below we will use the following notation. Let $W$ be a word in the alphabet $\{x
 The case of general commutative semigroups and computations over then was previously studied in relation to Range Queries problem. The standard approach to capture their generality here is to consider \emph{faithful commutative semigroups}~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}. 
 
 \begin{definition}
-A commutative semigroup $(S, \circ)$ is faithful commutative if for any equivalence $W\equiv W'$ in $X_S$ we have $\var(W)=\var(W')$. 
+A commutative semigroup $(S, \circ)$ is faithful commutative if for any equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$. 
 \end{definition}
 Note that this definition does not pose restrictions on the cardinality of each letter in $W$ and $W'$. This allows to capture in this definition important cases of idempotent semigroups. For example, semigroups $(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ are commutative faithful.
 
@@ -259,22 +259,22 @@ Note that this definition does not pose restrictions on the cardinality of each 
 The initial mark of $W$ is the letter that is present in $W$ such that its first appearance is farthest to the right. Let $U$ be the prefix of $W$ consisting of letters preceding the initial mark. That is, $U$ is the maximal prefix of $W$ with smaller number of generators. We call $U$ the initial of $W$. Analogously we define terminal mark of $W$ and the terminal of $W$.
 
 \begin{definition}\label{def:strong_non_commutativity}
-We say that a semigroup $X$ with generators $x_1,\ldots, x_n$ is strongly non-commutative if for any words $W$ and $W'$ in in the alphabet $\{x_1,\ldots, x_n\}$ the equivalence $W\equiv W'$ holds in $X$ only if the initial marks of $W$ and $W'$ are the same, terminal marks are the same, the equivalence $U \equiv U'$ holds in $X$, where $U$ and $U'$ are initials of $W$ and $W'$ respectively, and the equivalence $V \equiv V'$ holds in $X$, where $V$ and $V'$ are terminals of $W$ and $W'$ respectively.
+We say that a semigroup $X$ with generators $x_1,\ldots, x_n$ is strongly non-commutative if for any words $W$ and $W'$ in the alphabet $\{x_1,\ldots, x_n\}$ the equivalence $W\sim W'$ holds in $X$ only if the initial marks of $W$ and $W'$ are the same, terminal marks are the same, the equivalence $U \sim U'$ holds in $X$, where $U$ and $U'$ are initials of $W$ and $W'$ respectively, and the equivalence $V \sim V'$ holds in $X$, where $V$ and $V'$ are terminals of $W$ and $W'$ respectively.
 \end{definition}
 
-Basically, this definition states that the first and the last occurrence of variables in the equivalence separates the pieces of equivalence that cannot be affected by the rest of the variables and must be the equivalences themselves.
+Basically, this definition states that the first and the last occurrence of variables in the equivalence separates the pieces of equivalence that cannot be affected by the rest of the variables and must be the equivalences themselves. We also note that this definition exactly captures idempotent case: for free idempotent semigroup the conditions in this definition are ``if and only if''\cite{GreenR52}.
 
 \begin{definition} \label{def:faithful}
 A semigroup $(S, \circ)$ is faithful if $X_S$ is strongly non-commutative.
 \end{definition}
 
 
-We note that this notion of faithfulness is relatively general and is true for semigroups $(S,\circ)$ with considerable amount of non-commutativity in their structure. It clearly captures free semigroups with at least two generators (its identities are just graphic equalities). It is also not hard to see that the requirement in Definition~\ref{def:faithful} are satisfied for the free idemponent group with $n$ generators.
+We note that this notion of faithfulness is relatively general and is true for semigroups $(S,\circ)$ with considerable amount of non-commutativity in their structure. It clearly captures free semigroups with at least two generators (its identities are just graphic equalities). It is also easy to see that the requirement in Definition~\ref{def:faithful} are satisfied for the free idempotent group with $n$ generators (if $S$ is idempotent, then $X_S$ is also clearly idempotent and no other relations are holding in $X_S$ since we can substitute generators of $S$ for $x_1,\ldots, x_n$).
 
 Next we observe some properties of strongly-non commutative semigroups we need in our constructions.
 
 \begin{lemma} \label{lem:prefix_equivalence}
-Suppose $X$ is strongly non-commutative. Suppose the equivalence $W \equiv W'$ holds in $X$ and $\var(W)=\var(W')=k$. Suppose $U$ and $U'$ are minimal (maximal) prefixes of $W$ and $W'$ such that $|\var(U)| = |\var(U')| = l\leq k$. Then the equivalence $U \equiv U'$ holds in $X$. The same is true for suffixes.
+Suppose $X$ is strongly non-commutative. Suppose the equivalence $W \sim W'$ holds in $X$ and $\var(W)=\var(W')=k$. Suppose $U$ and $U'$ are minimal (maximal) prefixes of $W$ and $W'$ such that $|\var(U)| = |\var(U')| = l\leq k$. Then the equivalence $U \sim U'$ holds in $X$. The same is true for suffixes.
 \end{lemma}
 
 \begin{proof}
@@ -287,7 +287,7 @@ The case of suffixes is completely analogous.
 
 The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
 \begin{lemma} \label{lem:variables_order}
-Suppose $X$ is strongly non-commutative. Suppose $W \equiv W'$ holds in $X_S$. Let us write down the variables of $W$ in the order in which they appear first time in $W$ when we read it from left to right. Let's do the same for $W'$. Then we obtain exactly the same sequences of letters.
+Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X_S$. Let us write down the variables of $W$ in the order in which they appear first time in $W$ when we read it from left to right. Let's do the same for $W'$. Then we obtain exactly the same sequences of letters.
 
 The same is true if we read the words from right to left.
 \end{lemma}
@@ -346,7 +346,7 @@ We prove a~sequence of more and more general result. In the first result, which 
 %\subsection{Constant Maximum Row Density}
 
 \begin{lemma}\label{lemma:easy}
-Let $S$~be {\em any} semigroup (not necessarily commutative) and let $A \in \{0,1\}^{n \times n}$ contain at most one zero in every row. Then $C(Ax) \le O(n)$.
+Let $X$~be {\em any} semigroup (not necessarily commutative) and let $A \in \{0,1\}^{n \times n}$ contain at most one zero in every row. Then $C(Ax) \le O(n)$.
 \end{lemma}
 \begin{proof}
 We first precompute all prefixes and suffixes of $x_1, \dotsc, x_n$. Namely, let $p_i=x_1x_2\dotsb x_i$. All $p_i$'s can be computed in $(n-1)$ binary gates as follows:
@@ -369,7 +369,7 @@ with Corollary~\ref{cor:noncommutativetwo} that states that in
 the non-commutative setting we cannot hope for linear size
 circuits.
 
-\begin{lemma}
+\begin{lemma} \label{lem:at_most_2}
 Let $A \in \{0,1\}^{n \times n}$ contain at most two zeros in every row. Then $C(Ax) \le O(n)$.
 \end{lemma}
 \begin{proof}[Proof sketch]
@@ -544,40 +544,40 @@ In the previous section, we have shown that for commutative semigroups dense lin
 %In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. We do this by showing that, in the non-commutative case, the dense linear operator problem has linear size circuits iff the range queries problem has linear size circuits. We then use a~lower bound $\Omega(n\alpha(n))$ for the latter problem (over faithful semigroups) by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
 \begin{theorem}\label{thm:noncommlowerbound}
-For any faithful (non-commutative) semigroup $S$ there is a circuit to compute any dense operator of size $O(n\alpha(n))$. On the other hand, there exist dense matrices~$A$ such that any circuit computing $Ax$ must have size $\Omega(n\alpha(n))$.
+For any strongly non-commutative semigroup $X$ there is a circuit to compute any dense operator of size $O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function. On the other hand, there exist dense matrices~$A$ such that any circuit computing $Ax$ must have size $\Omega(n\alpha(n))$.
 \end{theorem}
 
 The upper bound follows easily by a naive algorithm: split all rows of $A$ into ranges, compute all ranges by a circuit of size $O(n\alpha(n))$ using Yao's construction~\cite{DBLP:conf/stoc/Yao82}, then combine ranges into rows of $A$ using $O(n)$ gates.
 
-Thus we will concentrate on lower bounds. We will view the computation of the circuit as a computation in a strongly non-commutative semigroup $X$. First we will prove the lower bound only for the case of idempotent strongly non-commutative semigroups $X$. In Section~\ref{sec:noncommutative_extension} we observe how to extend it to general strongly non-commutative $X$.
+Thus we will concentrate on lower bounds. We will view the computation of the circuit as a computation in a strongly non-commutative semigroup $X$. First we will prove the lower bound only for the case of idempotent strongly non-commutative semigroups $X$. In Section~\ref{sec:noncommutative_extension} we observe how to extend it to any strongly non-commutative $X$.
 
 Hence, {\em until Section~\ref{sec:noncommutative_extension} we assume that $X$ is idempotent and strongly non-commutative.}
 
 We proceed by establishing the following equivalence. We note that the equivalence between two problems is not difficult to prove for free semigroups.
 
 \begin{theorem}\label{thm:equivalence}
-Commutative range queries problem has size $S$ circuits iff non-commutative dense linear operator problem has size $S$ circuits.
+For any $s=\Omega(n)$ we have that commutative range queries problem has size $O(s)$ circuits iff non-commutative dense linear operator problem has size $O(s)$ circuits.
 \end{theorem}
 
 Using this theorem, it is straightforward to prove
 Theorem~\ref{thm:noncommlowerbound}.
 
-\begin{proof}[Proof of Theorem~\ref{thm:noncommlowerbound}]
-By Theorem~\ref{thm:equivalence}, if non-commutative dense linear operator problem has linear size circuit, then the commutative range queries problem also does. However, the latter problem does not have linear size circuits as proved by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}.
+\begin{proof}[Proof of Theorem~\ref{thm:noncommlowerbound} (idempotent case)]
+By Theorem~\ref{thm:equivalence}, if non-commutative dense linear operator problem has size $s$ circuit, then the commutative range queries problem also does. However, for the latter problem it is proved by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that $s=\Omega(n \alpha(n))$.
 \end{proof}
 
-Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing the following equivalences.
+Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing the following equivalences for any $s = \Omega(n)$.
 
 \begin{center}
 \begin{tikzpicture}
 %\draw[help lines] (0,0) grid (16,6);
 \tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=30mm,above right,minimum height=20mm]
 
-\node[v] (a) at (0,0) {commutative range queries problem has $O(n)$ size circuits};
+\node[v] (a) at (0,0) {commutative range queries problem has $O(s)$ size circuits};
 
-\node[v] (b) at (6.5,0) {non-commutative range queries problem has $O(n)$ size circuits};
+\node[v] (b) at (6.5,0) {non-commutative range queries problem has $O(s)$ size circuits};
 
-\node[v] (c) at (13,0) {non-commutative dense linear operator problem has $O(n)$ size circuits};
+\node[v] (c) at (13,0) {non-commutative dense linear operator problem has $O(s)$ size circuits};
 
 \path (a.10) edge[->] node[above] {Lemma~\ref{lem:intervals}} (b.170);
 \path (b.190) edge[->] node[below] {special case} (a.-10);
@@ -586,6 +586,7 @@ Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing t
 \end{tikzpicture}
 \end{center}
 
+In these equivalences non-commutative problems are considered over arbitrary strongly non-commutative semiring and the commutative problem is considered over free idempotent commutative semiring $X$. It is not hard to observe that if we factorize any strongly non-commutative idempotent semiring over commutativity equivalences, we obtain exactly free idempotent commutative semiring.
 
 
 
@@ -598,12 +599,12 @@ Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing t
 %Thus, it remains to show the following two lemmas.
 
 \begin{lemma} \label{lem:dense_matrices}
-If the non-commutative dense linear operator problem has $O(n)$ size circuits then the non-commutative range queries also does.
+If the non-commutative dense linear operator problem has size $s$ circuit then the non-commutative range queries has size $O(s)$ circuit.
 %If we can compute non-commutative dense matrices by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
 \begin{lemma} \label{lem:intervals}
-If the commutative version of the range queries problem has $O(n)$ size circuits then the non-commutative version also does.
+If the commutative version of the range queries problem has size $s$ circuits then the non-commutative version also does.
 %If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
@@ -613,7 +614,7 @@ In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the le
 It should be mentioned, at the same time, that idempotency is tricky. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
 This is not extremely impressive, since to get $xyz$ we multiply by $xyz$, but the point is that this is possible in principle.
 
-We proceed to the formal proofs. The proof of Lemma~\ref{lem:dense_matrices} follows from the following two lemmas. A~binary circuit is called an~{\em increasing} circuit if each of its gates computes a~word that is equivalent to a~word composed out of increasing variables.
+We proceed to the formal proofs. The proof of Lemma~\ref{lem:dense_matrices} follows from the following two lemmas. A~binary circuit is called an~{\em increasing} circuit if each of its gates computes a~word that is equivalent to a~word that is a sequence of increasing variables.
 Note that if a~gate in an~increasing circuit is fed by two gates~$G$ and~$H$, then the increasing sequences of variables computed by~$G$ and~$H$ are matching in a~sense that some suffix of~$G$ (possibly an empty suffix) is equal to some prefix of~$H$. Otherwise, the result is not equal to an increasing sequence of variables, due to Lemma~\ref{lem:variables_order}.
 
 \begin{lemma}\label{lemma:correctorder}
@@ -621,24 +622,26 @@ Given a~binary circuit computing~$Ax$, one may transform it into an~increasing c
 \end{lemma}
 
 \begin{lemma}\label{lemma:matrixranges}
-Given a~range circuit computing~$Ax$, one may transform it into an~increasing circuit of the same size computing all ranges of~$A$.
+Given an~increasing circuit computing~$Ax$, one may transform it into a~range circuit of the same size computing all ranges of~$A$.
 \end{lemma}
 
 \begin{proof}[Proof of Lemma~\ref{lem:dense_matrices}]
-Given $n$~ranges, pack them into a~matrix $A \in \{0,1\}^{n \times n}$ with at most $2n$ zeros. Take an $O(n)$ size circuit computing $Ax$ and convert it into a~binary circuit. Then, transform it into an~increasing circuit using Lemma~\ref{lemma:matrixranges}. Finally, extract the answers to all the ranges from this circuit using Lemma~\ref{lemma:matrixranges}.
+Given $n$~ranges, pack them into a~matrix $A \in \{0,1\}^{n \times n}$ with at most $2n$ zeros. Take an $O(n)$ size circuit computing $Ax$ and convert it into a~binary circuit. Then, transform it into an~increasing circuit using Lemma~\ref{lemma:correctorder}. Finally, extract the answers to all the ranges from this circuit using Lemma~\ref{lemma:matrixranges}.
 \end{proof}
 
-Since the proof of Lemma~\ref{lem:dense_matrices} deals with matrices with exactly two zeros in every row, we get the following corollary.
+Since the proof of Lemma~\ref{lem:dense_matrices} deals with matrices with exactly two zeros in every row, we get the following corollary that contrasts Lemma~\ref{lem:at_most_2}.
 \begin{corollary}\label{cor:noncommutativetwo}
-There exist matrices~$A \in \{0,1\}^{n \times n}$ with exactly two zeros in every row that cannot be computed by circuits of size~$O(n)$.
+There exist matrices~$A \in \{0,1\}^{n \times n}$ with exactly two zeros in every row that requires circuits of size~$Omega(n\alpha(n))$.
 \end{corollary}
 
 \begin{proof}[Proof of Lemma~\ref{lemma:matrixranges}]
-Take an~increasing circuit computing $Ax$ and process all its gates in some topological ordering. If the current gate~$G$ computes a~range, we just proceed to the next gate. Otherwise we remove~$G$ and take care of all the wires going out of~$G$: if $G$ is used as as the left operand in another gate~$H$, we replace the $G \to H$ wire by the $L \to H$ wire, where $L$ is the left parent of~$G$; the case when $G$~is used as the right operand is treated similarly.
-\todo[inline]{Volodya, could you complete this proof by showing that the resulting circuit indeed computes all the ranges?}
+Take an~increasing circuit ${\cal C}$ computing $Ax$ and process all its gates in some topological ordering. Each gate $G$ of the original circuit computes a word equivalent to an increasing sequence of variables. We split this sequence into ranges and we put into correspondence to $G$ an ordered sequence $G_1,\ldots, G_k$ of gates of the new circuit. Each of this gates compute one of the ranges of the increasing sequence and $G \sim G_1\circ\ldots \circ G_k$.
 
+Consider a gate $G$ of ${\cal C}$ and suppose we have already computed all gates of the new circuit corresponding to previous gates of ${\cal C}$. $G$ is the product $F \circ H$ of previous gates of ${\cal C}$. For which new range gates are already computed. Since ${\cal C}$ is increasing we have that $F$ and $H$ are matching, that is some suffix (maybe empty) of the increasing sequence computed in $F$ is equal to some prefix (maybe empty) of the increasing sequence computed in $H$ and there are no other common variables in these increasing sequences. It is easy to see that ranges for the sequence corresponding to $G$ are just the ranges for the sequences for $F$ and $H$ with possible to of them united. If needed, we compute the product of gates of the new circuit corresponding to the united ranges and the sequence of new gates for $G$ is ready
 
-%Then, once the interval circuit is trying to multiply intervals that have gaps  between them, we just not multiply them. Later on if we try to do something with the product we have not computed we use the left of its inputs in case we try to multiply from the left, and the right input if we are multiplying from the right. So, if we need to solve an interval problem, for each interval we skip one variable on each side and add all other variables to the interval. This turn our problem into the super-dense matrix. We compute this matrix, then deduce the computation of intervals as described above.
+Thus, to process each gate of ${\cal C}$ we need at most one operation in the new circuit and the size of the new circuit is at most the size of ${\cal C}$.
+
+For output gates of ${\cal C}$ we have gates in the new circuit that compute exactly ranges of output gates. Thus, in the new circuit all ranges of $A$ are computed.
 \end{proof}
 
 
@@ -667,7 +670,7 @@ We say that $x_i$ is \emph{good} in~$G$ if there is
 a~path in~${\cal C}$ from $G$ to an output gate, on which the word is never multiplied from the left by words containing variables greater than or equal to $x_i$.
 Note that if $x_i$ and $x_{i'}$ are both contained in $G$, $i<i'$, and $x_i$ is good in~$G$, then $x_{i'}$ is good in~$G$, too. That is, the set of all good variables in~$G$ is closed upwards.
 
-Consider the largest good variable in $G$ (if there is one), denote it by $x_k$ (if there are good variables in~$G$, then $x_k$ is actually just the largest variable in~$G${\todo{Volodya, why do we need this remark? The largest one is clearly unique. What am I missing?}}). Let us focus on the first occurrence of $x_k$ in~$G$.
+Consider the largest good variable in $G$ (if there is one), denote it by $x_k$ ($x_k$ is actually just the largest variable in~$G$, unless of course there are no good variables in $G$). Let us focus on the first occurrence of $x_k$ in~$G$.
 
 \begin{claim}
 All first occurrences of other good variables in~$G$ must be to the left of the first occurrence of $x_k$.
@@ -683,7 +686,7 @@ a~suffix of $\mmax_G$. If there are no good letters in $G$ we just let $\mmin_g=
 For the word~$W$ that has the form of the product of variables in the increasing order, we call $x_j$ a~\emph{gap variable} if it is not contained in $W$
 while $W$~contains variables $x_i$ and $x_k$ with $i < j < k$.
 
-Below we show how for a~given circuit~${\cal C}$ to construct an increasing circuit~${\cal C}'$ that for each gate~$G$ of~$C$ computes some intermediate product $P_G$ between $\mmin_G$ and $\mmax_G$: $\mmin_g$ is a~suffix of $P_G$ and $P_G$ is a~suffix of $\mmax_g$. The size of~${\cal C}'$ is at most the size of~${\cal C}$. For an output gate~$G$, $\mmin_g=\mmax_g=g$ hence the circuit ${\cal C}'$ computes the correct outputs.
+Below we show how for a~given circuit~${\cal C}$ to construct an increasing circuit~${\cal C}'$ that for each gate~$G$ of~${\cal C}$ computes some intermediate product $P_G$ between $\mmin_G$ and $\mmax_G$: $\mmin_g$ is a~suffix of $P_G$ and $P_G$ is a~suffix of $\mmax_g$. The size of~${\cal C}'$ is at most the size of~${\cal C}$. For an output gate~$G$, $\mmin_g=\mmax_g=g$ hence the circuit ${\cal C}'$ computes the correct outputs.
 
 To construct ${\cal C}'$, we process the gates of~${\cal C}$ in a~topological ordering. If $G$~is an input gate, everything is straightforward: in this case $\mmax_G$ is either $\lambda$ or $x_j$. Assume now that $G$ is an internal gate with predecessors~$F$ and~$H$.
 Consider the set of good variables in~$G$. If there are none, we let $P_G=\lambda$. If all first occurrences of good variable of $G$ are lying in one of the predecessors ($F$~and~$H$), then they are good in the corresponding input gate. We then set $P_G$ to $P_F$ or $P_H$.
@@ -716,45 +719,75 @@ Consider $P_F$ and $P_H$. By Claims~\ref{cl: h is good} and~\ref{cl: f is good},
 
 \subsection{Reducing Non-commutative Range Queries to Commutative Range Queries}
 %{Proof of Lemma~\ref{lem:intervals}}
-\todo[inline]{Volodya, could you polish this? For this, wrap it to a proof, use capital letters for gates, use ${\cal C}$ to denote a circuit, etc}
 
-For the proof of this lemma we will show that any computation of commutative intervals can be reconstructed without increase in the number of gates in such a way that each gate computes an interval (still commutatively; let's call this an interval circuit). It is easy to see that then this circuit can be reconstructed as a non-commutative circuit each gate of which computes the same interval with the variables in the right order. Indeed, we need to make sure that each gate computes an interval in such a way that all variables are in the right order and this is easy to do by induction. Each gate computes an OR of two intervals $a$ and $b$. If one of them is contained in the other, we simplify the circuit, since the gate just computes the same interval as one of its inputs. It is impossible that $a$ and $b$ are non-intersecting and have a gap between them, since then our gate does not compute an interval (in the interval circuit). So, if $a$ and  $b$ are non-intersecting, then they are consecutive and we just need to multiply then in the right order. If the intervals are intersecting, we just multiply then in the right order and apply idempotency (like this: $(x_1x_2x_3)(x_2x_3x_4)=x_1(x_2x_3)(x_2x_3)x_4=x_1x_2x_3x_4$).
+In this subsection we prove Lemma~\ref{lem:intervals}.
 
-Thus it remains to show that each non-commutative circuit can be reconstructed into an interval circuit. For this we will need some notation.
+\begin{proof}[Proof of Lemma~\ref{lem:intervals}]
+We will show that any computation of commutative ranges can be reconstructed without increase in the number of gates in such a way that each gate computes a range (still commutatively; recall, that we call this a range circuit). It is easy to see that then this circuit can be reconstructed as a non-commutative circuit each gate of which computes the same range with the variables in the increasing order. Indeed, we need to make sure that each gate computes a range in such a way that all variables are in the increasing order and this is easy to do by induction. Each gate computes a product of two ranges $a$ and $b$. If one of them is contained in the other, we simplify the circuit, since the gate just computes the same range as one of its inputs (due to idempotency and commutativity). It is impossible that $a$ and $b$ are non-intersecting and have a gap between them, since then our gate does not compute a range (in a range circuit). So, if $a$ and  $b$ are non-intersecting, then they are consecutive and we just need to multiply then in the right order. If the intervals are intersecting, we just multiply then in the right order and apply idempotency.
 
-Suppose we have some circuit $C$. For each gate $g$ denote by $\lef(g)$ the smallest index of the variable in $g$ (the leftmost variable). Analogously denote by $\righ(g)$ the largest index of the variable in $g$. Denote by $\gap(g)$ the smallest $i$ such that $x_i$ is not in $g$, but there are some $j,k$ such that $j<i<k$ and $x_j$ and $x_k$ (the smallest index of the variable that is in the gap in $g$).
+Thus it remains to show that each commutative circuit for Range Query problem can be reconstructed into a range circuit. For this we will need some notation.
+
+Suppose we have some circuit ${\cal C}$. For each gate $G$ denote by $\lef(G)$ the smallest index of the variable in $G$ (the leftmost variable). Analogously denote by $\righ(G)$ the largest index of the variable in $G$. Denote by $\gap(G)$ the smallest $i$ such that $x_i$ is not in $G$, but there are some $j,k$ such that $j<i<k$ and $x_j$ and $x_k$ (the smallest index of the variable that is in the gap in $G$).
 %If there is no such variable (that is, $g$ computes an interval), then $\gap(g)=n+1$.
-Next, fix some ordering of gates in $C$ (the ordering should be proper, that is inputs to any gate should have smaller numbers). Denote by $\num(g)$ the number of a gate in this ordering. Finally, by $\out(g)$ denote the out-degree of $g$.
+Next, fix some topological ordering of gates in ${\cal C}$ (the ordering should be proper, that is inputs to any gate should have smaller numbers). Denote by $\num(G)$ the number of a gate in this ordering. Finally, by $\out(G)$ denote the out-degree of $G$.
 
-For each gate that computes a non-interval consider the tuple
+For each gate that computes a non-range consider the tuple
 $$
-\tup(g)=(\lef(g),\gap(g),\num(g),-\out(g)).
-$$ For the circuit $C$ consider $\tup(C) = \min_g \tup(g)$, where the minimum is considered in the lexicographic order and is taken over all non-interval gates. If there are no non-interval gates we let $\tup(C)=\infty$. This is our semi-invariant, we will show that if we have a circuits that is not an interval circuit, we can reconstruct it to increase  its $\tup$ (in the lexicographic order) without increasing its size. Since $\tup$ ranges over a finite set, we can reconstruct the circuit repeatedly and end up with an interval circuit.
+\tup(G)=(\lef(G),\gap(G),\num(G),-\out(G)).
+$$ For the circuit ${\cal C}$ consider $\tup({\cal C}) = \min_G \tup(G)$, where the minimum is considered in the lexicographic order and is taken over all non-range gates. If there are no non-range gates we let $\tup({\cal C})=\infty$. This is our semi-invariant, we will show that if we have a circuits that is not a range circuit, we can reconstruct it to increase  its $\tup$ (in the lexicographic order) without increasing its size. Since $\tup$ ranges over a finite set, we can reconstruct the circuit repeatedly and end up with a range circuit.
 
-Now we are ready to describe a reconstruction. Consider a circuit $C$ that is not an interval circuit. And consider a gate $g$ such that $\tup(g)=\tup(C)$ (it is clearly unique). Denote by $a$ and $b$ two inputs of $g$. Let $i=\lef(g)$ and $j=\gap(g)$, that is $x_i$ is the variable with the smallest index in $g$ and $x_j$ is the first gap variable of $g$ (it is not contained in $g$).
+Now we are ready to describe a reconstruction of a circuit. Consider a circuit ${\cal C}$ that is not a range circuit. And consider a gate $G$ such that $\tup(G)=\tup({\cal C})$ (it is clearly unique). Denote by $A$ and $B$ two inputs of $G$. Let $i=\lef(G)$ and $j=\gap(G)$, that is $x_i$ is the variable with the smallest index in $G$ and $x_j$ is the first gap variable of $G$ (it is not contained in $G$).
 
-The variable $x_i$ is contained in at least one of $a$ and $b$. Consider the gate among $a$ and $b$ that contains $x_i$. It also contain all variables between $x_i$ and $x_j$ (but not $x_j$), since the converse would contradict minimality of $g$ (by the second coordinate of $\tup$). But this gate cannot have $x_j$ as a gap variable: it would also contradict minimality of $g$ (by the third coordinate of $\gap$). Thus this gate is exactly the interval $[x_i,x_j)$ (by this we denote the product of variables from $x_i$ to $x_j$ excluding $x_j$). In particular, only one of $a$ and $b$ contains $x_i$: otherwise they are both $[x_i,x_j)$ and $x_j$ is not a gap variable for $g$.
+The variable $x_i$ is contained in at least one of $A$ and $B$. Consider the gate among $A$ and $B$ that contains $x_i$. It also contain all variables between $x_i$ and $x_j$ (but not $x_j$), since the converse would contradict minimality of $G$ (by the second coordinate of $\tup$). But this gate cannot have $x_j$ as a gap variable: it would also contradict minimality of $G$ (by the third coordinate of $\gap$). Thus this gate is exactly the interval $[x_i,x_j)$ (by this we denote the product of variables from $x_i$ to $x_j$ excluding $x_j$). In particular, only one of $A$ and $B$ contains $x_i$: otherwise they are both $[x_i,x_j)$ and $x_j$ is not a gap variable for $G$.
 
-From now on we assume that $a$ contains $x_i$, that is $a=[x_i,x_j)$.
+From now on we assume that $A$ contains $x_i$, that is $A=[x_i,x_j)$.
 %Note that then $b$ contains all variables to the right of $x_j$, in particular the variable with the largest index in $g$.
 
-Now we consider all gates $h_1,\ldots, h_k$ that have edges leading from $g$. Denote by $f_1,\ldots, f_k$ their other inputs. If $k$ is equal to $0$, we can remove $g$ and reduce the circuit. Now we consider cases.
+Now we consider all gates $H_1,\ldots, H_k$ that have edges leading from $G$. Denote by $F_1,\ldots, F_k$ their other inputs. If $k$ is equal to $0$, we can remove $G$ and reduce the circuit. Now we consider cases.
 
-Case 1. Suppose that there is $l$ such that $\lef(f_l) \leq \lef(g)$. Then $f_l$ contains all variables in $[x_i,x_j)$ (the contrapositive contradicts the minimality of $g$ by the second coordinate of $\gap$). Thus $f_l$ contains $a$. Then, we can restructure the circuit by feeding $b$ to $h_l$ instead of $g$. This does not change the clause computed by $h_l$ and reduces $\out(g)$. Thus $\tup(C)$ increases and we are done.
+\emph{Case 1.} Suppose that there is $l$ such that $\lef(F_l) \leq \lef(G)$. Then $F_l$ contains all variables in $[x_i,x_j)$ (the contrapositive contradicts the minimality of $g$ by the second coordinate of $\gap$). Thus $F_l$ contains $A$. Then, we can restructure the circuit by feeding $B$ to $H_l$ instead of $G$. This does not change the value of the gate computed by $H_l$ and reduces $\out(G)$. Thus $\tup({\cal C})$ increases and we are done.
 
-Case 2. Suppose that for all $l$ we have $\lef(f_l)>\lef(g)$. Consider $l$ such that $f_l$ has the minimal $\righ(f_l)$ (if there are several such $l$ pick among them the one with the minimal $\num(f_l)$). Now we restructure the circuit in the following way. We feed $f_l$ to $g$ instead of $a$. We feed $a$ to $h_l$ instead of $f_l$. We feed $h_l$ to all other $h_p$'s instead of $g$. It is not hard to see that all these reconstructions are valid, that is, do not create cycles. Note that they might require reordering of the circuit gates, since we create edges between previously incomparable $h$-gates. But the reording changes only for the gates with $\num$ greater than $\num(g)$.
+\emph{Case 2.} Suppose that for all $l$ we have $\lef(F_l)>\lef(G)$. Consider $l$ such that $F_l$ has the minimal $\righ(F_l)$ (if there are several such $l$ pick among them the one with the minimal $\num(F_l)$). Now we restructure the circuit in the following way. We feed $F_l$ to $G$ instead of $A$. We feed $A$ to $H_l$ instead of $F_l$. We feed $H_l$ to all other $H_p$'s instead of $G$. It is not hard to see that all these reconstructions are valid, that is, do not create cycles (there were no paths from $G$ to $F_l$ since $\lef(G)<\lef(F_l)$; there was a path from $A$ to $H_l$, so there was no path in the reversed direction; there was no path from $H_p$ to $G$, $A$ and $F_l$ due to the minimality property of $F_l$, so there is no path from $H_p$ to $H_l$). Note that they might require reordering of the circuit gates, since we create edges between previously incomparable $H$-gates and between $F_l$ and $G$. But the reording changes only for the gates with $\num$ greater than $\num(G)$ and may only reduce $\num(F_l)$ to be smaller than $\num(G)$. But this can only increase $\tup(G)$ and since $\lef(F_l)>\lef(G)$ this can only increase $\tup({\cal C})$.
 
-Observe, that the circuit still computes the outputs correctly. The changes are in the gates $h_1\ldots, h_k$ (and also in $g$, but $h_1,\ldots, h_k$ are all of its outputs). $h_l$ does not change. Other $h_p$'s might have changed, they now additionally include variables of $f_l$. But note that all of these variables are in between of $\lef(h_p)$ and $\righ(h_p)$, so they must be presented in the output gates connected to $h_p$ anyway.
+Observe, that the circuit still computes the outputs correctly. The changes are in the gates $H_1\ldots, H_k$ (and also in $G$, but $H_1,\ldots, H_k$ are all of its outputs). $H_l$ does not change. Other $H_p$'s might have changed, they now additionally include variables of $F_l$. But note that all of these variables are in between of $\lef(H_p)$ and $\righ(H_p)$, so they must be presented in the output gates connected to $H_p$ anyway.
 
-Now, observe that $\num(g)$ has increased (by the first coordinate). There are no new gates with smaller $\lef$. Among gates with the minimal $\lef$ there are no new gates with smaller $\gap$. Among gates with minimal $(\lef,\gap)$ all gates have larger $\num$ then $g$. Thus $\tup(C)$ increased and we are done.
+Now, observe that $\tup(G)$ has increased (by the first coordinate). There are no new gates with smaller $\lef$. Among gates with the minimal $\lef$ there are no new gates with smaller $\gap$. Among gates with minimal $(\lef,\gap)$ all gates have larger $\num$ then $G$. Thus $\tup({\cal C})$ increased and we are done.
+\end{proof}
 
-\section{General Non-commutative Case}\label{sec:noncommutative_extension}
+\subsection{General Non-commutative Case}\label{sec:noncommutative_extension}
 
-Now we will show how to extend Theorem~\ref{thm:noncommlowerbound} beyond idempotent semirings.
+Now we will show how to extend Theorem~\ref{thm:noncommlowerbound} beyond idempotent semigroup.
+
+Consider arbitrary strongly non-commutative semigroup $X$. Consider a new semigroup $X_{id}$ over the same set of generators that is a factorization of $X$ by idempotency relations $W^2\sim W$ for all words $W$ in the alphabet $\{x_1,\ldots, x_n\}$.
+
+\begin{lemma} \label{lem:idempotisation}
+If $X$ is strongly non-commutative, then $X_{id}$ is also strongly non-commutative.
+\end{lemma}
+
+\begin{proof}
+Suppose $W$ and $W'$ are words in the alphabet $\{x_1,\ldots, x_n\}$ and $W \sim W'$ in $X_{id}$. This means that there is a sequence $W_0,\ldots, W_k$ of words in the same alphabet such that $W=W_0$, $W'=W_k$ and for each $i$ either $W_i \sim W_{i+1}$ in $X$, or $W_{i+1}$ is obtained from $W_i$ by one application of the idempotency equivalence to some subword of $W_i$. Clearly, it is enough to check that the conditions of Definition~\ref{def:strong_non_commutativity} are satisfied in $X_{id}$ for each consecutive pair $W_i$ and $W_{i+1}$. 
+
+If $W_i \sim W_{i+1}$ in $X$, then the conditions of Definition~\ref{def:strong_non_commutativity} follows from the strong non-commutativity of $X$.
+
+Suppose now that $W_{i+1}$ is obtained from $W_{i}$ by substituting some subword $A$ by $A^2$ (the symmetrical case is analyzed in the same way). We will show that initial marks of $W_i$ and $W_{i+1}$ are the same and $U_{i} \sim U_{i+1}$ in $X_{id}$, where $U_{i}$ and $U_{i+1}$ are initials of $W_i$ and $W_{i+1}$ respectively. For the terminals and terminal marks the proof is completely analogous.
+
+Suppose $A$ lies to the left of initial mark in $W_i$ and we substitute $A$ by $A^2$. Then the initial mark is unaltered and in the initial $U_i$ we also substitute $A$ by $A^2$. Thus in this case $U_{i+1}$ is obtained from $U_i$ by idempotency relation.
+
+Suppose $A$ contains initial mark of $W_i$ or lies to the right of it. Then after the substitution of $A$ by $A^2$ the initial mark is still the same and the initial $U_i$ also does not change.
+\end{proof}
+
+Now we are ready to prove Theorem~\ref{thm:noncommlowerbound} in its full generality.
+
+\begin{proof}[Proof of Theorem~\ref{thm:noncommlowerbound} (general case)]
+We have already shown an upper bound and the lower bound for the case of idempotent semigroups. Thus it remains to show a lower bound for arbitrary strongly non-commutative semigroup.
+
+Suppose $X$ is strongly non-commutative and suppose that for $X$ all dense operators can be computed by circuits of size at most $s$.
+
+Consider a semigroup $X_{id}$ as introduced above. By Lemma~\ref{lem:idempotisation} $X_{id}$ is also strongly non-commutative. On the other hand, since $X_{id}$ is a factorization of $X$ any circuit computing dense operator over $X$ also computes the same dense operator over $X_{id}$. Thus, by other assumption there are circuits of size at most $s$ for all dense operators over $X_{id}$. Finally, $X_{id}$ is idempotent, so by the special case of our theorem we have $s = \Omega(n \alpha(n))$ and we are done.
+\end{proof}
 
 
-
-\section{Acknowledgments}
+\section*{Acknowledgments}
 We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
 \bibliographystyle{plain}
