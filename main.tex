@@ -150,42 +150,46 @@ of a~naive algorithm), say, in time $O(\log n)$ or $O(1)$. In this paper, we foc
 
 \section{Applications}\label{sec-applications}
 
-\subsection{Applications of New Results}
-\todo[inline]{Andrey, please move this section after the section stating our results}
 In this section we demonstrate two applications of the presented linear-size
-construction for a dense linear operator: fast multiplication of \emph{boring}
-matrices over arbitrary semirings (Section~\ref{sec-boring-matrices}) and
-compact algebraic representation of dense graphs
-(Section~\ref{sec-dense-graph}).
+construction for a dense linear operator: fast multiplication of dense and, more
+generally, \emph{boring matrices} over arbitrary semirings
+(Section~\ref{sec-boring-matrices}) and compact algebraic representation of
+dense graphs (Section~\ref{sec-dense-graph}).
 
-\subsubsection{Boring matrix multiplication}\label{sec-boring-matrices}
+\subsection{Dense and boring matrix multiplication}\label{sec-boring-matrices}
 
 Throughout this section we consider $n \times n$ matrices over an arbitrary
 semiring $(S, \circ, \bullet)$, where the operations $\circ$ and $\bullet$ have
 identities 0 and 1, respectively.
-\todo[inline]{Andrey, fix the notation. In particular, we should probably avoid using juxtaposition for $\bullet$ as we use it for $\circ$}
 
 A matrix is \emph{sparse} if most of its elements are 0. To be more precise, we
 further assume that a sparse matrix has $O(n)$ non-zero elements. Sparse
 matrices arise in many applications, and can be multiplied by arbitrary vectors
-in $\Theta(n)$ time and arbitrary matrices in $\Theta(n^2)$ time (multiplication
+in $O(n)$ time and arbitrary matrices in $O(n^2)$ time (multiplication
 by an $n\times n$ matrix can be thought of as multiplication by $n$ vectors).
-Note that these complexity bounds are exact, as they match the time required to
-read the input.
+% Note that these complexity bounds are exact, as they match the time required to
+% read the input.
 
 A \emph{0-1 matrix} is a matrix whose elements belong to the set $\{0,1\}$. A
 0-1 matrix is \emph{dense} if most of its elements are 1. To be more precise, we
 further assume that a dense 0-1 matrix has $O(n)$ zero elements. The main result
-of this paper allows us to obtain an $\Theta(n)$ time algorithm for multiplying
-a 0-1~dense matrix by a vector in an arbitrary semiring and, as a consequence, a
-$\Theta(n^2)$ time algorithm for multiplying a 0-1 dense matrix by an arbitrary
-matrix.
+of this paper presented in Section~\ref{sec-commutative} allows us to obtain a
+linear-size circuit for multiplying a 0-1~dense matrix by a vector in an
+arbitrary semiring. Our construction is explicit and the corresponding algorithm
+takes $O(n^2)$ time. As a consequence, we can multiply a 0-1~dense matrix $A$ by
+an arbitrary matrix $B$ in $O(n^2)$ time as follows:
 
-\todo[inline]{Andrey, Volodya, should we check whether it is known already?}
+\begin{itemize}
+  \item Construct a linear-size circuit for the dense linear operator
+  $A\mathbf{x}$. Time complexity: $O(n^2)$.
+  \item Evaluate the circuit on all $n$ columns of the matrix $B$. Each
+  evaluation takes $O(n)$ time, hence the overall time complexity of this step
+  is also $O(n^2)$.
+\end{itemize}
 
-By combining the algorithms for sparse and dense matrix multiplication, one can
-obtain an efficient algorithm for the multiplication of so-called \emph{boring}
-matrices.
+Furthermore, by combining the algorithms for sparse and dense matrix
+multiplication, one can obtain an efficient algorithm for the multiplication of
+so-called \emph{boring} matrices.
 
 A matrix is \emph{boring} if most of its elements are equal to some element from
 the semiring $b$. To be more precise, we further assume that a boring matrix has
@@ -207,21 +211,18 @@ M \mathbf{v} & = & (M_0 \circ b M_1) \mathbf{v} & \text{(sparse-dense decomposit
 \end{array}
 \]
 
-\todo[inline]{Andrey, could you show how commutativity is used here?}
+% I'm a bit pressed with time, let's polish this in the final version.
+% \todo[inline]{Andrey, could you show how commutativity is used here?}
 
 \noindent
-$M_0 \mathbf{v}$ and $M_1 \mathbf{v}$ can be computed in linear time using
+Both $M_0 \mathbf{v}$ and $M_1 \mathbf{v}$ can be computed in linear time using
 sparse and dense matrix-vector multiplication; the results are further combined
 using scalar multiplication by $b$ and vector addition $\circ$, both of which
-take linear time too.
+take linear time too. As in the dense case, this immediately leads to
+$O(n^2)$-time boring matrix multiplication.
 
-
-\todo[inline]{Count the number of triangles in a dense graph.}
-\todo[inline]{AK: Andrey, we should mention that counting triangles is not difficult even without our results\\V: We better say that counting is usually not difficult, cause we can use subtraction when counting}
-
-\subsubsection{Dense graph representation}\label{sec-dense-graph}
+\subsection{Dense graph representation}\label{sec-dense-graph}
 \todo[inline]{Andrey, write this}
-
 
 \begin{itemize}
   \item Algebra of graphs
