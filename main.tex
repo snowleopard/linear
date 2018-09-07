@@ -326,50 +326,115 @@ of the circuit computing $G_A$ is $O(n)$. This allows us to store dense graphs
 on $n$ vertices using $O(n)$ memory, and perform basic transformations of dense
 graphs in $O(n)$ time.
 
-\section{General Setting}
-\subsection{Semigroups}
+\section{Computational Model}
 
-In the paper we consider computations over general semigroups. To establish complexity results  and especially to establish reasonable lower bounds we need to restrict ourselves to semigroups with relatively reach structure.
+In this section we define our computational model, which includes a few less
+commonly known notions related to semigroups, as well as semigroup circuits.
 
-Since we deal with computations with variables of the semigroups it is convenient to introduce the following notation. Suppose $(S,\circ)$ is a semigroup. Let $X_{S,n}$ be a semigroup with generators $x_1,\ldots, x_n$ and with equivalence relations consisting of identities in variables $x_1,\ldots, x_n$ over $(S,\circ)$. That is, for two words $W$ and $W'$ in the alphabet $\{x_1,\ldots,x_n\}$ we have $W=W'$ in $X_S$ iff no matter which elements of the semigroup $S$ we substitute for $x_1,\ldots, x_n$ we obtain a correct equation over $S$. In particular, note that if $S$ is commutative (idempotent), then $X_S$ is also commutative (respectively, idempotent).
+\subsection{Faithful semigroups}
 
-Below we will use the following notation. Let $W$ be a word in the alphabet $\{x_1,\ldots, x_n\}$. Denote by $\var(W)$ the set of letters that are present in $W$.
+In the paper we consider computations over general semigroups. To establish
+complexity results and especially to establish reasonable lower bounds we need
+to consider semigroups with relatively rich structure.
 
-The case of general commutative semigroups and computations over then was previously studied in relation to Range Queries problem. The standard approach to capture their generality here is to consider \emph{faithful commutative semigroups}~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}.
+Since we deal with computations with formal semigroup variables, it is
+convenient to introduce the following notation. Suppose $(S, \circ)$ is a
+semigroup. Let $X_{S,n}$ be a semigroup with generators $\{x_1,\ldots, x_n\}$
+and with the equivalence relation consisting of identities in variables
+$\{x_1,\ldots, x_n\}$ over~$(S,\circ)$. That is, for two words $W$ and $W'$ in
+the alphabet $\{x_1,\ldots,x_n\}$ we have $W=W'$ in $X_S$ iff no matter which
+elements of the semigroup $S$ we substitute for $\{x_1,\ldots, x_n\}$ we obtain
+a correct equation over $S$. In particular, note that if $S$ is commutative
+(respectively, idempotent), then $X_S$ is also commutative (respectively,
+idempotent).
+
+Below we will use the following notation. Let $W$ be a word in the alphabet
+$\{x_1,\ldots, x_n\}$. Denote by $\var(W)$ the set of letters that are present
+in $W$.
+
+The case of general commutative semigroups and computations over them was
+previously studied in relation to the Range Queries problem. The standard
+approach to capture their generality here is to consider \emph{faithful
+commutative semigroups}~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}.
 
 \begin{definition}
-A commutative semigroup $(S, \circ)$ is faithful commutative if for any equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
+A commutative semigroup $(S, \circ)$ is \emph{faithful commutative} if for any
+equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
 \end{definition}
-Note that this definition does not pose restrictions on the cardinality of each letter in $W$ and $W'$. This allows to capture in this definition important cases of idempotent semigroups. For example, semigroups $(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ are commutative faithful.
 
- We however need to study non-commutative case, and moreover, our results establish the difference between commutative and non-commutative cases. Thus, we need to extend the notion of faithfulness to non-commutative semigroups to capture their non-commutativity in the whole power. At the same time we would like to keep the case of idempotency. We introduce the notion of faithfulness for the non-commutative case inspired by the properties of free idempotent semigroups~\cite{GreenR52}. To introduce this notion we need several definitions.
+Note that this definition does not pose any restrictions on the cardinality of
+each letter in $W$ and $W'$. This allows us to capture in this definition
+important cases of idempotent semigroups. For example, semigroups
+$(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ are commutative faithful.
 
+We also need to study the non-commutative case, and moreover, our results
+establish the difference between commutative and non-commutative cases. Thus,
+we need to extend the notion of faithfulness to non-commutative semigroups to
+capture their non-commutativity in the whole power. At the same time we would
+like to keep the case of idempotency. We introduce the notion of faithfulness
+for the non-commutative case inspired by the properties of free idempotent
+semigroups~\cite{GreenR52}. To introduce this notion we need several
+definitions.
 
-The initial mark of $W$ is the letter that is present in $W$ such that its first appearance is farthest to the right. Let $U$ be the prefix of $W$ consisting of letters preceding the initial mark. That is, $U$ is the maximal prefix of $W$ with smaller number of generators. We call $U$ the initial of $W$. Analogously we define terminal mark of $W$ and the terminal of $W$.
+The \emph{initial mark} of $W$ is the letter that is present in $W$ such that
+its first appearance is farthest to the right. Let $U$ be the prefix of $W$
+consisting of letters preceding the initial mark. That is, $U$ is the maximal
+prefix of $W$ with a smaller number of generators. We call $U$ the
+\emph{initial} of $W$. Analogously we define the \emph{terminal mark} of $W$ and
+the \emph{terminal} of $W$.
 
 \begin{definition}\label{def:strong_non_commutativity}
-We say that a semigroup $X$ with generators $x_1,\ldots, x_n$ is strongly non-commutative if for any words $W$ and $W'$ in the alphabet $\{x_1,\ldots, x_n\}$ the equivalence $W\sim W'$ holds in $X$ only if the initial marks of $W$ and $W'$ are the same, terminal marks are the same, the equivalence $U \sim U'$ holds in $X$, where $U$ and $U'$ are initials of $W$ and $W'$ respectively, and the equivalence $V \sim V'$ holds in $X$, where $V$ and $V'$ are terminals of $W$ and $W'$ respectively.
+We say that a semigroup $X$ with generators $\{x_1,\ldots, x_n\}$ is
+\emph{strongly non-commutative} if for any words $W$ and $W'$ in the
+alphabet $\{x_1,\ldots, x_n\}$ the equivalence $W\sim W'$ holds in $X$ only if
+the initial marks of $W$ and $W'$ are the same, terminal marks are the same,
+the equivalence $U \sim U'$ holds in $X$, where $U$ and $U'$ are the initials of
+$W$ and $W'$, respectively, and the equivalence $V \sim V'$ holds in $X$, where
+$V$ and $V'$ are the terminals of $W$ and $W'$, respectively.
 \end{definition}
 
-Basically, this definition states that the first and the last occurrence of variables in the equivalence separates the pieces of equivalence that cannot be affected by the rest of the variables and must be the equivalences themselves. We also note that this definition exactly captures idempotent case: for free idempotent semigroup the conditions in this definition are ``if and only if''\cite{GreenR52}.
+In other words, this definition states that the first and the last occurrences
+of variables in the equivalence separates the parts of the equivalence that
+cannot be affected by the rest of the variables and must therefore be the
+equivalences themselves. We also note that this definition exactly captures the
+idempotent case: for a free idempotent semigroup the conditions in this
+definition are ``if and only if''\cite{GreenR52}.
 
 \begin{definition} \label{def:faithful}
-A semigroup $(S, \circ)$ is faithful if $X_S$ is strongly non-commutative.
+A semigroup $(S, \circ)$ is \emph{faithful} if $X_S$ is strongly non-commutative.
 \end{definition}
 
+We note that this notion of faithfulness is relatively general and is true for
+semigroups $(S,\circ)$ with considerable degree of non-commutativity in their
+structure. It clearly captures free semigroups with at least two generators
+(its identities are just graphic equalities). It is also easy to see that the
+requirements in Definition~\ref{def:faithful} are satisfied for the free
+idempotent group with $n$ generators (if $S$ is idempotent, then $X_S$ is also
+clearly idempotent and no other relations are holding in $X_S$ since we can
+substitute generators of $S$ for $x_1, \ldots, x_n$).
 
-We note that this notion of faithfulness is relatively general and is true for semigroups $(S,\circ)$ with considerable amount of non-commutativity in their structure. It clearly captures free semigroups with at least two generators (its identities are just graphic equalities). It is also easy to see that the requirement in Definition~\ref{def:faithful} are satisfied for the free idempotent group with $n$ generators (if $S$ is idempotent, then $X_S$ is also clearly idempotent and no other relations are holding in $X_S$ since we can substitute generators of $S$ for $x_1,\ldots, x_n$).
-
-Next we observe some properties of strongly-non commutative semigroups we need in our constructions.
+Next we observe some properties of strongly non-commutative semigroups that we
+need in our constructions.
 
 \begin{lemma} \label{lem:prefix_equivalence}
-Suppose $X$ is strongly non-commutative. Suppose the equivalence $W \sim W'$ holds in $X$ and $\var(W)=\var(W')=k$. Suppose $U$ and $U'$ are minimal (maximal) prefixes of $W$ and $W'$ such that $|\var(U)| = |\var(U')| = l\leq k$. Then the equivalence $U \sim U'$ holds in $X$. The same is true for suffixes.
+Suppose $X$ is strongly non-commutative. Suppose the equivalence $W \sim W'$
+holds in $X$ and $\var(W)=\var(W')=k$. Suppose $U$ and $U'$ are minimal
+(maximal) prefixes of $W$ and $W'$ such that $|\var(U)| = |\var(U')| = l\leq k$.
+Then the equivalence $U \sim U'$ holds in $X$. The same is true for suffixes.
 \end{lemma}
 
 \begin{proof}
-The proof is by induction on the decreasing $l$. Consider the maximal prefixes first. For $l=k$ and maximal prefixes we just have $U= W$ and $U'=W'$. Suppose the statement is true for some $l$, denote the corresponding prefixes by $U$ and $U'$ respectively. Then note that the maximal prefixes with $l-1$ variables are initials of $U$ and $U'$. And the statement follows by Definition~\ref{def:faithful}.
+The proof is by induction on the decreasing $l$. Consider the maximal prefixes
+first. For $l=k$ and maximal prefixes we just have $U=W$ and $U'=W'$. Suppose
+the statement is true for some $l$, and denote the corresponding prefixes by $U$
+and $U'$, respectively. Then note that the maximal prefixes with $l-1$ variables
+are initials of $U$ and $U'$. And the statement follows by
+Definition~\ref{def:faithful}.
 
-The proof of the statement for minimal prefixes is completely analogous. Note that on the step of induction the prefixes differs from the previous case by one letter that are  initial marks of the corresponding prefixes. So these additional letters are also equal by Definition~\ref{def:faithful}.
+The proof of the statement for minimal prefixes is completely analogous. Note
+that on the step of induction the prefixes differ from the previous case by one
+letter that are initial marks of the corresponding prefixes. So these additional
+letters are also equal by the Definition~\ref{def:faithful}.
 
 The case of suffixes is completely analogous.
 \end{proof}
@@ -381,11 +446,30 @@ Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X_S$. Let
 The same is true if we read the words from right to left.
 \end{lemma}
 
+\subsection{Circuits}
+We assume that the input consists of $n$~formal variables
+$\{x_1, \dotsc, x_n\}$. We are interested in the minimum number of semigroup
+operations needed to compute all given words $\{w_1, \dotsc, w_m\}$ (e.g., for
+the range queries problem, each word has a~form $x_lx_{l+1}\dotsb x_r$). We use
+the following natural {\em circuit} model. A~circuit computing all these queries
+is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They
+are labelled with $\{x_1, \dotsc, x_n\}$ and are called {\em input gates}. All
+other nodes have positive in-degree and are called {\em gates}. Finally, some
+$m$~gates have out-degree~0 and are labelled as {\em output gates}. The
+{\em size} of a~circuit is its number of edges (also called {\em wires}). Each
+gate of a~circuit computes a~word defined in a~natural way: input gates compute
+just $\{x_1, \dotsc, x_n\}$; any other gate of in-degree~$r$ computes a~word
+$f_1 \circ f_2 \circ \dotsb \circ f_r$ where $\{f_1, \dotsc, f_r\}$ are words
+computed at its predecessors (therefore, we assume that there is an underlying
+order on the incoming wires for each gate). We say that the circuit computes the
+words $\{w_1, \dotsc, w_m\}$ if the words computed at the output gates are
+equivalent to $\{w_1, \dotsc, w_m\}$.
 
-\subsection{Computational Model}
-We assume that the input consists of $n$~formal variables $x_1, \dotsc, x_n$. We are interested in the minimum number of semigroup operations needed to compute all the given words $w_1, \dotsc, w_m$ (e.g., for the range queries problem, each word has a~form $x_lx_{l+1}\dotsb x_r$). We use the following natural {\em circuit} model. A~circuit computing all these queries is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They are labeled with $x_1, \dotsc, x_n$ and are called {\em input gates}. All other nodes have positive in-degree and are called {\em gates}. Finally, some $m$~gates have out-degree~0 and are labeled as {\em output gates}. The {\em size} of a~circuit is its number of edges (also called {\em wires}). Each gate of a~circuit computes a~word defined in a~natural way: input gates compute just $x_1, \dotsc, x_n$; any other gate of in-degree~$r$ computes a~word $f_1 \circ f_2 \circ \dotsb \circ f_r$ where $f_1, \dotsc, f_r$ are words computed at its predecessors (therefore, we assume that there is an underlying order on the incoming wires for each gate). We say that the circuit computes the words $w_1, \dotsc, w_m$ if the words computed at the output gates are equivalent to $w_1, \dotsc, w_m$.
-
-For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and $(l_2,r_2)=(2,5)$ over $x_1, \dotsc, x_5$ or, equivalently, the function $Ax$ where $A=\begin{pmatrix}1&1&1&1&0\\0&1&1&1&1\end{pmatrix}$ and $x=(x_1, \dotsc, x_5)^T$.
+For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and
+$(l_2,r_2)=(2,5)$ over inputs $\{x_1, \dotsc, x_5\}$ or, equivalently, the
+linear operator $A\mathbf{x}$ where
+$A=\begin{pmatrix}1&1&1&1&0\\0&1&1&1&1\end{pmatrix}$ and
+$\mathbf{x}=(x_1, \dotsc, x_5)^T$.
 
 \begin{center}
 \begin{tikzpicture}
@@ -397,83 +481,112 @@ For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and 
 \end{tikzpicture}
 \end{center}
 
-For a~0/1-matrix~$A$, by $C(A)$ we denote the minimum
-number of gates in a~circuit computing the function $Ax$.
+For a~0/1-matrix~$A$, by $C(A)$ we denote the \emph{minimum number of gates} in
+a~circuit computing the linear operator $A\mathbf{x}$.
 
 
-A~{\em binary circuit} is a~circuit having no gates of fan-in more than two. It is not difficult to see that any circuit can be converted into a~binary circuit of size at most twice the size of the original circuit. For this, one just replaces every gate of fan-in~$k$, for $k>2$, by a~binary tree with $2k-2$ wires (such a~tree contains $k$~leaves hence $k-1$ inner nodes and $2k-2$ edges).
+A~{\em binary circuit} is a~circuit having no gates of fan-in more than two. It
+is not difficult to see that any circuit can be converted into a~binary circuit
+of size at most twice the size of the original circuit. For this, one just
+replaces every gate of fan-in~$k$, for $k>2$, by a~binary tree with $2k-2$ wires
+(such a~tree contains $k$~leaves hence $k-1$ inner nodes and $2k-2$ edges).
 
-Clearly, in the binary circuit the number of gates does not exceed its size (i.e., the number of wires). And the number of gates in a~binary circuit is exactly the minimum number of semigroup operations needed to compute the corresponding function.
+Clearly, in the binary circuit the number of gates does not exceed its size
+(i.e., the number of wires). And the number of gates in a~binary circuit is
+exactly the minimum number of semigroup operations needed to compute the
+corresponding function.
 
-Note that we can view circuits as computations over some semigroup $(S,\circ)$, meaning that we can substitute instead of the variables elements of the semigroup $S$. If we fix some semigroup $(S,\circ)$ we can actually consider a circuit as a computation in the semigroups $X_S$. Moreover, we can forget about original semigroup $S$ and consider the computations in the circuit as computations in arbitrary semigroup $X$ with generators $x_1, \ldots, x_n$.
+Note that we can view circuits as computations over some semigroup $(S,\circ)$,
+meaning that we can substitute instead of the variables elements of the
+semigroup $S$. If we fix some semigroup $(S,\circ)$ we can actually consider a
+circuit as a computation in the semigroups $X_S$. Moreover, we can forget about
+the original semigroup $S$ and consider the computations in the circuit as
+computations in an arbitrary semigroup $X$ with generators
+$\{x_1, \ldots, x_n\}$.
 
-
-In an~important special case of the Boolean semigroup $(\{0,1\}, \lor)$, circuits we are discussing are known as {\em rectifier networks}. An overview of known lower and upper bounds for such circuits is given by Jukna in \cite[Section~13.6]{DBLP:books/daglib/0028687}.
-
-
+In an~important special case of the Boolean semigroup $(\{0,1\}, \lor)$,
+circuits we are discussing are known as {\em rectifier networks}. An overview of
+known lower and upper bounds for such circuits is given by Jukna
+in~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
 
 \section{Commutative Case}\label{sec-commutative}
-It is easy to see that a~matrix $A \in \{0,1\}^{n \times n}$
-with~$k$ ones can be computed by a~circuit of size $O(n+k)$.
-The corresponding circuit is straightforward. The main goal of
-this section is to prove the same lower bound for the case
-when~$A$ has~$k$ zeroes (rather than ones) and the
-corresponding semigroup is commutative. The resulting circuits
-are already not at all straightforward.
+It is easy to see that a sparse 0/1 matrix $A$ of size $n \times n$ with~$k$
+ones can be computed by a~circuit of size $O(n+k)$. The main goal of this
+section is to prove the same upper bound in the dense case when~$A$ has~$k$
+zeroes (rather than ones) and the corresponding semigroup is commutative. Unlike
+the sparse case, the circuits we obtain for the dense case are not at all
+straightforward.
 
-We prove a~sequence of more and more general result. In the first result, which is almost trivial,  commutativity is not even needed.
-
-
+We prove a series of increasingly more general results. The first result, which
+is almost trivial, does not require commutativity, but others do.
 
 %\subsection{Constant Maximum Row Density}
 
 \begin{lemma}\label{lemma:easy}
-Let $X$~be {\em any} semigroup (not necessarily commutative) and let $A \in \{0,1\}^{n \times n}$ contain at most one zero in every row. Then $C(Ax) \le O(n)$.
+Let $X$~be a semigroup (not necessarily commutative) and let
+$A \in \{0,1\}^{n \times n}$ contain at most one zero in every row. Then
+$C(A) = O(n)$.
 \end{lemma}
 \begin{proof}
-We first precompute all prefixes and suffixes of $x_1, \dotsc, x_n$. Namely, let $p_i=x_1x_2\dotsb x_i$. All $p_i$'s can be computed in $(n-1)$ binary gates as follows:
-\[p_1=x_1, p_2=p_1x_2, p_3=p_2x_3, \dotsc, p_i=p_{i-1}x_i, \dotsc, p_n=p_{n-1}x_n \, .\]
-Similarly, in $(n-1)$ binary gates we compute all suffixes $s_j$
-(for all $1 \le j \le n$) where $s_j=x_jx_{j+1}\dotsc x_n$. From
-these prefixes and suffixes all the outputs can be computed as
-follows: if a~row of~$A$ contains no zeros, the corresponding
-output is~$p_n$; if a~row contains a~zero in position~$i$, the
-output is $p_{i-1}s_{i+1}$ (for $i=1$ and $i=n$ we just omit
-the redundant term).
+To compute the linear dense operator $\mathbf{y} = A \mathbf{x}$, we first
+precompute all prefixes and suffixes of $\mathbf{x}=(x_1, \dotsc, x_n)$.
+Concretely, let $p_i=x_1 \circ x_2 \dotsb x_i$. All $p_i$'s can be computed
+using $(n-1)$ binary gates as follows:
+\[
+p_1=x_1, p_2=p_1 \circ x_2, p_3=p_2 \circ x_3, \dotsc, p_i=p_{i-1} \circ x_i, \dotsc, p_n=p_{n-1}\circ x_n.
+\]
+Similarly, we compute all suffixes $s_j=x_j \circ x_{j+1} \dotsc x_n$ using
+$(n-1)$ binary gates. From these prefixes and suffixes all outputs $y_i$ can be
+computed as follows: if a~row of~$A$ contains no zeros, the corresponding
+output is~$p_n$; otherwise if the~row contains a~zero at position~$i$, the
+output is $p_{i-1} \circ s_{i+1}$ (for $i=1$ and $i=n$ we omit the redundant
+term).
 \end{proof}
 
-In the rest of the section, we assume that the underlying semigroup is commutative.
-Allowing at most two zeros per row already leads to a~non-trivial
-problem. We give a~sketch of its solution as
-below we prove a~more general results.
-It is interesting to compare the following lemma
-with Corollary~\ref{cor:noncommutativetwo} that states that in
-the non-commutative setting we cannot hope for linear size
-circuits.
+In the rest of the section, we assume that the underlying semigroup is
+commutative. Allowing at most two zeros per row already leads to a~non-trivial
+problem. We give only a~sketch of the solution below, since we will further
+prove a~more general result. It is interesting to compare the following lemma
+with Corollary~\ref{cor:noncommutativetwo} that states that in the
+non-commutative setting we cannot hope for a linear-size solution.
 
 \begin{lemma} \label{lem:at_most_2}
-Let $A \in \{0,1\}^{n \times n}$ contain at most two zeros in every row. Then $C(Ax) \le O(n)$.
+Let $A \in \{0,1\}^{n \times n}$ contain at most two zeros in every row. Then
+$C(A) = O(n)$.
 \end{lemma}
 \begin{proof}[Proof sketch]
-Consider the following undirected graph: the set of nodes is $[n]$; two nodes $i$ and $j$ are joined by an edge, if there is a~row having zeros in columns~$i$ and~$j$. The graph has $n$~edges and hence it contains a cut $(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into two parts ($L$ and $R$). Let now also split the rows into two parts: the top part $T$~contains all columns that have exactly one zero in both $L$ and $R$; the bottom part $B$ contains all the remaining rows. What is nice about the top part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$ gates (using Lemma~\ref{lemma:easy}). For the bottom part, let us cut all-1 columns out of it and make a recursive call. The corresponding recurrence relation is $C(n) \le an + C(n/2)$ implying $C(n)=O(n)$.
-\todo[inline]{Andrey, polish this proof. Make sure that we use the same notation as in the rest of the paper. (I just copied this proof from stackexchange)}
+Consider the following undirected graph: the set of nodes is $\{1,2\dots,n\}$;
+two nodes $i$ and $j$ are joined by an edge if there is a~row having zeros in
+columns~$i$ and~$j$. In the worst case (all rows are different and contain
+exactly two zeros), the graph has exactly $n$~edges and hence it contains a cut
+$(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into
+two parts ($L$ and $R$). Now let us also split the rows into two parts: the top
+part $T$~contains all columns that have exactly one zero in each $L$ and $R$;
+the bottom part $B$ contains all the remaining rows. What is nice about the top
+part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$
+gates (using Lemma~\ref{lemma:easy}). For the bottom part, let us cut all-1
+columns out of it and make a recursive call (note that this requires the
+commutativity). The corresponding recurrence relation is $T(n) \le cn + T(n/2)$
+for a fixed constant $c$, implying $T(n)=O(n)$, and hence $C(A) = O(n)$.
 \end{proof}
 
 It is possible to generalize the previous lemma to the case of
 any constant number of zeros in every row. Below we prove
 an even more general result.
 
-The most interesting case in the case of $X$ being free commutative semigroup.
+% The most interesting case in the case of $X$ being free commutative semigroup.
 
 \begin{theorem}\label{thm:main}
-Suppose $S$ is a commutative semigroup. A~matrix $A \in \{0,1\}^{n \times n}$ with $k$~zeros can
-be computed by a~circuit of size $O(n+k)$.
+Suppose $S$ is a commutative semigroup. A~matrix $A \in \{0,1\}^{n \times n}$
+with $k$~zeros can be computed by a~circuit of size $O(n+k)$.
 \end{theorem}
 
-It is easy to see that the hardest case is when $X_S$ is a free commutative semigroup. Indeed, any other semigroup is the factorization of the free semigroup. Thus for any semigroup $X$ we can just use the same circuit as for free semigroups.
-
-
-Thus from now on in the proof of Theorem~\ref{thm:main} we concentrate on the case of free commutative semigroup $X_S$. We build the required circuit out of the basic building blocks described below. We first show how to use these blocks and then prove their existence.
+It is easy to see that the hardest case is when $X_S$ is a free commutative
+semigroup, since the corresponding circuit can be used for any semigroup $X$.
+Thus from now on in the proof of Theorem~\ref{thm:main} we concentrate on the
+case of a free commutative semigroup $X_S$. We build the required circuit out
+of the basic building blocks described below. We first show how to use these
+blocks and then prove their existence.
 
 \begin{lemma}\label{lemma:decompose}
 There exists a~binary~circuit of size $O(n\log n)$ such that
@@ -488,21 +601,20 @@ additional gates from the gates of the circuit.
 \end{lemma}
 
 \begin{lemma}\label{lemma:permute}
-Let $A \in \{0,1\}^n$ contains at most $\log n$ zeroes in
-every row. Then there exists a~permutation of the rows of~$A$
+Let $A \in \{0,1\}^n$ contain at most $\log n$ zeroes in
+every row. Then there exists a~permutation of the columns of~$A$
 such that the total length of all ranges of length
 at most $\log n$ is $O(\log^4 n)$.
 \end{lemma}
 
-
 \begin{observation}\label{obs:transpose}
-Suppose $X$ is free commutative semigroup with generators $x_1,\ldots, x_n$. Then for any $0/1$-matrix~$A$, $C(A)=C(A^T)$.
+Suppose $X$ is free commutative semigroup with generators $\{x_1,\ldots, x_n\}$.
+Then for any $0/1$-matrix~$A$, $C(A)=C(A^T)$.
 \end{observation}
 \begin{proof}[Proof of Observation~\ref{obs:transpose}]
-Reverse the direction of each wire in a~circuit computing~$A$ to get a~circuit computing~$A^T$.
+Reverse the direction of each wire in a~circuit computing~$A$ to get a~circuit
+computing~$A^T$.
 \end{proof}
-
-
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
 We first take a~permutation of the columns of the matrix
@@ -515,13 +627,13 @@ Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
 having at least $\log n$ zeros and $R_1=R \setminus R_0$. We
 compute the matrices $R_0 \times C$ and $R_1 \times C$
-separately. In a~few words, $R_0 \times C$ is easy to compute
-as it has a~small number of rows (at most $k/\log n$). $R_1 \times C$ is easy since it has a~small number of zeroes in
-every row (at most $\log n$).
+separately. The main idea is that $R_0 \times C$ is easy to compute
+because it has a~small number of rows (at most $k/\log n$), while $R_1 \times C$
+is easy to compute because it has a~small number of zeroes in every row (at most
+$\log n$).
 
-\emph{Computing $R_0 \times C$.} Thanks to
-Observation~\ref{obs:transpose}, it suffices
-to compute $C \times R_0$.
+\emph{Computing $R_0 \times C$.} Thanks to the Observation~\ref{obs:transpose},
+it suffices to compute $C \times R_0$.
 Let $|R_0|=t$. Clearly, $t \le k/\log n$.
 Using Lemma~\ref{lemma:decompose}, one can compute all
 ranges of $C \times R_0$ by a~circuit of size
@@ -533,7 +645,7 @@ $R_1 \times C$ contains at most $\log n$ zeros. Moreover,
 thanks to Lemma~\ref{lemma:permute}, the total length of all
 ranges of length at most $\log n$ is $O(\log^4n)$. Hence, all
 such short ranges can be computed by a~circuit of size~
-$O(\log^4n)=O(n)$. It remains to compute all the ranges of
+$O(\log^4n)$. It remains to compute all the ranges of
 length at least~$\log n$. This can be done using Lemma~\ref{lemma:blocks}.
 \end{proof}
 
