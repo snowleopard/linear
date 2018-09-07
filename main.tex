@@ -30,7 +30,7 @@
 \newcommand{\var}{\texttt{Var}}
 
 \begin{document}
-\listoftodos
+% \listoftodos
 
 \sloppy
 \author{}
@@ -212,11 +212,13 @@ simplest semigroups like $(\mathbb{B},\vee)$.
 
 \subsection{Dense and boring matrix multiplication}\label{sec-boring-matrices}
 
-Out first main result presented in Section~\ref{sec-commutative} allows us to obtain a
-linear-size circuit for multiplying a 0-1~dense matrix by a vector in an
-arbitrary semiring. Our construction is explicit and the corresponding algorithm
-takes $O(n)$ time. As a consequence, we can multiply a 0-1~dense matrix $A$ by
-an arbitrary matrix $B$ in $O(n^2)$ time as follows:
+Out first main result presented in Section~\ref{sec-commutative} allows us to
+obtain a linear-size circuit for multiplying a 0-1~dense matrix of size
+$n \times n$ by a vector in an arbitrary semiring. Our construction is explicit
+and the corresponding algorithm takes $O(n^2)$ time\footnote{Faster
+implementations are possible if the input matrix is provided in a compressed
+form.}. As a consequence, we can multiply a 0-1~dense matrix $A$ by an arbitrary
+matrix $B$ in $O(n^2)$ time as follows:
 
 \begin{itemize}
   \item Construct a linear-size circuit for the dense linear operator
