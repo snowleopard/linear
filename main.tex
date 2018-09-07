@@ -50,7 +50,7 @@ Our two main results are: (i) we present a linear-size construction for the case
 when the semigroup is commutative, and (ii) we prove that the non-commutative
 case is strictly harder and is equivalent to the classic Range Queries
 problem~--~the corresponding $O(n\alpha(n))$-size circuits can be readily
-obtained by applying the Yao's Range Queries algorithm, where $\alpha(n)$ is the inverse Ackermann function, and we show that this circuit is optimal. 
+obtained by applying the Yao's Range Queries algorithm, where $\alpha(n)$ is the inverse Ackermann function, and we show that this circuit is optimal.
 
 As a simple application of the presented linear-size construction, we show that
 an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
@@ -242,16 +242,16 @@ $O(n^2)$-time boring matrix multiplication.
 \section{General Setting}
 \subsection{Semigroups}
 
-In the paper we consider computations over general semigroups. To establish complexity results  and especially to establish reasonable lower bounds we need to restrict ourselves to semigroups with relatively reach structure. 
+In the paper we consider computations over general semigroups. To establish complexity results  and especially to establish reasonable lower bounds we need to restrict ourselves to semigroups with relatively reach structure.
 
 Since we deal with computations with variables of the semigroups it is convenient to introduce the following notation. Suppose $(S,\circ)$ is a semigroup. Let $X_{S,n}$ be a semigroup with generators $x_1,\ldots, x_n$ and with equivalence relations consisting of identities in variables $x_1,\ldots, x_n$ over $(S,\circ)$. That is, for two words $W$ and $W'$ in the alphabet $\{x_1,\ldots,x_n\}$ we have $W=W'$ in $X_S$ iff no matter which elements of the semigroup $S$ we substitute for $x_1,\ldots, x_n$ we obtain a correct equation over $S$. In particular, note that if $S$ is commutative (idempotent), then $X_S$ is also commutative (respectively, idempotent).
 
 Below we will use the following notation. Let $W$ be a word in the alphabet $\{x_1,\ldots, x_n\}$. Denote by $\var(W)$ the set of letters that are present in $W$.
 
-The case of general commutative semigroups and computations over then was previously studied in relation to Range Queries problem. The standard approach to capture their generality here is to consider \emph{faithful commutative semigroups}~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}. 
+The case of general commutative semigroups and computations over then was previously studied in relation to Range Queries problem. The standard approach to capture their generality here is to consider \emph{faithful commutative semigroups}~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}.
 
 \begin{definition}
-A commutative semigroup $(S, \circ)$ is faithful commutative if for any equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$. 
+A commutative semigroup $(S, \circ)$ is faithful commutative if for any equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
 \end{definition}
 Note that this definition does not pose restrictions on the cardinality of each letter in $W$ and $W'$. This allows to capture in this definition important cases of idempotent semigroups. For example, semigroups $(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ are commutative faithful.
 
@@ -376,7 +376,7 @@ It is possible to generalize the previous lemma to the case of
 any constant number of zeros in every row. Below we prove
 an even more general result.
 
-The most interesting case in the case of $X$ being free commutative semigroup. 
+The most interesting case in the case of $X$ being free commutative semigroup.
 
 \begin{theorem}\label{thm:main}
 Suppose $S$ is a commutative semigroup. A~matrix $A \in \{0,1\}^{n \times n}$ with $k$~zeros can
@@ -750,8 +750,9 @@ Now, observe that $\tup(G)$ has increased (by the first coordinate). There are n
 \end{proof}
 
 
-\section*{Acknowledgments}
-We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}.
+% TODO: Uncomment in the final version.
+% \section*{Acknowledgments}
+% We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
 \bibliographystyle{plain}
 \bibliography{text}
@@ -772,7 +773,7 @@ If $X$ is strongly non-commutative, then $X_{id}$ is also strongly non-commutati
 \end{lemma}
 
 \begin{proof}
-Suppose $W$ and $W'$ are words in the alphabet $\{x_1,\ldots, x_n\}$ and $W \sim W'$ in $X_{id}$. This means that there is a sequence $W_0,\ldots, W_k$ of words in the same alphabet such that $W=W_0$, $W'=W_k$ and for each $i$ either $W_i \sim W_{i+1}$ in $X$, or $W_{i+1}$ is obtained from $W_i$ by one application of the idempotency equivalence to some subword of $W_i$. Clearly, it is enough to check that the conditions of Definition~\ref{def:strong_non_commutativity} are satisfied in $X_{id}$ for each consecutive pair $W_i$ and $W_{i+1}$. 
+Suppose $W$ and $W'$ are words in the alphabet $\{x_1,\ldots, x_n\}$ and $W \sim W'$ in $X_{id}$. This means that there is a sequence $W_0,\ldots, W_k$ of words in the same alphabet such that $W=W_0$, $W'=W_k$ and for each $i$ either $W_i \sim W_{i+1}$ in $X$, or $W_{i+1}$ is obtained from $W_i$ by one application of the idempotency equivalence to some subword of $W_i$. Clearly, it is enough to check that the conditions of Definition~\ref{def:strong_non_commutativity} are satisfied in $X_{id}$ for each consecutive pair $W_i$ and $W_{i+1}$.
 
 If $W_i \sim W_{i+1}$ in $X$, then the conditions of Definition~\ref{def:strong_non_commutativity} follows from the strong non-commutativity of $X$.
 
