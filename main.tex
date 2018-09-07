@@ -50,13 +50,19 @@ Our two main results are: (i) we present a linear-size construction for the case
 when the semigroup is commutative, and (ii) we prove that the non-commutative
 case is strictly harder and is equivalent to the classic Range Queries
 problem~--~the corresponding $O(n\alpha(n))$-size circuits can be readily
-obtained by applying the Yao's Range Queries algorithm, where $\alpha(n)$ is the inverse Ackermann function, and we show that this circuit is optimal.
+obtained by applying the Yao's Range Queries algorithm, where $\alpha(n)$ is the
+inverse Ackermann function, and we show that this construction is asymptotically
+optimal.
 
 As a simple application of the presented linear-size construction, we show that
 an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
 semiring in $O(n^2)$ time.
 
-We note that our positive results work in particular for computation of linear operators over Boolean and tropical semirings\todo{V: added}.
+% Volodya, I commented this out, because we don't specifically work with Boolean
+% or tropical semirings in the paper. I agree these are interesting semirings,
+% but so are many others.
+% We note that our positive results work in particular for computation of linear
+% operators over Boolean and tropical semirings\todo{V: added}.
 \end{abstract}
 
 %\tableofcontents
@@ -100,8 +106,8 @@ A natural solution that first comes to mind in the semigroup case is to split
 the rows of the matrix $A$ into ranges of consecutive ones, thus obtaining
 $O(n)$ ranges overall, and then apply the classic \emph{Range Queries} algorithm
 by Yao~\cite{DBLP:conf/stoc/Yao82} to compute all ranges by a circuit of size
-$O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function\todo{V: added}, and subsequently combine the results with $O(n)$ additional
-gates.
+$O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function, and
+subsequently combine the results with $O(n)$ additional gates.
 
 Can we do better? In general, the answer is ``No''. However, if the semigroup is
 \emph{commutative}, the answer is, remarkably, ``Yes''! We present a linear-size
