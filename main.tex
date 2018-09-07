@@ -50,11 +50,13 @@ Our two main results are: (i) we present a linear-size construction for the case
 when the semigroup is commutative, and (ii) we prove that the non-commutative
 case is strictly harder and is equivalent to the classic Range Queries
 problem~--~the corresponding $O(n\alpha(n))$-size circuits can be readily
-obtained by applying the Yao's Range Queries algorithm, where $\alpha(n)$ is the inverse Ackermann function, and we show that this circuit is optimal. We note that our positive result work in particular for computation of linear operators over Boolean and tropical semiring\todo{V: added}.
+obtained by applying the Yao's Range Queries algorithm, where $\alpha(n)$ is the inverse Ackermann function, and we show that this circuit is optimal. 
 
 As a simple application of the presented linear-size construction, we show that
 an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
 semiring in $O(n^2)$ time.
+
+We note that our positive results work in particular for computation of linear operators over Boolean and tropical semirings\todo{V: added}.
 \end{abstract}
 
 %\tableofcontents
@@ -105,7 +107,7 @@ Can we do better? In general, the answer is ``No''. However, if the semigroup is
 \emph{commutative}, the answer is, remarkably, ``Yes''! We present a linear-size
 circuit construction for dense linear operators in Section~\ref{sec-commutative}.
 Furthermore, in Section~\ref{sec-non-commutative} we prove that the
-non-commutative case is equivalent to the Range Queries problem that, as shown
+non-commutative case is equivalent to (both commutative and non-commutative versions of) the Range Queries problem that, as shown
 by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}, requires
 $\Theta(n\alpha(n))$ gates, hence separating the complexity of the two cases.
 As an additional contribution, we prove that the same bound $\Theta(n\alpha(n))$
@@ -318,13 +320,6 @@ Clearly, in the binary circuit the number of gates does not exceed its size (i.e
 
 Note that we can view circuits as computations over some semigroup $(S,\circ)$, meaning that we can substitute instead of the variables elements of the semigroup $S$. If we fix some semigroup $(S,\circ)$ we can actually consider a circuit as a computation in the semigroups $X_S$. Moreover, we can forget about original semigroup $S$ and consider the computations in the circuit as computations in arbitrary semigroup $X$ with generators $x_1, \ldots, x_n$.
 
-In the commutative case below we will need the following observation.
-\begin{observation}\label{obs:transpose}
-Suppose $X$ is free commutative semigroup with generators $x_1,\ldots, x_n$. Then for any $0/1$-matrix~$A$, $C(A)=C(A^T)$.
-\end{observation}
-\begin{proof}
-Reverse the direction of each wire in a~circuit computing~$A$ to get a~circuit computing~$A^T$.
-\end{proof}
 
 In an~important special case of the Boolean semigroup $(\{0,1\}, \lor)$, circuits we are discussing are known as {\em rectifier networks}. An overview of known lower and upper bounds for such circuits is given by Jukna in \cite[Section~13.6]{DBLP:books/daglib/0028687}.
 
@@ -384,22 +379,14 @@ an even more general result.
 The most interesting case in the case of $X$ being free commutative semigroup. 
 
 \begin{theorem}\label{thm:main}
-Suppose $X$ is free commutative semigroup. Suppose A~matrix $A \in \{0,1\}^{n \times n}$ with $k$~zeros can
+Suppose $S$ is a commutative semigroup. A~matrix $A \in \{0,1\}^{n \times n}$ with $k$~zeros can
 be computed by a~circuit of size $O(n+k)$.
 \end{theorem}
 
-It is easy to see that the general case is a simple corollary.
+It is easy to see that the hardest case is when $X_S$ is a free commutative semigroup. Indeed, any other semigroup is the factorization of the free semigroup. Thus for any semigroup $X$ we can just use the same circuit as for free semigroups.
 
-\begin{corollary}\label{cor:commutative}
-Suppose $X$ is any commutative semigroup with generators $x_1,\ldots, x_n$. Suppose A~matrix $A \in \{0,1\}^{n \times n}$ with $k$~zeros can
-be computed by a~circuit of size $O(n+k)$.
-\end{corollary}
 
-\begin{proof}[Proof of Corrolary~\ref{cor:commutative}]
-By Theorem~\ref{thm:main} there is a desired circuit for the case of free commutative semigroup $X$. Note that any other semigroup $X$ is the factorization of free semigroups by its equations. Thus for any semigroup $X$ we can just use the same circuit as for free semigroups.
-\end{proof}
-
-We now proceed to the proof of Theorem~\ref{thm:main}. We build the required circuit out of the basic building blocks described below. We first show how to use these blocks and then prove their existence.
+Thus from now on in the proof of Theorem~\ref{thm:main} we concentrate on the case of free commutative semigroup $X_S$. We build the required circuit out of the basic building blocks described below. We first show how to use these blocks and then prove their existence.
 
 \begin{lemma}\label{lemma:decompose}
 There exists a~binary~circuit of size $O(n\log n)$ such that
@@ -419,6 +406,14 @@ every row. Then there exists a~permutation of the rows of~$A$
 such that the total length of all ranges of length
 at most $\log n$ is $O(\log^4 n)$.
 \end{lemma}
+
+
+\begin{observation}\label{obs:transpose}
+Suppose $X$ is free commutative semigroup with generators $x_1,\ldots, x_n$. Then for any $0/1$-matrix~$A$, $C(A)=C(A^T)$.
+\end{observation}
+\begin{proof}[Proof of Observation~\ref{obs:transpose}]
+Reverse the direction of each wire in a~circuit computing~$A$ to get a~circuit computing~$A^T$.
+\end{proof}
 
 
 
@@ -549,20 +544,20 @@ For any strongly non-commutative semigroup $X$ there is a circuit to compute any
 
 The upper bound follows easily by a naive algorithm: split all rows of $A$ into ranges, compute all ranges by a circuit of size $O(n\alpha(n))$ using Yao's construction~\cite{DBLP:conf/stoc/Yao82}, then combine ranges into rows of $A$ using $O(n)$ gates.
 
-Thus we will concentrate on lower bounds. We will view the computation of the circuit as a computation in a strongly non-commutative semigroup $X$. First we will prove the lower bound only for the case of idempotent strongly non-commutative semigroups $X$. In Section~\ref{sec:noncommutative_extension} we observe how to extend it to any strongly non-commutative $X$.
+Thus we will concentrate on lower bounds. We will view the computation of the circuit as a computation in a strongly non-commutative semigroup $X$. We note that it is enough to prove the lower bound for the case of idempotent strongly non-commutative semigroups $X$. Indeed, if $X$ is not idempotent, we can factorize it by idempotency relations and obtain a strongly non-commutative idempotent semigroup $X_{id}$. A lower bound for the case of $X_{id}$ implies lower bound for the case of $X$. We provide a detailed explanation in Appendix~\ref{sec:noncommutative_extension}.
 
 Hence, {\em until Section~\ref{sec:noncommutative_extension} we assume that $X$ is idempotent and strongly non-commutative.}
 
 We proceed by establishing the following equivalence. We note that the equivalence between two problems is not difficult to prove for free semigroups.
 
 \begin{theorem}\label{thm:equivalence}
-For any $s=\Omega(n)$ we have that commutative range queries problem has size $O(s)$ circuits iff non-commutative dense linear operator problem has size $O(s)$ circuits.
+For any idempotent strongly non-commutative $X$ and for any $s=\Omega(n)$ we have that commutative range queries problem has size $O(s)$ circuits iff non-commutative dense linear operator problem has size $O(s)$ circuits.
 \end{theorem}
 
 Using this theorem, it is straightforward to prove
 Theorem~\ref{thm:noncommlowerbound}.
 
-\begin{proof}[Proof of Theorem~\ref{thm:noncommlowerbound} (idempotent case)]
+\begin{proof}[Proof of Theorem~\ref{thm:noncommlowerbound}]
 By Theorem~\ref{thm:equivalence}, if non-commutative dense linear operator problem has size $s$ circuit, then the commutative range queries problem also does. However, for the latter problem it is proved by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that $s=\Omega(n \alpha(n))$.
 \end{proof}
 
@@ -754,9 +749,21 @@ Observe, that the circuit still computes the outputs correctly. The changes are 
 Now, observe that $\tup(G)$ has increased (by the first coordinate). There are no new gates with smaller $\lef$. Among gates with the minimal $\lef$ there are no new gates with smaller $\gap$. Among gates with minimal $(\lef,\gap)$ all gates have larger $\num$ then $G$. Thus $\tup({\cal C})$ increased and we are done.
 \end{proof}
 
+
+\section*{Acknowledgments}
+We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}.
+
+\bibliographystyle{plain}
+\bibliography{text}
+
+\section{Appendix}
+\input range_queries_applications
+\input approaches
+\input constructive
+
 \subsection{General Non-commutative Case}\label{sec:noncommutative_extension}
 
-Now we will show how to extend Theorem~\ref{thm:noncommlowerbound} beyond idempotent semigroup.
+In this section we provide a detailed explanation of the reduction in Theorem~\ref{thm:noncommlowerbound} from general semigroups to idempotent semigroup.
 
 Consider arbitrary strongly non-commutative semigroup $X$. Consider a new semigroup $X_{id}$ over the same set of generators that is a factorization of $X$ by idempotency relations $W^2\sim W$ for all words $W$ in the alphabet $\{x_1,\ldots, x_n\}$.
 
@@ -776,26 +783,12 @@ Suppose $A$ lies to the left of initial mark in $W_i$ and we substitute $A$ by $
 Suppose $A$ contains initial mark of $W_i$ or lies to the right of it. Then after the substitution of $A$ by $A^2$ the initial mark is still the same and the initial $U_i$ also does not change.
 \end{proof}
 
-Now we are ready to prove Theorem~\ref{thm:noncommlowerbound} in its full generality.
-
-\begin{proof}[Proof of Theorem~\ref{thm:noncommlowerbound} (general case)]
-We have already shown an upper bound and the lower bound for the case of idempotent semigroups. Thus it remains to show a lower bound for arbitrary strongly non-commutative semigroup.
+Now we outline the reduction of the lower bound in Theorem~\ref{thm:noncommlowerbound} from idempotent semigroup to the general case..
 
 Suppose $X$ is strongly non-commutative and suppose that for $X$ all dense operators can be computed by circuits of size at most $s$.
 
 Consider a semigroup $X_{id}$ as introduced above. By Lemma~\ref{lem:idempotisation} $X_{id}$ is also strongly non-commutative. On the other hand, since $X_{id}$ is a factorization of $X$ any circuit computing dense operator over $X$ also computes the same dense operator over $X_{id}$. Thus, by other assumption there are circuits of size at most $s$ for all dense operators over $X_{id}$. Finally, $X_{id}$ is idempotent, so by the special case of our theorem we have $s = \Omega(n \alpha(n))$ and we are done.
-\end{proof}
 
 
-\section*{Acknowledgments}
-We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}.
-
-\bibliographystyle{plain}
-\bibliography{text}
-
-\section{Appendix}
-\input range_queries_applications
-\input approaches
-\input constructive
 
 \end{document}

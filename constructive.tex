@@ -1,6 +1,6 @@
 % !TEX root = main.tex
 
-\subsection{Constructive Construction for Commutative Case}\label{subsec:constructive}
+\subsection{Explicit Construction for Commutative Case}\label{subsec:constructive}
 
 Our original proof was probabilistic in the part computing the matrix $R_1 \times C$ having $n$ columns, at most $n$ rows, at most $k$ zeros and at most $\log n$ zeros in each row. For our proof it is convenient to add redundant rows and columns to the matrix in such a way that it has size $t \times t$, at most $t$ zeros in total and at most $\log t$ zeros in each row. We will then compute the matrix by the circuit of size at most $O(t)$. To enlarge the matrix we can just add rows and columns consisting of ones. It is easy to see that then we can let $t = \max(n,k)$. Note that enlargement of the matrix does not make the computation simpler: additional rows mean additional outputs that can be ignored and additional columns correspond to redundant variables that can be removed (substituted by 0) once the circuit is constructed.
 
