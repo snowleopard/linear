@@ -55,7 +55,8 @@ inverse Ackermann function, and this construction is asymptotically
 optimal.
 
 As a simple application of the presented linear-size construction, we show that
-an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary commutative semiring in $O(n^2)$ time.
+an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
+semiring in $O(n^2)$ time.
 
 % Volodya, I commented this out, because we don't specifically work with Boolean
 % or tropical semirings in the paper. I agree these are interesting semirings,
@@ -71,9 +72,11 @@ an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary comm
 Our main object of study in this paper are \emph{dense matrices}, which we
 define as 0/1 matrices of size $n \times n$ that contain $O(n)$ zeroes. We are
 interested in computations over dense matrices that take place in algebraic
-structures lacking an inverse operation (e.g. semigroups and semirings). 
-The interest to such computations has recently grew substantially throughout Computer Science community (see, for example,~\cite{Jukna16,Williams14,butkovic10systems})\todo{V: added}.
-For such computations dense matrices, being opposite to \emph{sparse matrices},
+structures lacking an inverse operation (e.g. semigroups and semirings).
+The interest in such computations has recently grew substantially throughout the
+Computer Science community (see, for
+example,~\cite{Jukna16,Williams14,butkovic10systems}).
+For such computations, dense matrices, being opposite to \emph{sparse matrices},
 might intuitively seem harder, but as we show in this paper, this intuition is
 only partially correct.
 
@@ -166,11 +169,11 @@ later in the text).
 
 \section{Motivation and Applications}\label{sec-applications}
 
-In this section we discuss some motivation and demonstrate two applications of the presented linear-size
-construction for a dense linear operator: fast multiplication of dense and, more
-generally, \emph{boring matrices} over arbitrary semirings
-(Section~\ref{sec-boring-matrices}) and compact algebraic representation of
-dense graphs (Section~\ref{sec-dense-graph}).
+In this section we discuss our motivation and demonstrate two applications of
+the presented linear-size construction for a dense linear operator: fast
+multiplication of dense and, more generally, \emph{boring matrices} over
+arbitrary semirings (Section~\ref{sec-boring-matrices}) and compact algebraic
+representation of dense graphs (Section~\ref{sec-dense-graph}).
 
 \subsection{Dense Operators}
 
@@ -190,11 +193,22 @@ A \emph{0-1 matrix} is a matrix whose elements belong to the set $\{0,1\}$. A
 0-1 matrix is \emph{dense} if most of its elements are 1. To be more precise, we
 further assume that a dense 0-1 matrix has $O(n)$ zero elements.
 
-Note that multiplication of dense matrices by vectors can be viewed as a special case of Range Queries. Indeed, we can split the rows of a dense matrix into ranges, compute answers to all these range queries and then compute the rows of the matrix combining corresponding ranges.
+Note that multiplication of dense matrices by vectors can be viewed as a special
+case of the Range Queries problem. Indeed, we can split the rows of a dense
+matrix into ranges, compute answers to all these range queries, and then compute
+the rows of the matrix combining the corresponding ranges.
 
-As mentioned above, over algebraic structures with inverse operators the computations with dense matrices does not differ substantially from the computations with sparse matrices. However, the picture is completely different when the computation is performed over semirings, due to the lack of inverse operation, and the computational complexity of various problems can differ substantially from more classical settings. Understanding complexity of computational tasks in the lack of inverse operations is a recurring topic in the recent years (see, for example,~\cite{AkianGG12,Williams14,GrigorievP15}) and the problems we are considering is a step in this direction. As far as we know, the complexity of the problem under consideration was not known even for the simplest semirings like $(\mathbb{B},\vee)$.
-
-
+As mentioned above, computations on dense matrices over algebraic structures
+with inverse operations do not differ substantially from computations on sparse
+matrices. However, the situation is very different when the computation is
+performed over semigroups or semirings, due to the lack of inverse operations,
+and the computation complexity of various problems can differ substantially from
+more classical settings. Understanding complexity in the settings with the lack
+of inverse operations is a recurring topic in the recent years (see, for
+example,~\cite{AkianGG12,Williams14,GrigorievP15}) and the results we obtain in
+this paper provide a further step in this research direction. As far as we know,
+the complexity of the problem under consideration was not known even for the
+simplest semigroups like $(\mathbb{B},\vee)$.
 
 \subsection{Dense and boring matrix multiplication}\label{sec-boring-matrices}
 
