@@ -831,6 +831,8 @@ If the commutative version of the range queries problem has size $s$ circuits th
 %If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
+In the proofs of these lemmas below we will often omit~$\circ$~sign replacing it by juxtaposition for convenience of presentation.
+
 \subsection{Reducing Dense Linear Operator to Range Queries}
 In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the correct order. This is shown in Lemma~\ref{lemma:correctorder}. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeros in positions $l-1$ and $r+1$ (hence, this row consists of three queries: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the right order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
 
