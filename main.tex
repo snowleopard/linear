@@ -644,15 +644,17 @@ computing~$A^T$.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
-We first take a~permutation of the columns of the matrix
-guaranteed by Lemma~\ref{lemma:permute}. At this stage,
+Denote the set of rows and the set of columns of~$A$ by~$R$
+and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
+having at least $\log n$ zeros and $R_1=R \setminus R_0$.
+
+We first take a~permutation of the columns $C$ of the matrix
+guaranteed by Lemma~\ref{lemma:permute} for the matrix $R_1 \times C$. At this stage,
 we use commutativity of the ground semigroup essentially.
 We will compute all the ranges of~$A$. From these ranges,
 it takes $O(n+k)$ additional wires to compute all the outputs.
 
-Denote the set of rows and the set of columns of~$A$ by~$R$
-and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
-having at least $\log n$ zeros and $R_1=R \setminus R_0$. We
+We
 compute the matrices $R_0 \times C$ and $R_1 \times C$
 separately. The main idea is that $R_0 \times C$ is easy to compute
 because it has a~small number of rows (at most $k/\log n$), while $R_1 \times C$
