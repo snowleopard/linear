@@ -52,7 +52,7 @@ case is strictly harder and is equivalent to the classic Range Queries
 problem~--~the corresponding $O(n\alpha(n))$-size circuits can be readily
 obtained by applying the Yao's Range Queries algorithm, where $\alpha(n)$ is the
 inverse Ackermann function, and this construction is asymptotically
-optimal.
+optimal as shown by Chazelle and Rosenberg.
 
 As a simple application of the presented linear-size construction, we show that
 an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
@@ -72,7 +72,7 @@ semiring in $O(n^2)$ time.
 Our main object of study in this paper are \emph{dense matrices}, which we
 define as 0/1 matrices of size $n \times n$ that contain $O(n)$ zeroes. We are
 interested in computations over dense matrices that take place in algebraic
-structures lacking an inverse operation (e.g. semigroups and semirings).
+structures lacking an inverse operation (e.g., semigroups and semirings).
 The interest in such computations has recently grew substantially throughout the
 Computer Science community (see, for
 example,~\cite{Jukna16,Williams14,butkovic10systems}).
@@ -154,7 +154,7 @@ answer to such a~query is the result of applying the semigroup operation to the
 corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. The Range
 Queries problem is then to simply answer all given range queries. There are two
 regimes: online and offline. In the {\em online regime}, one is given
-a~sequence $x_1, x_2, \dotsc, x_n$ and is asked to preprocess it so that to
+a~sequence of {\em values} $x_1=v_1, x_2=v_2, \dotsc, x_n=v_n$ and is asked to preprocess it so that to
 answer efficiently any subsequent query. By ``efficiently'' one usually
 means in time independent of the length of the range (i.e., $r-l+1$, the time
 of a~naive algorithm), say, in time $O(\log n)$ or $O(1)$. In this paper, we
@@ -163,7 +163,7 @@ all the queries, and are interested in the minimum number of semigroup
 operations needed to answer all the queries. Moreover, we study a~more general
 problem: we assume that $x_1, \dotsc, x_n$ are formal variables rather than
 actual semigroup values. That is, we study the circuit size of the corresponding
-computation problem (the formal definition of the computational model is given
+computational problem (the formal definition of the computational model is given
 later in the text).
 
 % TODO: In the final version, show that the Range Queries problem becomes
@@ -233,8 +233,8 @@ Furthermore, by combining the algorithms for sparse and dense matrix
 multiplication, one can obtain an efficient algorithm for the multiplication of
 so-called \emph{boring} matrices.
 
-A matrix is \emph{boring} if most of its elements are equal to some element from
-the semiring $b$. To be more precise, we further assume that a boring matrix has
+A matrix is \emph{boring} if most of its elements are equal to some element~$b$ from
+the semiring. To be more precise, we further assume that a boring matrix has
 $O(n)$ elements that are not equal to~$b$. Boring matrices are a natural
 generalisation of sparse and dense matrices: both are just special cases with
 $b=0$ and $b=1$, respectively.
@@ -253,11 +253,13 @@ A \mathbf{x} & = & (A_0 \circ b A_1) \mathbf{x} & \text{(sparse-dense decomposit
 \end{array}
 \]
 
+\todo[inline]{Andrey, ya do sih por ne ponimayu, gde zdes' nugna kommutativnost'...}
+
 % I'm a bit pressed with time, let's polish this in the final version.
 % \todo[inline]{Andrey, could you show how commutativity is used here?}
 
 \noindent
-Both $A_0 \mathbf{v}$ and $A_1 \mathbf{v}$ can be computed using sparse and
+Both $A_0 \mathbf{x}$ and $A_1 \mathbf{x}$ can be computed using sparse and
 dense matrix-vector multiplication, respectively; the results are further
 combined using scalar multiplication by $b$ and vector addition $\circ$, both of
 which take linear time and have linear-size circuits. As in the dense case, this
@@ -329,13 +331,13 @@ Let $A$ be a dense matrix of size $n\times n$. Our goal is to construct the
 graph $G_A = (\{1, \dots, n\}, E)$ such that $(i,j) \in E$ whenever $A_{ij}=1$.
 
 First, we compute the dense linear operator $\mathbf{y} = A \mathbf{x}$ over the
-(commutative) graph semigroup~$+$, where $\mathbf{x} = (1, 2, \dots, n)$, i.e.
+(commutative) graph semigroup~$+$, where $\mathbf{x} = (1, 2, \dots, n)$, i.e.,
 $x_j$ is the primitive graph comprising a single vertex~$j$, obtaining
 graphs~$y_i$ that comprise sets of isolated vertices corresponding to the rows
 of matrix~$A$:
 
 \[
-y_i = \sum_{A_{ij}=1} j
+y_i = \sum_{A_{ij}=1} j \, .
 \]
 
 The resulting graph $G_A = (\{1, \dots, n\}, E)$ can now be obtained by using
@@ -351,12 +353,15 @@ of the circuit computing $G_A$ is $O(n)$. This allows us to store dense graphs
 on $n$ vertices using $O(n)$ memory, and perform basic transformations of dense
 graphs in $O(n)$ time.
 
+\todo[inline]{Andrey, a ti ne hochesch' upomyanut' zdes' kompaktnie predstavleniya graphov v funktsional'nikh yazikakh?}
+
 \section{Computational Model}
 
 In this section we define our computational model, which includes a few less
 commonly known notions related to semigroups, as well as semigroup circuits.
 
 \subsection{Faithful semigroups}
+\todo[inline]{Volodya, mogesch', pogalauista, etu podsektsiyu perenesti v sektsiyu 6? Ved' eto vsyo nugno rovno dlya dok-va nignei otsenki v sektsii 6.}
 
 In the paper we consider computations over general semigroups. To establish
 complexity results and especially to establish reasonable lower bounds we need
@@ -368,8 +373,8 @@ semigroup. Let $X_{S,n}$ be a semigroup with generators $\{x_1,\ldots, x_n\}$
 and with the equivalence relation consisting of identities in variables
 $\{x_1,\ldots, x_n\}$ over~$(S,\circ)$. That is, for two words $W$ and $W'$ in
 the alphabet $\{x_1,\ldots,x_n\}$ we have $W=W'$ in $X_{S,n}$ iff no matter which
-elements of the semigroup $S$ we substitute for $\{x_1,\ldots, x_n\}$ we obtain
-a correct equation over $S$. In particular, note that if $S$ is commutative
+elements of the semigroup~$S$ we substitute for $\{x_1,\ldots, x_n\}$ we obtain
+a~correct equation over~$S$. In particular, note that if $S$~is commutative
 (respectively, idempotent), then $X_{S,n}$ is also commutative (respectively,
 idempotent). We will often omit the subscript $n$ and write simply $X_S$ since the number of generators will be clear from the context.
 
@@ -432,7 +437,7 @@ A semigroup $(S, \circ)$ is \emph{faithful} if $X_S$ is strongly non-commutative
 We note that this notion of faithfulness is relatively general and is true for
 semigroups $(S,\circ)$ with considerable degree of non-commutativity in their
 structure. It clearly captures free semigroups with at least two generators
-(its identities are just graphic equalities). It is also easy to see that the
+(its identities are just graphic{\todo{chto eto?..}} equalities). It is also easy to see that the
 requirements in Definition~\ref{def:faithful} are satisfied for the free
 idempotent semigroup with $n$ generators (if $S$ is idempotent, then $X_S$ is also
 clearly idempotent and no other relations are holding in $X_S$ since we can
@@ -443,7 +448,7 @@ need in our constructions.
 
 \begin{lemma} \label{lem:prefix_equivalence}
 Suppose $X$ is strongly non-commutative. Suppose the equivalence $W \sim W'$
-holds in $X$ and $\var(W)=\var(W')=k$. Suppose $U$ and $U'$ are minimal
+holds in~$X$ and $|\var(W)|=|\var(W')|=k$. Suppose $U$~and~$U'$ are minimal
 (maximal) prefixes of $W$ and $W'$ such that $|\var(U)| = |\var(U')| = l\leq k$.
 Then the equivalence $U \sim U'$ holds in $X$. The same is true for suffixes.
 \end{lemma}
@@ -475,7 +480,7 @@ The same is true if we read the words from right to left.
 We assume that the input consists of $n$~formal variables
 $\{x_1, \dotsc, x_n\}$. We are interested in the minimum number of semigroup
 operations needed to compute all given words $\{w_1, \dotsc, w_m\}$ (e.g., for
-the range queries problem, each word has a~form $x_lx_{l+1}\dotsb x_r$). We use
+the range queries problem, each word has a~form $x_l\circ x_{l+1}\circ \dotsb \circ x_r$). We use
 the following natural {\em circuit} model. A~circuit computing all these queries
 is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They
 are labelled with $\{x_1, \dotsc, x_n\}$ and are called {\em input gates}. All
@@ -555,12 +560,12 @@ $C(A) = O(n)$.
 \begin{proof}
 To compute the linear dense operator $\mathbf{y} = A \mathbf{x}$, we first
 precompute all prefixes and suffixes of $\mathbf{x}=(x_1, \dotsc, x_n)$.
-Concretely, let $p_i=x_1 \circ x_2 \dotsb x_i$. All $p_i$'s can be computed
+Concretely, let $p_i=x_1 \circ x_2 \dotsb \circ x_i$. All $p_i$'s can be computed
 using $(n-1)$ binary gates as follows:
 \[
 p_1=x_1, p_2=p_1 \circ x_2, p_3=p_2 \circ x_3, \dotsc, p_i=p_{i-1} \circ x_i, \dotsc, p_n=p_{n-1}\circ x_n.
 \]
-Similarly, we compute all suffixes $s_j=x_j \circ x_{j+1} \dotsc x_n$ using
+Similarly, we compute all suffixes $s_j=x_j \circ x_{j+1} \dotsb \circ x_n$ using
 $(n-1)$ binary gates. From these prefixes and suffixes all outputs $y_i$ can be
 computed as follows: if a~row of~$A$ contains no zeros, the corresponding
 output is~$p_n$; otherwise if the~row contains a~zero at position~$i$, the
@@ -580,7 +585,7 @@ Let $A \in \{0,1\}^{n \times n}$ contain at most two zeros in every row. Then
 $C(A) = O(n)$.
 \end{lemma}
 \begin{proof}[Proof sketch]
-Consider the following undirected graph: the set of nodes is $\{1,2\dots,n\}$;
+Consider the following undirected graph: the set of nodes is $\{1,2,\dotsc,n\}$;
 two nodes $i$ and $j$ are joined by an edge if there is a~row having zeros in
 columns~$i$ and~$j$. In the worst case (all rows are different and contain
 exactly two zeros), the graph has exactly $n$~edges and hence it contains a cut
@@ -626,7 +631,7 @@ additional gates from the gates of the circuit.
 \end{lemma}
 
 \begin{lemma}\label{lemma:permute}
-Let $A \in \{0,1\}^n$ contain at most $\log n$ zeroes in
+Let $A \in \{0,1\}^{n \times n}$ contain at most $\log n$ zeroes in
 every row. Then there exists a~permutation of the columns of~$A$
 such that the total length of all ranges of length
 at most $\log n$ is $O(\log^4 n)$.
@@ -831,7 +836,7 @@ If the commutative version of the range queries problem has size $s$ circuits th
 %If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
-In the proofs of these lemmas below we will often omit~$\circ$~sign replacing it by juxtaposition for convenience of presentation.
+In the proofs of these lemmas we will often omit~$\circ$~sign replacing it by juxtaposition for convenience of presentation.
 
 \subsection{Reducing Dense Linear Operator to Range Queries}
 In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the correct order. This is shown in Lemma~\ref{lemma:correctorder}. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeros in positions $l-1$ and $r+1$ (hence, this row consists of three queries: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the right order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.

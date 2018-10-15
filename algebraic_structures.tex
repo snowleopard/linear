@@ -2,15 +2,17 @@
 \subsection{Algebraic Structures}\label{subsec:algstr}
 
 A \emph{semigroup} $(S, \circ)$ is an algebraic structure, where the operation
-$\circ$ is \emph{closed}, i.e. $\circ : S\times S \rightarrow S$, and
-\emph{associative}, i.e.
-$x \circ (y \circ z) = (x \circ y) \circ z$ for all $x$, $y$ and $z$ in $S$.
+$\circ$ is \emph{closed}, i.e., $\circ : S\times S \rightarrow S$, and
+\emph{associative}, i.e.,
+$x \circ (y \circ z) = (x \circ y) \circ z$ for all $x$, $y$, and $z$ in $S$.
 \emph{Commutative} (or \emph{abelian}) semigroups introduce one extra
 requirement: $x \circ y = y \circ x$ for all $x$ and $y$ in $S$.
 
 Commutative semigroups are ubiquitous. Below we list a few
 notable examples, starting with the most basic one, which is, arguably, known
 to every person on the planet.
+
+\todo[inline]{Andrey, mne po-prezhnemu ne nravitsya, chto mi tak mnogo mesta (i vremeni chitatelya!) tratim na eti skuchnie algebraicheskie strukturi. U nas pervoe sodergatel'noe dok-vo nachinaetsya na 10-i stranitse tol'ko. Mogesch', pogaluista, bOl'schuyu chast' etoi sektsii unesti v Appendix? Zdes' mogno ostavit' pro $\circ$, $\bullet$ i graph overlay.}
 
 \begin{itemize}
   \item Integer numbers form commutative semigroups with many operations. For
@@ -26,7 +28,7 @@ to every person on the planet.
   $(\mathbb{B}, \wedge)$, $(\mathbb{B}, \oplus)$ and $(\mathbb{B}, \equiv)$.
 
   \item Any commutative semigroup $(S, \circ)$ can be \emph{lifted} to the set
-  $\hat{S}$ of ``containers'' of elements $S$, e.g. vectors or matrices,
+  $\hat{S}$ of ``containers'' of elements $S$, e.g., vectors or matrices,
   obtaining a commutative semigroup $(\hat{S}, \hat{\circ})$, where the lifted
   operation~$\hat{\circ}$ is applied to the contents of containers element-wise.
   % The \cdot in \hat{\cdot} is a placeholder for an operation that is lifted
@@ -78,7 +80,7 @@ hold for all $x$, $y$, and $z$ in~$S$. Since $\circ$ and $\bullet$~behave
 similarly to numeric addition and multiplication, it is common to give $\bullet$
 a higher precedence to avoid unnecessary parentheses, and even omit~$\bullet$~from
 formulas altogether, replacing it by juxtaposition. This gives a terser and
-more convenient notation, e.g. the left distributivity law becomes:
+more convenient notation, e.g., the left distributivity law becomes:
 $x (y \circ z) = x y \circ x z$. We will use this notation, insofar as this does
 not lead to ambiguity.
 
@@ -89,7 +91,7 @@ such that $1x=x1=x$. Furthermore, 0 is typically required to be
 \emph{annihilating}: $0x=x0=0$.
 
 A semiring $(S, \circ, \bullet)$ is also a \emph{ring} if $(S, \circ)$ is a
-group, i.e. the operation $\circ$ is invertible. One can think of rings as
+group, i.e., the operation $\circ$ is invertible. One can think of rings as
 semirings with subtraction.
 
 Let us extend some of our semigroup examples to semirings:
