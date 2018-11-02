@@ -266,17 +266,15 @@ A \mathbf{x} & = & (A_0 \circ b A_1) \mathbf{x} & \text{(sparse-dense decomposit
 \end{array}
 \]
 
-\todo[inline]{Andrey, ya do sih por ne ponimayu, gde zdes' nugna kommutativnost'...}
-
-% I'm a bit pressed with time, let's polish this in the final version.
-% \todo[inline]{Andrey, could you show how commutativity is used here?}
-
 \noindent
 Both $A_0 \mathbf{x}$ and $A_1 \mathbf{x}$ can be computed using sparse and
 dense matrix-vector multiplication, respectively; the results are further
 combined using scalar multiplication by $b$ and vector addition $\circ$, both of
-which take linear time and have linear-size circuits. As in the dense case, this
-immediately leads to $O(n^2)$-time boring matrix multiplication.
+which take linear time and have linear-size circuits. Note that the second step
+in the above equation relies on commutativity in a crucial way: elements of the
+original matrix $A$ are partitioned into elements of $A_0$ and $A_1$ in an
+arbitrary order. As in the dense case, this immediately leads to $O(n^2)$-time
+boring matrix multiplication.
 
 \subsection{Dense graph representation}\label{sec-dense-graph}
 
@@ -311,9 +309,6 @@ overlay and connect operations: $\varepsilon + x = x + \varepsilon = x$ and
 $\varepsilon \rightarrow x = x \rightarrow \varepsilon = x$, and consequently
 the annihilating zero property does not hold, which makes this algebraic
 structure not a~semiring according to the classic semiring definition.
-% We refer the
-% reader to~\cite{mokhov2017algebraic} for further details about the algebraic
-% properties and applications of this algebra of graphs.
 
 By using the two operations one can construct any graph starting from primitive
 single-vertex graphs. For example, let $U=\{1,2,3\}$ and $k$ stand for a
@@ -364,9 +359,9 @@ G_A = \sum_{i=1}^{n} i \rightarrow y_i.
 Thanks to the linear-size construction for the dense linear operator, the size
 of the circuit computing $G_A$ is $O(n)$. This allows us to store dense graphs
 on $n$ vertices using $O(n)$ memory, and perform basic transformations of dense
-graphs in $O(n)$ time.
-
-\todo[inline]{Andrey, a ti ne hochesch' upomyanut' zdes' kompaktnie predstavleniya graphov v funktsional'nikh yazikakh?}
+graphs in $O(n)$ time. We refer the reader to~\cite{mokhov2017algebraic} for
+further details about applications of algebraic graphs in functional programming
+languages.
 
 \section{Computational Model}
 
