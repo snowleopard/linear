@@ -6,8 +6,11 @@
 \usepackage{amssymb}
 \usepackage{fullpage}
 \usepackage[colorinlistoftodos]{todonotes}
-\usepackage[hidelinks]{hyperref}
 \usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage[hidelinks]{hyperref}
+
 
 
 \newtheorem{definition}{Definition}
@@ -54,7 +57,7 @@ where $A$ is a dense matrix and~$\mathbf{x}$ is a vector over an arbitrary
 semigroup: How many semigroup operations are required to simultaneously compute
 all values of the resulting vector?
 
-Our first main results is a linear-size circuit for the case
+Our first main results is a~linear-size circuit for the case
 when the semigroup is commutative. We note that this covers the cases of dense linear operators over Boolean and tropical semirings. For both cases such a circuit was unknown.
 
 As our second result we show that the non-commutative
@@ -68,17 +71,11 @@ As a simple application of the presented linear-size construction, we show that
 an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
 semiring in $O(n^2)$ time.
 
-The takeaway from this paper is that dense matrices can be processed as
-efficiently as sparse matrices, but only when the underlying semigroup is
-commutative. Note that the existence of inverses does not help, i.e. the case of
-non-commutative groups is strictly harder than the case of commutative
-semigroups, which may be counterintuitive.
-
-% Volodya, I commented this out, because we don't specifically work with Boolean
-% or tropical semirings in the paper. I agree these are interesting semirings,
-% but so are many others.
-% We note that our positive results work in particular for computation of linear
-% operators over Boolean and tropical semirings\todo{V: added}.
+%The takeaway from this paper is that very dense matrices can be processed as
+%efficiently as sparse matrices, but only when the underlying semigroup is
+%commutative. Note that, counterintuitively, the existence of inverses does not help, i.e. the case of
+%non-commutative groups is strictly harder than the case of commutative
+%semigroups.
 \end{abstract}
 
 \thispagestyle{empty}
@@ -94,13 +91,13 @@ semigroups, which may be counterintuitive.
 \section{Introduction}
 
 Our main object of study in this paper are \emph{dense matrices}, which we
-define as 0/1 matrices of size $n \times n$ that contain $O(n)$ zeroes. We are
+define as 0/1 matrices of size $n \times n$ that contain $O(n)$ zeroes.\footnote{Using this definition we slightly abuse the standard terminology as by a~dense matrix one usually means a~matrix with $\Omega(n^2)$ ones.} We are
 interested in computations over dense matrices that take place in algebraic
 structures lacking an inverse operation (e.g., semigroups and semirings).
 The interest in such computations has recently grew substantially throughout the
 Computer Science community with the cases of Boolean and tropical semiring being of the main interest (see, for
 example,~\cite{Jukna16,Williams14,butkovic10systems}).
-The lack of an inverse operation sometimes substantially changes the complexity of algorithmic problems over algebraic structure substantially and even the complexity of standard computational tasks are not well understood over tropical and Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}). From this perspective computations over dense matrices seems to be one of the most basic questions. In the presence of an inverse operation it trivially reduces to the computations over \emph{sparse matrices}.
+The lack of an inverse operation sometimes changes the complexity of algorithmic problems over algebraic structure drastically and even the complexity of standard computational tasks are not well understood over tropical and Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}). From this perspective computations over dense matrices seems to be one of the most basic questions. In the presence of an inverse operation it trivially reduces to the computations over \emph{sparse matrices}.
 Without an inverse operation dense matrices
 might intuitively seem harder than sparse matrices, but as we show in this paper, this intuition is
 only partially correct.
@@ -139,23 +136,31 @@ subsequently combine the results with $O(n)$ additional gates.
 
 Can we do better? In general, the answer is ``No''. However, if the semigroup is
 \emph{commutative}, the answer is, remarkably, ``Yes''! We present a linear-size
-circuit construction for dense linear operators in Section~\ref{sec-commutative}.
-Furthermore, in Section~\ref{sec-non-commutative} we prove that the
+circuit construction for dense linear operators.
+%in Section~\ref{sec-commutative}.
+Furthermore, 
+%in Section~\ref{sec-non-commutative} 
+we prove that the
 % Volodya, I removed "(both commutative and non-commutative versions of)" from
 % here, because I think it's a premature but distracting detail at this stage.
 non-commutative case is equivalent to the Range Queries problem that, as shown
 by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}, requires
-$\Theta(n\alpha(n))$ gates, hence separating the complexity of the two cases.
-A counterintuitive corollary of our separation theorem is that the case of
-non-commutative groups is strictly harder than the case of commutative
-semigroups. In other words, inverses provide no additional power for the studied
-problem, whereas commutativity does.
+$\Theta(n\alpha(n))$ gates, hence separating the complexity of the two cases. 
+
+
+%A counterintuitive corollary of our separation theorem is that the case of
+%non-commutative groups is strictly harder than the case of commutative
+%semigroups. In other words, inverses provide no additional power for the studied
+%problem, whereas commutativity does.
 
 %As an additional contribution, we prove that the same bound
 % $\Theta(n\alpha(n))$ also holds for the case of \emph{idempotent}
 % non-commutative semigroups, which are significantly more powerful.
 
-Section~\ref{sec-background} provides basic definitions used throughout the
+
+
+
+\paragraph{Organization of the paper.} Section~\ref{sec-background} provides basic definitions used throughout the
 paper. Section~\ref{sec-applications} highlights applications of the
 presented linear-size construction. In particular, we observe that an
 $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
@@ -566,7 +571,7 @@ circuits we are discussing are known as {\em rectifier networks}. An overview of
 known lower and upper bounds for such circuits is given by Jukna
 in~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
 
-\section{The Precise Statement of Our Results} \label{sec:statement}
+\section{Formal Statements of the Main Results} \label{sec:statement}
 
 Our first main result is the linear circuit for dense matrices over commutative semirings. We formulate it here in the full generality.
 
