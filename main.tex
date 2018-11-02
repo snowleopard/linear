@@ -5,7 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{fullpage}
-\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorinlistoftodos,disable]{todonotes}
 \usepackage{amsthm}
 \usepackage{thmtools}
 \usepackage{thm-restate}
@@ -62,10 +62,12 @@ when the semigroup is commutative. We note that this covers the cases of dense l
 
 As our second result we show that the non-commutative
 case is strictly harder and is equivalent to the classic (commutative) Range Queries
-problem~--~the complexity in this case is $\Theta(n\alpha(n))$, where $\alpha(n)$ is the
-inverse Ackermann function. The upper bound can be readily
-obtained by applying the Yao's Range Queries algorithm, and the matching lower bound for Range Query problem was shown by
-Chazelle and Rosenberg.
+problem~--- the complexity in this case is $\Theta(n\alpha(n))$, where $\alpha(n)$ is the
+inverse Ackermann function. 
+%The upper bound can be readily
+%obtained by applying the Yao's Range Queries algorithm, 
+%and the matching lower bound for Range Query problem was shown by
+%Chazelle and Rosenberg.
 
 As a simple application of the presented linear-size construction, we show that
 an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
@@ -94,7 +96,7 @@ Our main object of study in this paper are \emph{dense matrices}, which we
 define as 0/1 matrices of size $n \times n$ that contain $O(n)$ zeroes.\footnote{Using this definition we slightly abuse the standard terminology as by a~dense matrix one usually means a~matrix with $\Omega(n^2)$ ones.} We are
 interested in computations over dense matrices that take place in algebraic
 structures lacking an inverse operation (e.g., semigroups and semirings).
-The interest in such computations has recently grew substantially throughout the
+The interest in computations over such algebraic structures has recently grew substantially throughout the
 Computer Science community with the cases of Boolean and tropical semiring being of the main interest (see, for
 example,~\cite{Jukna16,Williams14,butkovic10systems}).
 The lack of an inverse operation sometimes changes the complexity of algorithmic problems over algebraic structure drastically and even the complexity of standard computational tasks are not well understood over tropical and Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}). From this perspective computations over dense matrices seems to be one of the most basic questions. In the presence of an inverse operation it trivially reduces to the computations over \emph{sparse matrices}.
@@ -136,10 +138,8 @@ subsequently combine the results with $O(n)$ additional gates.
 
 Can we do better? In general, the answer is ``No''. However, if the semigroup is
 \emph{commutative}, the answer is, remarkably, ``Yes''! We present a linear-size
-circuit construction for dense linear operators.
-%in Section~\ref{sec-commutative}.
-Furthermore, 
-%in Section~\ref{sec-non-commutative} 
+circuit construction for dense linear operators in Section~\ref{sec-commutative}.
+Furthermore, in Section~\ref{sec-non-commutative} 
 we prove that the
 % Volodya, I removed "(both commutative and non-commutative versions of)" from
 % here, because I think it's a premature but distracting detail at this stage.
@@ -468,8 +468,7 @@ A semigroup $(S, \circ)$ is \emph{faithful} if $X_S$ is strongly non-commutative
 
 We note that this notion of faithfulness is relatively general and is true for
 semigroups $(S,\circ)$ with considerable degree of non-commutativity in their
-structure. It clearly captures free semigroups with at least two generators
-(its identities are just graphic{\todo{chto eto?..}} equalities). It is also easy to see that the
+structure. It clearly captures free semigroups with at least two generators. It is also easy to see that the
 requirements in Definition~\ref{def:faithful} are satisfied for the free
 idempotent semigroup with $n$ generators (if $S$ is idempotent, then $X_S$ is also
 clearly idempotent and no other relations are holding in $X_S$ since we can
