@@ -54,13 +54,15 @@ where $A$ is a dense matrix and~$\mathbf{x}$ is a vector over an arbitrary
 semigroup: How many semigroup operations are required to simultaneously compute
 all values of the resulting vector?
 
-Our two main results are: (i) we present a linear-size construction for the case
-when the semigroup is commutative, and (ii) we prove that the non-commutative
-case is strictly harder and is equivalent to the classic Range Queries
-problem~--~the corresponding $O(n\alpha(n))$-size circuits can be readily
-obtained by applying the Yao's Range Queries algorithm, where $\alpha(n)$ is the
-inverse Ackermann function (the optimality of this construction was shown by
-Chazelle and Rosenberg).
+Our first main results is a linear-size circuit for the case
+when the semigroup is commutative. We note that this covers the cases of dense linear operators over Boolean and tropical semirings. For both cases such a circuit was unknown.
+
+As our second result we show that the non-commutative
+case is strictly harder and is equivalent to the classic (commutative) Range Queries
+problem~--~the complexity in this case is $\Theta(n\alpha(n))$, where $\alpha(n)$ is the
+inverse Ackermann function-size. The upper bound can be readily
+obtained by applying the Yao's Range Queries algorithm, and the matching lower bound for Range Query problem was shown by
+Chazelle and Rosenberg.
 
 As a simple application of the presented linear-size construction, we show that
 an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
@@ -79,6 +81,14 @@ semigroups, which may be counterintuitive.
 % operators over Boolean and tropical semirings\todo{V: added}.
 \end{abstract}
 
+\thispagestyle{empty}
+
+
+
+\newpage
+
+\setcounter{page}{1}
+
 %\tableofcontents
 
 \section{Introduction}
@@ -88,10 +98,11 @@ define as 0/1 matrices of size $n \times n$ that contain $O(n)$ zeroes. We are
 interested in computations over dense matrices that take place in algebraic
 structures lacking an inverse operation (e.g., semigroups and semirings).
 The interest in such computations has recently grew substantially throughout the
-Computer Science community (see, for
+Computer Science community with the cases of Boolean and tropical semiring being of the main interest (see, for
 example,~\cite{Jukna16,Williams14,butkovic10systems}).
-For such computations, dense matrices, being opposite to \emph{sparse matrices},
-might intuitively seem harder, but as we show in this paper, this intuition is
+The lack of an inverse operation sometimes substantially changes the complexity of algorithmic problems over algebraic structure substantially and even the complexity of standard computational tasks are not well understood over tropical and Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}). From this perspective computations over dense matrices seems to be one of the most basic questions. In the presence of an inverse operation it trivially reduces to the computations over \emph{sparse matrices}.
+Without an inverse operation dense matrices
+might intuitively seem harder than sparse matrices, but as we show in this paper, this intuition is
 only partially correct.
 
 Consider a \emph{dense linear operator}
