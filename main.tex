@@ -37,12 +37,12 @@
 
 \sloppy
 \author{
-Alexander Kulikov\thanks{Steklov Mathematical Institute at St.~Petersburg, Russian Academy of Sciences, email: \href{mailto:kulikov@logic.pdmi.ras.ru}{kulikov@logic.pdmi.ras.ru}} 
-\and 
+Alexander Kulikov\thanks{Steklov Mathematical Institute at St.~Petersburg, Russian Academy of Sciences, email: \href{mailto:kulikov@logic.pdmi.ras.ru}{kulikov@logic.pdmi.ras.ru}}
+\and
 Ivan Mikhailin\thanks{Department of Computer Science and Engineering, University
-of California, San Diego, email: \href{mailto:imikhail@eng.ucsd.edu}{imikhail@eng.ucsd.edu}} \and 
-Andrey Mokhov\thanks{School of Engineering, Newcastle University, UK, email: \href{mailto:andrey.mokhov@newcastle.ac.uk}{andrey.mokhov@newcastle.ac.uk}} 
-\and 
+of California, San Diego, email: \href{mailto:imikhail@eng.ucsd.edu}{imikhail@eng.ucsd.edu}} \and
+Andrey Mokhov\thanks{School of Engineering, Newcastle University, UK, email: \href{mailto:andrey.mokhov@ncl.ac.uk}{andrey.mokhov@ncl.ac.uk}}
+\and
 Vladimir Podolskii\thanks{Steklov Mathematical Institute, Russian Academy of Sciences and
 National Research University Higher School of Economics, Moscow, email: \href{mailto:podolskii@mi-ras.ru}{podolskii@mi-ras.ru}}}
 \date{}
@@ -57,15 +57,17 @@ where $A$ is a dense matrix and~$\mathbf{x}$ is a vector over an arbitrary
 semigroup: How many semigroup operations are required to simultaneously compute
 all values of the resulting vector?
 
-Our first main results is a~linear-size circuit for the case
-when the semigroup is commutative. We note that this covers the cases of dense linear operators over Boolean and tropical semirings. For both cases such a circuit was unknown.
+Our first main result is a~linear-size circuit for the case
+when the semigroup is commutative. We note that this covers the cases of dense
+linear operators over Boolean and tropical semirings. For both cases such a
+circuit was previously not known.
 
 As our second result we show that the non-commutative
-case is strictly harder and is equivalent to the classic (commutative) Range Queries
+case is strictly harder and is equivalent to the classic Range Queries
 problem~--- the complexity in this case is $\Theta(n\alpha(n))$, where $\alpha(n)$ is the
-inverse Ackermann function. 
+inverse Ackermann function.
 %The upper bound can be readily
-%obtained by applying the Yao's Range Queries algorithm, 
+%obtained by applying the Yao's Range Queries algorithm,
 %and the matching lower bound for Range Query problem was shown by
 %Chazelle and Rosenberg.
 
@@ -139,13 +141,13 @@ subsequently combine the results with $O(n)$ additional gates.
 Can we do better? In general, the answer is ``No''. However, if the semigroup is
 \emph{commutative}, the answer is, remarkably, ``Yes''! We present a linear-size
 circuit construction for dense linear operators in Section~\ref{sec-commutative}.
-Furthermore, in Section~\ref{sec-non-commutative} 
+Furthermore, in Section~\ref{sec-non-commutative}
 we prove that the
 % Volodya, I removed "(both commutative and non-commutative versions of)" from
 % here, because I think it's a premature but distracting detail at this stage.
 non-commutative case is equivalent to the Range Queries problem that, as shown
 by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}, requires
-$\Theta(n\alpha(n))$ gates, hence separating the complexity of the two cases. 
+$\Theta(n\alpha(n))$ gates, hence separating the complexity of the two cases.
 
 
 %A counterintuitive corollary of our separation theorem is that the case of
