@@ -161,7 +161,7 @@ presented linear-size construction. In particular, we observe that an
 $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
 semiring in $O(n^2)$ time. This appears to be significantly more challenging
 compared to the case of multiplication over a \emph{ring}, which can reduced to
-sparse matrix multiplication via subtraction.
+sparse matrix multiplication via subtraction. In Section~\ref{sec:statement} we give the precise statements of our results.
 
 \section{Background}\label{sec-background}
 
@@ -566,6 +566,24 @@ circuits we are discussing are known as {\em rectifier networks}. An overview of
 known lower and upper bounds for such circuits is given by Jukna
 in~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
 
+\section{The Precise Statement of Our Results} \label{sec:statement}
+
+Our first main result is the linear circuit for dense matrices over commutative semirings. We formulate it here in the full generality.
+
+\begin{theorem}\label{thm:main_statement}
+Suppose $S$ is a commutative semigroup. A~matrix $A \in \{0,1\}^{n \times n}$
+with $k$~zeros can be computed by a~circuit of size $O(n+k)$.
+\end{theorem}
+
+
+Our second result shows that such a circuit is impossible over strongly non-commutative semirings.
+
+\begin{theorem}\label{thm:noncommlowerbound_statement}
+For any strongly non-commutative semigroup $X$ there is a circuit to compute any dense operator of size $O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function. On the other hand, there exist dense matrices~$A$ such that any circuit computing $Ax$ must have size $\Omega(n\alpha(n))$.
+\end{theorem}
+
+In the next two sections we provide the detailed proofs of these two theorems.
+
 \section{Commutative Case}\label{sec-commutative}
 It is easy to see that a sparse 0/1 matrix $A$ of size $n \times n$ with~$k$
 ones can be computed by a~circuit of size $O(n+k)$. The main goal of this
@@ -633,7 +651,7 @@ an even more general result.
 
 % The most interesting case in the case of $X$ being free commutative semigroup.
 
-\begin{theorem}\label{thm:main}
+\begin{theorem}[Restatement of Theorem~\ref{thm:main_statement}]\label{thm:main}
 Suppose $S$ is a commutative semigroup. A~matrix $A \in \{0,1\}^{n \times n}$
 with $k$~zeros can be computed by a~circuit of size $O(n+k)$.
 \end{theorem}
@@ -798,7 +816,7 @@ In the previous section, we have shown that for commutative semigroups dense lin
 
 %In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. We do this by showing that, in the non-commutative case, the dense linear operator problem has linear size circuits iff the range queries problem has linear size circuits. We then use a~lower bound $\Omega(n\alpha(n))$ for the latter problem (over faithful semigroups) by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
-\begin{theorem}\label{thm:noncommlowerbound}
+\begin{theorem}[Restatement of Theorem~\ref{thm:noncommlowerbound_statement}]\label{thm:noncommlowerbound}
 For any strongly non-commutative semigroup $X$ there is a circuit to compute any dense operator of size $O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function. On the other hand, there exist dense matrices~$A$ such that any circuit computing $Ax$ must have size $\Omega(n\alpha(n))$.
 \end{theorem}
 
