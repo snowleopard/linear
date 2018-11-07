@@ -50,47 +50,24 @@ National Research University Higher School of Economics, Moscow, email: \href{ma
 \maketitle
 
 \begin{abstract}
-We study the circuit complexity of \emph{dense matrices}, i.e. 0/1 matrices of size
-$n \times n$ with $O(n)$ zeroes. More specifically, we are interested in
-the complexity of computing the \emph{dense linear operator} $A\mathbf{x}$,
-where $A$ is a dense matrix and~$\mathbf{x}$ is a vector over an arbitrary
-semigroup: How many semigroup operations are required to simultaneously compute
-all values of the resulting vector?
-
-Our first main result is a~linear-size circuit for the case
-when the semigroup is commutative. We note that this covers the cases of dense
-linear operators over Boolean and tropical semirings. For both cases such a
-circuit was previously not known.
-
-As our second result we show that the non-commutative
-case is strictly harder and is equivalent to the classic Range Queries
-problem~--- the complexity in this case is $\Theta(n\alpha(n))$, where $\alpha(n)$ is the
-inverse Ackermann function.
-%The upper bound can be readily
-%obtained by applying the Yao's Range Queries algorithm,
-%and the matching lower bound for Range Query problem was shown by
-%Chazelle and Rosenberg.
-
-As a simple application of the presented linear-size construction, we show that
-an $n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
-semiring in $O(n^2)$ time.
-
-% The takeaway from this paper is that dense matrices can be processed as
-% efficiently as sparse matrices, but only when the underlying semigroup is
-% commutative. Note that, counterintuitively, the existence of inverses does not help, i.e. the case of
-% non-commutative groups is strictly harder than the case of commutative
-% semigroups.
+Let $A \in \{0,1\}^{m \times n}$ be a~matrix with $t_0$ zeroes
+and $t_1$ ones and $\mathbf{x}$ be an~$n$-dimensional vector 
+over a~semigroup. How many semigroup operations are required to 
+compute $A\mathbf{x}$? This problem generalizes the well-known 
+range queries problem and has applications in graph algorithms, 
+functional programming languages, circuit complexity, and others. It 
+is immediate that $O(t_1+n+m)$ semigroup operations are 
+sufficient. The main question studied in this paper is: 
+can $A\mathbf{x}$ be computed using $O(t_0+n+m)$ semiring 
+operations? We prove that in general this is not possible: there 
+exists a~matrix $A \in \{0,1\}^{n \times n}$ having exactly two 
+zeroes in every row (hence $t_0=2n$) whose complexity is 
+$\Theta(n\alpha(n))$. However, for the case when the underlying 
+semiring is commutative, we prove an~$O(t_0+n+m)$ upper 
+bound. This implies that for commutative setting, complements 
+of~sparse matrices can be processed as efficiently as spares
+matrices (though the corresponding algorithm is more involved).
 \end{abstract}
-
-\thispagestyle{empty}
-
-
-
-\newpage
-
-\setcounter{page}{1}
-
-%\tableofcontents
 
 \section{Introduction}
 
