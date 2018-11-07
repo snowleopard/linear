@@ -5,7 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{fullpage}
-\usepackage[colorinlistoftodos,disable]{todonotes}
+\usepackage[colorinlistoftodos]{todonotes}
 \usepackage{amsthm}
 \usepackage{thmtools}
 \usepackage{thm-restate}
@@ -70,6 +70,145 @@ matrices (though the corresponding algorithm is more involved).
 \end{abstract}
 
 \section{Introduction}
+\subsection{Problem Statement and New Results}
+Let $A \in \{0,1\}^{m \times n}$ be a~matrix with $t_0$ zeroes
+and $t_1$ ones and 
+$\mathbf{x}=(x_1, \dotsc, x_n)$~be an~$n$-dimensional vector 
+over a~semigroup~$(S, \circ)$. 
+How many semigroup operations are required to 
+compute the \emph{linear operator}~$A\mathbf{x}$?
+In this case, the $i$-th element of the output vector is
+$\sum_{j \colon A_{ij}=1}x_j$ where the summation 
+is over the semigroup operation~$\circ$.
+More generally, how many semigroup operations are needed 
+to compute $AB$ where $B \in S^{n \times k}$?
+In this paper, 
+we are interested in lower and upper bounds 
+involving~$t_0$ and~$t_1$. 
+Matrices with $t_1=O(n)$ are usually called \emph{dense} 
+whereas matrices with $t_2=O(n)$ 
+are called \emph{complements of dense matrices}. 
+It is not difficult to see that computing all $n$~outputs
+of $A\mathbf{x}$ independently takes
+$O(t_1+n+m)$ semigroup operations.
+The main question studied in this paper is: 
+can $A\mathbf{x}$ be computed using $O(t_0+n+m)$ semiring 
+operations? (This complexity is easy to achieve if $\circ$ has an
+easily computable inverse (in that case $S$~is a~group): in this case~$A$ can be obtained by subtracting a~dense matrix from all-ones matrix.) Our first result states that this is possible for 
+\emph{commutative} semigroups.
+
+%\begin{restatable}{theorem}{upper}
+\begin{theorem}
+\label{thm:upperbound}
+Let $S$~be a~commutative semigroup, 
+$\mathbf{x} \in S^{n \times 1}$ be a~vector, 
+and $A \in \{0,1\}^{m \times n}$ be a~matrix with~$t_0$ zeros.
+Then, $A\mathbf{x}$ can be computed using at most 
+$O(m+n+t_0)$ semiring operations.
+%\end{restatable}
+\end{theorem}
+
+Hence, complements of sparse matrices can be processed as
+efficiently as sparse matrices.
+As an~immediate consequence we get the following matrix 
+multiplication result.
+
+%\begin{restatable}{corollary}{matrixmult}
+\begin{corollary}
+\label{cor:matrixmultiplication}
+Let $S$~be a~commutative semigroup, 
+$A \in \{0,1\}^{n \times n}$ be a~matrix with~$t_0$ zeros,
+and $B \in S^{n \times n}$ be a~matrix. Then, 
+$AB$ can be computed using at most 
+$O(n^2)$ semiring operations.
+\end{corollary}
+%\end{restatable}
+
+We then show that commutativity is essential: for 
+a~strongly non-commutative semigroup~$S$ 
+(the notion of strongly non-commutativity is made formal
+later in the text) the minimum number of semigroup operations
+needed to compute $A\mathbf{x}$ for a~matrix 
+$A \in \{0,1\}^{n \times n}$ with $t_0=O(n)$ zeros is $\Theta(n\alpha(n))$ where is the inverse Ackermann function.
+
+%\begin{restatable}{theorem}{lower}
+\begin{theorem}
+\label{thm:lowerbound}
+For any strongly non-commutative semigroup $X$ there is a circuit to compute any dense operator of size $O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function. On the other hand, there exist dense matrices~$A$ such that any circuit computing $Ax$ must have size $\Omega(n\alpha(n))$.
+\end{theorem}
+%\end{restatable}
+
+
+
+
+\subsection{Motivation}
+The linear operator problem is interesting for many reasons.
+\begin{description}
+\item[Range queries.] In the \emph{range queries} problem, 
+one is given a~vector~$\mathbf{x}=(x_1, \dotsc, x_n)$ over 
+a~semiring $(S, \circ)$ and 
+a~bunch of queries of the form~$(l,r)$ and is required to 
+output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$ 
+for each query. The linear operator problem is thus a~natural
+generalization of the range queries problem: each row of the
+matrix~$A$ defines a~subset of the elements of~$\mathbf{x}$
+that need to be summed up and this subset is not required to be 
+a~contiguous interval. The algorithms (Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}) and hardness results (Theorem~\ref{thm:lowerbound}) for 
+the linear operator problem presented in this paper 
+are indeed inspired 
+by some of the known results for the range queries problem.
+Later in the text we summarize a~rich
+variety of algorithmic approaches and applications of the range 
+queries problem.
+
+\item[Graph algorithms.] Various graph path/reachability 
+problems can be reduced naturally to matrix multiplication. 
+E.g., the all-pairs shortest path problem (APSP) is reducible
+to min-plus matrix product whereas
+the number of triangles in an undirected graph is equal to
+the trace of~$A^3$ divided by six, 
+where $A$~is the adjacency matrix and matrix 
+multiplication is over integers. It is natural to ask what happens if
+a~graph has $O(n)$ edges or $O(n)$ anti-edges 
+(as usual, by~$n$ we denote the number of nodes). 
+In many cases, an efficient algorithm 
+for sparse graphs ($O(n)$ edges) is 
+almost immediate whereas an algorithm with the same efficiency
+for 
+a~complement of a~sparse graph ($O(n)$ anti-edges) is not so immediate. For
+example, it is easy to solve APSP and triangle counting on sparse graphs in time $O(n^2)$, but it is not immediate how to achieve
+the same time complexity for complements of sparse graphs.
+Theorem~\ref{thm:upperbound} shows that the same effect 
+occurs for matrices whereas 
+Corollary~\ref{cor:matrixmultiplication} can be used to
+solve various problems on complements of 
+sparse graphs in time $O(n^2)$.
+
+\item[Matrix multiplication over semirings.] Fast matrix
+ multiplication methods rely essentially on the ring structure.
+The first such algorithm was given by~Strassen~\cite{}, 
+the current record upper bound is $O(n^{2.373})$~\cite{}; 
+see the survey~\cite{} for an~overview of known approaches.
+For various important semirings lacking the inverse operation, 
+we still do not know an $n^{3-\varepsilon}$ upper bound for
+ a~constant~$\varepsilon>0$. 
+E.g., the strongest known upper bound for min-plus matrix
+multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}. 
+Corollary~\ref{cor:matrixmultiplication} can be seen as a~natural 
+special case where faster algorithms are possible.
+
+\item[Functional programming languages.]
+\todo{Andrey, poyasni tut, pogaluista, kak eto vsyo v functional programming ispol'zuetsya dlya kompaktnogo predstavleniya grafov.}
+
+\item[Circuit complexity.] Computing linear operators over
+a~Boolean semiring~$(\{0,1\}, \lor)$ is a~well-studied problem 
+in circuit complexity. The corresponding computational model is known as~\emph{rectifier network}. An overview of
+known lower and upper bounds for such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}. Theorem~\ref{thm:upperbound} states that very dense linear operators have
+linear rectifier network complexity.
+\end{description}
+
+
+\section{(OLD) Introduction}
 
 Our main object of study in this paper are \emph{dense matrices}, which we
 define as 0/1 matrices of size $n \times n$ that contain $O(n)$ zeroes.\footnote{Using this definition we slightly abuse the standard terminology as by a~dense matrix one usually means a~matrix with $\Omega(n^2)$ ones.} We are
