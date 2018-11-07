@@ -134,7 +134,13 @@ $A \in \{0,1\}^{n \times n}$ with $t_0=O(n)$ zeros is $\Theta(n\alpha(n))$ where
 %\begin{restatable}{theorem}{lower}
 \begin{theorem}
 \label{thm:lowerbound}
-For any strongly non-commutative semigroup $X$ there is a circuit to compute any dense operator of size $O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function. On the other hand, there exist dense matrices~$A$ such that any circuit computing $Ax$ must have size $\Omega(n\alpha(n))$.
+Let $(S, \circ)$ be a~strongly non-commutative semigroup, $\mathbf{x} \in S^{n \times 1}$, and $A \in \{0,1\}^{n \times n}$
+be a~matrix with $O(n)$ zeros. Then $A\mathbf{x}$ is computable
+using $O(n\alpha(n))$ semiring operations, where $\alpha(n)$
+is the inverse Ackermann function. Moreover, there exists
+a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeros
+in every row such that the minimum number of semiring operations
+required to compute~$A\mathbf{x}$ is $\Omega(n\alpha(n))$.
 \end{theorem}
 %\end{restatable}
 
