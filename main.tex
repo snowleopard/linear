@@ -49,29 +49,25 @@ National Research University Higher School of Economics, Moscow, email: \href{ma
 
 \begin{abstract}
 Let $A \in \{0,1\}^{m \times n}$ be a~matrix with $t_0$~zeroes
-and $t_1$~ones and 
-$x \in S^{n \times 1}$ be an~$n$-dimensional vector of 
-formal variables
-over a~semigroup $(S, \circ)$. 
-How many semigroup operations are required to 
-compute $Ax$? This problem generalizes the well-known 
+and $t_1$~ones and $x \in S^n$ be an~$n$-dimensional vector of
+formal variables over a~semigroup $(S, \circ)$.
+How many semigroup operations are required to compute the linear operator $Ax$?
+
+As we show in this paper, this problem generalizes the well-known
 range queries problem and has a~rich variety of applications in
-such areas as graph algorithms, 
-functional programming languages, circuit complexity, and others. It 
-is immediate that $O(t_1+n+m)$ semigroup operations are 
-sufficient. The main question studied in this paper is: 
-can $Ax$~be computed using $O(t_0+n+m)$ semigroup 
-operations? We prove that in general this is not possible: there 
-exists a~matrix $A \in \{0,1\}^{n \times n}$ having exactly two 
-zeroes in every row 
-(hence $m=n$ and $t_0=2n$) 
-whose complexity is $\Theta(n\alpha(n))$ 
+such areas as graph algorithms, functional programming, circuit complexity,
+and others. It is immediate that $O(t_1+n+m)$ semigroup operations are
+sufficient. The main question studied in this paper is:
+can $Ax$~be computed using $O(t_0+n+m)$ semigroup operations?
+We prove that in general this is not possible: there exists
+a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in every row
+(hence $m=n$ and $t_0=2n$) whose complexity is $\Theta(n\alpha(n))$
 where $\alpha(n)$ is the inverse Ackermann function.
-However, for the case when the underlying 
-semigroup is commutative, we prove an~$O(t_0+n+m)$ upper 
-bound. This implies that for commutative setting, complements 
-of~sparse matrices can be processed as efficiently as spares
-matrices (though the corresponding algorithm is more involved).
+However, for the case when the semigroup is commutative,
+we give a constructive proof of an~$O(t_0+n+m)$ upper bound.
+This implies that in commutative settings, complements of~sparse matrices can
+be processed as efficiently as sparse matrices (though the corresponding
+algorithms are more involved).
 \end{abstract}
 
 \tableofcontents
@@ -81,65 +77,65 @@ matrices (though the corresponding algorithm is more involved).
 \todo[inline]{AK: let's use just $x$ instead of $\mathbf{x}$ everywhere}
 
 Let $A \in \{0,1\}^{m \times n}$ be a~matrix with $t_0$ zeroes
-and $t_1$ ones and 
-$x=(x_1, \dotsc, x_n) \in S^n$~be an~$n$-dimensional vector 
-of formal variables 
-over a~semigroup~$(S, \circ)$. 
-How many semigroup operations are required to 
+and $t_1$ ones and
+$x=(x_1, \dotsc, x_n) \in S^n$~be an~$n$-dimensional vector
+of formal variables
+over a~semigroup~$(S, \circ)$.
+How many semigroup operations are required to
 compute the \emph{linear operator}~$Ax$?
 In this case, the $i$-th element of the output vector is
-$\sum_{j \colon A_{ij}=1}x_j$ where the summation 
+$\sum_{j \colon A_{ij}=1}x_j$ where the summation
 is over the semigroup operation~$\circ$.
-More generally, how many semigroup operations are needed 
+More generally, how many semigroup operations are needed
 to compute $AX$ where $X \in S^{n \times k}$ is a~matrix of formal variables?
-In this paper, 
-we are interested in lower and upper bounds 
-involving~$t_0$ and~$t_1$. 
-Matrices with $t_1=O(n)$ are usually called \emph{sparse} 
-whereas matrices with $t_0=O(n)$ 
-are called \emph{complements of sparse matrices}. 
+In this paper,
+we are interested in lower and upper bounds
+involving~$t_0$ and~$t_1$.
+Matrices with $t_1=O(n)$ are usually called \emph{sparse}
+whereas matrices with $t_0=O(n)$
+are called \emph{complements of sparse matrices}.
 It is not difficult to see that computing all $n$~outputs
 of~$Ax$ independently takes
 $O(t_1+n+m)$ semigroup operations.
-The main question studied in this paper is: 
-can $Ax$~be computed using $O(t_0+n+m)$ semigroup 
+The main question studied in this paper is:
+can $Ax$~be computed using $O(t_0+n+m)$ semigroup
 operations? (This complexity is easy to achieve if $\circ$ has an
-easily computable inverse: in this case $A$~can be obtained by subtracting a~dense matrix from all-ones matrix.) Our first result states that this is possible for 
+easily computable inverse: in this case $A$~can be obtained by subtracting a~dense matrix from all-ones matrix.) Our first result states that this is possible for
 \emph{commutative} semigroups.
 
 \begin{restatable}{theorem}{upperthm}
 \label{thm:upperbound}
-Let $(S, \circ)$~be a~commutative semigroup, 
-$x \in S^{n \times 1}$ be a~vector of formal variables, 
+Let $(S, \circ)$~be a~commutative semigroup,
+$x \in S^{n \times 1}$ be a~vector of formal variables,
 and $A \in \{0,1\}^{m \times n}$ be a~matrix with~$t_0=n^{O(1)}$ zeros.
-Then, $Ax$ can be computed using at most 
+Then, $Ax$ can be computed using at most
 $O(m+n+t_0)$ semigroup operations.
 \end{restatable}
 
 Hence, complements of sparse matrices can be processed as
 efficiently as sparse matrices.
-As an~immediate consequence we get the following matrix 
+As an~immediate consequence we get the following matrix
 multiplication result.
 
 \begin{restatable}{corollary}{matrixmultcor}
 \label{cor:matrixmultiplication}
-Let $(S, \circ)$~be a~commutative semigroup, 
+Let $(S, \circ)$~be a~commutative semigroup,
 $A \in \{0,1\}^{n \times n}$ be a~matrix with~$O(n)$ zeros,
-and $X \in S^{n \times n}$ be a~matrix of formal variables. Then, 
-$AX$ can be computed using at most 
+and $X \in S^{n \times n}$ be a~matrix of formal variables. Then,
+$AX$ can be computed using at most
 $O(n^2)$ semigroup operations.
 \end{restatable}
 
-We then show that commutativity is essential: for 
-a~strongly non-commutative semigroup~$S$ 
+We then show that commutativity is essential: for
+a~strongly non-commutative semigroup~$S$
 (the notion of strongly non-commutativity is made formal
 later in the text) the minimum number of semigroup operations
-needed to compute $Ax$ for a~matrix 
+needed to compute $Ax$ for a~matrix
 $A \in \{0,1\}^{n \times n}$ with $t_0=O(n)$ zeros is $\Theta(n\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function.
 
 \begin{restatable}{theorem}{lowerthm}
 \label{thm:lowerbound}
-Let $(S, \circ)$ be a~strongly non-commutative semigroup, $x \in S^{n \times 1}$ be a~vector of formal variables, 
+Let $(S, \circ)$ be a~strongly non-commutative semigroup, $x \in S^{n \times 1}$ be a~vector of formal variables,
 and $A \in \{0,1\}^{n \times n}$
 be a~matrix with $O(n)$ zeros. Then $Ax$ is computable
 using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
@@ -152,18 +148,18 @@ required to compute~$Ax$ is $\Omega(n\alpha(n))$.
 \subsection{Motivation}
 The linear operator problem is interesting for many reasons.
 \begin{description}
-\item[Range queries.] In the \emph{range queries} problem, 
-one is given a~vector~$x=(x_1, \dotsc, x_n)$ over 
-a~semigroup $(S, \circ)$ and 
-a~bunch of queries of the form~$(l,r)$ and is required to 
-output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$ 
-for each query. It~is a~classical problem in data structures and 
+\item[Range queries.] In the \emph{range queries} problem,
+one is given a~vector~$x=(x_1, \dotsc, x_n)$ over
+a~semigroup $(S, \circ)$ and
+a~bunch of queries of the form~$(l,r)$ and is required to
+output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$
+for each query. It~is a~classical problem in data structures and
 algorithms
-having a~variety of applications in fields like bioinformatics and 
+having a~variety of applications in fields like bioinformatics and
 string
-algorithms, computational geometry, image analysis, real-time 
+algorithms, computational geometry, image analysis, real-time
 systems, and
-others (we review some of the applications in 
+others (we review some of the applications in
 Section~\ref{subseq:rmqapp}, as
 well as a~rich variety of algebraic techniques for the problem in
 Section~\ref{subsec:approaches}).
@@ -172,56 +168,56 @@ Section~\ref{subsec:approaches}).
 The linear operator problem is thus a~natural
 generalization of the range queries problem: each row of the
 matrix~$A$ defines a~subset of the elements of~$x$
-that need to be summed up and this subset is not required to be 
-a~contiguous interval. The algorithms (Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}) and hardness results (Theorem~\ref{thm:lowerbound}) for 
-the linear operator problem presented in this paper 
-are indeed inspired 
+that need to be summed up and this subset is not required to be
+a~contiguous interval. The algorithms (Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}) and hardness results (Theorem~\ref{thm:lowerbound}) for
+the linear operator problem presented in this paper
+are indeed inspired
 by some of the known deep results for the range queries problem.
 
-\item[Graph algorithms.] Various graph path/reachability 
-problems can be reduced naturally to matrix multiplication. 
+\item[Graph algorithms.] Various graph path/reachability
+problems can be reduced naturally to matrix multiplication.
 E.g., the all-pairs shortest path problem (APSP) is reducible
 to min-plus matrix product whereas
-the number of triangles in an undirected graph 
+the number of triangles in an undirected graph
 can be found by computing the third power of the
 adjacency matrix.
 It is natural to ask what happens if
-a~graph has $O(n)$ edges or $O(n)$ anti-edges 
-(as usual, by~$n$ we denote the number of nodes). 
-In many cases, an efficient algorithm 
-for sparse graphs ($O(n)$ edges) is 
+a~graph has $O(n)$ edges or $O(n)$ anti-edges
+(as usual, by~$n$ we denote the number of nodes).
+In many cases, an efficient algorithm
+for sparse graphs ($O(n)$ edges) is
 straightforward
 whereas an algorithm with the same efficiency
-for 
+for
 a~complement of a~sparse graph ($O(n)$ anti-edges) is not so immediate. For
 example, it is easy to solve APSP and triangle counting on sparse graphs in time $O(n^2)$, but it is not immediate how to achieve
 the same time complexity for complements of sparse graphs.
-Theorem~\ref{thm:upperbound} shows that the same effect 
-occurs for matrices whereas 
+Theorem~\ref{thm:upperbound} shows that the same effect
+occurs for matrices whereas
 Corollary~\ref{cor:matrixmultiplication} can be used to
-solve various problems on complements of 
+solve various problems on complements of
 sparse graphs in time $O(n^2)$.
 
 \item[Matrix multiplication over semirings.] Fast matrix
 multiplication methods rely essentially on the ring structure.
-The first such algorithm was given by~Strassen, 
+The first such algorithm was given by~Strassen,
 the current record upper bound is $O(n^{2.373})$~\cite{DBLP:conf/stoc/Williams12, DBLP:conf/issac/Gall14a}.
 At the same time, the lack of an inverse operation sometimes
-changes the complexity of algorithmic problems over algebraic 
-structure drastically and even the complexity of standard 
-computational tasks are not well understood over tropical and 
+changes the complexity of algorithmic problems over algebraic
+structure drastically and even the complexity of standard
+computational tasks are not well understood over tropical and
 Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}).
-For various important semirings, 
+For various important semirings,
 we still do not know an $n^{3-\varepsilon}$ (a~constant~$\varepsilon>0$) upper bound for matrix multiplication.
 E.g., the strongest known upper bound for min-plus matrix
-multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}. 
+multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}.
 
-The interest in computations over such algebraic structures has 
+The interest in computations over such algebraic structures has
 recently grew substantially throughout the
-Computer Science community with the cases of Boolean and 
+Computer Science community with the cases of Boolean and
 tropical semiring being of the main interest (see, for
 example,~\cite{Jukna16,Williams14,butkovic10systems}).
-From this perspective computations over sparse and dense 
+From this perspective computations over sparse and dense
 matrices seems to be one of the most basic questions.
 Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication} therefore give natural special
 cases when efficient computations are possible.
@@ -232,7 +228,7 @@ We give more details on this in Section~\ref{sec-dense-graph}.
 \todo{Andrey, poyasni tut, pogaluista, kak eto vsyo v functional programming ispol'zuetsya dlya kompaktnogo predstavleniya grafov.}
 
 \item[Circuit complexity.] Computing linear operators over
-a~Boolean semiring~$(\{0,1\}, \lor)$ is a~well-studied problem 
+a~Boolean semiring~$(\{0,1\}, \lor)$ is a~well-studied problem
 in circuit complexity. The corresponding computational model is known as~\emph{rectifier network}. An overview of
 known lower and upper bounds for such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}. Theorem~\ref{thm:upperbound} states that very dense linear operators have
 linear rectifier network complexity.
@@ -324,21 +320,21 @@ linear rectifier network complexity.
 
 \section{Background}
 \subsection{Semigroups and Semirings}
-A~\emph{semigroup} $(S, \circ)$ is an algebraic structure, where 
+A~\emph{semigroup} $(S, \circ)$ is an algebraic structure, where
 the operation
-$\circ$~is~\emph{closed}, i.e., $\circ : S\times S \rightarrow S$, 
+$\circ$~is~\emph{closed}, i.e., $\circ : S\times S \rightarrow S$,
 and
 \emph{associative}, i.e.,
-$x \circ (y \circ z) = (x \circ y) \circ z$ for all~$x$, $y$,~and~$z$ 
+$x \circ (y \circ z) = (x \circ y) \circ z$ for all~$x$, $y$,~and~$z$
 in~$S$.
-\emph{Commutative} (or \emph{abelian}) semigroups introduce 
-one extra requirement: $x \circ y = y \circ x$ for all $x$ and $y$ 
+\emph{Commutative} (or \emph{abelian}) semigroups introduce
+one extra requirement: $x \circ y = y \circ x$ for all $x$ and $y$
 in~$S$.
 
-A~commutative semigroup $(S, \circ)$ can often be extended to 
-a~\emph{semiring} $(S, \circ, \bullet)$ by introducing 
+A~commutative semigroup $(S, \circ)$ can often be extended to
+a~\emph{semiring} $(S, \circ, \bullet)$ by introducing
 another associative (but not necessarily
-commutative) 
+commutative)
 operation $\bullet$ that \emph{distributes} over~$\circ$, that is
 \[
 x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)\\
@@ -346,55 +342,55 @@ x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)\\
 \[
 (x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z)
 \]
-hold for all~$x$, $y$,~and~$z$ in~$S$. 
+hold for all~$x$, $y$,~and~$z$ in~$S$.
 Since $\circ$~and~$\bullet$ behave
 similarly to numeric addition and multiplication, it is common to
-give~$\bullet$ a~higher precedence to avoid 
+give~$\bullet$ a~higher precedence to avoid
 unnecessary parentheses, and even omit~$\bullet$~from
-formulas altogether, replacing it by juxtaposition. 
+formulas altogether, replacing it by juxtaposition.
 This gives a terser and
 more convenient notation, e.g., the left distributivity law becomes:
-$x (y \circ z) = x y \circ x z$. We will use this notation, 
+$x (y \circ z) = x y \circ x z$. We will use this notation,
 insofar as this does not lead to ambiguity. See Subsection~
-\ref{subsec:algstr} for an overview of commonly used 
+\ref{subsec:algstr} for an overview of commonly used
 semigroups and semirings.
 
 \subsection{Range Queries Problem and Linear Operator Problem}
-In the {\em range queries problem}, one is given 
+In the {\em range queries problem}, one is given
 a~sequence $x_1, x_2, \dotsc, x_n$ of
-elements of a~fixed semigroup $(S, \circ)$. 
+elements of a~fixed semigroup $(S, \circ)$.
 Then, a~\emph{range query} is
-specified by a~pair of indices $(l,r)$, such that $1 \le l \le r \le n$. 
-The answer to such a~query is the result of applying the semigroup 
+specified by a~pair of indices $(l,r)$, such that $1 \le l \le r \le n$.
+The answer to such a~query is the result of applying the semigroup
 operation to the
-corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$. 
-The range queries problem is then to simply answer all given range 
-queries. 
+corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$.
+The range queries problem is then to simply answer all given range
+queries.
 There are two
 regimes: online and offline. In the {\em online regime}, one is given
-a~sequence of {\em values} 
-$x_1=v_1, x_2=v_2, \dotsc, x_n=v_n$ and is asked to preprocess 
+a~sequence of {\em values}
+$x_1=v_1, x_2=v_2, \dotsc, x_n=v_n$ and is asked to preprocess
 it so that to
-answer efficiently any subsequent query. 
+answer efficiently any subsequent query.
 By ``efficiently'' one usually
-means in time independent of the length of the range 
+means in time independent of the length of the range
 (i.e., $r-l+1$, the time
-of a~naive algorithm), say, in time $O(\log n)$ or $O(1)$. 
+of a~naive algorithm), say, in time $O(\log n)$ or $O(1)$.
 In this paper, we
-focus on the {\em offline} version, where one is given a~sequence 
+focus on the {\em offline} version, where one is given a~sequence
 together with
-all the queries, and are interested in the minimum number of 
+all the queries, and are interested in the minimum number of
 semigroup
-operations needed to answer all the queries. Moreover, we study 
+operations needed to answer all the queries. Moreover, we study
 a~more general
-problem: we assume that $x_1, \dotsc, x_n$ are formal variables 
+problem: we assume that $x_1, \dotsc, x_n$ are formal variables
 rather than
-actual semigroup values. That is, we study the {\em circuit size} of 
+actual semigroup values. That is, we study the {\em circuit size} of
 the corresponding
 computational problem.
 
-The {\em linear operator} problem generalizes the range 
-queries problem: now, instead of contiguous ranges one wants 
+The {\em linear operator} problem generalizes the range
+queries problem: now, instead of contiguous ranges one wants
 to computes sums over arbitrary subsets. These subsets are
 given as rows of a~0/1-matrix~$A$.
 
@@ -589,7 +585,7 @@ This section is devoted to the proof of Theorem~\ref{thm:upperbound}.
 
 \upperthm*
 
-Before proving it, we prove two simpler statements to show 
+Before proving it, we prove two simpler statements to show
 how commutativity is important.
 
 \begin{lemma}\label{lemma:easy}
@@ -640,7 +636,7 @@ commutativity). The corresponding recurrence relation is $T(n) \le cn + T(n/2)$
 for a fixed constant $c$, implying $T(n)=O(n)$, and hence $C(A) = O(n)$.
 \end{proof}
 
-We now state a~few auxiliary lemmas that will be 
+We now state a~few auxiliary lemmas that will be
 used as building blocks in the proof of Theorem~\ref{thm:upperbound}.
 
 %It is easy to see that the hardest case is when $X_S$ is a free commutative
@@ -710,7 +706,7 @@ since $t_0 \le n^{O(1)}$.
 $R_1 \times C$ contains at most $\log n$ zeros. Moreover,
 thanks to Lemma~\ref{lemma:permute}, the total length of all
 ranges of length at most $\log n$ is $O(\frac{m}{n}\cdot\log^4n)$. Hence, all
-such short ranges can be computed by a~circuit of 
+such short ranges can be computed by a~circuit of
 size~$O(m)$. It remains to compute all the ranges of
 length at least~$\log n$. This can be done using Lemma~\ref{lemma:blocks}.
 \end{proof}
