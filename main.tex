@@ -50,7 +50,7 @@ National Research University Higher School of Economics, Moscow, email: \href{ma
 \begin{abstract}
 Let $A \in \{0,1\}^{m \times n}$ be a~matrix with $t_0$~zeroes
 and $t_1$~ones and 
-$x \in S^{n \times 1}$ be an~$n$-dimensional vector of 
+$x \in S^{n \times 1}$\todo{V: let's write just $S^{n}$ throughout the paper?} be an~$n$-dimensional vector of 
 formal variables
 over a~semigroup $(S, \circ)$. 
 How many semigroup operations are required to 
@@ -58,10 +58,10 @@ compute $Ax$? This problem generalizes the well-known
 range queries problem and has a~rich variety of applications in
 such areas as graph algorithms, 
 functional programming languages, circuit complexity, and others. It 
-is immediate that $O(t_1+n+m)$ semigroup operations are 
+is immediate that $O(t_1+n+m)$\todo{V: isn't the exact complexity $t_1 - m = O(t_1)$?} semigroup operations are 
 sufficient. The main question studied in this paper is: 
 can $Ax$~be computed using $O(t_0+n+m)$ semigroup 
-operations? We prove that in general this is not possible: there 
+operations? \todo{V: let's state positive result first and say that it covers Boolean and min-plus}We prove that in general this is not possible: there 
 exists a~matrix $A \in \{0,1\}^{n \times n}$ having exactly two 
 zeroes in every row 
 (hence $m=n$ and $t_0=2n$) 
@@ -98,7 +98,7 @@ involving~$t_0$ and~$t_1$.
 Matrices with $t_1=O(n)$ are usually called \emph{sparse} 
 whereas matrices with $t_0=O(n)$ 
 are called \emph{complements of sparse matrices}. 
-It is not difficult to see that computing all $n$~outputs
+It is not difficult to see that computing all $m$~outputs
 of~$Ax$ independently takes
 $O(t_1+n+m)$ semigroup operations.
 The main question studied in this paper is: 
@@ -176,7 +176,7 @@ that need to be summed up and this subset is not required to be
 a~contiguous interval. The algorithms (Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}) and hardness results (Theorem~\ref{thm:lowerbound}) for 
 the linear operator problem presented in this paper 
 are indeed inspired 
-by some of the known deep results for the range queries problem.
+by some of the known deep results for the range queries problem.\todo{V: shouldn't we keep the intuition that dense matrices is a special case of range query?}
 
 \item[Graph algorithms.] Various graph path/reachability 
 problems can be reduced naturally to matrix multiplication. 
