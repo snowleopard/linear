@@ -74,24 +74,23 @@ algorithms are more involved).
 
 \section{Introduction}
 \subsection{Problem Statement and New Results}
-\todo[inline]{AK: let's use just $x$ instead of $\mathbf{x}$ everywhere}
 
 Let $A \in \{0,1\}^{m \times n}$ be a~matrix with $t_0$ zeroes
-and $t_1$ ones and
-$x=(x_1, \dotsc, x_n) \in S^n$~be an~$n$-dimensional vector
-of formal variables
-over a~semigroup~$(S, \circ)$.
-How many semigroup operations are required to
-compute the \emph{linear operator}~$Ax$?
-In this case, the $i$-th element of the output vector is
-$\sum_{j \colon A_{ij}=1}x_j$ where the summation
-is over the semigroup operation~$\circ$.
-More generally, how many semigroup operations are needed
-to compute $AX$ where $X \in S^{n \times k}$ is a~matrix of formal variables?
-In this paper,
-we are interested in lower and upper bounds
+and $t_1$ ones and $x=(x_1, \dotsc, x_n) \in S^n$~be an~$n$-dimensional vector
+of formal variables over a~semigroup~$(S, \circ)$. In this paper we study the
+complexity of the \emph{linear operator}~$Ax$, i.e. how many semigroup
+operations are required to compute a vector whose $i$-th element is
+
+\[
+\sum_{1 \le j \le n\,\bigwedge\,A_{ij}=1}x_j
+\]
+
+% More generally, we study how many semigroup operations are needed
+% to compute $AX$ where $X \in S^{n \times k}$ is a~matrix of formal variables.
+where the summation is over the semigroup operation~$\circ$.
+More specifically, we are interested in lower and upper bounds
 involving~$t_0$ and~$t_1$.
-Matrices with $t_1=O(n)$ are usually called \emph{sparse}
+Matrices with $t_1=O(n)$ are usually called \emph{sparse},
 whereas matrices with $t_0=O(n)$
 are called \emph{complements of sparse matrices}.
 It is not difficult to see that computing all $n$~outputs
@@ -99,17 +98,18 @@ of~$Ax$ independently takes
 $O(t_1+n+m)$ semigroup operations.
 The main question studied in this paper is:
 can $Ax$~be computed using $O(t_0+n+m)$ semigroup
-operations? (This complexity is easy to achieve if $\circ$ has an
-easily computable inverse: in this case $A$~can be obtained by subtracting a~dense matrix from all-ones matrix.) Our first result states that this is possible for
+operations? Note that this complexity is easy to achieve if $\circ$ has an
+inverse: in this case $A$~can be obtained by subtracting a~dense matrix from
+all-ones matrix. Our first result states that this is also possible for
 \emph{commutative} semigroups.
 
 \begin{restatable}{theorem}{upperthm}
 \label{thm:upperbound}
-Let $(S, \circ)$~be a~commutative semigroup,
-$x \in S^{n \times 1}$ be a~vector of formal variables,
-and $A \in \{0,1\}^{m \times n}$ be a~matrix with~$t_0=n^{O(1)}$ zeros.
-Then, $Ax$ can be computed using at most
-$O(m+n+t_0)$ semigroup operations.
+Let $(S, \circ)$~be a~commutative semigroup, $x \in S^n$ be a~vector of formal
+variables, and $A \in \{0,1\}^{m \times n}$ be a~matrix with~$t_0=n^{O(1)}$
+\todo{Sasha: why use $n^{O(1)}$ here instead of simpler $O(n)$ as above?}
+zeros. Then, $Ax$ can be computed using at most
+$O(t_0+n+m)$ semigroup operations.
 \end{restatable}
 
 Hence, complements of sparse matrices can be processed as
@@ -126,17 +126,25 @@ $AX$ can be computed using at most
 $O(n^2)$ semigroup operations.
 \end{restatable}
 
+\todo[inline]{AM: If I understand correctly, the general case when
+$A \in \{0,1\}^{m \times n}$ and $X \in S^{n \times k}$ has
+complexity $O((t_0+m+n)k)$, is that right? Shall we report it here as well?}
+
 We then show that commutativity is essential: for
 a~strongly non-commutative semigroup~$S$
-(the notion of strongly non-commutativity is made formal
+(the notion of strong non-commutativity is made formal
 later in the text) the minimum number of semigroup operations
 needed to compute $Ax$ for a~matrix
-$A \in \{0,1\}^{n \times n}$ with $t_0=O(n)$ zeros is $\Theta(n\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function.
+$A \in \{0,1\}^{n \times n}$ with $t_0=O(n)$ zeros is
+$\Theta(n\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function.
+
+\todo[inline]{AM: Can we have a lower bound for the general case
+$A \in \{0,1\}^{m \times n}$? Is it something like $O((m+n)\alpha(t_0))$?}
 
 \begin{restatable}{theorem}{lowerthm}
 \label{thm:lowerbound}
-Let $(S, \circ)$ be a~strongly non-commutative semigroup, $x \in S^{n \times 1}$ be a~vector of formal variables,
-and $A \in \{0,1\}^{n \times n}$
+Let $(S, \circ)$ be a~strongly non-commutative semigroup, $x \in S^n$ be
+a~vector of formal variables, and $A \in \{0,1\}^{n \times n}$
 be a~matrix with $O(n)$ zeros. Then $Ax$ is computable
 using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
 is the inverse Ackermann function. Moreover, there exists
@@ -145,53 +153,50 @@ in every row such that the minimum number of semigroup operations
 required to compute~$Ax$ is $\Omega(n\alpha(n))$.
 \end{restatable}
 
+\todo[inline]{AM: I wonder if we can have an interesting corollary about matrix
+multiplication in the style of Corollary~\ref{cor:matrixmultiplication}. Can we
+say that computing $A X$ in strongly non-commutative case requires
+$\Omega(n^2\alpha(n))$ operations? Or is it too good to be true?}
+
 \subsection{Motivation}
-The linear operator problem is interesting for many reasons.
+The complexity of linear operators is interesting for many reasons.
 \begin{description}
 \item[Range queries.] In the \emph{range queries} problem,
-one is given a~vector~$x=(x_1, \dotsc, x_n)$ over
-a~semigroup $(S, \circ)$ and
-a~bunch of queries of the form~$(l,r)$ and is required to
+one is given a~vector~$x=(x_1, \dotsc, x_n)$ over a~semigroup $(S, \circ)$ and
+multiple queries of the form~$(l,r)$, and is required to
 output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$
 for each query. It~is a~classical problem in data structures and
-algorithms
-having a~variety of applications in fields like bioinformatics and
-string
-algorithms, computational geometry, image analysis, real-time
-systems, and
-others (we review some of the applications in
-Section~\ref{subseq:rmqapp}, as
-well as a~rich variety of algebraic techniques for the problem in
-Section~\ref{subsec:approaches}).
+algorithms with applications in many fields, such as bioinformatics and
+string algorithms, computational geometry, image analysis, real-time
+systems, and others. We review major applications in Section~\ref{subseq:rmqapp},
+as well as a~rich variety of algebraic techniques for the problem in
+Section~\ref{subsec:approaches}.
 
-
-The linear operator problem is thus a~natural
-generalization of the range queries problem: each row of the
-matrix~$A$ defines a~subset of the elements of~$x$
+The linear operator problem is a~natural generalization of the range queries
+problem: each row of the matrix~$A$ defines a~subset of the elements of~$x$
 that need to be summed up and this subset is not required to be
-a~contiguous interval. The algorithms (Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}) and hardness results (Theorem~\ref{thm:lowerbound}) for
-the linear operator problem presented in this paper
-are indeed inspired
-by some of the known deep results for the range queries problem.
+a~contiguous interval. The algorithms (Theorem~\ref{thm:upperbound} and
+Corollary~\ref{cor:matrixmultiplication}) and hardness results
+(Theorem~\ref{thm:lowerbound}) for the linear operator problem presented in this
+paper are indeed inspired by some of the known results for the range queries
+problem.
 
 \item[Graph algorithms.] Various graph path/reachability
 problems can be reduced naturally to matrix multiplication.
 E.g., the all-pairs shortest path problem (APSP) is reducible
-to min-plus matrix product whereas
-the number of triangles in an undirected graph
-can be found by computing the third power of the
+to min-plus matrix product whereas the number of triangles in an
+undirected graph can be found by computing the third power of the
 adjacency matrix.
 It is natural to ask what happens if
 a~graph has $O(n)$ edges or $O(n)$ anti-edges
 (as usual, by~$n$ we denote the number of nodes).
 In many cases, an efficient algorithm
-for sparse graphs ($O(n)$ edges) is
-straightforward
+for sparse graphs ($O(n)$ edges) is straightforward
 whereas an algorithm with the same efficiency
-for
-a~complement of a~sparse graph ($O(n)$ anti-edges) is not so immediate. For
-example, it is easy to solve APSP and triangle counting on sparse graphs in time $O(n^2)$, but it is not immediate how to achieve
-the same time complexity for complements of sparse graphs.
+for complements of sparse graphs ($O(n)$ anti-edges) is not. For
+example, it is easy to solve APSP and triangle counting on sparse graphs in
+time $O(n^2)$, but achieving the same time complexity for complements of sparse
+graphs is (relatively) difficult.
 Theorem~\ref{thm:upperbound} shows that the same effect
 occurs for matrices whereas
 Corollary~\ref{cor:matrixmultiplication} can be used to
@@ -208,7 +213,8 @@ structure drastically and even the complexity of standard
 computational tasks are not well understood over tropical and
 Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}).
 For various important semirings,
-we still do not know an $n^{3-\varepsilon}$ (a~constant~$\varepsilon>0$) upper bound for matrix multiplication.
+we still do not know an $n^{3-\varepsilon}$ (a~constant~$\varepsilon>0$) upper
+bound for matrix multiplication.
 E.g., the strongest known upper bound for min-plus matrix
 multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}.
 
@@ -217,20 +223,26 @@ recently grew substantially throughout the
 Computer Science community with the cases of Boolean and
 tropical semiring being of the main interest (see, for
 example,~\cite{Jukna16,Williams14,butkovic10systems}).
-From this perspective computations over sparse and dense
-matrices seems to be one of the most basic questions.
-Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication} therefore give natural special
+From this perspective, the computation complexity over sparse and complements of
+sparse matrices is one of the most basic questions.
+Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}
+therefore give natural special
 cases when efficient computations are possible.
 
-\item[Functional programming languages.]
-Blah-blah
-We give more details on this in Section~\ref{sec-dense-graph}.
-\todo{Andrey, poyasni tut, pogaluista, kak eto vsyo v functional programming ispol'zuetsya dlya kompaktnogo predstavleniya grafov.}
+\item[Functional programming.]
+Algebraic data structures for graphs developed in the functional programming
+community~\cite{mokhov2017algebraic} can be used for representing and processing
+densely-connected graphs in linear (in the number of vertices) time and memory.
+As we discuss in Section~\ref{sec-dense-graph}, Theorem~\ref{thm:upperbound}
+yields an algorithm for deriving a linear-size algebraic graph representation
+for complements of sparse graphs.
 
 \item[Circuit complexity.] Computing linear operators over
 a~Boolean semiring~$(\{0,1\}, \lor)$ is a~well-studied problem
-in circuit complexity. The corresponding computational model is known as~\emph{rectifier network}. An overview of
-known lower and upper bounds for such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}. Theorem~\ref{thm:upperbound} states that very dense linear operators have
+in circuit complexity. The corresponding computational model is known
+as~\emph{rectifier networks}. An overview of known lower and upper bounds for
+such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
+Theorem~\ref{thm:upperbound} states that very dense linear operators have
 linear rectifier network complexity.
 \end{description}
 
