@@ -51,14 +51,16 @@ National Research University Higher School of Economics, Moscow, email: \href{ma
 Let $A \in \{0,1\}^{m \times n}$ be a~matrix with $t_0$~zeroes
 and $t_1$~ones and $x \in S^n$ be an~$n$-dimensional vector of
 formal variables over a~semigroup $(S, \circ)$.
-How many semigroup operations are required to compute the linear operator $Ax$?
+How many semigroup operations are required to compute the linear operator $A x$?
 
 As we show in this paper, this problem generalizes the well-known
 range queries problem and has a~rich variety of applications in
 such areas as graph algorithms, functional programming, circuit complexity,
-and others. It is immediate that $O(t_1+n+m)$ semigroup operations are
-sufficient. The main question studied in this paper is:
-can $Ax$~be computed using $O(t_0+n+m)$ semigroup operations?
+and others. It is easy to compute $A x$ using a linear number of semigroup
+operations with respect to $t_1$, i.e. $O(t_1 + n + m)$, or just $O(t_1)$
+in the circuit model of computation.
+The main question studied in this paper is:
+can $A x$~be computed using $O(t_0+n+m)$ semigroup operations?
 We prove that in general this is not possible: there exists
 a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in every row
 (hence $m=n$ and $t_0=2n$) whose complexity is $\Theta(n\alpha(n))$
