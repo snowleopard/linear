@@ -95,9 +95,15 @@ operations are required to compute a vector whose $i$-th element is
 
 % More generally, we study how many semigroup operations are needed
 % to compute $AX$ where $X \in S^{n \times k}$ is a~matrix of formal variables.
-where the summation is over the semigroup operation~$\circ$.
-More specifically, we are interested in lower and upper bounds
-involving~$t_0$ and~$t_1$.
+where the summation is over the semigroup\footnote{Note that the result of
+summation is undefined in case of an all-zero row, because semigroups have no
+neutral element in general. One can trivially sidestep this technical issue by
+adding an all-one column~$n+1$ to the matrix~$A$, as well as the neutral element
+$x_{n+1}$ into the vector. Alternatively, we could switch from semigroups to
+\emph{monoids}, but we choose not to do that, since we have no use
+for the neutral element and associated laws in the rest of the paper.}
+operation~$\circ$. More specifically, we are interested in lower and
+upper bounds involving~$t_0$ and~$t_1$.
 Matrices with $t_1=O(n)$ are usually called \emph{sparse},
 whereas matrices with $t_0=O(n)$
 are called \emph{complements of sparse matrices}.
