@@ -119,9 +119,10 @@ all-ones matrix. Our first result states that this is also possible for
 
 \begin{restatable}{theorem}{upperthm}
 \label{thm:upperbound}
-Let $(S, \circ)$~be a~commutative semigroup, $x \in S^n$ be a~vector of formal
-variables, and $A \in \{0,1\}^{m \times n}$ be a~matrix with~$t_0=n^{O(1)}$
-\todo{Sasha: why use $n^{O(1)}$ here instead of simpler $O(n)$ as above? Andrey, by writing $n^{O(1)}$ I mean polynomial, but not linear.}
+Let $(S, \circ)$~be a~commutative semigroup, 
+$x \in S^n$ be a~vector of formal
+variables, and $A \in \{0,1\}^{m \times n}$ be a~matrix 
+with~$t_0$
 zeros. Then, $Ax$ can be computed using at most
 $O(t_0+n+m)$ semigroup operations.
 \end{restatable}
@@ -439,19 +440,22 @@ order on the incoming wires for each gate). We say that the circuit computes the
 words $\{w_1, \dotsc, w_m\}$ if the words computed at the output gates are
 equivalent to $\{w_1, \dotsc, w_m\}$.
 
-For example, the following circuit computes range queries $(l_1,r_1)=(1,4)$ and
-$(l_2,r_2)=(2,5)$ over inputs $\{x_1, \dotsc, x_5\}$ or, equivalently, the
-linear operator $A\mathbf{x}$ where
-$A=\begin{pmatrix}1&1&1&1&0\\0&1&1&1&1\end{pmatrix}$ and
-$\mathbf{x}=(x_1, \dotsc, x_5)^T$.
+For example, the following circuit computes range queries 
+$(l_1,r_1)=(1,4)$,
+$(l_2,r_2)=(2,5)$, and
+$(l_3,r_3)=(4,5)$
+over inputs $\{x_1, \dotsc, x_5\}$ or, equivalently, the
+linear operator $A\mathbf{x}$ where the matrix $A$~is given below and $\mathbf{x}=(x_1, \dotsc, x_5)^T$.
 
 \begin{center}
 \begin{tikzpicture}
 %\draw[help lines] (0,0) grid (10,6);
-\foreach \x/\y/\n/\t in {0/4/x1/x_1, 1/4/x2/x_2, 2/4/x3/x_3, 3/4/x4/x_4, 4/4/x5/x_5, 2/3/a/~, 1/2/b/1, 3/2/c/2}
+\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/3/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
   \node[inner sep=0mm,circle,draw,minimum size=6mm] (\n) at (\x,\y) {$\t$};
-\foreach \s/\t in {x2/a, x3/a, x4/a, a/b, x1/b, a/c, x5/c}
+\foreach \s/\t in {x2/a, x3/a, x4/a, x1/b, a/b, x5/c, a/c, x4/d, x5/d}
   \draw[->] (\s) -- (\t);
+  
+\node at (8,3) {$A=\begin{pmatrix}1&1&1&1&0\\0&1&1&1&1\\0&0&0&1&1\end{pmatrix}$};
 \end{tikzpicture}
 \end{center}
 
@@ -463,23 +467,38 @@ A~{\em binary circuit} is a~circuit having no gates of fan-in more than two. It
 is not difficult to see that any circuit can be converted into a~binary circuit
 of size at most twice the size of the original circuit. For this, one just
 replaces every gate of fan-in~$k$, for $k>2$, by a~binary tree with $2k-2$ wires
-(such a~tree contains $k$~leaves hence $k-1$ inner nodes and $2k-2$ edges).
-
-Clearly, in the binary circuit the number of gates does not exceed its size
-(i.e., the number of wires). And the number of gates in a~binary circuit is
-exactly the minimum number of semigroup operations needed to compute the
+(such a~tree contains $k$~leaves hence $k-1$ inner nodes and $2k-2$ edges). 
+In~the binary circuit the number of gates does not exceed its size
+(i.e., the number of wires). And the number of gates in a~binary
+circuit is
+exactly the minimum number of semigroup operations needed to 
+compute the
 corresponding function.
 
-Note that we can view circuits as computations over some semigroup $(S,\circ)$,
-meaning that we can substitute instead of the variables elements of the
-semigroup $S$. If we fix some semigroup $(S,\circ)$ we can actually consider a
-circuit as a computation in the semigroups $X_S$.{\todo{Andrey, Volodya, a davaite vmesto etogo vezde pisat', chto $x \in S^n$ is a vector of formal variables over $S$?}} Moreover, we can forget about
-the original semigroup $S$ and consider the computations in the circuit as
-computations in an arbitrary semigroup~$X$ with generators
-$\{x_1, \ldots, x_n\}$.
+%Note that we can view circuits as computations over some semigroup $(S,\circ)$,
+%meaning that we can substitute instead of the variables elements of the
+%semigroup $S$. If we fix some semigroup $(S,\circ)$ we can actually consider a
+%circuit as a computation in the semigroups $X_S$.{\todo{Andrey, Volodya, a davaite vmesto etogo vezde pisat', chto $x \in S^n$ is a vector of formal variables over $S$?}} Moreover, we can forget about
+%the original semigroup $S$ and consider the computations in the circuit as
+%computations in an arbitrary semigroup~$X$ with generators
+%$\{x_1, \ldots, x_n\}$.
+We call a~circuit~$C$ computing $A$ \emph{regular} if for every pair $(i,j)$ such that $A_{ij}=1$, there exists exactly one path from the input~$j$ to the output~$i$. A~convenient property of regular circuits is the following observation.
 
+\begin{observation}\label{obs:transpose}
+Let $C$~be a~regular circuit computing a~0/1-matrix~$A$ over a~commutative semigroup. Then, by reversing all the wires in~$C$ one gets a~circuit computing~$A^T$. 
+\end{observation}
+Instead of giving a~formal proof, we provide an example of a~reversed circuit from the example given above. It is because of this observation that we require circuit outputs to be gates of out-degree zero (so that when reversing all the wires the inputs and the outputs exchange places). Note also that commutativity is not essential for this observation, it just allows us not to worry about the order of the incoming wires for each gate.
 
-
+\begin{center}
+\begin{tikzpicture}
+\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/3/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
+  \node[inner sep=0mm,circle,draw,minimum size=6mm] (\n) at (\x,\y) {$\t$};
+\foreach \s/\t in {x2/a, x3/a, x4/a, x1/b, a/b, x5/c, a/c, x4/d, x5/d}
+  \draw[<-] (\s) -- (\t);
+  
+\node at (8,3) {$A^T=\begin{pmatrix}1&0&0\\1&1&0\\1&1&0\\1&1&1\\0&1&1\end{pmatrix}$};
+\end{tikzpicture}
+\end{center}
 
 %\section{Motivation and Applications}\label{sec-applications}
 %
@@ -691,18 +710,17 @@ such that the total length of all ranges of length
 at most $\log n$ is $O(\frac{m}{n}\cdot \log^4 n)$.
 \end{lemma}
 
-We will also use the following simple observation.
 
-\begin{observation}\label{obs:transpose}
-%Suppose $X$ is free commutative semigroup with generators $\{x_1,\ldots, x_n\}$.
-For any $0/1$-matrix~$A$, $C(A)=C(A^T)$.
-\end{observation}
-\begin{proof}[Proof of Observation~\ref{obs:transpose}]
-Reverse the direction of each wire in a~circuit computing~$A$ to get a~circuit
-computing~$A^T$.
-\end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:upperbound}]
+We start by considering the case when $t_0=\Omega(n\log n)$. 
+Note that $t_0$ zeroes split the rows of~$A$ into at most 
+$O(t_1+m)$ ranges. We then take a~circuit guaranteed by 
+Lemma~\ref{lemma:decompose} and compute the results for 
+all~$m$ rows in $O(t_0+m)$ additional gates. The total size is
+$O(n\log n+t_0+m)=O(t_0+m)$. Hence, in the 
+following we assume that $t_0=O(n\log n)$.
+
 Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
 having at least $\log n$ zeros and $R_1=R \setminus R_0$.
@@ -726,7 +744,7 @@ Let $|R_0|=t$. Clearly, $t \le t_0/\log n$.
 Using Lemma~\ref{lemma:decompose}, one can compute all
 ranges of $C \times R_0$ by a~circuit of size
 \[O(t\log t+t_0)=O\left(\frac{t_0}{\log n} \cdot \log t_0+t_0\right)=O(t_0+n)\, ,\]
-since $t_0 \le n^{O(1)}$.
+since $t_0 =O(n\log n)$.
 
 \emph{Computing $R_1 \times C$.} Each row of
 $R_1 \times C$ contains at most $\log n$ zeros. Moreover,
@@ -776,7 +794,7 @@ of blocks, and a~prefix of a~block
 (where any of the three components may be empty). For example, for $n=16$,
 a~range $(2,13)$ is decomposed into a~suffix $(3,4)$ of the
 first block,
-a~range $(2,3)$ of blocks, and a~prefix $(13,13)$ of
+a~range $(2,3)$ of blocks $(B_1, B_2, B_3, B_4)$, and a~prefix $(13,13)$ of
 the last block:
 \begin{center}
 \begin{tikzpicture}
