@@ -88,13 +88,9 @@ and $t_1$ ones and $x=(x_1, \dotsc, x_n) \in S^n$~be an~$n$-dimensional vector
 of formal variables over a~semigroup~$(S, \circ)$. In this paper we study the
 complexity of the \emph{linear operator}~$Ax$, i.e. how many semigroup
 operations are required to compute a vector whose $i$-th element is
-
 \[
 \sum_{1 \le j \le n\,\bigwedge\,A_{ij}=1}x_j
 \]
-
-% More generally, we study how many semigroup operations are needed
-% to compute $AX$ where $X \in S^{n \times k}$ is a~matrix of formal variables.
 where the summation is over the semigroup\footnote{Note that the result of
 summation is undefined in case of an all-zero row, because semigroups have no
 neutral element in general. One can trivially sidestep this technical issue by
@@ -692,19 +688,21 @@ used as building blocks in the proof of Theorem~\ref{thm:upperbound}.
 %blocks and then prove their existence.
 
 \begin{lemma}\label{lemma:decompose}
-There exists a~binary~circuit of size $O(n\log n)$ such that
+There exists a~binary regular circuit of size $O(n\log n)$ such that
 any range can be computed in a~single additional binary gate
 using two gates of the circuit.
 \end{lemma}
 
 \begin{lemma}\label{lemma:blocks}
-There exists a~binary circuit of size $O(n)$ such that any range
+There exists a~binary regular circuit of size $O(n)$ such 
+that any range
 of length at least $\log n$ can be computed in two binary
 additional gates from the gates of the circuit.
 \end{lemma}
 
 \begin{lemma}\label{lemma:permute}
-Let $A \in \{0,1\}^{n \times n}$ contain at most $\log n$ zeroes in
+Let $A \in \{0,1\}^{m \times n}$ contain at most $\log n$ 
+zeroes in
 every row. Then there exists a~permutation of the columns of~$A$
 such that the total length of all ranges of length
 at most $\log n$ is $O(\frac{m}{n}\cdot \log^4 n)$.
@@ -715,7 +713,7 @@ at most $\log n$ is $O(\frac{m}{n}\cdot \log^4 n)$.
 \begin{proof}[Proof of Theorem~\ref{thm:upperbound}]
 We start by considering the case when $t_0=\Omega(n\log n)$. 
 Note that $t_0$ zeroes split the rows of~$A$ into at most 
-$O(t_1+m)$ ranges. We then take a~circuit guaranteed by 
+$O(t_0+m)$ ranges. We then take a~circuit guaranteed by 
 Lemma~\ref{lemma:decompose} and compute the results for 
 all~$m$ rows in $O(t_0+m)$ additional gates. The total size is
 $O(n\log n+t_0+m)=O(t_0+m)$. Hence, in the 
@@ -739,7 +737,7 @@ is easy to compute because it has a~small number of zeroes in every row (at most
 $\log n$).
 
 \emph{Computing $R_0 \times C$.} Thanks to the Observation~\ref{obs:transpose},
-it suffices to compute $C \times R_0$.
+it suffices to compute $C \times R_0$ by a~regular circuit.
 Let $|R_0|=t$. Clearly, $t \le t_0/\log n$.
 Using Lemma~\ref{lemma:decompose}, one can compute all
 ranges of $C \times R_0$ by a~circuit of size
@@ -749,7 +747,7 @@ since $t_0 =O(n\log n)$.
 \emph{Computing $R_1 \times C$.} Each row of
 $R_1 \times C$ contains at most $\log n$ zeros. Moreover,
 thanks to Lemma~\ref{lemma:permute}, the total length of all
-ranges of length at most $\log n$ is $O(\frac{m}{n}\cdot\log^4n)$. Hence, all
+ranges of length at most $\log n$ is $O(\frac{m}{n}\cdot\log^4n)=O(m)$. Hence, all
 such short ranges can be computed by a~circuit of
 size~$O(m)$. It remains to compute all the ranges of
 length at least~$\log n$. This can be done using Lemma~\ref{lemma:blocks}.
@@ -784,7 +782,7 @@ top of these blocks. The size of this circuit is $O(n)$ since the
 number of blocks is $n/\log n$.
 
 Now, compute all prefixes and all suffixes of every block. Since
-the block partition the input range $(1,n)$, this also can be done
+the blocks partition the input range $(1,n)$, this also can be done
 with an $O(n)$ size circuit.
 
 Now consider any range of length at least $\log n$. Note that it
@@ -815,7 +813,7 @@ It remains to note that all these three components are already precomputed.
 
 \begin{proof}[(Probabilistic) Proof of Lemma~\ref{lemma:permute}.]
 Permute the columns randomly and compute the expectation of
-the total length of ranges of length at most $\log n$. Call such ranges short. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that the cell belongs to a~segment of length $\log n$? There are two cases to consider.
+the total length of ranges of length at most $\log n$. Call such ranges short. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
 \begin{enumerate}
 \item The cell lies close to the border, i.e., it belongs to
 the first $\log n$ cells or to the last~$\log n$ cells
@@ -834,7 +832,27 @@ Hence, the expected total length of short ranges in one row is
 Multiplying this by the number of rows gives the desired upper bound.
 \end{proof}
 
-The construction of the circuit above is not explicit, since the proof of Lemma~\ref{lemma:permute} is randomized. We outline an explicit construction of a circuit in Appendix~\ref{subsec:constructive}.
+\begin{proof}[(Constructive) Proof of Lemma~\ref{lemma:permute}.]
+\todo[inline]{to be updated}
+Our original proof was probabilistic in the part computing the matrix $R_1 \times C$ having $n$ columns, at most $n$ rows, at most $k$ zeros and at most $\log n$ zeros in each row. For our proof it is convenient to add redundant rows and columns to the matrix in such a way that it has size $t \times t$, at most $t$ zeros in total and at most $\log t$ zeros in each row. We will then compute the matrix by the circuit of size at most $O(t)$. To enlarge the matrix we can just add rows and columns consisting of ones. It is easy to see that then we can let $t = \max(n,k)$. Note that enlargement of the matrix does not make the computation simpler: additional rows mean additional outputs that can be ignored and additional columns correspond to redundant variables that can be removed (substituted by 0) once the circuit is constructed.
+
+Thus our goal is to compute matrix $A \in \{0,1\}^{t\times t}$ with at most $t$ zeros in total and at most $\log t$ zeros in each row by a circuit of size $O(t)$. For this we will first permute the columns of $A$ in such a way that all ranges of length shorter than $\log t$ lie within the last $O(\log^2 t)$ columns. Once we have such an permutation of columns, we can compute ranges of length at least $\log t$ by Lemma~\ref{lemma:blocks} and we can compute all ranges within the last $O(\log^2 n)$ columns by a circuit of size at most $O(\log^4 n)$, thus computing all short ranges. 
+
+Thus it remains to construct a desired permutation of $A$. We will do it step by step by a greedy algorithm. After step $r$ we will have a sequence of the first $r$ columns chosen and we will maintain the following properties:
+\begin{itemize}
+\item For each $i \leq r$ the first $i$ columns contain at least $i$ zeros;
+\item There are no ranges of the length less than $\log n$ in the first $r$ rows (apart from those, that can be extended by adding columns on the right).
+\end{itemize}
+The process will work for at least $t - \log^ t$ steps, so the ranges of length $\log t$ are only possible within the last $\log^2 t + \log t = O(\log^2 t)$ columns.
+
+On the first step we can pick for the first column any column that has zeros in it. Suppose we have reached step $r$. We will now explain how to add a column on step $r+1$. Consider the last $\log t$ columns in the currently constructed list. Consider the set $A$ of rows that have zeros in them. These are exactly the rows that are placing constraints on the choice of our next column. There are two cases.
+\begin{enumerate}
+\item There are at most $\log t$ rows in $A$. Then, for each row in $A$ there are at most $\log t$ columns that has zeros in this row. In total, there are at most $\log^2 t$ columns that have zeros in some rows of $A$. Denote the set of this columns by $F$. If there is an unpicked column outside of $F$ that has at least one zero in it, we add this column to our sequence. Clearly, the properties of our sequence are maintained and the step is over. Otherwise, all other columns contain only ones, so we add all of them to our sequence, place the columns from $F$ to the end of the sequence, and the whole permutation is constructed.
+\item There are more that $\log t$ rows in $A$. This means that in the last $\log t$ columns of the current sequence there are more than $\log t$ zeros. Also note, that by the maintained property, the first $r - \log t$ columns there are at least $r - \log t$ zeros. So overall, in the current sequence of $r$ columns there are more than $r$ zeros. Thus, in the remaining $t-r$ columns there are less then $t-r$ zeros and there is a column without zeros. Let us add this column to our sequence. It is easy to see that the properties are still maintained.
+\end{enumerate}
+\end{proof}
+
+%The construction of the circuit above is not explicit, since the proof of Lemma~\ref{lemma:permute} is randomized. We outline an explicit construction of a circuit in Appendix~\ref{subsec:constructive}.
 
 
 \section{Non-commutative Case}\label{sec-non-commutative}
@@ -1200,7 +1218,7 @@ Now, observe that $\tup(G)$ has increased (by the first coordinate). There are n
 \input dense_graph_repr
 
 \section{Omitted Proofs}
-\input constructive
+%\input constructive
 
 \subsection{From Idempotent Semigroups to General Semigroups}\label{sec:noncommutative_extension}
 
