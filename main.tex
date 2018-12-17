@@ -48,24 +48,24 @@ National Research University Higher School of Economics, Moscow, email: \href{ma
 \maketitle
 
 \begin{abstract}
-Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $t_0$~zeroes
-and $t_1$~ones and $x \in S^n$ be an~$n$-dimensional vector of
+Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes
+and $u$~ones and $x \in S^n$ be an~$n$-dimensional vector of
 formal variables over a~semigroup $(S, \circ)$.
 How many semigroup operations are required to compute the linear operator $Ax$?
 
 As we show in this paper, this problem generalizes the well-known
 range queries problem and has a~rich variety of applications in
 such areas as graph algorithms, functional programming, circuit complexity,
-and others. It is easy to compute $Ax$ using $O(t_1)$ semigroup
+and others. It is easy to compute $Ax$ using $O(u)$ semigroup
 operations.
 The main question studied in this paper is:
-can $Ax$~be computed using $O(t_0)$ semigroup operations?
+can $Ax$~be computed using $O(z)$ semigroup operations?
 We prove that in general this is not possible: there exists
 a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in every row
-(hence $t_0=2n$) whose complexity is $\Theta(n\alpha(n))$
+(hence $z=2n$) whose complexity is $\Theta(n\alpha(n))$
 where $\alpha(n)$ is the inverse Ackermann function.
 However, for the case when the semigroup is commutative,
-we give a~constructive proof of an~$O(t_0)$ upper bound.
+we give a~constructive proof of an~$O(z)$ upper bound.
 This implies that in commutative settings, complements of~sparse 
 matrices can
 be processed as efficiently as sparse matrices (though the 
@@ -77,7 +77,7 @@ we show
 how to multiply two $n\times n$ matrices over an arbitrary 
 semiring in $O(n^2)$
 time if one of these matrices is a~0/1-matrix with $O(n)$~zeroes 
-(i.e. a~complement if a sparse matrix). Note that this covers the 
+(i.e. a~complement of a~sparse matrix). Note that this covers the 
 cases of Boolean and tropical semirings, which have numerous 
 applications, e.g., in graph theory.
 \end{abstract}
@@ -89,13 +89,13 @@ applications, e.g., in graph theory.
 \section{Introduction}
 \subsection{Problem Statement and New Results}
 
-Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $t_0$ zeroes
-and $t_1$ ones and $x=(x_1, \dotsc, x_n) \in S^n$~be an~$n$-
+Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes
+and $u$~ones and $x=(x_1, \dotsc, x_n) \in S^n$~be an~$n$-
 dimensional vector
 of formal variables over a~semigroup~$(S, \circ)$. In this paper, 
 we study the
 complexity of the \emph{linear operator}~$Ax$, 
-i.e. how many semigroup
+i.e., how many semigroup
 operations are required to compute a~vector whose $i$-th element is
 \[
 \sum_{1 \le j \le n\,\bigwedge\,A_{ij}=1}x_j
@@ -108,22 +108,22 @@ $x_{n+1}$ into the vector. Alternatively, we could switch from semigroups to
 \emph{monoids}, but we choose not to do that, since we have no use
 for the neutral element and associated laws in the rest of the paper.}
 More specifically, we are interested in lower and
-upper bounds involving~$t_0$ and~$t_1$.
-Matrices with $t_1=O(n)$ are usually called \emph{sparse},
-whereas matrices with $t_0=O(n)$
+upper bounds involving~$z$ and~$u$.
+Matrices with $u=O(n)$ are usually called \emph{sparse},
+whereas matrices with $z=O(n)$
 are called \emph{complements of sparse matrices}.
-It is not difficult to see that computing all $n$~outputs
-of~$Ax$ independently takes
-$O(t_1)$ semigroup operations.
+Computing all $n$~outputs
+of~$Ax$ in a~straightforward way takes
+$O(u)$ semigroup operations.
 The main question studied in this paper is:
-can $Ax$~be computed using $O(t_0)$ semigroup
+can $Ax$~be computed using $O(z)$ semigroup
 operations? Note that this complexity is easy to achieve if $\circ$ has an inverse: in this case $A$~can be obtained by subtracting 
 a~dense matrix from all-ones matrix. 
 
 \subsubsection{Commutative Case}
-Our first result states that this 
-is also possible for \emph{commutative} semigroups. Basically, it 
-shows that in the commutative case complements of sparse 
+Our first result states that $O(z)$ semigroup operations
+are sufficient for \emph{commutative} semigroups. This implies
+that in the commutative case complements of sparse 
 matrices can be processed as
 efficiently as sparse matrices.
 
@@ -132,21 +132,21 @@ efficiently as sparse matrices.
 Let $(S, \circ)$~be a~commutative semigroup, 
 $x \in S^n$ be a~vector of formal
 variables, and $A \in \{0,1\}^{n \times n}$ be a~matrix 
-with~$t_0=\Omega(n)$ 
+with~$z=\Omega(n)$ 
 zeros. Then, $Ax$ can be computed using
-$O(t_0)$ semigroup operations.
+$O(z)$ semigroup operations.
 \end{restatable}
 
 It should be noted that:
 \begin{itemize}
 \item We state the result for square matrices to simplify the presentation. Theorem~\ref{thm:upperbound} generalizes easily
-to show that $Ax$ for a~matrix $A \in \{0,1\}^{m \times n}$ with $t_0=\Omega(n)$ zeros can be computed using $O(m+t_0)$ semigroup operations.
-\item We assume that $t_0=\Omega(n)$ to be able to state an upper bound $O(t_0)$ instead of $O(t_0+n)$. Note that when
-$t_0<n$, the matrix~$A$ is forced to contain all-one rows
+to show that $Ax$ for a~matrix $A \in \{0,1\}^{m \times n}$ with $z=\Omega(n)$ zeros can be computed using $O(m+z)$ semigroup operations.
+\item We assume that $z=\Omega(n)$ to be able to state an upper bound $O(z)$ instead of $O(z+n)$. Note that when
+$z<n$, the matrix~$A$ is forced to contain all-one rows
 that can be computed trivially.
-\item By saying ``can be computed using $O(t_0)$ semigroup 
-operation'' we mean that there exists a~\emph{circuit} of size 
-$O(t_0)$ whose inputs are $x_1, \dotsc, x_n$ and where each 
+\item By saying ``can be computed using $O(z)$ semigroup 
+operations'' we mean that there exists a~\emph{circuit} of size 
+$O(z)$ whose inputs are $x_1, \dotsc, x_n$ and where each 
 gate just applies the semigroup operation~$\circ$. The formal 
 definition of this computational model is given in 
 Section~\ref{subsec:circuits}. Note that our 
@@ -159,12 +159,12 @@ in two independent directions: from circuits to algorithms and from vectors to m
 
 \begin{restatable}{corollary}{matrixmultcor}
 \label{cor:matrixmultiplication}
-Let $(S, \circ)$~be a~commutative semigroup.
+Let $(S, \circ)$~be a~commutative semigroup.{\todo{AK: Should we speak about a semiring here instead?}}
 There exists an algorithm that takes as input 
-a~matrix $A \in \{0,1\}^{n \times n}$ with $t_0$
+a~matrix $A \in \{0,1\}^{n \times n}$ with $z$
 zeros
 and a~matrix $B \in S^{n \times k}$ and computes
-the matrix $AB$ in time $O(t_0k)$.
+the matrix $AB$ in time $O(zk)$.
 \end{restatable}
 In particular, the product of a~matrix $A \in \{0,1\}^{n \times n}$
 with $O(n)$ zeroes and a~matrix $B \in S^{n \times n}$ cab be computed in time $O(n^2)$.
@@ -175,7 +175,7 @@ a~strongly non-commutative semigroup~$S$
 (the notion of strong non-commutativity is made formal
 later in the text) the minimum number of semigroup operations
 needed to compute $Ax$ for a~matrix
-$A \in \{0,1\}^{n \times n}$ with $t_0=O(n)$ zeros is
+$A \in \{0,1\}^{n \times n}$ with $z=O(n)$ zeros is
 $\Theta(n\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function.
 
 \begin{restatable}{theorem}{lowerthm}
@@ -203,13 +203,13 @@ for each query. It~is a~classical problem in data structures and
 algorithms with applications in many fields, such as bioinformatics and
 string algorithms, computational geometry, image analysis, real-time
 systems, and others. We review major applications in Section~\ref{subseq:rmqapp},
-as well as a~rich variety of algebraic techniques for the problem in
+as well as a~rich variety of algorithmic techniques for the problem in
 Section~\ref{subsec:approaches}.
 
 The linear operator problem is a~natural generalization of the range queries
 problem: each row of the matrix~$A$ defines a~subset of the elements of~$x$
 that need to be summed up and this subset is not required to be
-a~contiguous interval. The algorithms (Theorem~\ref{thm:upperbound} and
+a~contiguous range. The algorithms (Theorem~\ref{thm:upperbound} and
 Corollary~\ref{cor:matrixmultiplication}) and hardness results
 (Theorem~\ref{thm:lowerbound}) for the linear operator problem presented in this
 paper are indeed inspired by some of the known results for the range queries
@@ -230,7 +230,7 @@ whereas an algorithm with the same efficiency
 for complements of sparse graphs ($O(n)$ anti-edges) is not. For
 example, it is easy to solve APSP and triangle counting on sparse graphs in
 time $O(n^2)$, but achieving the same time complexity for complements of sparse
-graphs is (relatively) difficult.
+graphs is more complicated.
 Theorem~\ref{thm:upperbound} shows that the same effect
 occurs for matrices whereas
 Corollary~\ref{cor:matrixmultiplication} can be used to
@@ -247,7 +247,7 @@ structure drastically and even the complexity of standard
 computational tasks are not well understood over tropical and
 Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}).
 For various important semirings,
-we still do not know an $n^{3-\varepsilon}$ (a~constant~$\varepsilon>0$) upper
+we still do not know an $n^{3-\varepsilon}$ (for a~constant~$\varepsilon>0$) upper
 bound for matrix multiplication.
 E.g., the strongest known upper bound for min-plus matrix
 multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}.
@@ -268,7 +268,7 @@ Algebraic data structures for graphs developed in the functional programming
 community~\cite{mokhov2017algebraic} can be used for representing and processing
 densely-connected graphs in linear (in the number of vertices) time and memory.
 As we discuss in Section~\ref{sec-dense-graph}, Theorem~\ref{thm:upperbound}
-yields an algorithm for deriving a linear-size algebraic graph representation
+yields an algorithm for deriving a~linear-size algebraic graph representation
 for complements of sparse graphs.
 
 \item[Circuit complexity.] Computing linear operators over
@@ -281,88 +281,6 @@ linear rectifier network complexity.
 \end{description}
 
 
-%\section{(OLD) Introduction}
-%
-%Our main object of study in this paper are \emph{dense matrices}, which we
-%define as 0/1 matrices of size $n \times n$ that contain $O(n)$ zeroes.\footnote{Using this definition we slightly abuse the standard terminology as by a~dense matrix one usually means a~matrix with $\Omega(n^2)$ ones.} We are
-%interested in computations over dense matrices that take place in algebraic
-%structures lacking an inverse operation (e.g., semigroups and semirings).
-%The interest in computations over such algebraic structures has recently grew substantially throughout the
-%Computer Science community with the cases of Boolean and tropical semiring being of the main interest (see, for
-%example,~\cite{Jukna16,Williams14,butkovic10systems}).
-%The lack of an inverse operation sometimes changes the complexity of algorithmic problems over algebraic structure drastically and even the complexity of standard computational tasks are not well understood over tropical and Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}). From this perspective computations over dense matrices seems to be one of the most basic questions. In the presence of an inverse operation it trivially reduces to the computations over \emph{sparse matrices}.
-%Without an inverse operation dense matrices
-%might intuitively seem harder than sparse matrices, but as we show in this paper, this intuition is
-%only partially correct.
-%
-%Consider a \emph{dense linear operator}
-%\[
-%\mathbf{y} = A\mathbf{x},
-%\]
-%where $A$ is a dense matrix and~$\mathbf{x}=(x_1, \cdots, x_n)$ is a vector over
-%an arbitrary semigroup\footnote{See Section~\ref{subsec:algstr} for definitions
-%and examples of algebraic structures used in this paper.} $(S, \circ)$. Our goal
-%is to simultaneously compute all elements of the resulting vector
-%$\mathbf{y}=(y_1, \cdots, y_n)$, where
-%
-%\begin{equation}\label{eq-sum}
-%y_i = \sum_{A_{ij}=1} x_j
-%\end{equation}
-%
-%\noindent
-%for all $1 \le i \le n$, and the ``summation'' is over the semigroup operation
-%$\circ$. What is the size of the smallest circuit comprising 2-input gates
-%$\circ$ that computes $\mathbf{y}$?
-%
-%Note that if $A$ is sparse, i.e. contains $O(n)$ ones, then~(\ref{eq-sum})
-%directly yields a linear-size circuit. Furthermore, if the summation is over a
-%\emph{commutative group} rather than just a semigroup, then the dense case can
-%be reduced to the sparse one by \emph{subtracting} $y_i$ from the sum
-%$x_1 \circ \cdots \circ x_n$. A similar reduction is also not hard to show for the case of non-commutative groups.
-%
-%A natural solution that first comes to mind in the semigroup case is to split
-%the rows of the matrix $A$ into ranges of consecutive ones, thus obtaining
-%$O(n)$ ranges overall, and then apply the classic \emph{Range Queries} algorithm
-%by Yao~\cite{DBLP:conf/stoc/Yao82} to compute all ranges by a circuit of size
-%$O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function, and
-%subsequently combine the results with $O(n)$ additional gates.
-%
-%Can we do better? In general, the answer is ``No''. However, if the semigroup is
-%\emph{commutative}, the answer is, remarkably, ``Yes''! We present a linear-size
-%circuit construction for dense linear operators in Section~\ref{sec-commutative}.
-%Furthermore, in Section~\ref{sec-non-commutative}
-%we prove that the
-%% Volodya, I removed "(both commutative and non-commutative versions of)" from
-%% here, because I think it's a premature but distracting detail at this stage.
-%non-commutative case is equivalent to the Range Queries problem that, as shown
-%by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}, requires
-%$\Theta(n\alpha(n))$ gates, hence separating the complexity of the two cases.
-%
-%% A counterintuitive corollary of our separation theorem is that the case of
-%% non-commutative groups is strictly harder than the case of commutative
-%% semigroups. In other words, inverses provide no additional power for the studied
-%% problem, whereas commutativity does.
-%
-%%As an additional contribution, we prove that the same bound
-%% $\Theta(n\alpha(n))$ also holds for the case of \emph{idempotent}
-%% non-commutative semigroups, which are significantly more powerful.
-%
-%
-%
-%
-%\paragraph{Organization of the paper.} Section~\ref{sec-background} provides basic definitions used throughout the
-%paper. Section~\ref{sec-applications} highlights applications of the
-%presented linear-size construction. In particular, we observe that an
-%$n\times n$ matrix can be multiplied by a dense matrix over an arbitrary
-%semiring in $O(n^2)$ time. This appears to be significantly more challenging
-%compared to the case of multiplication over a \emph{ring}, which can reduced to
-%sparse matrix multiplication via subtraction. In Section~\ref{sec:statement} we give the precise statements of our results.
-%
-%\section{Background}\label{sec-background}
-%
-%In this section we review basic algebraic structures used in this paper, as well
-%as the classic Range Queries problem that turns out to be inherently related to
-%dense linear operators.
 
 \section{Background}
 \subsection{Semigroups and Semirings}
@@ -437,7 +355,7 @@ computational problem.
 
 The {\em linear operator} problem generalizes the range
 queries problem: now, instead of contiguous ranges one wants
-to computes sums over arbitrary subsets. These subsets are
+to compute sums over arbitrary subsets. These subsets are
 given as rows of a~0/1-matrix~$A$.
 
 \subsection{Circuits}\label{subsec:circuits}
@@ -464,7 +382,7 @@ $(l_1,r_1)=(1,4)$,
 $(l_2,r_2)=(2,5)$, and
 $(l_3,r_3)=(4,5)$
 over inputs $\{x_1, \dotsc, x_5\}$ or, equivalently, the
-linear operator $Ax$ where the matrix $A$~is given below and $x=(x_1, \dotsc, x_5)^T$.
+linear operator $Ax$ where the matrix $A$~is given below.
 
 \begin{center}
 \begin{tikzpicture}
@@ -478,8 +396,8 @@ linear operator $Ax$ where the matrix $A$~is given below and $x=(x_1, \dotsc, x_
 \end{tikzpicture}
 \end{center}
 
-For a~0/1-matrix~$A$, by $C(A)$ we denote the \emph{minimum number of gates} in
-a~circuit computing the linear operator $A\mathbf{x}$.
+For a~0/1-matrix~$A$, by $C(A)$ we denote the minimum size of
+a~circuit computing the linear operator $Ax$.
 
 
 A~{\em binary circuit} is a~circuit having no gates of fan-in more than two. It
@@ -645,35 +563,43 @@ Instead of giving a~formal proof, we provide an example of a~reversed circuit fr
 %In the next two sections we provide the detailed proofs of these two theorems.
 
 \section{Commutative Case}\label{sec-commutative}
-This section is devoted to the proof of Theorem~\ref{thm:upperbound}.
+This section is devoted to the proofs of Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}
+which we remind below.
 
 \upperthm*
 
-Before proving it, we prove two simpler statements to show
+\matrixmultcor*
+
+We start by proving two simpler statements to show
 how commutativity is important.
 
 \begin{lemma}\label{lemma:easy}
 Let $S$~be a semigroup (not necessarily commutative) and let
-$A \in \{0,1\}^{m \times n}$ contain at most one zero in every row. Then
-$C(A) = O(m+n)$.
+$A \in \{0,1\}^{n \times n}$ contain at most 
+one zero in every row. Then
+$C(A) = O(n)$.
 \end{lemma}
 \begin{proof}
-To compute the linear dense operator $\mathbf{y} = A \mathbf{x}$, we first
-precompute all prefixes and suffixes of $\mathbf{x}=(x_1, \dotsc, x_n)$.
-Concretely, let $p_i=x_1 \circ x_2 \dotsb \circ x_i$. All $p_i$'s can be computed
+To compute the linear operator $Ax$, we first
+precompute all prefixes and suffixes of $x=(x_1, \dotsc, x_n)$.
+Concretely, let $p_i=x_1 \circ x_2 \circ \dotsb \circ x_i$. All $p_i$'s can be computed
 using $(n-1)$ binary gates as follows:
 \[
 p_1=x_1, p_2=p_1 \circ x_2, p_3=p_2 \circ x_3, \dotsc, p_i=p_{i-1} \circ x_i, \dotsc, p_n=p_{n-1}\circ x_n.
 \]
-Similarly, we compute all suffixes $s_j=x_j \circ x_{j+1} \dotsb \circ x_n$ using
-$(n-1)$ binary gates. From these prefixes and suffixes all outputs $y_i$ can be
-computed as follows: if a~row of~$A$ contains no zeros, the corresponding
-output is~$p_n$; otherwise if the~row contains a~zero at position~$i$, the
-output is $p_{i-1} \circ s_{i+1}$ (for $i=1$ and $i=n$ we omit the redundant
+Similarly, we compute all suffixes 
+$s_j=x_j \circ x_{j+1} \dotsb \circ x_n$ using
+$(n-1)$ binary gates. From these prefixes and suffixes 
+all outputs can be
+computed as follows: if a~row of~$A$ contains no zeros, 
+the corresponding
+output is~$p_n$; otherwise if a~row contains a~zero at position~$i$, the
+output is $p_{i-1} \circ s_{i+1}$ (for $i=1$ and $i=n$, we omit the redundant
 term).
 \end{proof}
 
-In the rest of the section, we assume that the underlying semigroup is
+In the rest of the section, we assume that the 
+underlying semigroup is
 commutative. Allowing at most two zeros per row already leads to a~non-trivial
 problem. We give only a~sketch of the solution below, since we will further
 prove a~more general result. It is interesting to compare the following lemma
@@ -700,6 +626,7 @@ commutativity). The corresponding recurrence relation is $T(n) \le cn + T(n/2)$
 for a fixed constant $c$, implying $T(n)=O(n)$, and hence $C(A) = O(n)$.
 \end{proof}
 
+
 We now state a~few auxiliary lemmas that will be
 used as building blocks in the proof of Theorem~\ref{thm:upperbound}.
 
@@ -724,23 +651,23 @@ additional gates from the gates of the circuit.
 \end{lemma}
 
 \begin{lemma}\label{lemma:permute}
-Let $A \in \{0,1\}^{m \times n}$ contain at most $\log n$ 
+Let $A \in \{0,1\}^{n \times n}$ contain at most $\log n$ 
 zeroes in
 every row. Then there exists a~permutation of the columns of~$A$
 such that the total length of all ranges of length
-at most $\log n$ is $O(\frac{m}{n}\cdot \log^4 n)$.
+at most $\log n$ is $O(\cdot \log^4 n)$.
 \end{lemma}
 
 
 
 \begin{proof}[Proof of Theorem~\ref{thm:upperbound}]
-We start by considering the case when $t_0=\Omega(n\log n)$. 
-Note that $t_0$ zeroes split the rows of~$A$ into at most 
-$O(t_0+m)$ ranges. We then take a~circuit guaranteed by 
-Lemma~\ref{lemma:decompose} and compute the results for 
-all~$m$ rows in $O(t_0+m)$ additional gates. The total size is
-$O(n\log n+t_0+m)=O(t_0+m)$. Hence, in the 
-following we assume that $t_0=O(n\log n)$.
+%We start by considering the case when $t_0=\Omega(n\log n)$. 
+%Note that $t_0$ zeroes split the rows of~$A$ into at most 
+%$O(t_0+m)$ ranges. We then take a~circuit guaranteed by 
+%Lemma~\ref{lemma:decompose} and compute the results for 
+%all~$m$ rows in $O(t_0+m)$ additional gates. The total size is
+%$O(n\log n+t_0+m)=O(t_0+m)$. Hence, in the 
+%following we assume that $t_0=O(n\log n)$.
 
 Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
@@ -750,12 +677,12 @@ We first take a~permutation of the columns $C$ of the matrix
 guaranteed by Lemma~\ref{lemma:permute} for the matrix $R_1 \times C$. At this stage,
 we use commutativity of the ground semigroup essentially.
 We will compute all the ranges of~$A$. From these ranges,
-it takes $O(t_0)$ additional binary gates to compute all the outputs.
+it takes $O(z)$ additional binary gates to compute all the outputs.
 
 We
 compute the matrices $R_0 \times C$ and $R_1 \times C$
 separately. The main idea is that $R_0 \times C$ is easy to compute
-because it has a~small number of rows (at most $t_0/\log n$), while $R_1 \times C$
+because it has a~small number of rows (at most $z/\log n$), while $R_1 \times C$
 is easy to compute because it has a~small number of zeroes in every row (at most
 $\log n$).
 
@@ -764,15 +691,15 @@ it suffices to compute $C \times R_0$ by a~regular circuit.
 Let $|R_0|=t$. Clearly, $t \le t_0/\log n$.
 Using Lemma~\ref{lemma:decompose}, one can compute all
 ranges of $C \times R_0$ by a~circuit of size
-\[O(t\log t+t_0)=O\left(\frac{t_0}{\log n} \cdot \log t_0+t_0\right)=O(t_0+n)\, ,\]
-since $t_0 =O(n\log n)$.
+\[O(t\log t+z)=O\left(\frac{z}{\log n} \cdot \log z+z\right)=O(z+n)=O(z)\, ,\]
+since $z =O(n^2)$.
 
 \emph{Computing $R_1 \times C$.} Each row of
 $R_1 \times C$ contains at most $\log n$ zeros. Moreover,
 thanks to Lemma~\ref{lemma:permute}, the total length of all
-ranges of length at most $\log n$ is $O(\frac{m}{n}\cdot\log^4n)=O(m)$. Hence, all
+ranges of length at most $\log n$ is $O(\log^4n)$. Hence, all
 such short ranges can be computed by a~circuit of
-size~$O(m)$. It remains to compute all the ranges of
+size~$o(n)$. It remains to compute all the ranges of
 length at least~$\log n$. This can be done using Lemma~\ref{lemma:blocks}.
 \end{proof}
 
@@ -836,7 +763,7 @@ It remains to note that all these three components are already precomputed.
 
 \begin{proof}[(Probabilistic) Proof of Lemma~\ref{lemma:permute}.]
 Permute the columns randomly and compute the expectation of
-the total length of ranges of length at most $\log n$. Call such ranges short. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
+the total length of ranges of length at most $\log n$. Call such ranges \emph{short}. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
 \begin{enumerate}
 \item The cell lies close to the border, i.e., it belongs to
 the first $\log n$ cells or to the last~$\log n$ cells
@@ -876,6 +803,8 @@ On the first step we can pick for the first column any column that has zeros in 
 \end{proof}
 
 %The construction of the circuit above is not explicit, since the proof of Lemma~\ref{lemma:permute} is randomized. We outline an explicit construction of a circuit in Appendix~\ref{subsec:constructive}.
+
+\todo[inline]{Prove corollary}
 
 
 \section{Non-commutative Case}\label{sec-non-commutative}
@@ -1241,6 +1170,7 @@ Now, observe that $\tup(G)$ has increased (by the first coordinate). There are n
 \input dense_graph_repr
 
 \section{Omitted Proofs}
+\todo[inline]{Volodya, verni eto v osnovnoi text (iz appendixa), pogaluista}
 %\input constructive
 
 \subsection{From Idempotent Semigroups to General Semigroups}\label{sec:noncommutative_extension}
