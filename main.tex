@@ -48,109 +48,135 @@ National Research University Higher School of Economics, Moscow, email: \href{ma
 \maketitle
 
 \begin{abstract}
-Let $A \in \{0,1\}^{m \times n}$ be a~matrix with $t_0$~zeroes
+Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $t_0$~zeroes
 and $t_1$~ones and $x \in S^n$ be an~$n$-dimensional vector of
 formal variables over a~semigroup $(S, \circ)$.
-How many semigroup operations are required to compute the linear operator $A x$?
+How many semigroup operations are required to compute the linear operator $Ax$?
 
 As we show in this paper, this problem generalizes the well-known
 range queries problem and has a~rich variety of applications in
 such areas as graph algorithms, functional programming, circuit complexity,
-and others. It is easy to compute $A x$ using a linear number of semigroup
-operations with respect to $t_1$, i.e. $O(t_1 + n + m)$, or just $O(t_1)$
-in the circuit model of computation.
+and others. It is easy to compute $Ax$ using $O(t_1)$ semigroup
+operations.
 The main question studied in this paper is:
-can $A x$~be computed using $O(t_0+n+m)$ semigroup operations?
+can $Ax$~be computed using $O(t_0)$ semigroup operations?
 We prove that in general this is not possible: there exists
 a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in every row
-(hence $m=n$ and $t_0=2n$) whose complexity is $\Theta(n\alpha(n))$
+(hence $t_0=2n$) whose complexity is $\Theta(n\alpha(n))$
 where $\alpha(n)$ is the inverse Ackermann function.
 However, for the case when the semigroup is commutative,
-we give a constructive proof of an~$O(t_0+n+m)$ upper bound.
-This implies that in commutative settings, complements of~sparse matrices can
-be processed as efficiently as sparse matrices (though the corresponding
+we give a~constructive proof of an~$O(t_0)$ upper bound.
+This implies that in commutative settings, complements of~sparse 
+matrices can
+be processed as efficiently as sparse matrices (though the 
+corresponding
 algorithms are more involved).
 
-As a simple application of the presented linear-size construction, we show
-how to multiply two $n\times n$ matrices over an arbitrary semiring in $O(n^2)$
-time if one of these matrices is a 0/1 matrix with $O(n)$~zeroes (i.e. a
-complement if a sparse matrix). Note that this covers the cases of Boolean and
-tropical semirings, which have numerous applications, e.g. in graph theory.
+As a~simple application of the presented linear-size construction, 
+we show
+how to multiply two $n\times n$ matrices over an arbitrary 
+semiring in $O(n^2)$
+time if one of these matrices is a~0/1-matrix with $O(n)$~zeroes 
+(i.e. a~complement if a sparse matrix). Note that this covers the 
+cases of Boolean and tropical semirings, which have numerous 
+applications, e.g., in graph theory.
 \end{abstract}
 
+\clearpage
 \tableofcontents
+\clearpage
 
 \section{Introduction}
 \subsection{Problem Statement and New Results}
 
-Let $A \in \{0,1\}^{m \times n}$ be a~matrix with $t_0$ zeroes
-and $t_1$ ones and $x=(x_1, \dotsc, x_n) \in S^n$~be an~$n$-dimensional vector
-of formal variables over a~semigroup~$(S, \circ)$. In this paper we study the
-complexity of the \emph{linear operator}~$Ax$, i.e. how many semigroup
-operations are required to compute a vector whose $i$-th element is
+Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $t_0$ zeroes
+and $t_1$ ones and $x=(x_1, \dotsc, x_n) \in S^n$~be an~$n$-
+dimensional vector
+of formal variables over a~semigroup~$(S, \circ)$. In this paper, 
+we study the
+complexity of the \emph{linear operator}~$Ax$, 
+i.e. how many semigroup
+operations are required to compute a~vector whose $i$-th element is
 \[
 \sum_{1 \le j \le n\,\bigwedge\,A_{ij}=1}x_j
 \]
-where the summation is over the semigroup\footnote{Note that the result of
+where the summation is over the semigroup operation~$\circ$.\footnote{Note that the result of
 summation is undefined in case of an all-zero row, because semigroups have no
 neutral element in general. One can trivially sidestep this technical issue by
 adding an all-one column~$n+1$ to the matrix~$A$, as well as the neutral element
 $x_{n+1}$ into the vector. Alternatively, we could switch from semigroups to
 \emph{monoids}, but we choose not to do that, since we have no use
 for the neutral element and associated laws in the rest of the paper.}
-operation~$\circ$. More specifically, we are interested in lower and
+More specifically, we are interested in lower and
 upper bounds involving~$t_0$ and~$t_1$.
 Matrices with $t_1=O(n)$ are usually called \emph{sparse},
 whereas matrices with $t_0=O(n)$
 are called \emph{complements of sparse matrices}.
 It is not difficult to see that computing all $n$~outputs
 of~$Ax$ independently takes
-$O(t_1+n+m)$ semigroup operations.
+$O(t_1)$ semigroup operations.
 The main question studied in this paper is:
-can $Ax$~be computed using $O(t_0+n+m)$ semigroup
-operations? Note that this complexity is easy to achieve if $\circ$ has an
-inverse: in this case $A$~can be obtained by subtracting a~dense matrix from
-all-ones matrix. Our first result states that this is also possible for
-\emph{commutative} semigroups.
+can $Ax$~be computed using $O(t_0)$ semigroup
+operations? Note that this complexity is easy to achieve if $\circ$ has an inverse: in this case $A$~can be obtained by subtracting 
+a~dense matrix from all-ones matrix. 
+
+\subsubsection{Commutative Case}
+Our first result states that this 
+is also possible for \emph{commutative} semigroups. Basically, it 
+shows that in the commutative case complements of sparse 
+matrices can be processed as
+efficiently as sparse matrices.
 
 \begin{restatable}{theorem}{upperthm}
 \label{thm:upperbound}
 Let $(S, \circ)$~be a~commutative semigroup, 
 $x \in S^n$ be a~vector of formal
-variables, and $A \in \{0,1\}^{m \times n}$ be a~matrix 
-with~$t_0$
-zeros. Then, $Ax$ can be computed using at most
-$O(t_0+n+m)$ semigroup operations.
+variables, and $A \in \{0,1\}^{n \times n}$ be a~matrix 
+with~$t_0=\Omega(n)$ 
+zeros. Then, $Ax$ can be computed using
+$O(t_0)$ semigroup operations.
 \end{restatable}
 
-Hence, complements of sparse matrices can be processed as
-efficiently as sparse matrices.
-As an~immediate consequence we get the following matrix
-multiplication result.
+It should be noted that:
+\begin{itemize}
+\item We state the result for square matrices to simplify the presentation. Theorem~\ref{thm:upperbound} generalizes easily
+to show that $Ax$ for a~matrix $A \in \{0,1\}^{m \times n}$ with $t_0=\Omega(n)$ zeros can be computed using $O(m+t_0)$ semigroup operations.
+\item We assume that $t_0=\Omega(n)$ to be able to state an upper bound $O(t_0)$ instead of $O(t_0+n)$. Note that when
+$t_0<n$, the matrix~$A$ is forced to contain all-one rows
+that can be computed trivially.
+\item By saying ``can be computed using $O(t_0)$ semigroup 
+operation'' we mean that there exists a~\emph{circuit} of size 
+$O(t_0)$ whose inputs are $x_1, \dotsc, x_n$ and where each 
+gate just applies the semigroup operation~$\circ$. The formal 
+definition of this computational model is given in 
+Section~\ref{subsec:circuits}. Note that our 
+circuits are very simple and they are, in fact, \emph{uniform}. 
+Informally, this means that these circuits can be generated 
+efficiently by an algorithm. To emphasize this, we also state the
+following corollary that generalizes Theorem~\ref{thm:upperbound}
+in two independent directions: from circuits to algorithms and from vectors to matrices.
+\end{itemize}
 
 \begin{restatable}{corollary}{matrixmultcor}
 \label{cor:matrixmultiplication}
-Let $(S, \circ)$~be a~commutative semigroup,
-$A \in \{0,1\}^{n \times n}$ be a~matrix with~$O(n)$ zeros,
-and $X \in S^{n \times n}$ be a~matrix of formal variables. Then,
-$AX$ can be computed using at most
-$O(n^2)$ semigroup operations.
+Let $(S, \circ)$~be a~commutative semigroup.
+There exists an algorithm that takes as input 
+a~matrix $A \in \{0,1\}^{n \times n}$ with $t_0$
+zeros
+and a~matrix $B \in S^{n \times k}$ and computes
+the matrix $AB$ in time $O(t_0k)$.
 \end{restatable}
+In particular, the product of a~matrix $A \in \{0,1\}^{n \times n}$
+with $O(n)$ zeroes and a~matrix $B \in S^{n \times n}$ cab be computed in time $O(n^2)$.
 
-\todo[inline]{AM: If I understand correctly, the general case when
-$A \in \{0,1\}^{m \times n}$ and $X \in S^{n \times k}$ has
-complexity $O((t_0+m+n)k)$, is that right? Shall we report it here as well?}
-
-We then show that commutativity is essential: for
+\subsubsection{Non-commutative Case}
+We then show that \emph{commutativity is essential}: for
 a~strongly non-commutative semigroup~$S$
 (the notion of strong non-commutativity is made formal
 later in the text) the minimum number of semigroup operations
 needed to compute $Ax$ for a~matrix
 $A \in \{0,1\}^{n \times n}$ with $t_0=O(n)$ zeros is
 $\Theta(n\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function.
-
-\todo[inline]{AM: Can we have a lower bound for the general case
-$A \in \{0,1\}^{m \times n}$? Is it something like $O((m+n)\alpha(t_0))$?}
 
 \begin{restatable}{theorem}{lowerthm}
 \label{thm:lowerbound}
@@ -160,14 +186,11 @@ be a~matrix with $O(n)$ zeros. Then $Ax$ is computable
 using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
 is the inverse Ackermann function. Moreover, there exists
 a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeros
-in every row such that the minimum number of semigroup operations
+in every row such that the minimum number of semigroup 
+operations
 required to compute~$Ax$ is $\Omega(n\alpha(n))$.
 \end{restatable}
 
-\todo[inline]{AM: I wonder if we can have an interesting corollary about matrix
-multiplication in the style of Corollary~\ref{cor:matrixmultiplication}. Can we
-say that computing $A X$ in strongly non-commutative case requires
-$\Omega(n^2\alpha(n))$ operations? Or is it too good to be true?}
 
 \subsection{Motivation}
 The complexity of linear operators is interesting for many reasons.
@@ -417,7 +440,7 @@ queries problem: now, instead of contiguous ranges one wants
 to computes sums over arbitrary subsets. These subsets are
 given as rows of a~0/1-matrix~$A$.
 
-\subsection{Circuits}
+\subsection{Circuits}\label{subsec:circuits}
 We assume that the input consists of $n$~formal variables
 $\{x_1, \dotsc, x_n\}$. We are interested in the minimum number of semigroup
 operations needed to compute all given words $\{w_1, \dotsc, w_m\}$ (e.g., for
