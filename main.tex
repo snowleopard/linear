@@ -651,11 +651,11 @@ additional gates from the gates of the circuit.
 \end{lemma}
 
 \begin{lemma}\label{lemma:permute}
-Let $A \in \{0,1\}^{n \times n}$ contain at most $\log n$ 
+Let $A \in \{0,1\}^{m \times n}$ contain at most $\log n$ 
 zeroes in
-every row. Then there exists a~permutation of the columns of~$A$
+every row and $m \le n$. Then there exists a~permutation of the columns of~$A$
 such that the total length of all ranges of length
-at most $\log n$ is $O(\cdot \log^4 n)$.
+at most $\log n$ is $O(\log^4 n)$.
 \end{lemma}
 
 
@@ -784,9 +784,11 @@ Multiplying this by the number of rows gives the desired upper bound.
 
 \begin{proof}[(Constructive) Proof of Lemma~\ref{lemma:permute}.]
 \todo[inline]{to be updated}
-Our original proof was probabilistic in the part computing the matrix $R_1 \times C$ having $n$ columns, at most $n$ rows, at most $k$ zeros and at most $\log n$ zeros in each row. For our proof it is convenient to add redundant rows and columns to the matrix in such a way that it has size $t \times t$, at most $t$ zeros in total and at most $\log t$ zeros in each row. We will then compute the matrix by the circuit of size at most $O(t)$. To enlarge the matrix we can just add rows and columns consisting of ones. It is easy to see that then we can let $t = \max(n,k)$. Note that enlargement of the matrix does not make the computation simpler: additional rows mean additional outputs that can be ignored and additional columns correspond to redundant variables that can be removed (substituted by 0) once the circuit is constructed.
+Assume without loss of generality that $m=n$. Hence, we have 
+a~matrix $A \in \{0,1\}^{n \times n}$ with at most $\log n$ 
+zeros in every row.
 
-Thus our goal is to compute matrix $A \in \{0,1\}^{t\times t}$ with at most $t$ zeros in total and at most $\log t$ zeros in each row by a circuit of size $O(t)$. For this we will first permute the columns of $A$ in such a way that all ranges of length shorter than $\log t$ lie within the last $O(\log^2 t)$ columns. Once we have such an permutation of columns, we can compute ranges of length at least $\log t$ by Lemma~\ref{lemma:blocks} and we can compute all ranges within the last $O(\log^2 n)$ columns by a circuit of size at most $O(\log^4 n)$, thus computing all short ranges. 
+For this we will first permute the columns of $A$ in such a way that all ranges of length shorter than $\log t$ lie within the last $O(\log^2 t)$ columns. Once we have such an permutation of columns, we can compute ranges of length at least $\log t$ by Lemma~\ref{lemma:blocks} and we can compute all ranges within the last $O(\log^2 n)$ columns by a circuit of size at most $O(\log^4 n)$, thus computing all short ranges. 
 
 Thus it remains to construct a desired permutation of $A$. We will do it step by step by a greedy algorithm. After step $r$ we will have a sequence of the first $r$ columns chosen and we will maintain the following properties:
 \begin{itemize}
@@ -804,7 +806,7 @@ On the first step we can pick for the first column any column that has zeros in 
 
 %The construction of the circuit above is not explicit, since the proof of Lemma~\ref{lemma:permute} is randomized. We outline an explicit construction of a circuit in Appendix~\ref{subsec:constructive}.
 
-\todo[inline]{Prove corollary}
+\todo[inline]{AM: Please prove corollary 1}
 
 
 \section{Non-commutative Case}\label{sec-non-commutative}
@@ -1154,14 +1156,13 @@ Now, observe that $\tup(G)$ has increased (by the first coordinate). There are n
 \end{proof}
 
 
-% TODO: Uncomment in the final version.
-% \section*{Acknowledgments}
-% We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}.
+\section*{Acknowledgments}
+We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
 \bibliographystyle{plain}
 \bibliography{text}
 
-%\section{Appendix}
+\clearpage
 \appendix
 \section{Review}
 \input algebraic_structures
