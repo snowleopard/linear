@@ -53,7 +53,7 @@ and $u$~ones and $x \in S^n$ be an~$n$-dimensional vector of
 formal variables over a~semigroup $(S, \circ)$.
 How many semigroup operations are required to compute the linear operator $Ax$?
 
-As we show in this paper, this problem generalizes the well-known
+\todo{V:edited}As we observe in this paper, this problem contains as a special case the well-known
 range queries problem and has a~rich variety of applications in
 such areas as graph algorithms, functional programming, circuit complexity,
 and others. It is easy to compute $Ax$ using $O(u)$ semigroup
@@ -70,16 +70,16 @@ This implies that in commutative settings, complements of~sparse
 matrices can
 be processed as efficiently as sparse matrices (though the 
 corresponding
-algorithms are more involved).
+algorithms are more involved). Note that this covers the 
+cases of Boolean and tropical semirings, which have numerous 
+applications, e.g., in graph theory.
 
 As a~simple application of the presented linear-size construction, 
 we show
 how to multiply two $n\times n$ matrices over an arbitrary 
 semiring in $O(n^2)$
 time if one of these matrices is a~0/1-matrix with $O(n)$~zeroes 
-(i.e. a~complement of a~sparse matrix). Note that this covers the 
-cases of Boolean and tropical semirings, which have numerous 
-applications, e.g., in graph theory.
+(i.e. a~complement of a~sparse matrix). 
 \end{abstract}
 
 \clearpage
@@ -202,7 +202,7 @@ output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$
 for each query. It~is a~classical problem in data structures and
 algorithms with applications in many fields, such as bioinformatics and
 string algorithms, computational geometry, image analysis, real-time
-systems, and others. We review major applications in Section~\ref{subseq:rmqapp},
+systems, and others. We review some of the less straightforward applications in Section~\ref{subseq:rmqapp},
 as well as a~rich variety of algorithmic techniques for the problem in
 Section~\ref{subsec:approaches}.
 
@@ -673,9 +673,6 @@ Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
 having at least $\log n$ zeros and $R_1=R \setminus R_0$.
 
-We first take a~permutation of the columns $C$ of the matrix
-guaranteed by Lemma~\ref{lemma:permute} for the matrix $R_1 \times C$. At this stage,
-we use commutativity of the ground semigroup essentially.
 We will compute all the ranges of~$A$. From these ranges,
 it takes $O(z)$ additional binary gates to compute all the outputs.
 
@@ -694,7 +691,11 @@ ranges of $C \times R_0$ by a~circuit of size
 \[O(t\log t+z)=O\left(\frac{z}{\log n} \cdot \log z+z\right)=O(z+n)=O(z)\, ,\]
 since $z =O(n^2)$.
 
-\emph{Computing $R_1 \times C$.} Each row of
+\emph{Computing $R_1 \times C$.} We first take a~permutation of the columns $C$ of the matrix
+guaranteed by Lemma~\ref{lemma:permute} for the matrix $R_1 \times C$. At this stage,
+we use commutativity of the ground semigroup essentially.\todo{V: moved from above}
+
+Each row of
 $R_1 \times C$ contains at most $\log n$ zeros. Moreover,
 thanks to Lemma~\ref{lemma:permute}, the total length of all
 ranges of length at most $\log n$ is $O(\log^4n)$. Hence, all
