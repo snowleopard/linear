@@ -53,7 +53,7 @@ and $u$~ones and $x \in S^n$ be an~$n$-dimensional vector of
 formal variables over a~semigroup $(S, \circ)$.
 How many semigroup operations are required to compute the linear operator $Ax$?
 
-As we show in this paper, this problem generalizes the well-known
+\todo{V:edited}As we observe in this paper, this problem contains as a special case the well-known
 range queries problem and has a~rich variety of applications in
 such areas as graph algorithms, functional programming, circuit complexity,
 and others. It is easy to compute $Ax$ using $O(u)$ semigroup
@@ -70,16 +70,16 @@ This implies that in commutative settings, complements of~sparse
 matrices can
 be processed as efficiently as sparse matrices (though the 
 corresponding
-algorithms are more involved).
+algorithms are more involved). Note that this covers the 
+cases of Boolean and tropical semirings, which have numerous 
+applications, e.g., in graph theory.
 
 As a~simple application of the presented linear-size construction, 
 we show
 how to multiply two $n\times n$ matrices over an arbitrary 
 semiring in $O(n^2)$
 time if one of these matrices is a~0/1-matrix with $O(n)$~zeroes 
-(i.e. a~complement of a~sparse matrix). Note that this covers the 
-cases of Boolean and tropical semirings, which have numerous 
-applications, e.g., in graph theory.
+(i.e. a~complement of a~sparse matrix). 
 \end{abstract}
 
 \clearpage
@@ -205,7 +205,7 @@ output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$
 for each query. It~is a~classical problem in data structures and
 algorithms with applications in many fields, such as bioinformatics and
 string algorithms, computational geometry, image analysis, real-time
-systems, and others. We review major applications in Section~\ref{subseq:rmqapp},
+systems, and others. We review some of the less straightforward applications in Section~\ref{subseq:rmqapp},
 as well as a~rich variety of algorithmic techniques for the problem in
 Section~\ref{subsec:approaches}.
 
@@ -680,9 +680,6 @@ Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
 having at least $\log n$ zeros and $R_1=R \setminus R_0$.
 
-We first take a~permutation of the columns $C$ of the matrix
-guaranteed by Lemma~\ref{lemma:permute} for the matrix $R_1 \times C$. At this stage,
-we use commutativity of the ground semigroup essentially.
 We will compute all the ranges of~$A$. From these ranges,
 it takes $O(z)$ additional binary gates to compute all the outputs.
 
@@ -701,7 +698,11 @@ ranges of $C \times R_0$ by a~circuit of size
 \[O(t\log t+z)=O\left(\frac{z}{\log n} \cdot \log z+z\right)=O(z+n)=O(z)\, ,\]
 since $z =O(n^2)$.
 
-\emph{Computing $R_1 \times C$.} Each row of
+\emph{Computing $R_1 \times C$.} We first take a~permutation of the columns $C$ of the matrix
+guaranteed by Lemma~\ref{lemma:permute} for the matrix $R_1 \times C$. At this stage,
+we use commutativity of the ground semigroup essentially.\todo{V: moved from above}
+
+Each row of
 $R_1 \times C$ contains at most $\log n$ zeros. Moreover,
 thanks to Lemma~\ref{lemma:permute}, the total length of all
 ranges of length at most $\log n$ is $O(\frac{n}{\log n})$ 
@@ -831,45 +832,48 @@ In the previous section, we have shown that for commutative semigroups dense lin
 
 \todo[inline]{Volodya, priberis' v etoi sektsii, pogaluista. V chastnosti, davaite polugruppu vezde nazivat' $S$ (a ne $X$).}
 
-\todo[inline]{Eschyo mogno vsyo perevesti s kvadratnikh matrits na pryamougol'nie.}
 
 \subsection{Faithful semigroups}
 
-In the paper we consider computations over general semigroups. To establish
-complexity results and especially to establish reasonable lower bounds we need
-to consider semigroups with relatively rich structure.
+We consider computations over general semigroups that are not necessarily commutative. In particular, we will establish lower bounds for a large class of semigroups and our lower bound does not hold for commutative semigroups. This requires a formal definition that captures semigroups with rich enough structure and in particular requires that a semigroup is substantially non-commutative.
 
-Since we deal with computations with formal semigroup variables, it is
-convenient to introduce the following notation. Suppose $(S, \circ)$ is a
+Previously lower bounds in the circuit model for a large class of groups were known for the Range Queries problem~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}. These result are proven for a large class of commutative semigroups that are called \emph{faithful} (we provide a formal definition below). Since we are dealing with non-commutative case we need to generalize the notion of faithfulness to non-commutative semigroups.
+
+To provide formal definition of faithfulness it is convenient to introduce the following notation.
+Suppose $(S, \circ)$ is a
 semigroup. Let $X_{S,n}$ be a semigroup with generators $\{x_1,\ldots, x_n\}$
 and with the equivalence relation consisting of identities in variables
 $\{x_1,\ldots, x_n\}$ over~$(S,\circ)$. That is, for two words $W$ and $W'$ in
-the alphabet $\{x_1,\ldots,x_n\}$ we have $W=W'$ in $X_{S,n}$ iff no matter which
+the alphabet $\{x_1,\ldots,x_n\}$ we have $W\equiv W'$ in $X_{S,n}$ iff no matter which
 elements of the semigroup~$S$ we substitute for $\{x_1,\ldots, x_n\}$ we obtain
 a~correct equation over~$S$. In particular, note that if $S$~is commutative
 (respectively, idempotent), then $X_{S,n}$ is also commutative (respectively,
-idempotent). We will often omit the subscript $n$ and write simply $X_S$ since the number of generators will be clear from the context.
+idempotent).
+The semigroup $X_{S,n}$ is studied in algebra under the name of relatively free semigroup of rank $n$ ofa variety generated by semigroup $S$~\cite{neumann2012varieties}.
+We will often omit the subscript $n$ and write simply $X_S$ since the number of generators will be clear from the context.
 
 Below we will use the following notation. Let $W$ be a word in the alphabet
 $\{x_1,\ldots, x_n\}$. Denote by $\var(W)$ the set of letters that are present
 in $W$.
 
-The case of general commutative semigroups and computations over them was
-previously studied in relation to the Range Queries problem. The standard
-approach to capture their generality here is to consider \emph{faithful
-commutative semigroups}~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}.
+%The case of general commutative semigroups and computations over them was
+%previously studied in relation to the Range Queries problem. The standard
+%approach to capture their generality here is to consider \emph{faithful
+%commutative semigroups}~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}.
 
-\begin{definition}
+We are now ready to introduce the definition of commutative faithful semigroup.
+
+\begin{definition}[\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}]
 A commutative semigroup $(S, \circ)$ is \emph{faithful commutative} if for any
 equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
 \end{definition}
 
 Note that this definition does not pose any restrictions on the cardinality of
-each letter in $W$ and $W'$. This allows us to capture in this definition
+each letter in $W$ and $W'$. This allows to capture in this definition
 important cases of idempotent semigroups. For example, semigroups
 $(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ are commutative faithful.
 
-We also need to study the non-commutative case, and moreover, our results
+We need to study the non-commutative case, and moreover, our results
 establish the difference between commutative and non-commutative cases. Thus,
 we need to extend the notion of faithfulness to non-commutative semigroups to
 capture their non-commutativity in the whole power. At the same time we would
@@ -903,7 +907,7 @@ idempotent case: for a free idempotent semigroup the condition in this
 definition is ``if and only if''\cite{GreenR52}.
 
 \begin{definition} \label{def:faithful}
-A semigroup $(S, \circ)$ is \emph{faithful} if $X_S$ is strongly non-commutative.
+A semigroup $(S, \circ)$ is \emph{faithful non-commutative} if $X_S$ is strongly non-commutative.
 \end{definition}
 
 We note that this notion of faithfulness is relatively general and is true for
@@ -947,7 +951,7 @@ Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X_S$. Let
 The same is true if we read the words from right to left.
 \end{lemma}
 
-\subsection{Plan (Better Subsection Title Needed!!)}
+\subsection{Proof Strategy}
 
 %In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. We do this by showing that, in the non-commutative case, the dense linear operator problem has linear size circuits iff the range queries problem has linear size circuits. We then use a~lower bound $\Omega(n\alpha(n))$ for the latter problem (over faithful semigroups) by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
