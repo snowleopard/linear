@@ -818,20 +818,19 @@ In the previous section, we have shown that for commutative semigroups dense lin
 
 \todo[inline]{Volodya, priberis' v etoi sektsii, pogaluista. V chastnosti, davaite polugruppu vezde nazivat' $S$ (a ne $X$).}
 
-\todo[inline]{Eschyo mogno vsyo perevesti s kvadratnikh matrits na pryamougol'nie.}
 
 \subsection{Faithful semigroups}
 
-In the paper we consider computations over general semigroups. To establish
-complexity results and especially to establish reasonable lower bounds we need
-to consider semigroups with relatively rich structure.
+We consider computations over general semigroups that are not necessarily commutative. In particular, we will establish lower bounds for a large class of semigroups and our lower bound does not hold for commutative semigroups. This requires a formal definition that captures semigroups with rich enough structure and in particular requires that a semigroup is substantially non-commutative.
 
-Since we deal with computations with formal semigroup variables, it is
-convenient to introduce the following notation. Suppose $(S, \circ)$ is a
+Previously lower bounds in the circuit model for a large class of groups were known for the Range Queries problem: Yao~\cite{?} has shown that there is a system of range queries that requires $\Omega(n\alpha(n))$-size circuit. This result is proven for a large class pf commutative semigroups that are called \emph{faithful} (we provide a formal definition below). Since we are dealing with non-commutative case we need to generalize the notion of faithfulness to non-commutative semigroups.
+
+To provide formal definition of faithfulness it is convenient to introduce the following notation.
+Suppose $(S, \circ)$ is a
 semigroup. Let $X_{S,n}$ be a semigroup with generators $\{x_1,\ldots, x_n\}$
 and with the equivalence relation consisting of identities in variables
 $\{x_1,\ldots, x_n\}$ over~$(S,\circ)$. That is, for two words $W$ and $W'$ in
-the alphabet $\{x_1,\ldots,x_n\}$ we have $W=W'$ in $X_{S,n}$ iff no matter which
+the alphabet $\{x_1,\ldots,x_n\}$ we have $W\equiv W'$ in $X_{S,n}$ iff no matter which
 elements of the semigroup~$S$ we substitute for $\{x_1,\ldots, x_n\}$ we obtain
 a~correct equation over~$S$. In particular, note that if $S$~is commutative
 (respectively, idempotent), then $X_{S,n}$ is also commutative (respectively,
