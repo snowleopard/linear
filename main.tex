@@ -123,7 +123,7 @@ whose linear operator is computed trivially in $O(n)$, and $\overline{A}$ is the
 complement of $A$ and therefore has only $z = O(n)$ ones.
 
 \subsubsection{Commutative Case}
-Our first result shows that in the commutative case, complements
+Our first main result shows that in the commutative case, complements
 of sparse matrices can be processed as
 efficiently as sparse matrices. Specifically, we prove
 that if the semigroup is commutative, $Ax$ can be computed in $O(z)$ semigroup
@@ -176,13 +176,13 @@ In particular, the product of a~matrix $A \in \{0,1\}^{n \times n}$
 with $O(n)$ zeroes and a~matrix $B \in S^{n \times n}$ can be computed in time $O(n^2)$.
 
 \subsubsection{Non-commutative Case}
-We then show that \emph{commutativity is essential}: for
+As our second main result, we show that \emph{commutativity is essential}: for
 a~faithful non-commutative semigroup~$S$
 (the notion of faithful non-commutative semigroup  is made formal
-later in the text) the minimum number of semigroup operations
-needed to compute $Ax$ for a~matrix
+later in the text), the minimum number of semigroup operations
+required to compute $Ax$ for a~matrix
 $A \in \{0,1\}^{n \times n}$ with $z=O(n)$ zeros is
-$\Theta(n\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function.
+$\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
 
 \begin{restatable}{theorem}{lowerthm}
 \label{thm:lowerbound}
