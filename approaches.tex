@@ -15,13 +15,22 @@ This can be done in time $O(n)$ since $S_i=S_{i-1}+x_i$. Then, the answer to any
 
 Note that the algorithm above solves a~{\em static} version of the problem. For the {\em dynamic} version, where one is allowed to change the elements of the input sequence, there is a~data structure known as Fenwick's tree~\cite{DBLP:journals/spe/Fenwick94}. It allows to change any element as well as to retrieve any prefix sum in time $O(\log n)$.
 
-\item[Block decomposition.] One decomposes the input range $(1,n)$ into $n/b$~subranges of length~$b$ and then computes, for each block, all its prefixes and suffixes. This can be done in time $O(n)$. Then, for each query, if it lies entirely in a~block, we compute the answer directly (hence, in time at most $O(b)$). If it crosses a~number of blocks, we decompose it into a~suffix of a~block, a~number of consecutive blocks, and a~prefix of a~block. This allows us to answer such long queries in time $O(n/b)$. Setting $b=\sqrt{n}$ to balance both case, we get a~$(O(n), O(\sqrt{n}))$-algorithm. 
+\item[Block decomposition.] One decomposes the input range $(1,n)$ into $n/b$~subranges of length~$b$ (called blocks) and then computes, for each block, all its prefixes and suffixes. This can be done in time $O(n)$. Then, for each query, if it lies entirely in a~block, we compute the answer directly (hence, in time at most $O(b)$). If it crosses a~number of blocks, we decompose it into a~suffix of a~block, a~number of consecutive blocks, and a~prefix of a~block. This allows us to answer such long queries in time $O(n/b)$. Setting $b=\sqrt{n}$ to balance both cases, we get a~$(O(n), O(\sqrt{n}))$-algorithm. 
 
 \item[Sparse table.] This data structure works for idempotent semigroups ({\em bands}) and has type $(O(n\log n), O(1))$. We illustrate its main idea on $(\mathbb{Z}, \min)$. One precomputes answers to $O(n\log n)$ queries---namely, those whose length is a~power of~2. More formally, for all $0 \le k \le \log_2n$ and $1 \le i \le n-2^k+1$, let $S_{k,i}$ be the answer to a~query $(i, i+2^k-1)$:
 \(S_{k,i}=x_i \circ x_{i+1} \circ \dotsb \circ x_{i+2^k-1} \, .\)
 Since any range of length $2^k$ consists of two ranges of length $2^{k-1}$, one can compute all $S_{k,i}$'s in time $O(n\log n)$ using dynamic programming. Then, any range $(l,r)$ can be covered by two precomputed ranges: if $k$~is the smallest integer such that $2^k \ge (r-l+1)/2$, then the answer to this query is $S_{k,l} \circ S_{k,r-2^k+1}$ (idempotency is required since we are covering the range, but not partitioning it). This gives an $(O(n\log n), O(1))$ algorithm.
 
-\item[Hybrid strategy.] One may extend the block decomposition approach further and use one efficient data structure on top of blocks and possibly a~different data structure for each block. E.g., combining the sparse table data structure with no preprocessing technique gives an~$(O(n), O(\log n))$-algorithm. Another example: using sparse table in both cases gives an $O(O(n\log\log n), O(1))$ algorithm. \todo{V: I got lost here. Sasha, can you please provide more details?}
+\item[Hybrid strategy.] One may extend the block decomposition 
+approach further and use one efficient data structure on top of 
+blocks and possibly a~different data structure for each block. 
+Namely, we decompose the input range into blocks of size~$b$, 
+use a~$(p_1(n), q_1(n))$-algorithm on top of blocks and
+a~$(p_2(n), q_2(n))$-algorithm within each block. The resulting algorithm then has type
+\[(O(n + p_1(n / b) + (n / b) \cdot p_2(b), O(q_1(n/b) + q_2(b))) \, .\]
+E.g., for the range minimum problem, combining the sparse table data structure ($p_1(n)=O(n\log n)$, $q_1(n)=O(1)$) with no preprocessing technique ($p_2(n)=O(1)$, $q_2=O(n)$) and block size $b=\log n$, gives an~$(O(n), O(\log n))$-algorithm. Another example: using sparse table in both cases (with block size $b=\log n$) gives an $(O(n\log\log n), O(1))$ algorithm. \todo{V: I got lost here. Sasha, can you please provide more details?~--- AK: poyasnil}
+
+% reference: https://web.stanford.edu/class/cs166/lectures/00/Slides00.pdf
 
 
 \item[Segment tree.] The segment tree data structure is also based on dynamic programming ideas and works for any semigroup. Consider the following complete binary tree with $O(n)$ nodes: the root is labeled by a~query $(1,n)$, the two children of each inner node $(l,r)$ are labeled by the left and right halves of the current query (i.e., $(l,m)$ and $(m+1,r)$ where $m=(l+r)/2$), the leaves are labeled by length one queries. Going from leaves to the root, one can precompute the answers to all the queries in this tree in time $O(n)$. Then, it is possible to show that any query $(l,r)$ can be  partitioned into $O(\log n)$ queries that are stored in the tree. This gives an $(O(n), O(\log n))$ algorithm. It should be noted that the segment tree can also be used to solve the dynamic version of the range queries problem efficiently: to change the value of one of the elements of the input sequence, one needs to adjust the answers to $O(\log n)$ queries stored in the tree.
@@ -36,7 +45,7 @@ There is a~sequence of $(O(n), O(1))$-type algorithms designed specifically to t
 DBLP:journals/jal/BenderFPSS05,
 DBLP:conf/latin/BenderF00, 
 DBLP:conf/cpm/FischerH06}. Here, we briefly sketch the algorithm by Bender and Farach-Colton. 
-Its main idea is to first reduce RMQ to LCA (the least common ancestor problem). One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$\todo{V: which semiring are we considering here?}. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
+Its main idea is to first reduce RMQ to LCA (the least common ancestor problem). One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$\todo{V: which semiring are we considering here?~--- AK: since we are solving RMQ, it is $(\mathbb{R}, \min)$}. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
 \end{description}
 
 %\todo[inline]{Sasha, mention block/hybrid approaches}

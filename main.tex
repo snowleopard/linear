@@ -427,7 +427,8 @@ We call a~circuit~$C$ computing $A$ \emph{regular} if for every pair $(i,j)$ suc
 \begin{observation}\label{obs:transpose}
 Let $C$~be a~regular circuit computing a~0/1-matrix~$A$ over a~commutative semigroup. Then, by reversing all the wires in~$C$ one gets a~circuit computing~$A^T$. 
 \end{observation}
-Instead of giving a~formal proof, we provide an example of a~reversed circuit from the example given above. It is because of this observation that we require circuit outputs to be gates of out-degree zero (so that when reversing all the wires the inputs and the outputs exchange places). Note also that commutativity is not essential for this observation, it just allows us not to worry about the order of the incoming wires for each gate.
+Instead of giving a~formal proof, we provide an example of a~reversed circuit from the example given above. It is because of this observation that we require circuit outputs to be gates of out-degree zero (so that when reversing all the wires the inputs and the outputs exchange places). 
+%Note also that commutativity is not essential for this observation, it just allows us not to worry about the order of the incoming wires for each gate.
 
 \begin{center}
 \begin{tikzpicture}
@@ -698,9 +699,11 @@ ranges of $C \times R_0$ by a~circuit of size
 \[O(t\log t+z)=O\left(\frac{z}{\log n} \cdot \log z+z\right)=O(z+n)=O(z)\, ,\]
 since $z =O(n^2)$.
 
-\emph{Computing $R_1 \times C$.} We first take a~permutation of the columns $C$ of the matrix
-guaranteed by Lemma~\ref{lemma:permute} for the matrix $R_1 \times C$. At this stage,
-we use commutativity of the ground semigroup essentially.\todo{V: moved from above}
+\emph{Computing $R_1 \times C$.} We first take a~permutation 
+of the columns~$C$ of the matrix
+guaranteed by Lemma~\ref{lemma:permute} for 
+the matrix $R_1 \times C$. At this stage, we use 
+commutativity of the ground semigroup essentially.
 
 Each row of
 $R_1 \times C$ contains at most $\log n$ zeros. Moreover,
@@ -829,9 +832,6 @@ of $n$~objects can be generated in time~$O(n)$~\cite[Algorithm~P (Shuffling)]{DB
 In the previous section, we have shown that for commutative semigroups dense linear operators can be computed by linear size circuits. A~closer look at the circuit constructions reveals that we use commutativity crucially: it is important that we may reorder the columns of the matrix. In this section, we show that this trick is unavoidable: for non-commutative semigroups, it is not possible to construct linear size circuits for dense linear operators. Namely, we prove Theorem~\ref{thm:lowerbound}.
 
 \lowerthm*
-
-\todo[inline]{Volodya, priberis' v etoi sektsii, pogaluista. V chastnosti, davaite polugruppu vezde nazivat' $S$ (a ne $X$).}
-
 
 \subsection{Faithful semigroups}
 
