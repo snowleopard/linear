@@ -142,7 +142,7 @@ chosen) order that is independent of the specific input $x$.
 \label{thm:upperbound}
 Let $(S, \circ)$~be a~commutative semigroup,
 and $A \in \{0,1\}^{n \times n}$ be a~matrix
-with~$z=\Omega(n)$ zeros.
+with~$z=\Omega(n)$ zeroes.
 There exists a~circuit of size $O(z)$ that uses
 a~vector $x = (x_1,\ldots, x_n)$ of formal variables as an input,
 uses only the semigroup operation~$\circ$ at internal gates,
@@ -153,7 +153,7 @@ with probability at least $1-\frac{\operatorname{polylog}(n)}{n}$.
 \end{restatable}
 
 We state the result for square matrices to simplify the presentation. Theorem~\ref{thm:upperbound} generalizes easily
-to show that $Ax$ for a~matrix $A \in \{0,1\}^{m \times n}$ with $z=\Omega(n)$ zeros can be computed using $O(m+z)$ semigroup operations. Also,
+to show that $Ax$ for a~matrix $A \in \{0,1\}^{m \times n}$ with $z=\Omega(n)$ zeroes can be computed using $O(m+z)$ semigroup operations. Also,
 we assume that $z=\Omega(n)$ to be able to state an upper bound $O(z)$ instead of $O(z+n)$. Note that when
 $z<n$, the matrix~$A$ is forced to contain all-one rows
 that can be computed trivially.
@@ -166,7 +166,7 @@ from vectors to matrices.
 Let $(S, \circ)$~be a~commutative semigroup.
 There exists a~randomized algorithm that takes as input
 a~matrix $A \in \{0,1\}^{n \times n}$ with
-$z=\Omega(n)$~zeros (given as a~sequence of positions
+$z=\Omega(n)$~zeroes (given as a~sequence of positions
 of $z$~zeroes)
 and a~matrix $B \in S^{n \times k}$ and computes
 the product $AB$ in time $O(zk)$ with probability
@@ -181,17 +181,17 @@ a~faithful non-commutative semigroup~$S$
 (the notion of faithful non-commutative semigroup  is made formal
 later in the text), the minimum number of semigroup operations
 required to compute $Ax$ for a~matrix
-$A \in \{0,1\}^{n \times n}$ with $z=O(n)$ zeros is
+$A \in \{0,1\}^{n \times n}$ with $z=O(n)$ zeroes is
 $\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
 
 \begin{restatable}{theorem}{lowerthm}
 \label{thm:lowerbound}
 Let $(S, \circ)$ be a~faithful non-commutative semigroup, $x = (x_1,\ldots, x_n)$ be
 a~vector of formal variables, and $A \in \{0,1\}^{n \times n}$
-be a~matrix with $O(n)$ zeros. Then $Ax$ is computable
+be a~matrix with $O(n)$ zeroes. Then $Ax$ is computable
 using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
 is the inverse Ackermann function. Moreover, there exists
-a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeros
+a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes
 in every row such that the minimum number of semigroup
 operations
 required to compute~$Ax$ is $\Omega(n\alpha(n))$.
@@ -557,7 +557,7 @@ Instead of giving a~formal proof, we provide an example of a~reversed circuit fr
 %
 %\begin{theorem}\label{thm:main_statement}
 %Suppose $S$ is a commutative semigroup. A~matrix $A \in \{0,1\}^{n \times n}$
-%with $k$~zeros can be computed by a~circuit of size $O(n+k)$.
+%with $k$~zeroes can be computed by a~circuit of size $O(n+k)$.
 %\end{theorem}
 %
 %
@@ -598,7 +598,7 @@ Similarly, we compute all suffixes
 $s_j=x_j \circ x_{j+1} \dotsb \circ x_n$ using
 $(n-1)$ binary gates. From these prefixes and suffixes
 all outputs can be
-computed as follows: if a~row of~$A$ contains no zeros,
+computed as follows: if a~row of~$A$ contains no zeroes,
 the corresponding
 output is~$p_n$; otherwise if a~row contains a~zero at position~$i$, the
 output is $p_{i-1} \circ s_{i+1}$ (for $i=1$ and $i=n$, we omit the redundant
@@ -607,21 +607,21 @@ term).
 
 In the rest of the section, we assume that the
 underlying semigroup is
-commutative. Allowing at most two zeros per row already leads to a~non-trivial
+commutative. Allowing at most two zeroes per row already leads to a~non-trivial
 problem. We give only a~sketch of the solution below, since we will further
 prove a~more general result. It is interesting to compare the following lemma
 with Theorem~\ref{thm:lowerbound} that states that in the
-non-commutative setting matrices with two zeros per row are already hard.
+non-commutative setting matrices with two zeroes per row are already hard.
 
 \begin{lemma} \label{lem:at_most_2}
-Let $A \in \{0,1\}^{n \times n}$ contain at most two zeros in every row. Then
+Let $A \in \{0,1\}^{n \times n}$ contain at most two zeroes in every row. Then
 $C(A) = O(n)$.
 \end{lemma}
 \begin{proof}[Proof sketch]
 Consider the following undirected graph: the set of nodes is $\{1,2,\dotsc,n\}$;
-two nodes $i$ and $j$ are joined by an edge if there is a~row having zeros in
+two nodes $i$ and $j$ are joined by an edge if there is a~row having zeroes in
 columns~$i$ and~$j$. In the worst case (all rows are different and contain
-exactly two zeros), the graph has exactly $n$~edges and hence it contains a cut
+exactly two zeroes), the graph has exactly $n$~edges and hence it contains a cut
 $(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into
 two parts ($L$ and $R$). Now let us also split the rows into two parts: the top
 part $T$~contains all columns that have exactly one zero in each $L$ and $R$;
@@ -682,7 +682,7 @@ generates such a~permutation with probability at least $1-\frac{\operatorname{po
 
 Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
-having at least $\log n$ zeros and $R_1=R \setminus R_0$.
+having at least $\log n$ zeroes and $R_1=R \setminus R_0$.
 
 We will compute all the ranges of~$A$. From these ranges,
 it takes $O(z)$ additional binary gates to compute all the outputs.
@@ -709,7 +709,7 @@ the matrix $R_1 \times C$. At this stage, we use
 commutativity of the ground semigroup essentially.
 
 Each row of
-$R_1 \times C$ contains at most $\log n$ zeros. Moreover,
+$R_1 \times C$ contains at most $\log n$ zeroes. Moreover,
 thanks to Lemma~\ref{lemma:permute}, the total length of all
 ranges of length at most $\log n$ is $O(\frac{n}{\log n})$
 (with good enough probability).
@@ -780,14 +780,14 @@ It remains to note that all these three components are already precomputed.
 \begin{proof}[Proof of Lemma~\ref{lemma:permute}.]
 %Assume without loss of generality that $m=n$.
 Permute the columns randomly and compute the expectation of
-the total length of ranges of length at most $\log n$. Call such ranges \emph{short}. Let us focus on a~single row and a~particular cell in it. Denote the number of zeros in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
+the total length of ranges of length at most $\log n$. Call such ranges \emph{short}. Let us focus on a~single row and a~particular cell in it. Denote the number of zeroes in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
 \begin{enumerate}
 \item The cell lies close to the border, i.e., it belongs to
 the first $\log n$ cells or to the last~$\log n$ cells
 (the number of such cells is $2\log n$). Then,
 this cell belongs to a~short range iff there is at least one zero
 in $\log n$ cells close to it (on the side opposite to the border).
-Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeros may be anywhere.
+Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeroes may be anywhere.
 The probability is then at most
 \[\log n \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}}=\log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
 \item It is not close to the border (the number of such cells is $n-2\log n$). Then, there must be a~zero on both sides of the
@@ -809,21 +809,21 @@ of $n$~objects can be generated in time~$O(n)$~\cite[Algorithm~P (Shuffling)]{DB
 %\todo[inline]{to be updated}
 %Assume without loss of generality that $m=n$. Hence, we have
 %a~matrix $A \in \{0,1\}^{n \times n}$ with at most $\log n$
-%zeros in every row.
+%zeroes in every row.
 %
 %For this we will first permute the columns of $A$ in such a way that all ranges of length shorter than $\log t$ lie within the last $O(\log^2 t)$ columns. Once we have such an permutation of columns, we can compute ranges of length at least $\log t$ by Lemma~\ref{lemma:blocks} and we can compute all ranges within the last $O(\log^2 n)$ columns by a circuit of size at most $O(\log^4 n)$, thus computing all short ranges.
 %
 %Thus it remains to construct a desired permutation of $A$. We will do it step by step by a greedy algorithm. After step $r$ we will have a sequence of the first $r$ columns chosen and we will maintain the following properties:
 %\begin{itemize}
-%\item For each $i \leq r$ the first $i$ columns contain at least $i$ zeros;
+%\item For each $i \leq r$ the first $i$ columns contain at least $i$ zeroes;
 %\item There are no ranges of the length less than $\log n$ in the first $r$ rows (apart from those, that can be extended by adding columns on the right).
 %\end{itemize}
 %The process will work for at least $t - \log^ t$ steps, so the ranges of length $\log t$ are only possible within the last $\log^2 t + \log t = O(\log^2 t)$ columns.
 %
-%On the first step we can pick for the first column any column that has zeros in it. Suppose we have reached step $r$. We will now explain how to add a column on step $r+1$. Consider the last $\log t$ columns in the currently constructed list. Consider the set $A$ of rows that have zeros in them. These are exactly the rows that are placing constraints on the choice of our next column. There are two cases.
+%On the first step we can pick for the first column any column that has zeroes in it. Suppose we have reached step $r$. We will now explain how to add a column on step $r+1$. Consider the last $\log t$ columns in the currently constructed list. Consider the set $A$ of rows that have zeroes in them. These are exactly the rows that are placing constraints on the choice of our next column. There are two cases.
 %\begin{enumerate}
-%\item There are at most $\log t$ rows in $A$. Then, for each row in $A$ there are at most $\log t$ columns that has zeros in this row. In total, there are at most $\log^2 t$ columns that have zeros in some rows of $A$. Denote the set of this columns by $F$. If there is an unpicked column outside of $F$ that has at least one zero in it, we add this column to our sequence. Clearly, the properties of our sequence are maintained and the step is over. Otherwise, all other columns contain only ones, so we add all of them to our sequence, place the columns from $F$ to the end of the sequence, and the whole permutation is constructed.
-%\item There are more that $\log t$ rows in $A$. This means that in the last $\log t$ columns of the current sequence there are more than $\log t$ zeros. Also note, that by the maintained property, the first $r - \log t$ columns there are at least $r - \log t$ zeros. So overall, in the current sequence of $r$ columns there are more than $r$ zeros. Thus, in the remaining $t-r$ columns there are less then $t-r$ zeros and there is a column without zeros. Let us add this column to our sequence. It is easy to see that the properties are still maintained.
+%\item There are at most $\log t$ rows in $A$. Then, for each row in $A$ there are at most $\log t$ columns that has zeroes in this row. In total, there are at most $\log^2 t$ columns that have zeroes in some rows of $A$. Denote the set of this columns by $F$. If there is an unpicked column outside of $F$ that has at least one zero in it, we add this column to our sequence. Clearly, the properties of our sequence are maintained and the step is over. Otherwise, all other columns contain only ones, so we add all of them to our sequence, place the columns from $F$ to the end of the sequence, and the whole permutation is constructed.
+%\item There are more that $\log t$ rows in $A$. This means that in the last $\log t$ columns of the current sequence there are more than $\log t$ zeroes. Also note, that by the maintained property, the first $r - \log t$ columns there are at least $r - \log t$ zeroes. So overall, in the current sequence of $r$ columns there are more than $r$ zeroes. Thus, in the remaining $t-r$ columns there are less then $t-r$ zeroes and there is a column without zeroes. Let us add this column to our sequence. It is easy to see that the properties are still maintained.
 %\end{enumerate}
 %\end{proof}
 
@@ -986,7 +986,7 @@ For an idempotent strongly non-commutative $X$ and for any $s=\Omega(n)$ we have
 Using this theorem, it is straightforward to finish the proof of
 Theorem~\ref{thm:lowerbound}.
 %\begin{proof}[Proof of Theorem~\ref{thm:lowerbound}]
-Indeed, by Theorem~\ref{thm:equivalence} if non-commutative dense linear operator problem has size $s$ circuit, then the commutative range queries problem also does. However, for the latter problem it is proved by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that $s=\Omega(n \alpha(n))$. Moreover, in our construction for the proof of Theorem~\ref{thm:equivalence} it is enough to consider dense linear operators with exactly two zeros in every row. From this the second part of Theroem~\ref{thm:lowerbound} follows.
+Indeed, by Theorem~\ref{thm:equivalence} if non-commutative dense linear operator problem has size $s$ circuit, then the commutative range queries problem also does. However, for the latter problem it is proved by Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that $s=\Omega(n \alpha(n))$. Moreover, in our construction for the proof of Theorem~\ref{thm:equivalence} it is enough to consider dense linear operators with exactly two zeroes in every row. From this the second part of Theroem~\ref{thm:lowerbound} follows.
 %\end{proof}
 
 Note that for the proof of Theorem~\ref{thm:lowerbound} only one direction of Theorem~\ref{thm:equivalence} is needed. However, we think that the equivalence in Theorem~\ref{thm:equivalence} might be of independent interest, so we provide the proof for both directions.
@@ -1066,7 +1066,7 @@ Suppose $X$ is strongly non-commutative and suppose that for $X$ all dense opera
 Consider a semigroup $X_{id}$ as introduced above. By Lemma~\ref{lem:idempotisation} $X_{id}$ is also strongly non-commutative. On the other hand, since $X_{id}$ is a factorization of $X$ any circuit computing dense operator over $X$ also computes the same dense operator over $X_{id}$. Thus, by our assumption there are circuits of size at most $s$ for all dense operators over $X_{id}$. Finally, $X_{id}$ is idempotent, so by the special case of our theorem we have $s = \Omega(n \alpha(n))$ and we are done.
 
 \subsection{Reducing Dense Linear Operator to Range Queries} \label{sec:operators_to_queries}
-In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the natural order. This intuition is formalized in Lemma~\ref{lemma:correctorder} below. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeros in positions $l-1$ and $r+1$ (hence, this row consists of three ranges: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the natural order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
+In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the natural order. This intuition is formalized in Lemma~\ref{lemma:correctorder} below. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeroes in positions $l-1$ and $r+1$ (hence, this row consists of three ranges: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the natural order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
 
 It should be mentioned, at the same time, that the semigroup $X$ might be complicated. In particular, the idempotency is tricky. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
 This is not extremely impressive, since to get $xyz$ we multiply by $xyz$, but the point is that this is possible in principle.
@@ -1087,12 +1087,12 @@ Given an~increasing circuit computing~$Ax$, one may transform it into a~range ci
 \end{lemma}
 
 \begin{proof}[Proof of Lemma~\ref{lem:dense_matrices}]
-Given $n$~ranges, pack them into a~matrix $A \in \{0,1\}^{n \times n}$ with at most $2n$ zeros. Take a size-$s$ circuit computing $Ax$ and convert it into a~binary circuit. Then, transform it into an~increasing circuit using Lemma~\ref{lemma:correctorder}. Finally, extract the answers to all the ranges from this circuit using Lemma~\ref{lemma:matrixranges}.
+Given $n$~ranges, pack them into a~matrix $A \in \{0,1\}^{n \times n}$ with at most $2n$ zeroes. Take a size-$s$ circuit computing $Ax$ and convert it into a~binary circuit. Then, transform it into an~increasing circuit using Lemma~\ref{lemma:correctorder}. Finally, extract the answers to all the ranges from this circuit using Lemma~\ref{lemma:matrixranges}.
 \end{proof}
 
-Note that the second statement of Theorem~\ref{thm:lowerbound} follows since the proof of Lemma~\ref{lem:dense_matrices} deals with matrices with exactly two zeros in every row.
+Note that the second statement of Theorem~\ref{thm:lowerbound} follows since the proof of Lemma~\ref{lem:dense_matrices} deals with matrices with exactly two zeroes in every row.
 %\begin{corollary}\label{cor:noncommutativetwo}
-%There exist matrices~$A \in \{0,1\}^{n \times n}$ with exactly two zeros in every row that requires circuits of size~$\Omega(n\alpha(n))$.
+%There exist matrices~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes in every row that requires circuits of size~$\Omega(n\alpha(n))$.
 %\end{corollary}
 
 \begin{proof}[Proof of Lemma~\ref{lemma:matrixranges}]
@@ -1253,8 +1253,8 @@ Now, observe that $\tup(G)$ has increased (by the first coordinate). There are n
 There are two natural problems left open.
 \begin{enumerate}
 \item Derandomize the $O(z)$ algorithm for the commutative case. For this, it suffices to design an $O(n)$ deterministic algorithm for the following problem: given a~list of positions
-of $n$~zeroes of an $n \times n$ 0/1-matrix with at most $\log n$ zeros in every row, permute its columns so that the total length of all segments of length at most $O(\log n)$ is $O(\frac{n}{\log n})$.
-\item Determine the asymptotic complexity of the linear operator in terms of the number of zeros in the non-commutative case.
+of $n$~zeroes of an $n \times n$ 0/1-matrix with at most $\log n$ zeroes in every row, permute its columns so that the total length of all segments of length at most $O(\log n)$ is $O(\frac{n}{\log n})$.
+\item Determine the asymptotic complexity of the linear operator in terms of the number of zeroes in the non-commutative case.
 \end{enumerate}
 
 
