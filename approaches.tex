@@ -28,7 +28,7 @@ Namely, we decompose the input range into blocks of size~$b$,
 use a~$(p_1(n), q_1(n))$-algorithm on top of blocks and
 a~$(p_2(n), q_2(n))$-algorithm within each block. The resulting algorithm then has type
 \[(O(n + p_1(n / b) + (n / b) \cdot p_2(b), O(q_1(n/b) + q_2(b))) \, .\]
-E.g., for the range minimum problem, combining the sparse table data structure ($p_1(n)=O(n\log n)$, $q_1(n)=O(1)$) with no preprocessing technique ($p_2(n)=O(1)$, $q_2=O(n)$) and block size $b=\log n$, gives an~$(O(n), O(\log n))$-algorithm. Another example: using sparse table in both cases (with block size $b=\log n$) gives an $(O(n\log\log n), O(1))$ algorithm. \todo{V: I got lost here. Sasha, can you please provide more details?~--- AK: poyasnil}
+E.g., for the range minimum problem, combining the sparse table data structure ($p_1(n)=O(n\log n)$, $q_1(n)=O(1)$) with no preprocessing technique ($p_2(n)=O(1)$, $q_2=O(n)$) and block size $b=\log n$, gives an~$(O(n), O(\log n))$-algorithm. Another example: using sparse table in both cases (with block size $b=\log n$) gives an $(O(n\log\log n), O(1))$ algorithm. 
 
 % reference: https://web.stanford.edu/class/cs166/lectures/00/Slides00.pdf
 
@@ -45,7 +45,7 @@ There is a~sequence of $(O(n), O(1))$-type algorithms designed specifically to t
 DBLP:journals/jal/BenderFPSS05,
 DBLP:conf/latin/BenderF00, 
 DBLP:conf/cpm/FischerH06}. Here, we briefly sketch the algorithm by Bender and Farach-Colton. 
-Its main idea is to first reduce RMQ to LCA (the least common ancestor problem). One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$\todo{V: which semiring are we considering here?~--- AK: since we are solving RMQ, it is $(\mathbb{R}, \min)$ or $(\mathbb{Z}, \min)$}. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
+Its main idea is to first reduce RMQ to LCA (the least common ancestor problem). One then reduces LCA back to RMQ and notices that the resulting instance of RMQ has a~convenient property: the difference between any two consecutive elements is $\pm 1$. This property allows to do the following trick: we precompute answers to all relatively short queries (this can be done even without knowing the input sequence because of the $\pm 1$ property); we also partition the input sequence into blocks and build a~segment tree out of these blocks.
 \end{description}
 
 %\todo[inline]{Sasha, mention block/hybrid approaches}
