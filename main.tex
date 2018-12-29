@@ -223,9 +223,9 @@ problem.
 
 \item[Graph algorithms.] Various graph path/reachability
 problems can be reduced naturally to matrix multiplication.
-E.g., the all-pairs shortest path problem (APSP) is reducible
-to min-plus matrix product whereas the number of triangles in an
-undirected graph can be found by computing the third power of the
+Two classic examples are: (i) the all-pairs shortest path problem (APSP) is
+reducible to min-plus matrix multiplication, and (ii) the number of triangles
+in an undirected graph can be found by computing the third power of its
 adjacency matrix.
 It is natural to ask what happens if
 a~graph has $O(n)$ edges or $O(n)$ anti-edges
@@ -237,36 +237,31 @@ for complements of sparse graphs ($O(n)$ anti-edges) is not. For
 example, it is easy to solve APSP and triangle counting on sparse graphs in
 time $O(n^2)$, but achieving the same time complexity for complements of sparse
 graphs is more complicated.
-Theorem~\ref{thm:upperbound} shows that the same effect
-occurs for matrices whereas
-Corollary~\ref{cor:matrixmultiplication} can be used to
-solve various problems on complements of
-sparse graphs in time $O(n^2)$.
+Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication} can be
+used to solve various problems on complements of sparse graphs in time $O(n^2)$.
 
 \item[Matrix multiplication over semirings.] Fast matrix
-multiplication methods rely essentially on the ring structure.
-The first such algorithm was given by~Strassen,
+multiplication methods rely essentially on the ring structure of the underlying
+set of elements. The first such algorithm was given by~Strassen,
 the current record upper bound is $O(n^{2.373})$~\cite{DBLP:conf/stoc/Williams12, DBLP:conf/issac/Gall14a}.
-At the same time, the lack of an inverse operation sometimes
-changes the complexity of algorithmic problems over algebraic
-structure drastically and even the complexity of standard
-computational tasks are not well understood over tropical and
+The removal of the inverse operation often drastically increases the complexity
+of algorithmic problems over algebraic structures, and even the complexity of
+standard computational tasks are not well understood over tropical and
 Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}).
 For various important semirings,
 we still do not know an $n^{3-\varepsilon}$ (for a~constant~$\varepsilon>0$) upper
-bound for matrix multiplication.
-E.g., the strongest known upper bound for min-plus matrix
-multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}.
+bound for matrix multiplication, e.g., the strongest known upper bound for
+min-plus matrix multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}.
 
 The interest in computations over such algebraic structures has
 recently grew substantially throughout the
 Computer Science community with the cases of Boolean and
-tropical semiring being of the main interest (see, for
+tropical semirings being of the main interest (see, for
 example,~\cite{Jukna16,Williams14,butkovic10systems}).
 From this perspective, the computation complexity over sparse and complements of
 sparse matrices is one of the most basic questions.
 Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}
-therefore give natural special
+therefore characterise natural special
 cases when efficient computations are possible.
 
 \item[Functional programming.]
