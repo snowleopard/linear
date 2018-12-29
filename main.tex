@@ -162,12 +162,13 @@ from vectors to matrices.
 \begin{restatable}{corollary}{matrixmultcor}
 \label{cor:matrixmultiplication}
 Let $(S, \circ)$~be a~commutative semigroup.
-There exists an~algorithm that takes as input 
+There exists a~randomized algorithm that takes as input 
 a~matrix $A \in \{0,1\}^{n \times n}$ with 
 $z=\Omega(n)$~zeros (given as a~sequence of positions 
 of $z$~zeroes)
 and a~matrix $B \in S^{n \times k}$ and computes
-the product $AB$ in time $O(zk)$.
+the product $AB$ in time $O(zk)$ with probability 
+at least $1-\frac{\operatorname{polylog}(n)}{n}$.
 \end{restatable}
 In particular, the product of a~matrix $A \in \{0,1\}^{n \times n}$
 with $O(n)$ zeroes and a~matrix $B \in S^{n \times n}$ can be computed in time $O(n^2)$.
@@ -826,6 +827,10 @@ of $n$~objects can be generated in time~$O(n)$~\cite[Algorithm~P (Shuffling)]{DB
 
 %The construction of the circuit above is not explicit, since the proof of Lemma~\ref{lemma:permute} is randomized. We outline an explicit construction of a circuit in Appendix~\ref{subsec:constructive}.
 
+\begin{proof}[Proof of Corollary~\ref{cor:matrixmultiplication}]
+One generates a~circuit guaranteed by Theorem~\ref{thm:upperbound} and uses it to multiply~$A$ by the $k$~columns of~$B$.
+\end{proof}
+
 
 \section{Non-commutative Case}\label{sec-non-commutative}
 
@@ -987,9 +992,9 @@ Note that for the proof of Theorem~\ref{thm:lowerbound} only one direction of Th
 Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing the following equivalences for any $s = \Omega(n)$.
 
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.95,transform shape]
 %\draw[help lines] (0,0) grid (16,6);
-\tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=30mm,above right,minimum height=20mm]
+\tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=36mm,above right,minimum height=20mm]
 
 \node[v] (a) at (0,0) {(commutative) range queries problem over $X_{sym}$ has $O(s)$ size circuits};
 
@@ -1241,6 +1246,14 @@ Observe, that the circuit still computes the outputs correctly. The changes are 
 
 Now, observe that $\tup(G)$ has increased (by the first coordinate). There are no new gates with smaller $\lef$. Among gates with the minimal $\lef$ there are no new gates with smaller $\gap$. Among gates with minimal $(\lef,\gap)$ all gates have larger $\num$ then $G$. Thus $\tup({\cal C})$ increased and we are done.
 \end{proof}
+
+\section{Open Problems}
+There are two natural problems left open.
+\begin{enumerate}
+\item Derandomize the $O(z)$ algorithm for the commutative case. For this, it suffices to design an $O(n)$ deterministic algorithm for the following problem: given a~list of positions
+of $n$~zeroes of an $n \times n$ 0/1-matrix with at most $\log n$ zeros in every row, permute its columns so that the total length of all segments of length at most $O(\log n)$ is $O(\frac{n}{\log n})$.
+\item Determine the asymptotic complexity of the linear operator in terms of the number of zeros in the non-commutative case.
+\end{enumerate}
 
 
 \section*{Acknowledgments}
