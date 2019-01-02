@@ -1,5 +1,9 @@
 # Complexity of Linear Operators
 
+The paper is currently under review. See the latest version here: https://arxiv.org/abs/1812.11772.
+
+## Abstract
+
 Let **A** be an **n×n** 0/1-matrix with **z** zeroes and **u** ones and **x** be
 an **n**-dimensional vector of formal variables over a semigroup **(S,∘)**.
 How many semigroup operations **∘** are required to compute the linear operator **Ax**?
