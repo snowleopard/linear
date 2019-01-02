@@ -1,8 +1,8 @@
 # Complexity of Linear Operators
 
 Let **A** be an **n×n** 0/1-matrix with **z** zeroes and **u** ones and **x** be
-an **n**-dimensional vector of formal variables over a semigroup **(S, ∘)**.
-How many semigroup operations are required to compute the linear operator **Ax**?
+an **n**-dimensional vector of formal variables over a semigroup **(S,∘)**.
+How many semigroup operations **∘** are required to compute the linear operator **Ax**?
 
 As we observe in this paper, this problem contains as a special case the well-known
 range queries problem and has a rich variety of applications in such areas as graph
