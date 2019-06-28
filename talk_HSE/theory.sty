@@ -1,0 +1,234 @@
+%\theoremstyle{plain}
+%\newtheorem{theorem}{Theorem}%[section]
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{claim}{Claim}[theorem]
+%\newtheorem{fact}[theorem]{Fact}
+%\newtheorem*{unnumberedtheorem}{}
+
+%\theoremstyle{definition}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem*{example}{Example}
+%\newtheorem{xca}[theorem]{Exercise}
+%\newtheorem{assumption}[theorem]{Assumption}
+%\newtheorem*{openproblem}{Open Problem}
+
+%\theoremstyle{remark}
+%\newtheorem*{remark}{Remark}
+%\newtheorem{conjecture}[theorem]{Conjecture}
+
+%\numberwithin{equation}{section}
+
+% explicit functions
+\newcommand{\CQ}{\mathrm{CQ}}
+\newcommand{\IP}{\mathrm{IP}}
+\newcommand{\GT}{\mathrm{GT}}
+\newcommand{\parity}{\mathrm{PARITY}}
+\newcommand{\disj}{\mathrm{DISJ}}
+%\newcommand{\maj}{\mathrm{MAJ}}
+\newcommand{\thresh}{\mathrm{THRESH}}
+%\newcommand{\AND}{\mathrm{AND}}
+%\newcommand{\NOT}{\mathrm{NOT}}
+%\newcommand{\OR}{\mathrm{OR}}
+\newcommand{\dmaj}{\mathrm{DISTRIB\mbox{-}MAJ}}
+
+% metrics, quantities
+\DeclareMathOperator{\cdistr}{D}
+\DeclareMathOperator{\dc}{dc}
+\DeclareMathOperator{\deci}{deci}
+\DeclareMathOperator{\disc}{disc}
+\DeclareMathOperator{\discprod}{disc^\times}
+\DeclareMathOperator{\distr}{D}
+\DeclareMathOperator{\Inf}{Inf}
+\DeclareMathOperator{\mc}{mc}
+\DeclareMathOperator{\rand}{R}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\rcc}{R}
+\DeclareMathOperator{\sqdim}{sqdim}
+\DeclareMathOperator{\sq}{sq}
+\DeclareMathOperator{\vcdim}{vcdim}
+\DeclareMathOperator{\weight}{weight}
+\newcommand{\randpub}{\mathrm{R}^{\mbox{\scriptsize \rm pub}}}
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\fmax}[1]{\mathbf{L_\infty}(#1)}
+\newcommand{\e}{\mathrm{e}}  % base of natural logarithm
+\DeclareMathOperator*{\Exp}{\mathbf{E}}
+\DeclareMathOperator*{\Prob}{\mathbf{Pr}}
+
+
+
+
+\newcommand{\define}{\;\;\stackrel{\text{\rm def}}{=}\;\;}
+\newcommand{\textdefine}{\stackrel{\text{\rm def}}{=}}
+\newcommand{\taglessdefine}{\;\;\stackrel{\phantom{\text{\rm def}}}{=}\;\;}
+%\newcommand{\define}{\rightleftharpoons}
+\newcommand{\moon}{\{-1,+1\}^n}
+\newcommand{\zoon}{\{0,1\}^n}
+\newcommand{\mo}{\{-1,+1\}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\zodn}{\{0,1,\dots,n\}}
+\newcommand{\ot}{\{1,2\}}
+\newcommand{\Cl}{\mathcal{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZP}{\mathbb{Z}^*}
+
+
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\Re}{\mathbb{R}}
+
+\long\def\symbolfootnote[#1]#2{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnote[#1]{#2}\endgroup}
+
+
+\newenvironment{restatetheorem}[1]{\begin{trivlist}\item[\hskip
+\labelsep{\bf Theorem~\ref{#1}}  {(Restated from p.~\pageref{#1}).}]\it}
+{\end{trivlist}}
+
+\newenvironment{restatelemma}[1]{\begin{trivlist}\item[\hskip
+\labelsep{\bf Lemma~\ref{#1}}  {(Restated from p.~\pageref{#1}).}]\it}
+{\end{trivlist}}
+
+\newenvironment{restatecorollary}[1]{\begin{trivlist}\item[\hskip
+\labelsep{\bf Corollary~\ref{#1}}  {(Restated from p.~\pageref{#1}).}]\it}
+{\end{trivlist}}
+
+
+\newenvironment{restateproposition}[1]{\begin{trivlist}\item[\hskip
+\labelsep{\bf Proposition~\ref{#1}}  {(Restated from p.~\pageref{#1}).}]\it}
+{\end{trivlist}}
+
+
+\newcommand{\tagover}[2]{\;\;\overset{\text{\rm #1}}{#2}\;\;}
+
+\newcommand{\K}{\mathsf{K}}
+\newcommand{\mK}{\mathsf{mK}}
+\newcommand{\HGPp}{\mathsf{HGP}^{path}}
+\newcommand{\HGPt}{\mathsf{HGP}^{tree}}
+\newcommand{\HGP}{\mathsf{HGP}}
+\newcommand{\NBP}{\mathsf{NBP}}
+\newcommand{\coNBP}{\mathsf{coNBP}}
+\newcommand{\mNBP}{\mathsf{mNBP}}
+\renewcommand{\P}{\mathsf{P}}
+\newcommand{\mP}{\mathsf{mP}}
+\newcommand{\NP}{\mathsf{NP}}
+\newcommand{\mNP}{\mathsf{mNP}}
+\newcommand{\NL}{\mathsf{NL}}
+\newcommand{\coNP}{\mathsf{coNP}}
+\newcommand{\coNL}{\mathsf{coNL}}
+\newcommand{\abold}{\mathbf{a}}
+\newcommand{\ee}{\mathbf{e}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+%\renewcommand{\AA}{\mathcal{A}}
+\newcommand{\BB}{\mathcal{B}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\VV}{\mathcal{V}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\pub}{_{\rm {pub}}}
+\newcommand{\priv}{_{\rm {priv}}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\tr}{^{\sf T}}
+\newcommand{\F}{_\mathrm{F}}
+\newcommand{\ghr}{\mathrm{GHR}}
+\newcommand{\exactl}{\mathrm{EXACT}_\ell}
+\newcommand{\exact}{\mathrm{EXACT}}
+\newcommand{\eps}{\epsilon}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Conv}{Conv}
+\DeclareMathOperator{\signdeg}{\deg_{\pm}}
+\DeclareMathOperator{\adeg}{\deg_{1/3}}
+\DeclareMathOperator{\degeps}{\deg_{\epsilon}}
+\newcommand{\berr}{\epsilon^*}  % best error
+\newcommand{\morth}{\gamma^*}   % modulus of orthogonality
+\newcommand{\qcc}{Q_{1/3}^*}   % quantum communication complexity
+%\newcommand{\opt}{\text{\sf opt}}
+\newcommand{\final}{\text{\sf Final}}
+\newcommand{\init}{\text{\sf Initial}}
+\newcommand{\cpaturi}{c_{\text{\rm Paturi}}}
+\newcommand{\Cpaturi}{C_{\text{\rm Paturi}}}
+\newcommand{\wt}{{\text{\rm weight}}}
+\newcommand{\WW}{\mathcal{W}}
+\newcommand{\add}[1]{{\color{blue} #1}}
+%\newcommand{\add}[1]{#1}
+\newcommand{\onehalf}{{\textstyle\frac{1}{2}}}
+\newcommand{\onefourth}{{\textstyle\frac{1}{4}}}
+\newcommand{\threefourths}{{\textstyle\frac{3}{4}}}
+\newcommand{\oneeighth}{{\textstyle\frac{1}{8}}}
+\newcommand{\onethird}{{\textstyle\frac{1}{3}}}
+\newcommand{\mip}{\mathrm{MP}}
+\newcommand{\symm}{_{\text{\rm sym}}}
+\DeclareMathOperator{\GL}{\sf GL}
+\DeclareMathOperator{\GF}{GF}
+\newcommand{\Abold}{\mathbf{A}}
+\newcommand{\sigmabold}{\mathbf{\sigma}}
+\DeclareMathOperator{\diag}{diag}
+
+\DeclareMathOperator{\Dom}{\sf Dom}
+
+\newcommand{\TC}{\mathsf{TC}}
+
+\newcommand{\AC}{\mathsf{AC}}
+\newcommand{\mAC}{\mathsf{mAC}}
+\newcommand{\NC}{\mathsf{NC}}
+\newcommand{\mNC}{\mathsf{mNC}}
+\newcommand{\SAC}{\mathsf{SAC}}
+\newcommand{\mSAC}{\mathsf{mSAC}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\PP}{\mathsf{PP}}
+\newcommand{\UPP}{\mathsf{UPP}}
+\DeclareMathOperator{\srank}{sign-rank}
+\newcommand{\polylog}{\mathsf{polylog}}
+\newcommand{\poly}{\text{poly}}
+\newcommand{\mook}{\moo^k}
+\newcommand{\moom}{\moo^m}
+\newcommand{\zook}{\zoo^k}
+\newcommand{\zoom}{\zoo^m}
+\newcommand{\onetom}{\{1,\dots,m\}}
+\newcommand{\oneton}{\{1,\dots,n\}}
+\newcommand{\degthr}{\mathrm{deg}_\pm}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\modd}{mod}
+
+\newcommand{\maxdeg}{\mathrm{max\-deg}}
+\newcommand{\sumdeg}{\mathrm{sum\-deg}}
+
+
+\newcommand{\NOT}{\ensuremath{{\rm NOT}}}
+\newcommand{\AND}{\ensuremath{{\rm AND}}}
+\newcommand{\OR}{\ensuremath{{\rm OR}}}
+\newcommand{\MOD}{\ensuremath{{\rm MOD}}}
+\newcommand{\MAJ}{\ensuremath{{\rm MAJ}}}
+\newcommand{\THR}{\ensuremath{{\rm THR}}}
+\newcommand{\EMAJ}{\ensuremath{{\rm EMAJ}}}
+\newcommand{\ETHR}{\ensuremath{{\rm ETHR}}}
+\newcommand{\SYM}{\ensuremath{{\rm SYM}}}
+\newcommand{\ANY}{\ensuremath{{\rm ANY}}}
+\newcommand{\XOR}{\ensuremath{{\rm XOR}}}
+\newcommand{\SUM}{\ensuremath{{\rm SUM}}}
+\newcommand{\LIN}{\ensuremath{{\rm LIN}}}
+
+\newcommand{\cAND}{\ensuremath{{\rm \sf AND}}}
+\newcommand{\cOR}{\ensuremath{{\rm \sf OR}}}
+\newcommand{\cNOT}{\ensuremath{{\rm \sf NOT}}}
+\newcommand{\cMOD}{\ensuremath{{\rm \sf MOD}}}
+\newcommand{\cMAJ}{\ensuremath{{\rm \sf MAJ}}}
+\newcommand{\cTHR}{\ensuremath{{\rm \sf THR}}}
+\newcommand{\cEMAJ}{\ensuremath{{\rm \sf EMAJ}}}
+\newcommand{\cETHR}{\ensuremath{{\rm \sf ETHR}}}
+\newcommand{\cSYM}{\ensuremath{{\rm \sf SYM}}}
+\newcommand{\cANY}{\ensuremath{{\rm \sf ANY}}}
+\newcommand{\cLIN}{\ensuremath{{\rm \sf LIN}}}
+\newcommand{\cXOR}{\ensuremath{{\rm \sf XOR}}}
+\newcommand{\cSUM}{\ensuremath{{\rm \sf SUM}}}
+
+\newcommand{\esgn}{\ensuremath{\operatorname{esgn}}}
+
+\newcommand{\inter}[1]{\accentset{\circ}{#1}}
+

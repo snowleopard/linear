@@ -1,0 +1,40 @@
+\section{Deterministic Algorithm in the Proof of Lemma~\ref{lemma:permute}} \label{sec:deterministic}
+
+%\item[Deterministic algorithm.]
+It will prove convenient to assume that $A$ is a~$t \times t$ matrix with exactly~$t$ zeros with at most $\log t$ zeroes in every row. For this, we let $t=\max\{n, z\}$ and add a~number of
+all-ones rows and columns if needed. This enlargement of the matrix
+does not make the computation simpler: additional rows mean additional outputs that can be ignored and additional columns correspond to redundant variables that can be removed (substituted by~0) once the circuit is constructed. Below, we show how to deterministically construct a~circuit of size $O(t)$ for~$A$.
+For this, we present a~greedy algorithm for permuting the columns
+of~$A$ in such a~way that the total length of all short segments
+is $O(\log^4n)$. This will follow from the fact that all short
+ranges in the resulting matrix~$A$ will lie within the last $O(\log^2 t)$ columns.
+
+We construct the required permutation of columns step by step by a~greedy algorithm. After step~$r$ we will have a~sequence of the first~$r$ columns chosen and we will maintain the following properties:
+\begin{itemize}
+\item For each $i \leq r$, the first $i$~columns contain at least $i$ zeros.
+\item There are no short ranges within the first~$r$ rows (apart from those, that can be extended by adding columns on the right).
+\end{itemize}
+The process will work for at least $t - \log^2 t$ steps, so short ranges are only possible within the last $\log^2 t + \log t = O(\log^2 t)$ columns.
+
+On the first step, we pick any column that has a zero in it. Suppose
+we have reached step~$r$. We explain how to add a~column on
+step $r+1$. Consider the last $\log t$ columns in the currently
+constructed sequence. Consider the set $R$~of rows that have
+zeros in them. These are exactly the rows that constrain our
+choice for the next column. There are two cases.
+\begin{enumerate}
+\item There are at most $\log t$ rows in~$R$. Then, for each row in~$R$, there are at most $\log t$ columns that have zeros in this row. In total, there are at most $\log^2 t$ columns that have zeros in some row of~$R$. Denote the set of this columns by~$F$. If there is an unpicked column outside of~$F$ that has at least one zero in it, we add this column to our sequence. Clearly, both properties are satisfied and the step is over. Otherwise, all other columns contain only ones, so we add all of them to our sequence, place the columns from~$F$ to the end of the sequence, and the whole permutation is constructed.
+\item There are more that $\log t$ rows in~$R$. This means that the last $\log t$ columns of the current sequence contain more than $\log t$ zeros. By the first property, the first $r - \log t$ columns contain at least $r - \log t$ zeros. So overall, in the current sequence of~$r$ columns there are more than $r$~zeros. Thus, in the remaining $t-r$ columns there are less then $t-r$ zeros and there is a~column without zeros. We add this column to the sequence.
+\end{enumerate}
+
+
+To implement this algorithm in time $O(t\log^{4}t)$, we store, for each column~$j$ of~$A$, a~sorted array of rows~$i$ such that $A_{ij}=0$. Since the total number of zeros~$z$ is at most~$t\log t$, these arrays can be computed in time $O(t\log^2t)$: if $c_1, \dotsc, c_t$ are the numbers of zeros in the columns, then sorting the corresponding arrays takes time
+\[\sum_{i=1}^{t}c_i \log c_i \le \log(t \log t) \cdot \sum_{i=1}^{t}c_i \le \log(t \log t) \cdot t\log t \, .\]
+
+At every iteration, we need to update the set~$R$. For this, we need to remove some rows from it (from the column that no longer belongs to the stripe of columns of width $\log t$) and to add the rows of the newly added column. Since the size of~$|R|$ is always at most~$t$ and the total number of zeros is $z \le t\log t$, the total running time for all such updates is
+$O(t\log^2t)$ (if one uses, e.g., a~balanced binary search tree for
+representing~$R$).
+
+If $|R| > \log t$, one just takes an all-one column (all such columns
+can be stored in a~list). If $|R| \le \log t$, we need to find a~column outside of the set~$F$. For this, we just scan the list of the yet unpicked columns. For each column, we first check whether it belongs to the set~$F$. This can be checked in time $O(\log^2t)$: for every row in~$|R|$, one checks whether this row belongs to the sorted array of the considered column using binary search in time
+$O(\log t)$. Since $|F| \le \log^2t$, we will find a~column outside of~$F$ in time~$O(\log^4 t)$.

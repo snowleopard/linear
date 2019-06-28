@@ -1,0 +1,788 @@
+\documentclass{beamer}
+%\includeonlyframes{ew}
+\usepackage{graphicx, amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{kbordermatrix}
+
+\usetikzlibrary{shapes.arrows,chains,decorations.pathreplacing}
+\usetikzlibrary{arrows, decorations.markings, shapes}
+\usetikzlibrary{positioning}
+
+\usepackage{theory}
+
+
+
+%\usepackage{easybmat}
+\usepackage{blkarray}
+
+\newtheorem{hypothesis}{Hypothesis}
+%\newcommand{\poly}{\text{poly}}
+
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+
+%\usepackage[T2A]{fontenc}
+%\usepackage[cp1251]{inputenc}
+%%\usepackage[koi8-r]{inputenc}
+%\usepackage[russian]{babel}
+
+\colorlet{dark}{red!85!blue!60!black}
+\newcommand{\emp}[1]{{\bf\color{dark}#1}}
+
+\newtheorem{observation}[theorem]{Observation}
+%\newtheorem{problem}[theorem]{Open Problem}
+
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+\def\mpfile#1#2{\includegraphics{#1-#2.mps}}
+
+\author{Vladimir V. Podolskii\inst{1}\\[3mm] \small joint work with Alexander Kulikov, Ivan Mikhailin, Andrey Mokhov}
+
+
+
+\institute{
+ \inst{1} \  Steklov\ Mathematical\ Institute, Moscow\\
+ Higher School of Economics, Moscow\\
+}
+
+\date{HSE Open Lectures}
+
+\title{Complexity of Dense Linear Operators}
+
+\newcommand{\newfontobj}[2]{
+  \newcommand{#1}[1]{
+    \expandafter\def\csname##1\endcsname{\ensuremath{#2{##1}}}}}
+
+%\newfontobj{\class}{\mathrm}
+%\class{P} \class{FP} \class{UP} \class{FewP}
+%\class{NP}\class{coNP} \class{SAT} \class{coNP} \class{PSPACE}
+%\class{EXP} \class{QBF} \class{TFNP} \class{TF} \class{F}
+%\class{PH} \class{AND} \class{XOR} \class{PARITY} \class{OR}
+%\class{MAJ} \class{GT} \class{PARITY}
+
+\newcommand{\PRIMES}{\textsc{PRIMES}}
+
+\newcommand{\bb}[1]{\mathbb{#1}}
+%\newcommand{\zo}{\{0,1\}}
+
+\newcommand{\vertex}{\textsc{VertexCover}}
+\newcommand{\tropdim}{\textsc{TropDim}}
+\newcommand{\tropsolv}{\textsc{TropSolv}}
+\newcommand{\tropimpl}{\textsc{TropImpl}}
+\newcommand{\tropequiv}{\textsc{TropEquiv}}
+
+\newcommand{\para}[1]{{\color{blue}#1}}
+
+\begin{document}
+
+\tikzstyle{mbrace} = [decorate,decoration={brace,amplitude=5pt}]
+
+
+\begin{frame}
+
+\titlepage
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Setting}
+
+Consider a Boolean matrix $A \in \{0,1\}^{n\times n}$\\
+Consider variables $x = (x_1,\ldots, x_n)$ over $\{0,1\}$
+
+\medskip
+We want to compute a Boolean linear operator $A x$
+
+\medskip
+
+\[
+  A =\begin{bmatrix}
+    1 & 0 & 1 & 0 \\
+    1 & 1 & 0 & 0 \\
+    0 & 1 & 1 & 1 \\
+    1 & 1 & 1 & 1 \\
+  \end{bmatrix}
+ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ax = \left(\begin{array}{@{}l@{}}
+    x_1 \vee x_3 \\
+    x_1 \vee x_2 \\
+    x_2 \vee x_3 \vee x_4 \\
+    x_1 \vee x_2 \vee x_3 \vee x_4\\
+  \end{array}\right)
+  \]
+
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Model}
+
+\begin{itemize}
+\item The computation is a Boolean circuit consisting of $\OR$ gates
+\item We start with variables $x_1,\ldots, x_n$
+\item In one step we can compute OR of two previously computed expressions
+\item Want to compute all the outputs and minimize the number of steps
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Example}
+
+\[
+  A =\begin{bmatrix}
+    1 & 0 & 1 & 0 \\
+    1 & 1 & 0 & 0 \\
+    0 & 1 & 1 & 1 \\
+    1 & 1 & 1 & 1 \\
+  \end{bmatrix}
+ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \begin{array}{l}
+    x_1 \vee x_3 \\
+    x_1 \vee x_2 \\
+    x_2 \vee x_3 \vee x_4 \\
+    x_1 \vee x_2 \vee x_3 \vee x_4\\
+  \end{array}
+  \]
+
+\medskip
+Computation:
+
+$x_1 \vee x_3$ --- output\\
+$x_1 \vee x_2$ --- output\\
+$x_3 \vee x_4$\\
+$x_2 \vee (x_3 \vee x_4)$ --- output\\
+$x_1 \vee (x_2 \vee x_3 \vee x_4)$ --- output
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Basic facts}
+
+\begin{itemize}%[<+->]
+\item One of the simplest Boolean circuit complexity models, studied since 50's
+\item Trivial upper bound: $O(n^2)$
+\item Counting lower bound: $\Omega(n^2/\log n)$
+\item Non-trivial upper bound: $O(n^2/\log n)$ (Lupanov '56)
+\item The best explicit lower bound: $\Omega(n^{2 - o(1)})$ (Nechiporuk '70)
+\end{itemize}
+
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{General setting}
+
+Consider a Boolean matrix $A \in \{0,1\}^{n\times n}$\\
+Consider variables $x = (x_1,\ldots, x_n)$ over some semigroup $(S, \circ)$.
+
+\medskip
+We want to compute a linear operator $A x$.
+
+\medskip
+
+\[
+  A =\begin{bmatrix}
+    1 & 0 & 1 & 0 \\
+    1 & 1 & 0 & 0 \\
+    0 & 1 & 1 & 1 \\
+    1 & 1 & 1 & 1 \\
+  \end{bmatrix}
+ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ax = \left(\begin{array}{@{}l@{}}
+    x_1 \circ x_3 \\
+    x_1 \circ x_2 \\
+    x_2 \circ x_3 \circ x_4 \\
+    x_1 \circ x_2 \circ x_3 \circ x_4\\
+  \end{array}\right)
+  \]
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Some semigroups}
+
+\begin{itemize}%[<+->]
+\item Boolean semigroup: $(\{0,1\}, \vee)$
+\item Integers with addition: $(\mathbb{Z}, +)$
+\item $\{0,1\}$ with addition: $(\{0,1\}, \oplus)$
+\item Tropical semigroup: $(\mathbb{Z}, \min)$
+
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The Problem}
+
+\para{Problem:} Suppose $A \in \{0,1\}^{n\times n}$ is very dense, that is $A$ has $O(n)$ zeros. How hard is it to compute $Ax$?
+
+\pause
+\medskip
+Simple observations:
+\begin{itemize}[<+->]
+\item If instead we consider $A$ containing $O(n)$ ones, the complexity is trivially $O(n)$
+\item If $(S,\circ)$ has an inverse operation (is a group), the complexity is trivially $O(n)$
+\end{itemize}
+
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Motivation}
+
+\begin{itemize}[<+->]
+\item Want to understand the structure of semigroups that are not groups
+\item Important examples: Boolean semigroup and tropical semigroup
+\item Famous problem of similar flavor: matrix multiplication \\
+Given two matrices $A$, $B$, how many operations are needed to compute $A\cdot B$?
+\item Non-trivial upper bound over integers: $O(n^{2.373})$ (V.~Williams '12)
+\item Best known upper bound over tropical semiring is $O(n^3/e^{\sqrt{\log n}})$ (R.~Williams '14)
+\item Other motivation: connection to range minimum query problem (will see later)
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Main results}
+
+\begin{theorem}
+If $(S,\circ)$ is a commutative semigroup, then $Ax$ can be computed in $O(n)$ operations for dense $A$
+\end{theorem}
+
+\pause
+
+\begin{theorem}
+If $(S,\circ)$ is strongly non-commutative semigroup, then the maximal complexity of $Ax$ is $\Theta(n\alpha(n))$ operations for dense $A$
+\end{theorem}
+
+\medskip
+Here $\alpha(n)$ is the inverse Ackermann function
+
+\pause
+\medskip
+$\alpha(n)$ growth is extremely slow
+
+\medskip
+For all practical needs we can assume $\alpha(n)\leq 4$
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Plan}
+
+\begin{itemize}
+\item Upper bound + connection to RMQ
+\item A bit on lower bounds (+ connection to RMQ)
+\end{itemize}
+
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Upper bound}
+
+\begin{theorem}[restated]
+If $(S,\circ)$ is a commutative semiring, then $Ax$ can be computed is $\Theta(n)$ for dense $A$
+\end{theorem}
+
+
+\begin{itemize}
+\item Let's concentrate on Boolean case: $(\{0,1\},\vee)$
+\item The general case is the same
+\item So, $A \in \{0,1\}^{n\times n}$ has $O(n)$ zeros, we want to compute $Ax$ using $O(n)$ operations
+\end{itemize}
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Warm Up}
+
+Consider
+\[
+ A =\begin{bmatrix}
+    0 & 1 & 1 & 1 & 1 & 1 \\
+    1 & 0 & 1 & 1 & 1 & 1 \\
+    1 & 1 & 0 & 1 & 1 & 1 \\
+    1 & 1 & 1 & 0 & 1 & 1 \\
+    1 & 1 & 1 & 1 & 0 & 1 \\
+    1 & 1 & 1 & 1 & 1 & 0 \\
+    \end{bmatrix}
+\]
+
+How would we compute $Ax$?
+
+\pause
+\medskip
+Compute:
+\vspace{-3mm}
+\begin{equation*}
+\begin{array}{l}
+\\
+\text{all prefixes}\\
+x_1\\
+x_1 \vee x_2\\
+x_1 \vee x_2 \vee x_3\\
+x_1 \vee x_2 \vee x_3 \vee x_4\\
+x_1 \vee x_2 \vee x_3 \vee x_4 \vee x_5\\
+\end{array}\ 
+\only<4->{\begin{array}{c}
+\text{match}\\
+\\
+\leftrightarrow\\
+\leftrightarrow\\
+\leftrightarrow\\
+\leftrightarrow\\
+\\
+\end{array}\ }
+\only<-3>{\phantom{\begin{array}{c}
+\text{match}\\
+\\
+\leftrightarrow\\
+\leftrightarrow\\
+\leftrightarrow\\
+\leftrightarrow\\
+\\
+\end{array}\ }}
+\only<3->{\begin{array}{r}
+\\
+x_2 \vee x_3 \vee x_4 \vee x_5 \vee x_6\\
+x_3 \vee x_4 \vee x_5 \vee x_6\\
+x_4 \vee x_5 \vee x_6\\
+x_5 \vee x_6\\
+x_6\\
+\text{all suffixes}\\
+\end{array}}
+\only<-2>{\phantom{\begin{array}{r}
+\\
+x_2 \vee x_3 \vee x_4 \vee x_5 \vee x_6\\
+x_3 \vee x_4 \vee x_5 \vee x_6\\
+x_4 \vee x_5 \vee x_6\\
+x_5 \vee x_6\\
+x_6\\
+\text{all suffixes}\\
+\end{array}}}
+\end{equation*}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Warm Up-2}
+
+Suppose $A \in \{0,1\}^{n\times n}$ has 2 zeros in each row. How would we compute $Ax$?
+
+\pause
+\medskip
+Permute columns of $A$ randomly and cut in two halves.
+
+\begin{equation*}\only<-2>{\left[
+\begin{array}{@{}ccc|ccc@{}}
+     & 0 &  &  & 0 &  \\
+    0 &  &  &  &  & 0 \\
+     &  & 0 & 0 &  &  \\
+     &  &  & 0 & 0 &  \\
+     &  &  &  & 0 & 0 \\
+     0 & 0 &  &  &  &  \\
+    \end{array}
+    \right]}
+\only<3->{
+\left[
+\begin{array}{@{}ccc|ccc@{}}
+     & \color{red}0 &  &  & \color{red}0 &  \\
+    \color{red}0 &  &  &  &  & \color{red}0 \\
+     &  & \color{red}0 & \color{red}0 &  &  \\\hline
+     &  &  & 0 & 0 &  \\
+     &  &  &  & 0 & 0 \\
+     0 & 0 &  &  &  &  \\
+    \end{array}
+    \right]
+}
+\end{equation*}
+
+\begin{overlayarea}{110mm}{25mm}
+\only<3>{
+With positive probability in at least half of the rows the zeros will be splitted. 
+
+Compute them by the previous algorithm, compute the rest recursively.
+}
+\only<4->{
+We get the recurrence
+$$
+T(n) = Cn + T(n/2),
+$$
+where $T(n)$ is the complexity for matrices with $n$ rows
+}
+
+\end{overlayarea}
+
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Towards the General Case}
+
+How would we solve the general case?
+
+\medskip
+First idea: Connection to Range Minimum Query problem (RMQ)
+
+\medskip
+This is the standard setting in theory of algorithms
+
+\medskip
+We are given an array of numbers $x_1,\ldots, x_n$. We want a data structure to answer queries of the form 
+$$
+\min\{x_i \mid l\leq i \leq r\}=\ ?
+$$ 
+for integer $l$ and $r$.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Reduction to RMQ}
+
+Consider
+\[
+ A =\begin{bmatrix}
+    1 & 0 & 1 & 1 & 0 & 1 \\
+    1 & 1 & 0 & 1 & 1 & 1 \\
+    1 & 0 & 1 & 1 & 1 & 0 \\
+    1 & 1 & 1 & 0 & 1 & 1 \\
+    0 & 1 & 1 & 1 & 1 & 1 \\
+    1 & 0 & 0 & 1 & 1 & 1 \\
+    \end{bmatrix}
+\]
+
+Split each row into intervals
+\[
+\begin{array}{lll}
+    x_1 & \phantom{0}x_3 \vee x_4 & \phantom{0}x_6 \\
+    x_1 \vee x_2& \phantom{0}x_4\vee x_5 \vee x_6 & \\
+    x_1& \phantom{0}x_3\vee x_4 \vee x_5 &\\
+    x_1\vee x_2 \vee x_3& \phantom{0}x_5 \vee x_6 &\\
+    x_2\vee x_3 \vee x_4\vee x_5 \vee x_6 &&\\
+    x_1& \phantom{0}x_4 \vee x_5\vee x_6 &\\
+    \end{array}
+\]
+
+There are $O(n)$ intervals in total, so we reduced our problem to the offline version of RMQ (intervals are given in advance)
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Complexity of RMQ}
+
+Unfortunately, best constructions for RMQ give only $O(n \alpha(n))$ complexity in our model, where $\alpha(n)$ is an inverse Ackermann function
+
+
+\pause
+\medskip
+Moreover, the following is true
+\begin{theorem}[Chazelle, Rozenberg '91]
+There are range matrices $A\in \{0,1\}^{n\times n}$ with the complexity $\Omega(n \alpha(n))$
+\end{theorem}
+
+So, the reduction to RMQ is not enough
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Idea}
+
+
+\begin{equation*}\only<-2>{A=\left[
+\begin{array}{@{}cccccc@{}}
+     \ast & \ast  & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+    \end{array}
+    \right]}
+\only<3->{
+A=\left[
+\begin{array}{@{}ccc|ccc@{}}
+     \ast & \ast  & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+    \end{array}
+    \right]
+}
+\end{equation*}
+
+There is a simple construction with complexity $O(n \log n)$
+
+\pause
+
+\begin{itemize}[<+->]
+\item Compute all prefixes and suffixes
+\item Split the matrix in two halves vertically
+\item Repeat in both halves recursively
+\item Now we can compute any range in just one operation, just pick the first vertical line that crosses it
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Next Idea}
+
+\begin{lemma}
+Suppose $A \in \{0,1\}^{n\times n}$ has $O(n)$ zeros and each range is of length at least $\log n$. Then we can compute $Ax$ in $O(n)$ operations
+\end{lemma}
+
+\begin{itemize}
+\item Split into blocks of size $\log n$
+\item Each range intersects block boundary!
+\item Compute prefixes and suffixes in each block in $O(n)$ operations
+\item Apply the previous idea on top of blocks
+\item Now for each range we can compute its `complete' part in one operation and add `incomplete' prefix and suffix in two more operations
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Yet Another Next Idea}
+
+\begin{lemma}
+Suppose $A \in \{0,1\}^{n\times n}$ has $O(n)$ zeros and at most $\log n$ zeros in each row. Then we can compute it in $O(n)$ operations
+\end{lemma}
+
+\begin{itemize}
+\item Permute blocks randomly
+\item With high probability most zeros will be far from each other
+\item Thus most ranges are long
+\item Compute them by the previous idea
+\item Compute all short ranges by brute force (there are few of them)
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Final Idea}
+
+\begin{theorem}
+Suppose $A \in \{0,1\}^{n\times n}$ has complexity $s$. Then $A^T$ also has complexity $s$
+\end{theorem}
+
+
+\pause
+\begin{center}
+\begin{tikzpicture}
+%\draw[help lines] (0,0) grid (10,6);
+\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/3/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
+  \node[inner sep=0mm,circle,draw,minimum size=6mm] (\n) at (\x,\y) {$\t$};
+\foreach \s/\t in {x2/a, x3/a, x4/a, x1/b, a/b, x5/c, a/c, x4/d, x5/d}
+  \draw[->] (\s) -- (\t);
+
+\node at (8,3) {$A=\begin{bmatrix}1&1&1&1&0\\0&1&1&1&1\\0&0&0&1&1\end{bmatrix}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/3/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
+  \node[inner sep=0mm,circle,draw,minimum size=6mm] (\n) at (\x,\y) {$\t$};
+\foreach \s/\t in {x2/a, x3/a, x4/a, x1/b, a/b, x5/c, a/c, x4/d, x5/d}
+  \draw[<-] (\s) -- (\t);
+
+\node at (8,3) {$A^T=\begin{bmatrix}1&0&0\\1&1&0\\1&1&0\\1&1&1\\0&1&1\end{bmatrix}$};
+\end{tikzpicture}
+\end{center}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{So, What Do We Have?}
+
+\begin{itemize}
+\item Can compute $Ax$ in $O(n\log n)$ operations
+\item If each row has at most $\log n$ zeros, can compute $Ax$ in $O(n)$ opetations
+\item $Ax$ and $A^Ty$ have the same complexity
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Completing the Proof}
+
+\begin{equation*}\only<-1>{A=\left[
+\begin{array}{@{}cccccc@{}}
+     \ast & \ast  & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+    \end{array}
+    \right]}
+\only<2->{
+A=\left[
+\begin{array}{@{}cccccc@{}}
+     \ast & \ast  & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \hline
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+     \ast & \ast & \ast  & \ast  & \ast  & \ast  \\
+    \end{array}
+    \right]
+}
+\end{equation*}
+
+Suppose we have $A$ with $O(n)$ zeros
+
+\pause
+\begin{itemize}[<+->]
+\item Split rows in two parts: with more than $\log n$ zeros and with at most $\log n$ zeros
+\item We know how to compute the second part
+\item The first part has at most $n/\log n$ rows
+\item Transpose the first part
+\item The transposition is computable in $O(n)$ operations
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Non-commutative Case}
+
+Recall, that we heavily used commutativity even for the case when $A$ has two zeros in each row: permutation of columns
+
+\pause
+\medskip
+We next show that this is unavoidable:
+
+\medskip
+\begin{theorem}
+If $(S,\circ)$ is strongly non-commutative semiring, then there is $A$ with at most 2 zeros in each row such that the complexity of $Ax$ is $\Omega(n\alpha(n))$
+\end{theorem}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Examples}
+
+\begin{itemize}[<+->]
+\item Recall Boolean case. There are equivalences on variables:
+$$
+x_1 \vee x_1 = x_1, \ \ \ \ x_1 \vee x_2 = x_2 \vee x_1
+$$
+\item The first is idempotency, the second is commutativity
+\item The first example for us is free semigroup: no equivalences on variables
+\item The second example is free idempotent semigroup; the only equivalences are
+$$
+x \circ x = x
+$$
+\end{itemize}
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Idempotent Case}
+
+We prove the following problem equivalences 
+
+\begin{center}
+\begin{tikzpicture}[xscale=0.65,line width=1pt]
+%\draw[help lines] (0,0) grid (16,6);
+\tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=26mm,above right,minimum height=25mm]
+
+\node[v] (a) at (0,0) {commutative RMQ has $O(s)$ complexity};
+
+\node[v] (b) at (6.5,0) {non-commutative RMQ has $O(s)$ complexity};
+
+\node[v] (c) at (13,0) {non-commutative dense operators $Ax$ have $O(s)$ complexity};
+
+\path (a.10) edge[->] node[above=1cm] {complicated} (b.170);
+\path (b.190) edge[->] node[below=1cm] {special case} (a.-10);
+\path (b.10) edge[->] node[above=1cm] {straightforward} (c.170);
+\path (c.190) edge[->] node[below=1cm] {complicated} (b.-10);
+%\node (l1) at (6.5,0) {special case};
+\end{tikzpicture}
+\end{center}
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Non-idempotent Case}
+
+\begin{itemize}
+\item Suppose we have a small circuit
+\item Just factorize the whole computation by idempotency relations
+\item Now we have a small circuit for idempotent case
+\item This is a contradiction
+\item Basically, non-idempotent case is harder
+\end{itemize}
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Open problem}
+
+\begin{problem}[Jukna '19]
+Consider $A \in \{0,1\}^{n\times n}$, denote by $\overline{A}$ the bit-wise negation of $A$. How large can
+$$
+\frac{Complexity(\overline{A}x)}{Complexity(Ax)}
+$$ 
+be (over Boolean semigroup)?
+\end{problem}
+
+\pause
+\medskip
+Our result rules out the possibility to achieve gap with sparse matrix
+
+\pause
+\medskip
+Thank you for attention!
+
+\end{frame}
+
+\end{document}
