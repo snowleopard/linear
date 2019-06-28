@@ -57,7 +57,7 @@
 
 \authorrunning{A. Kulikov, I. Mikhailin, A. Mokhov, V. Podolskii}%TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
 
-\Copyright{Alexander Kulikov, Ivan Mikhailin, Andrey Mokhov and Vladimir V. Podolskii}%TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+\Copyright{Alexander~S. Kulikov, Ivan Mikhailin, Andrey Mokhov and Vladimir V. Podolskii}%TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
 \ccsdesc[100]{Theory of computation~Streaming, sublinear and near linear time algorithms}
 %\ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
@@ -431,10 +431,10 @@ over inputs $\{x_1, \dotsc, x_5\}$ or, equivalently, the
 linear operator $Ax$ where the matrix $A$~is given below.
 
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[yscale=0.5]
 %\draw[help lines] (0,0) grid (10,6);
-\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/3/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
-  \node[inner sep=0mm,circle,draw,minimum size=6mm] (\n) at (\x,\y) {$\t$};
+\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/2.5/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
+  \node[inner sep=0mm,circle,draw,minimum size=5mm] (\n) at (\x,\y) {$\t$};
 \foreach \s/\t in {x2/a, x3/a, x4/a, x1/b, a/b, x5/c, a/c, x4/d, x5/d}
   \draw[->] (\s) -- (\t);
 
@@ -474,8 +474,8 @@ Instead of giving a~formal proof, we provide an example of a~reversed circuit fr
 %Note also that commutativity is not essential for this observation, it just allows us not to worry about the order of the incoming wires for each gate.
 
 \begin{center}
-\begin{tikzpicture}
-\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/3/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
+\begin{tikzpicture}[yscale=0.5]
+\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/2.5/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
   \node[inner sep=0mm,circle,draw,minimum size=6mm] (\n) at (\x,\y) {$\t$};
 \foreach \s/\t in {x2/a, x3/a, x4/a, x1/b, a/b, x5/c, a/c, x4/d, x5/d}
   \draw[<-] (\s) -- (\t);
@@ -610,13 +610,13 @@ Instead of giving a~formal proof, we provide an example of a~reversed circuit fr
 %In the next two sections we provide the detailed proofs of these two theorems.
 
 \section{Commutative Case}\label{sec-commutative}
-This section is devoted to the proofs of Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}
-which we remind below.
-
-\upperthm*
-
-\matrixmultcor*
-
+This section is devoted to the proofs of Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}.
+%which we remind below.
+%
+%\upperthm*
+%
+%\matrixmultcor*
+%
 We start by proving two simpler statements to show
 how commutativity is important.
 
@@ -774,7 +774,7 @@ first block,
 a~range $(2,3)$ of blocks $(B_1, B_2, B_3, B_4)$, and a~prefix $(13,13)$ of
 the last block:
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.8]
 \foreach \x in {1,...,16}
   \node at (\x,2) {\x};
 \draw[draw=white,fill=gray!20!white] (2.5,0.5) rectangle (13.5,1.5);
@@ -791,42 +791,45 @@ It remains to note that all these three components are already precomputed.
 \end{proof}
 
 \begin{proof}[Proof of Lemma~\ref{lemma:permute}.]
-The $z$~zeroes of~$A$ breaks its rows into ranges.
+All the $z$~zeroes of~$A$ break its rows into ranges.
 Let us call a~range {\em short} is its length is at most $\log n$.
 We will show that it is possible to permute the columns of~$A$
 so that the total length of all short ranges is at most $O(\frac{n}{\log n})$. Then, all such short ranges can be computed by a~circuit of size $O(\frac{\log n}{n} \cdot n)=O(n)=O(z)$.
 All the remaining ranges can be computed by a~circuit of size $O(n)$ using Lemma~\ref{lemma:blocks}.
 
-\begin{description}
-\item[Randomized algorithm.]
+It is easy to construct the required permutation randomly. For this, one just 
+estimates the expected total length of all short ranges in a~random permutation. It is then possible to derandomize this approach using a~greedy algorithm. We provide all formal details in Subsection~\ref{sec:deterministic}.
 
-Permute the columns randomly. A~uniform random permutation
-of $n$~objects can be generated in time~$O(n)$~\cite[Algorithm~P (Shuffling)]{DBLP:books/lib/Knuth98}.
-Let us compute the expectation of
-the total length of short ranges.
-Let us focus on a~single row and a~particular cell in it. Denote the number of zeroes in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
-\begin{enumerate}
-\item The cell lies close to the border, i.e., it belongs to
-the first $\log n$ cells or to the last~$\log n$ cells
-(the number of such cells is $2\log n$). Then,
-this cell belongs to a~short range iff there is at least one zero
-in $\log n$ cells close to it (on the side opposite to the border).
-Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeroes may be anywhere.
-The probability is then at most
-\[\log n \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}}=\log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
-\item It is not close to the border (the number of such cells is $n-2\log n$). Then, there must be a~zero on both sides of the
-cell. The probability is then at most
-\[\log^2 n \cdot \frac{\binom{n}{t-2}}{\binom{n}{t}}=\log^2n \cdot \frac{t(t-1)}{(n-t+1)(n-t+2)}=O\left(\frac{\log^4 n}{n^2}\right) \, .\]
-\end{enumerate}
-Hence, the expected total length of short ranges in one row is
-\[O\left( 2\log n \cdot \frac{\log^2 n}{n} + (n-2\log n) \cdot \frac{\log^4 n}{n^2}\right)=O\left(\frac{\log^4 n}{n}\right) \, .\]
-Thus, the expected length of short ranges in the whole
-matrix~$A$ is $O(\log^4n)$. By Markov inequality, the probability that
-the length of all short ranges is larger than $\frac{n}{\log n}$ is
-at most $O(\frac{\log^5 n}{n})$.
-\end{description}
-
-We provide a deterministic algorithm in Appendix~\ref{sec:deterministic}.
+%\begin{description}
+%\item[Randomized algorithm.]
+%
+%Permute the columns randomly. A~uniform random permutation
+%of $n$~objects can be generated in time~$O(n)$~\cite[Algorithm~P (Shuffling)]{DBLP:books/lib/Knuth98}.
+%Let us compute the expectation of
+%the total length of short ranges.
+%Let us focus on a~single row and a~particular cell in it. Denote the number of zeroes in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
+%\begin{enumerate}
+%\item The cell lies close to the border, i.e., it belongs to
+%the first $\log n$ cells or to the last~$\log n$ cells
+%(the number of such cells is $2\log n$). Then,
+%this cell belongs to a~short range iff there is at least one zero
+%in $\log n$ cells close to it (on the side opposite to the border).
+%Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeroes may be anywhere.
+%The probability is then at most
+%\[\log n \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}}=\log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
+%\item It is not close to the border (the number of such cells is $n-2\log n$). Then, there must be a~zero on both sides of the
+%cell. The probability is then at most
+%\[\log^2 n \cdot \frac{\binom{n}{t-2}}{\binom{n}{t}}=\log^2n \cdot \frac{t(t-1)}{(n-t+1)(n-t+2)}=O\left(\frac{\log^4 n}{n^2}\right) \, .\]
+%\end{enumerate}
+%Hence, the expected total length of short ranges in one row is
+%\[O\left( 2\log n \cdot \frac{\log^2 n}{n} + (n-2\log n) \cdot \frac{\log^4 n}{n^2}\right)=O\left(\frac{\log^4 n}{n}\right) \, .\]
+%Thus, the expected length of short ranges in the whole
+%matrix~$A$ is $O(\log^4n)$. By Markov inequality, the probability that
+%the length of all short ranges is larger than $\frac{n}{\log n}$ is
+%at most $O(\frac{\log^5 n}{n})$.
+%\end{description}
+%
+%We provide a deterministic algorithm in Appendix~\ref{sec:deterministic}.
 
 
 \end{proof}
@@ -959,7 +962,7 @@ The case of suffixes is completely analogous.
 The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
 \begin{lemma} \label{lem:variables_order}
 Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X$. Let us write down the letters of $W$ in the order in which they appear first time in $W$ when we read it from left to right. Let's do the same for $W'$. Then we obtain exactly the same sequences of letters.
-
+%
 The same is true if we read the words from right to left.
 \end{lemma}
 
@@ -972,14 +975,14 @@ The same is true if we read the words from right to left.
 %\end{theorem}
 
 We now proceed to the proof of Theorem~\ref{thm:lowerbound}.
-
+%
 The upper bound follows easily by a naive algorithm: split all rows of $A$ into ranges, compute all ranges by a circuit of size $O(n\alpha(n))$ using Yao's construction~\cite{DBLP:conf/stoc/Yao82}, then combine ranges into rows of $A$ using $O(n)$ gates.
 
-Thus we will concentrate on lower bounds. We will view the computation of the circuit as a computation in a strongly non-commutative semigroup $X=X_S$.
+Thus, we focus on lower bounds. We will view the computation of the circuit as a computation in a strongly non-commutative semigroup $X=X_S$.
 
 We will use the following proof strategy.
 First we observe that it is enough to prove the lower bound for the case of idempotent strongly non-commutative semigroups $X$. Indeed, if $X$ is not idempotent, we can factorize it by idempotency relations and obtain a strongly non-commutative idempotent semigroup $X_{id}$. A lower bound for the case of $X_{id}$ implies lower bound for the case of $X$. %We provide a detailed explanation in Section~\ref{sec:noncommutative_extension}.
-We provide a detailed explanation in Appendix~\ref{sec:noncommutative_extension}.
+We provide a~detailed explanation in Appendix~\ref{sec:noncommutative_extension}.
 
 Hence, { from this point we can assume that $X$ is idempotent and strongly non-commutative}.
 Next for idempotent case we show that our problem is equivalent to the commutative version of the range query problem.
@@ -1001,7 +1004,7 @@ Note that for the proof of Theorem~\ref{thm:lowerbound} only one direction of Th
 Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing the following equivalences for any $s = \Omega(n)$.
 
 \begin{center}
-\begin{tikzpicture}[scale=0.95,transform shape]
+\begin{tikzpicture}[scale=0.82,transform shape]
 %\draw[help lines] (0,0) grid (16,6);
 \tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=36mm,above right,minimum height=20mm]
 
@@ -1042,7 +1045,7 @@ If the (commutative) version of the range queries problem over $X_{sym}$ has siz
 
 %The proofs of these lemmas are presented in Sections~\ref{sec:operators_to_queries} and~\ref{sec:non-commutative_to_commutative} respectively.
 
-Due to the space constraints the proofs of these lemmas are presented in Appendix~\ref{sec:operators_to_queries} and Appendix~\ref{sec:non-commutative_to_commutative} respectively. 
+%Due to the space constraints the proofs of these lemmas are presented in Appendix~\ref{sec:operators_to_queries} and Appendix~\ref{sec:non-commutative_to_commutative} respectively. 
 
 %In the proofs of these lemmas we will often omit~$\circ$~sign replacing it by juxtaposition for convenience of presentation.
 
@@ -1059,10 +1062,10 @@ of $n$~zeroes of an $n \times n$ 0/1-matrix with at most $\log n$ zeroes in ever
 \end{enumerate}
 
 
-\section*{Acknowledgments}
-We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}. We thank Alexey Talambutsa for fruitful discussions on the theory of semigroups.
+%\section*{Acknowledgments}
+%We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}. We thank Alexey Talambutsa for fruitful discussions on the theory of semigroups.
 
-\bibliographystyle{plain}
+\bibliographystyle{plainurl}
 \bibliography{text}
 
 \clearpage
@@ -1072,6 +1075,7 @@ We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journal
 \input range_queries_applications
 \input approaches
 \input dense_graph_repr
+\section{Omitted Proofs}
 \input deterministic_algorithm
 \input non_commutative_proofs
 

@@ -1,6 +1,42 @@
-\section{Deterministic Algorithm in the Proof of Lemma~\ref{lemma:permute}} \label{sec:deterministic}
+\subsection{Deterministic Algorithm in the Proof of Lemma~\ref{lemma:permute}} \label{sec:deterministic}
 
-%\item[Deterministic algorithm.]
+\begin{proof}[Proof of Lemma~\ref{lemma:permute}.]
+All the $z$~zeroes of~$A$ break its rows into ranges.
+Let us call a~range {\em short} is its length is at most $\log n$.
+We will show that it is possible to permute the columns of~$A$
+so that the total length of all short ranges is at most $O(\frac{n}{\log n})$. Then, all such short ranges can be computed by a~circuit of size $O(\frac{\log n}{n} \cdot n)=O(n)=O(z)$.
+All the remaining ranges can be computed by a~circuit of size $O(n)$ using Lemma~\ref{lemma:blocks}.
+
+\begin{description}
+\item[Randomized algorithm.]
+
+Permute the columns randomly. A~uniform random permutation
+of $n$~objects can be generated in time~$O(n)$~\cite[Algorithm~P (Shuffling)]{DBLP:books/lib/Knuth98}.
+Let us compute the expectation of
+the total length of short ranges.
+Let us focus on a~single row and a~particular cell in it. Denote the number of zeroes in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
+\begin{enumerate}
+\item The cell lies close to the border, i.e., it belongs to
+the first $\log n$ cells or to the last~$\log n$ cells
+(the number of such cells is $2\log n$). Then,
+this cell belongs to a~short range iff there is at least one zero
+in $\log n$ cells close to it (on the side opposite to the border).
+Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeroes may be anywhere.
+The probability is then at most
+\[\log n \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}}=\log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
+\item It is not close to the border (the number of such cells is $n-2\log n$). Then, there must be a~zero on both sides of the
+cell. The probability is then at most
+\[\log^2 n \cdot \frac{\binom{n}{t-2}}{\binom{n}{t}}=\log^2n \cdot \frac{t(t-1)}{(n-t+1)(n-t+2)}=O\left(\frac{\log^4 n}{n^2}\right) \, .\]
+\end{enumerate}
+Hence, the expected total length of short ranges in one row is
+\[O\left( 2\log n \cdot \frac{\log^2 n}{n} + (n-2\log n) \cdot \frac{\log^4 n}{n^2}\right)=O\left(\frac{\log^4 n}{n}\right) \, .\]
+Thus, the expected length of short ranges in the whole
+matrix~$A$ is $O(\log^4n)$. By Markov inequality, the probability that
+the length of all short ranges is larger than $\frac{n}{\log n}$ is
+at most $O(\frac{\log^5 n}{n})$.
+
+\item[Deterministic algorithm.]
+
 It will prove convenient to assume that $A$ is a~$t \times t$ matrix with exactly~$t$ zeros with at most $\log t$ zeroes in every row. For this, we let $t=\max\{n, z\}$ and add a~number of
 all-ones rows and columns if needed. This enlargement of the matrix
 does not make the computation simpler: additional rows mean additional outputs that can be ignored and additional columns correspond to redundant variables that can be removed (substituted by~0) once the circuit is constructed. Below, we show how to deterministically construct a~circuit of size $O(t)$ for~$A$.
@@ -38,3 +74,10 @@ representing~$R$).
 If $|R| > \log t$, one just takes an all-one column (all such columns
 can be stored in a~list). If $|R| \le \log t$, we need to find a~column outside of the set~$F$. For this, we just scan the list of the yet unpicked columns. For each column, we first check whether it belongs to the set~$F$. This can be checked in time $O(\log^2t)$: for every row in~$|R|$, one checks whether this row belongs to the sorted array of the considered column using binary search in time
 $O(\log t)$. Since $|F| \le \log^2t$, we will find a~column outside of~$F$ in time~$O(\log^4 t)$.
+\end{description}
+
+
+
+\end{proof}
+
+
