@@ -240,7 +240,5 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
-main.tex
-main.pdf
 main.pdf
 main.vtc
