@@ -7,9 +7,8 @@ We will show that it is possible to permute the columns of~$A$
 so that the total length of all short ranges is at most $O(\frac{n}{\log n})$. Then, all such short ranges can be computed by a~circuit of size $O(\frac{\log n}{n} \cdot n)=O(n)=O(z)$.
 All the remaining ranges can be computed by a~circuit of size $O(n)$ using Lemma~\ref{lemma:blocks}.
 
-\begin{description}
-\item[Randomized algorithm.]
-
+% \begin{description}
+\textbf{Randomized algorithm.}
 Permute the columns randomly. A~uniform random permutation
 of $n$~objects can be generated in time~$O(n)$~\cite[Algorithm~P (Shuffling)]{DBLP:books/lib/Knuth98}.
 Let us compute the expectation of
@@ -35,8 +34,7 @@ matrix~$A$ is $O(\log^4n)$. By Markov inequality, the probability that
 the length of all short ranges is larger than $\frac{n}{\log n}$ is
 at most $O(\frac{\log^5 n}{n})$.
 
-\item[Deterministic algorithm.]
-
+\textbf{Deterministic algorithm.}
 It will prove convenient to assume that $A$ is a~$t \times t$ matrix with exactly~$t$ zeros with at most $\log t$ zeroes in every row. For this, we let $t=\max\{n, z\}$ and add a~number of
 all-ones rows and columns if needed. This enlargement of the matrix
 does not make the computation simpler: additional rows mean additional outputs that can be ignored and additional columns correspond to redundant variables that can be removed (substituted by~0) once the circuit is constructed. Below, we show how to deterministically construct a~circuit of size $O(t)$ for~$A$.
@@ -74,7 +72,7 @@ representing~$R$).
 If $|R| > \log t$, one just takes an all-one column (all such columns
 can be stored in a~list). If $|R| \le \log t$, we need to find a~column outside of the set~$F$. For this, we just scan the list of the yet unpicked columns. For each column, we first check whether it belongs to the set~$F$. This can be checked in time $O(\log^2t)$: for every row in~$|R|$, one checks whether this row belongs to the sorted array of the considered column using binary search in time
 $O(\log t)$. Since $|F| \le \log^2t$, we will find a~column outside of~$F$ in time~$O(\log^4 t)$.
-\end{description}
+% \end{description}
 
 \end{proof}
 

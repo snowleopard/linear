@@ -224,8 +224,8 @@ $\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
 
 \begin{restatable}{theorem}{lowerthm}
 \label{thm:lowerbound}
-Let $(S, \circ)$ be a~faithful non-commutative semigroup, $x = (x_1,\ldots, x_n)$ be
-a~vector of formal variables, and $A \in \{0,1\}^{n \times n}$
+Let $(S, \circ)$ be a~faithful non-commutative semigroup, $x$ be
+a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and $A \in \{0,1\}^{n \times n}$
 be a~matrix with $O(n)$ zeroes. Then $Ax$ is computable
 using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
 is the inverse Ackermann function. Moreover, there exists
@@ -238,8 +238,9 @@ required to compute~$Ax$ is $\Omega(n\alpha(n))$.
 
 \subsection{Motivation}
 The complexity of linear operators is interesting for many reasons.
-\begin{description}
-\item[Range queries.] In the \emph{range queries} problem,
+
+% \begin{description}
+\textbf{Range queries.} In the \emph{range queries} problem,
 one is given a~vector~$x=(x_1, \dotsc, x_n)$ over a~semigroup $(S, \circ)$ and
 multiple queries of the form~$(l,r)$, and is required to
 output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$
@@ -260,7 +261,7 @@ Corollary~\ref{cor:matrixmultiplication}) and hardness results
 paper are indeed inspired by some of the known results for the range queries
 problem.
 
-\item[Graph algorithms.] Various graph path/reachability
+\textbf{Graph algorithms.} Various graph path/reachability
 problems can be reduced naturally to matrix multiplication.
 Two classic examples are: (i) the all-pairs shortest path problem (APSP) is
 reducible to min-plus matrix multiplication, and (ii) the number of triangles
@@ -278,7 +279,7 @@ time $O(n^2)$, but achieving the same time complexity for complements of sparse
 graphs is more complicated.
 Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication} give a~black-box way to solve these two problems on complements of sparse graphs in time $O(n^2)$.
 
-\item[Matrix multiplication over semirings.] Fast matrix
+\textbf{Matrix multiplication over semirings.} Fast matrix
 multiplication methods rely essentially on the ring structure of the underlying
 set of elements. The first such algorithm was given by~Strassen,
 the current record upper bound is $O(n^{2.373})$~\cite{DBLP:conf/stoc/Williams12, DBLP:conf/issac/Gall14a}.
@@ -302,7 +303,7 @@ Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}
 therefore characterise natural special
 cases when efficient computations are possible.
 
-\item[Functional programming.]
+\textbf{Functional programming.}
 Algebraic data structures for graphs developed in the functional programming
 community~\cite{mokhov2017algebraic} can be used for representing and processing
 densely-connected graphs in linear (in the number of vertices) time and memory.
@@ -313,14 +314,14 @@ Theorem~\ref{thm:upperbound}
 yields an algorithm for deriving a~linear-size algebraic graph representation
 for complements of sparse graphs.
 
-\item[Circuit complexity.] Computing linear operators over
-a~Boolean semiring~$(\{0,1\}, \lor)$ is a~well-studied problem
+\textbf{Circuit complexity.} Computing linear operators over
+the Boolean semiring $(\{0,1\}, \lor)$ is a~well-studied problem
 in circuit complexity. The corresponding computational model is known
 as~\emph{rectifier networks}. An overview of known lower and upper bounds for
 such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
 Theorem~\ref{thm:upperbound} states that very dense linear operators have
 linear rectifier network complexity.
-\end{description}
+% \end{description}
 
 \subsection{Organization}
 
@@ -407,7 +408,7 @@ to compute sums over arbitrary subsets. These subsets are
 given as rows of a~0/1-matrix~$A$.
 
 \subsection{Circuits}\label{subsec:circuits}
-We assume that the input consists of $n$~formal variables
+We consider circuits whose input consists of $n$~formal variables
 $\{x_1, \dotsc, x_n\}$. We are interested in the minimum number of semigroup
 operations needed to compute all given words $\{w_1, \dotsc, w_m\}$ (e.g., for
 the range queries problem, each word has a~form $x_l\circ x_{l+1}\circ \dotsb \circ x_r$). We use
@@ -425,13 +426,14 @@ order on the incoming wires for each gate). We say that the circuit computes the
 words $\{w_1, \dotsc, w_m\}$ if the words computed at the output gates are
 equivalent to $\{w_1, \dotsc, w_m\}$ over the considered semigroup.
 
-For example, the following circuit computes range queries
+For example, the circuit below computes range queries
 $(l_1,r_1)=(1,4)$,
 $(l_2,r_2)=(2,5)$, and
 $(l_3,r_3)=(4,5)$
 over inputs $\{x_1, \dotsc, x_5\}$ or, equivalently, the
 linear operator $Ax$ where the matrix $A$~is given below.
 
+\vspace{3mm}
 \begin{center}
 \begin{tikzpicture}[yscale=0.5]
 %\draw[help lines] (0,0) grid (10,6);
@@ -443,6 +445,7 @@ linear operator $Ax$ where the matrix $A$~is given below.
 \node at (8,3) {$A=\begin{pmatrix}1&1&1&1&0\\0&1&1&1&1\\0&0&0&1&1\end{pmatrix}$};
 \end{tikzpicture}
 \end{center}
+\vspace{3mm}
 
 For a~0/1-matrix~$A$, by $C(A)$ we denote the minimum size of
 a~circuit computing the linear operator $Ax$.
@@ -661,8 +664,8 @@ Let $A \in \{0,1\}^{n \times n}$ contain at most two zeroes in every row. Then
 $C(A) = O(n)$.
 \end{lemma}
 \begin{proof}[Proof sketch]
-Consider the following undirected graph: the set of nodes is $\{1,2,\dotsc,n\}$;
-two nodes $i$ and $j$ are joined by an edge if there is a~row having zeroes in
+Consider an undirected graph with the set of nodes $\{1,2,\dotsc,n\}$, where
+two nodes $i$ and $j$ are connected by an edge if there is a~row having zeroes in
 columns~$i$ and~$j$. In the worst case (all rows are different and contain
 exactly two zeroes), the graph has exactly $n$~edges and hence it contains a cut
 $(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into
@@ -1009,18 +1012,18 @@ Indeed, by Theorem~\ref{thm:equivalence} if non-commutative dense linear operato
 
 Note that for the proof of Theorem~\ref{thm:lowerbound} only one direction of Theorem~\ref{thm:equivalence} is needed. However, we think that the equivalence in Theorem~\ref{thm:equivalence} might be of independent interest, so we provide the proof for both directions.
 
-Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing the following equivalences for any $s = \Omega(n)$.
+Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing
+the following equivalences for any $s = \Omega(n)$.
 
+\vspace{2mm}
 \begin{center}
-\begin{tikzpicture}[scale=0.82,transform shape]
+\begin{tikzpicture}[scale=0.84,transform shape]
 %\draw[help lines] (0,0) grid (16,6);
-\tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=36mm,above right,minimum height=20mm]
+\tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=33mm,above right,minimum height=20mm]
 
 \node[v] (a) at (0,0) {(commutative) range queries problem over $X_{sym}$ has $O(s)$ size circuits};
-
-\node[v] (b) at (6.5,0) {(non-commutative) range queries problem over $X$ has $O(s)$ size circuits};
-
-\node[v] (c) at (13,0) {(non-commutative) dense linear operator problem over $X$ has $O(s)$ size circuits};
+\node[v] (b) at (5.8,0) {(non-commutative) range queries problem over $X$ has $O(s)$ size circuits};
+\node[v] (c) at (11.9,0) {(non-commutative) dense linear operator problem over $X$ has $O(s)$ size circuits};
 
 \path (a.10) edge[->] node[above] {Lemma~\ref{lem:intervals}} (b.170);
 \path (b.190) edge[->] node[below] {special case} (a.-10);
@@ -1028,6 +1031,7 @@ Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing t
 \path (c.190) edge[->] node[below] {Lemma~\ref{lem:dense_matrices}} (b.-10);
 \end{tikzpicture}
 \end{center}
+\vspace{2mm}
 
 %In these equivalences non-commutative problems are considered over arbitrary strongly non-commutative semigroup and the commutative problem is considered over free idempotent commutative semigroup $X$. It is not hard to observe that if we factorize any strongly non-commutative idempotent semigroup over commutativity equivalences, we obtain exactly free idempotent commutative semigroup.
 

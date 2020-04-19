@@ -32,7 +32,7 @@ In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the le
 It should be mentioned, at the same time, that the semigroup $X$ might be complicated. In particular, the idempotency is tricky. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
 This is not extremely impressive, since to get $xyz$ we multiply by $xyz$, but the point is that this is possible in principle.
 
-We proceed to the formal proofs. Let's call the word $W$ in the alphabet $\{x_1,\ldots,x_n\}$ \emph{increasing} if it is a product of variables in the increasing order. A~binary circuit is called an~{\em increasing circuit} if each of its gates computes a word equivalent in $X$ to increasing~word.
+We proceed to the formal proofs. Let's call a word $W$ in the alphabet $\{x_1,\ldots,x_n\}$ \emph{increasing} if it is a product of variables in the increasing order. A~binary circuit is called an~{\em increasing circuit} if each of its gates computes a word equivalent in $X$ to increasing~word.
 Note that if a~gate in an~increasing circuit is fed by two gates~$G$ and~$H$, then the increasing words computed by~$G$ and~$H$ are matching in a~sense that some suffix of~$G$ (possibly an empty suffix) is equal to some prefix of~$H$. Otherwise, the result is not equal to a product of variables in the increasing order, due to Lemma~\ref{lem:variables_order}.
 
 Analogously, a~binary circuit is called a~{\em range circuit} if each of its gates computes a~word that is equivalent to a~range.
@@ -51,7 +51,7 @@ Given an~increasing circuit computing~$Ax$, one may transform it into a~range ci
 Given $n$~ranges, pack them into a~matrix $A \in \{0,1\}^{n \times n}$ with at most $2n$ zeroes. Take a size-$s$ circuit computing $Ax$ and convert it into a~binary circuit. Then, transform it into an~increasing circuit using Lemma~\ref{lemma:correctorder}. Finally, extract the answers to all the ranges from this circuit using Lemma~\ref{lemma:matrixranges}.
 \end{proof}
 
-Note that the second statement of Theorem~\ref{thm:lowerbound} follows since the proof of Lemma~\ref{lem:dense_matrices} deals with matrices with exactly two zeroes in every row.
+Note that the second statement of Theorem~\ref{thm:lowerbound} follows because the proof of Lemma~\ref{lem:dense_matrices} deals with matrices with exactly two zeroes in every row.
 %\begin{corollary}\label{cor:noncommutativetwo}
 %There exist matrices~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes in every row that requires circuits of size~$\Omega(n\alpha(n))$.
 %\end{corollary}
