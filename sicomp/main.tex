@@ -612,15 +612,15 @@ Instead of giving a~formal proof, we provide an example of a~reversed circuit fr
 %In the next two sections we provide the detailed proofs of these two theorems.
 
 \section{Commutative Case}\label{sec-commutative}
-This section is devoted to the proofs of Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}.
-%which we remind below.
-%
-%\upperthm*
-%
-%\matrixmultcor*
-%
-We start by proving two simpler statements to show
-how commutativity is important.
+
+This section is devoted to the proofs of Theorem~\ref{thm:upperbound} and
+Corollary~\ref{cor:matrixmultiplication}, which we remind below.
+
+\upperthm*
+
+\matrixmultcor*
+
+We start by proving two simpler statements to show how commutativity is important.
 
 \begin{lemma}\label{lemma:easy}
 Let $S$~be a semigroup (not necessarily commutative) and let
@@ -628,6 +628,7 @@ $A \in \{0,1\}^{n \times n}$ contain at most
 one zero in every row. Then
 $C(A) = O(n)$.
 \end{lemma}
+
 \begin{proof}
 To compute the linear operator $Ax$, we first
 precompute all prefixes and suffixes of $x=(x_1, \dotsc, x_n)$.
@@ -793,16 +794,18 @@ the last block:
 It remains to note that all these three components are already precomputed.
 \end{proof}
 
-\begin{proof}[Proof of Lemma~\ref{lemma:permute}.]
-All the $z$~zeroes of~$A$ break its rows into ranges.
-Let us call a~range {\em short} is its length is at most $\log n$.
-We will show that it is possible to permute the columns of~$A$
-so that the total length of all short ranges is at most $O(\frac{n}{\log n})$. Then, all such short ranges can be computed by a~circuit of size $O(\frac{\log n}{n} \cdot n)=O(n)=O(z)$.
-All the remaining ranges can be computed by a~circuit of size $O(n)$ using Lemma~\ref{lemma:blocks}.
+\input deterministic_algorithm
 
-It is easy to construct the required permutation randomly. For this, one just
-estimates the expected total length of all short ranges in a~random permutation. It is then possible to derandomize this approach using a~greedy algorithm. We provide all formal details %in Subsection~\ref{sec:deterministic}.
-the full version of the paper~\cite{DBLP:journals/eccc/KulikovMMP19}.
+% \begin{proof}[Proof of Lemma~\ref{lemma:permute}.]
+% All the $z$~zeroes of~$A$ break its rows into ranges.
+% Let us call a~range {\em short} is its length is at most $\log n$.
+% We will show that it is possible to permute the columns of~$A$
+% so that the total length of all short ranges is at most $O(\frac{n}{\log n})$. Then, all such short ranges can be computed by a~circuit of size $O(\frac{\log n}{n} \cdot n)=O(n)=O(z)$.
+% All the remaining ranges can be computed by a~circuit of size $O(n)$ using Lemma~\ref{lemma:blocks}.
+
+% It is easy to construct the required permutation randomly. For this, one just
+% estimates the expected total length of all short ranges in a~random permutation. It is then possible to derandomize this approach using a~greedy algorithm. We provide all formal details %in Subsection~\ref{sec:deterministic}.
+% the full version of the paper~\cite{DBLP:journals/eccc/KulikovMMP19}.
 
 %\begin{description}
 %\item[Randomized algorithm.]
@@ -835,8 +838,7 @@ the full version of the paper~\cite{DBLP:journals/eccc/KulikovMMP19}.
 %
 %We provide a deterministic algorithm in Appendix~\ref{sec:deterministic}.
 
-
-\end{proof}
+% \end{proof}
 
 
 \begin{proof}[Proof of Corollary~\ref{cor:matrixmultiplication}]
@@ -1049,7 +1051,10 @@ If the (commutative) version of the range queries problem over $X_{sym}$ has siz
 %If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
-%The proofs of these lemmas are presented in Sections~\ref{sec:operators_to_queries} and~\ref{sec:non-commutative_to_commutative} respectively.
+The proofs of these lemmas are presented in Sections~\ref{sec:operators_to_queries}
+and~\ref{sec:non-commutative_to_commutative} respectively.
+
+\input non_commutative_proofs
 
 %Due to the space constraints the proofs of these lemmas are presented in Appendix~\ref{sec:operators_to_queries} and Appendix~\ref{sec:non-commutative_to_commutative} respectively.
 
@@ -1070,15 +1075,13 @@ of $n$~zeroes of an $n \times n$ 0/1-matrix with at most $\log n$ zeroes in ever
 We thank Paweł Gawrychowski for pointing us out to the paper~\cite{DBLP:journals/ijcga/ChazelleR91}. We thank Alexey Talambutsa for fruitful discussions on the theory of semigroups.
 
 \clearpage
+
 \appendix
 \section{Review}
 \input algebraic_structures
 \input range_queries_applications
 \input approaches
 \input dense_graph_repr
-\section{Omitted Proofs}
-\input deterministic_algorithm
-\input non_commutative_proofs
 
 \bibliographystyle{siamplain}
 \bibliography{references}
