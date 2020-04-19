@@ -1,7 +1,7 @@
 %!TEX root = main.tex
 \subsection{Algebraic Structures}\label{subsec:algstr}
 
-A~\emph{semigroup} $(S, \circ)$ is an algebraic structure, where the operation
+A~\emph{semigroup} $(S, \circ)$ is an algebraic structure where the operation
 $\circ$ is \emph{closed}, i.e., $\circ : S\times S \rightarrow S$, and
 \emph{associative}, i.e.,
 $x \circ (y \circ z) = (x \circ y) \circ z$ for all $x$, $y$, and $z$ in $S$.
@@ -25,7 +25,7 @@ to every person on the planet.
   is not even a semigroup, since subtraction is non-associative:
   $1-(2-3) \neq (1-2)-3$.
 
-  \item Boolean values form commutative semigroups $(\mathbb{B}, \vee)$,
+  \item Booleans form commutative semigroups $(\mathbb{B}, \vee)$,
   $(\mathbb{B}, \wedge)$, $(\mathbb{B}, \oplus)$ and $(\mathbb{B}, \equiv)$.
 
   \item Any commutative semigroup $(S, \circ)$ can be \emph{lifted} to the set
@@ -108,7 +108,7 @@ Let us extend some of our semigroup examples to semirings:
   Unlike $+$, the $\max$ operation has no inverse, therefore
   $(\mathbb{Z}, \max, +)$ is not a ring.
 
-  \item Boolean values form the semiring $(\mathbb{B}, \vee, \wedge)$. Note that
+  \item Booleans form the semiring $(\mathbb{B}, \vee, \wedge)$. Note that
   $(\mathbb{B}, \wedge, \vee)$ is a semiring too thanks to the duality between
   the operations $\vee$ and $\wedge$. Furthermore,
   $(\mathbb{B}, \oplus, \wedge)$ is a ring, where every element is its own
