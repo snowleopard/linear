@@ -1,0 +1,85 @@
+\subsection{Dense Graph Representation}\label{sec-dense-graph}
+
+Let us revisit the graph semigroup defined in Section~\ref{subsec:algstr}.
+We will denote it by $(G_U, +)$, where $G_U$ is the set of directed graphs whose
+vertices come from a universe $U$, that is, if $(V, E) \in G_U$ then
+$V \subseteq U$ and $E \subseteq V \times V$. Recall that the graph overlay
+operation $+$ is defined as
+
+\[
+(V_1, E_1) + (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2).
+\]
+
+\noindent
+The algebra of graphs presented in~\cite{mokhov2017algebraic} also defines
+the \emph{graph connect} operation $\rightarrow$:\footnote{The definition
+coincides with that of \emph{graph join}~\cite{1969_graph_theory_harary}, but,
+just like graph union, graph join requires that given graphs are
+non-overlapping. The connect operation has no such requirement.}
+
+\[
+(V_1, E_1) \rightarrow (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2 \cup V_1 \times V_2).
+\]
+
+This operation allows us to ``connect'' two graphs by adding edges from every
+vertex in the left-hand graph to every vertex in the right-hand graph, possibly
+introducing self-loops if $V_1 \cap V_2 \neq \emptyset$. The operation is
+associative, non-commutative and distributes over $+$. Note, however, that the
+empty graph $\varepsilon = (\emptyset, \emptyset)$ is the identity for both
+overlay and connect operations: $\varepsilon + x = x + \varepsilon = x$ and
+$\varepsilon \rightarrow x = x \rightarrow \varepsilon = x$, and consequently
+the annihilating zero property does not hold, which makes this algebraic
+structure not a~semiring according to the classic semiring definition.
+
+By using the two operations one can construct any graph starting from primitive
+single-vertex graphs. For example, let $U=\{1,2,3\}$ and $k$ stand for a
+single-vertex graph $({k}, \emptyset)$. Then:
+
+\begin{itemize}
+  \item $1 \rightarrow 2$ is the graph with a single edge $(1,2)$, i.e.
+  $1 \rightarrow 2 = (\{1,2\}, \{(1,2)\})$.
+  \item $1 \rightarrow (2 + 3)$ is the graph $(\{1,2,3\}, \{(1,2),(1,3)\})$.
+  \item $1 \rightarrow 2 \rightarrow 3$ is the graph $(\{1,2,3\}, \{(1,2),(1,3),(2,3)\})$.
+\end{itemize}
+
+\noindent
+Clearly any sparse graph $(V, E)$, i.e. a graph with a sparse connectivity
+matrix, can be constructed by a linear-size expression:
+
+\[
+(V, E) = \sum_{v \in V} v + \sum_{(u,v) \in E} u \rightarrow v.
+\]
+
+\noindent
+But what about complements of sparse graphs, i.e. graphs with dense
+connectivity matrices? It is not difficult to show that by applying the dense
+linear operator we can obtain a linear-size circuit comprising 2-input gates
+$+$ and $\rightarrow$ for any dense graph.
+
+Let $A$ be a dense matrix of size $n\times n$. Our goal is to construct the
+graph $G_A = (\{1, \dots, n\}, E)$ such that $(i,j) \in E$ whenever $A_{ij}=1$.
+
+First, we compute the dense linear operator $\mathbf{y} = A \mathbf{x}$ over the
+(commutative) graph semigroup~$+$, where $\mathbf{x} = (1, 2, \dots, n)$, i.e.,
+$x_j$ is the primitive graph comprising a single vertex~$j$, obtaining
+graphs~$y_i$ that comprise sets of isolated vertices corresponding to the rows
+of matrix~$A$:
+
+\[
+y_i = \sum_{A_{ij}=1} j \, .
+\]
+
+The resulting graph $G_A = (\{1, \dots, n\}, E)$ can now be obtained by using
+the connect operation~$\rightarrow$ to connect $i$ to all vertices $y_i$, and
+subsequently overlaying the results:
+
+\[
+G_A = \sum_{i=1}^{n} i \rightarrow y_i.
+\]
+
+Thanks to the linear-size construction for the dense linear operator, the size
+of the circuit computing $G_A$ is $O(n)$. This allows us to store dense graphs
+on $n$ vertices using $O(n)$ memory, and perform basic transformations of dense
+graphs in $O(n)$ time. We refer the reader to~\cite{mokhov2017algebraic} for
+further details about applications of algebraic graphs in functional programming
+languages.

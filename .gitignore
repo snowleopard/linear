@@ -240,8 +240,6 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
-main.tex
-main.pdf
 main.pdf
 main.vtc
 camera_ready_for_submission/Archive.zip
