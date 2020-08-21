@@ -122,8 +122,8 @@ There are no gap variables for $\mmax_H$ in~$F$.
 \end{claim}
 
 \begin{proof}
-Suppose that some variable $x_i$ in~$F$ is a~gap variable for $\mmax_H$. Consider an output $C$ such that there is a path from~$G$ to~$C$ and along this path there are no multiplications of $G$ from the left by words containing variables greater than~$x_k$. Then we have $C \sim LGR$ where all variables of $L$ are smaller then~$x_k$. Consider the prefix $P$ of $C$ preceding the variable~$x_k$ and the prefix~$Q$ of $LG$ preceding the variable $x_k$.
-Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. But then the variables of~$P$ and~$Q$ appear in the same order if we read the words from right to left. But this is not true (the variable in~$P$ are in the decreasing order and in~$Q$ the variable $x_i$ is not on its place), a~contradiction.
+Suppose that some variable $x_i$ in~$F$ is a~gap variable for $\mmax_H$. Consider an output $U$ such that there is a path from~$G$ to~$U$ and along this path there are no multiplications of $G$ from the left by words containing variables greater than~$x_k$. Then we have $U \sim LGR$ where all variables of $L$ are smaller then~$x_k$. Consider the prefix $P$ of $U$ preceding the variable~$x_k$ and the prefix~$Q$ of $LG$ preceding the variable $x_k$.
+Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. Let us know read $P$ and $Q$ from right to left (note that we switch the order here, previously we read the words from left to right). By Lemma~\ref{lem:variables_order} the variables in~$P$ and~$Q$ should appear in the same order. But this is not true (the variable in~$P$ are in the decreasing order and in~$Q$ the variable $x_i$ is not on its place), a~contradiction.
 \end{proof}
 
 \begin{claim}\label{cl: f is good}
@@ -131,7 +131,7 @@ There are no gap variables for $\mmax_F$ in~$H$.
 \end{claim}
 
 \begin{proof}
-Suppose that a~variable $x_i$ in~$H$ is a~gap variable for $\mmax_F$. Consider an output~$C$ such that there is a~path from~$G$ to~$C$ and along this path there are no multiplications of~$G$ from the left by words containing variables greater than $x_l$, the largest variable of~$F$. Then we have $C \sim LGR$, where all variables of~$L$ are smaller then $x_l$. Consider the prefix~$P$ of~$C$ preceding $x_l$ and the prefix $Q$ of $LG$ preceding $x_l$.
+Suppose that a~variable $x_i$ in~$H$ is a~gap variable for $\mmax_F$. Consider an output~$U$ such that there is a~path from~$G$ to~$U$ and along this path there are no multiplications of~$G$ from the left by words containing variables greater than $x_l$, the largest variable of~$F$. Then we have $U \sim LGR$, where all variables of~$L$ are smaller then $x_l$. Consider the prefix~$P$ of~$U$ preceding $x_l$ and the prefix $Q$ of $LG$ preceding $x_l$.
 Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. But then the variables of~$P$ and~$Q$ appear in the same order if we read the words from right to left. But this is not true (the variables in~$P$ are in the decreasing order and in~$Q$ the variable $x_i$ is not on its place), a~contradiction.
 \end{proof}
 

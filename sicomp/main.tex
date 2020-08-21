@@ -223,11 +223,11 @@ $\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
 
 \begin{restatable}{theorem}{lowerthm}
 \label{thm:lowerbound}
-Let $(S, \circ)$ be a~faithful non-commutative semigroup, $x$ be
+Let $(S, \circ)$ be a~semigroup, $x$ be
 a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
 $A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
 computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
-is the inverse Ackermann function. Moreover, there exists
+is the inverse Ackermann function. Moreover, if $(S, \circ)$ is faithful non-commutative then there exists
 a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes
 in every row such that the minimum number of semigroup
 operations
@@ -1052,7 +1052,7 @@ problem also does. However, for the latter problem it is proved by Chazelle and
 Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that $s=\Omega(n \alpha(n))$.
 Moreover, in our construction for the proof of Theorem~\ref{thm:equivalence} it
 is enough to consider dense linear operators with exactly two zeroes in every
-row. From this the second part of Theroem~\ref{thm:lowerbound} follows.
+row. From this the second part of Theorem~\ref{thm:lowerbound} follows.
 \end{proof}
 
 Note that for the proof of Theorem~\ref{thm:lowerbound} only one direction of
@@ -1083,7 +1083,7 @@ the following equivalences for any $s = \Omega(n)$.
 
 In these equivalences non-commutative problems are considered over arbitrary
 strongly non-commutative semigroup and the commutative problem is considered
-over free idempotent commutative semigroup $X$. It is not hard to observe that
+over free idempotent commutative semigroup $X_{sym}$. Recall that
 if we factorize any strongly non-commutative idempotent semigroup over
 commutativity equivalences, we obtain exactly free idempotent commutative
 semigroup.
