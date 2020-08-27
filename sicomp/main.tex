@@ -86,11 +86,6 @@ and $u$~ones and $x$ be an~$n$-dimensional vector of
 formal variables over a~semigroup $(S, \circ)$.
 How many semigroup operations are required to compute the linear operator $Ax$?
 
-% As we observe in this paper, this problem contains as a special case the well-known
-% range queries problem and has a~rich variety of applications in
-% such areas as graph algorithms, functional programming, circuit complexity,
-% and others.
-
 It is easy to compute $Ax$ using $O(u)$ semigroup operations.
 The main question studied in this paper is:
 can $Ax$~be computed using $O(z)$ semigroup operations?
@@ -101,10 +96,8 @@ where $\alpha(n)$ is the inverse Ackermann function.
 However, for the case when the semigroup is commutative,
 we give a~constructive proof of an~$O(z)$ upper bound.
 This implies that in commutative settings, complements of~sparse
-matrices can
-be processed as efficiently as sparse matrices (though the
-corresponding
-algorithms are more involved). Note that this covers the
+matrices can be processed as efficiently as sparse matrices (though the
+corresponding algorithms are more involved). This covers the
 cases of Boolean and tropical semirings that have numerous
 applications, e.g., in graph theory.
 
@@ -241,8 +234,8 @@ The complexity of linear operators is interesting for many reasons, some of
 which are listed below.
 
 \textbf{Range queries.} In the \emph{range queries} problem,
-one is given a~vector~$x=(x_1, \dotsc, x_n)$ over a~semigroup $(S, \circ)$ and
-multiple queries of the form~$(l,r)$, and is required to
+given a~vector~$x=(x_1, \dotsc, x_n)$ over a~semigroup $(S, \circ)$ and
+multiple queries of the form~$(l,r)$, one is required to
 output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$
 for each query. It~is a~classical problem in data structures and
 algorithms with applications in many fields, such as bioinformatics and
@@ -330,6 +323,7 @@ Section~\ref{sec-commutative} we present the results on commutative case. In
 Section~\ref{sec-non-commutative} we present the results on the non-commutative
 case.
 
+\newpage
 \section{Background} \label{sec:background}
 \subsection{Semigroups and Semirings}
 A~\emph{semigroup} $(S, \circ)$ is an algebraic structure, where
@@ -879,20 +873,20 @@ Theorem~\ref{thm:lowerbound}.
 \subsection{Faithful semigroups}
 
 We consider computations over general semigroups that are not necessarily
-commutative. In particular, we will establish lower bounds for a large class of
+commutative. In particular, we will establish a lower bound for a large class of
 semigroups and our lower bound does not hold for commutative semigroups. This
 requires a formal definition that captures semigroups with rich enough structure
 and in particular requires that a semigroup is substantially non-commutative.
 
 Previously lower bounds in the circuit model for a large class of semigroups
-were known for the Range Queries
+were known for the range queries
 problem~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}. These
-result are proven for a large class of commutative semigroups that are called
+results were proven for a large class of commutative semigroups called
 \emph{faithful} (we provide a formal definition below). Since we are dealing
-with non-commutative case we need to generalize the notion of faithfulness to
-non-commutative semigroups.
+with the non-commutative case, we need to generalize the notion of faithfulness
+to non-commutative semigroups.
 
-To provide formal definition of faithfulness it is convenient to introduce the
+To provide a formal definition of faithfulness it is convenient to introduce the
 following notation. Suppose $(S, \circ)$ is a
 semigroup. Let $X_{S,n}$ be a semigroup with generators $\{x_1,\ldots, x_n\}$
 and with the equivalence relation consisting of identities in variables
