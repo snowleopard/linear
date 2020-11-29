@@ -1,0 +1,1284 @@
+\documentclass{toc}
+\date{}
+
+%% !!! AUTHOR: Fill in meta-data below
+%% Optional items are marked %OPL, followed by explanation "if (when to use)"
+%% if using optional item, delete "%OPL"
+\tocdetails{%
+  title = {Complexity of Linear Operators},
+%% please update the following four items when submitting revision
+  number_of_pages = {NN},
+  number_of_bibitems = {NN},
+  number_of_figures = {NN},
+  conference_version = {ISAAC19}, %% examples: {EC17},  {FSTTCS18}, {NONE}
+  author = {Alexander S. Kulikov, Ivan Mikhailin, Andrey Mokhov, and Vladimir V. Podolskii},
+    %% Use the format
+    %% "A", or "A and B", or "A, B, and C", or "A, B, C, and D", etc.
+    %% e.g., {Author A, Author B, and K\'alm\'an Sz\H{o}l\H{o}ssy},
+    %% IMPORTANT: Please use ascii TeX codes for characters with
+    %% foreign accents.
+  authorlist = {Alexander S. Kulikov, Ivan Mikhailin, Andrey Mokhov, Vladimir V. Podolskii},
+    %% Comma separated author list, NO AND: Use the format
+    %% "A", or "A, B", or "A, B, C", etc.
+    %% NOTE: No "and" at the end--simply comma separated,
+    %% e.g., {Author A, Author B, K\'alm\'an Sz\H{o}l\H{o}ssy},
+  runningauthor = {A. S. Kulikov, I. Mikhailin, A. Mokhov, V. V. Podolskii},
+  copyrightauthor = {Alexander~S. Kulikov, Ivan Mikhailin, Andrey Mokhov, and
+    Vladimir V. Podolskii},
+  acmclassification = {Theory of computation: Streaming, sublinear and near
+    linear time algorithms},
+  amsclassification = {Analysis of algorithms and problem complexity (68Q25)},
+  keywords = {algorithms, linear operators, commutativity, range queries,
+    circuit complexity},  % , lower bounds, upper bounds
+    %% keywords and phrases of your choice, lower case, comma separated,
+    %% no period at end
+    %% please consider using relevant ToC categories -- see
+    %%    http://theoryofcomputing.org/categories
+    %
+}   %% END AUTHOR-FILLED METADATA
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% EDITOR: Fill in meta-data below
+\tocdetails{%
+%  volume = 1X,      %% example:  volume = 16,
+%  number = Y,       %% examples: number = 5,    number = 19,
+%  year = 20ZZ,
+%  specissue={\cccBH}  %% CCC'17
+%  specissue={\cccBI}  %% CCC'18
+%  specissue={\cccBJ}  %% CCC'19
+%  specissue={\cccCA}  %% CCC'20
+%  specissue={\cccCB}  %% CCC'21
+%  specissue={\approxrandomBG}  %% APPROX-RANDOM'16
+%  specissue={\approxrandomBI}  %% APPROX-RANDOM'18
+%  received = {date},
+%  revised = {date},
+%  published = {date},
+%  note,
+%  survey,  %% this item refers to "research survey", not "grad survey"
+%  exposition, %% refers to "research exposition"
+%  doi = {10.4086/toc....},  %% format: doi = {10.4086/toc.2018.v014a009}
+}   %% END tocdetails
+
+% \usepackage[utf8]{inputenc}
+% \usepackage[english]{babel}
+% \usepackage{amsmath}
+\usepackage{amssymb}
+% \usepackage{fullpage}
+% \usepackage[colorinlistoftodos,disable]{todonotes}
+% \usepackage{amsthm}
+\usepackage{thm-restate}
+\usepackage{tikz}
+% \usepackage[hidelinks]{hyperref}
+
+% \newtheorem{definition}{Definition}
+% \newtheorem{lemma}{Lemma}
+\newtheorem{observation}{Observation}
+% \newtheorem{corollary}{Corollary}
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{claim}{Claim}
+
+\newcommand{\lef}{\texttt{left}}
+\newcommand{\righ}{\texttt{right}}
+\newcommand{\gap}{\texttt{gap}}
+\newcommand{\num}{\texttt{num}}
+\newcommand{\out}{\texttt{out}}
+\newcommand{\tup}{\texttt{tup}}
+
+\newcommand{\mmin}{\texttt{MIN}}
+\newcommand{\mmax}{\texttt{MAX}}
+\newcommand{\var}{\texttt{Var}}
+
+% \listoftodos
+
+% \title{Complexity of Linear Operators
+% \thanks{This is an extended version of an earlier conference publication~\cite{isaac-2019-version}.
+% The results presented in Section~\ref{sec-commutative} are supported by
+% Russian Science Foundation (18-71-10042). The results presented in
+% Section~\ref{sec-non-commutative} are supported by Russian Science Foundation
+% (16-11-10252).}}
+
+% \ccsdesc[100]{Theory of computation~Streaming, sublinear and near linear time algorithms}
+% \ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm
+
+\begin{document}
+
+\begin{frontmatter}%%[classification=text] << EDITOR.
+
+%% EDITOR: If abstract fits entirely on first page, you may consider
+%% the "classification=text" option, which typesets classifications
+%% (as text) directly after the abstract--a preferable arrangement.
+
+%%% !!! If a conference version exists, use instead the following
+%%%   (after replacing the conference name)
+%OPL  \title{TITLE OF PAPER\titlefootnote{XXX of this paper appeared in
+%OPL  the \href{http://URL}{Proceedings of the 26th IEEE Conference on
+%OPL  Computational Complexity, 2011}.}}
+%%% !!! Replace XXX by one of the following phrases:
+%%%   An extended abstract (if the current version adds or significantly
+%%%         expands the proofs of the main results stated in the conference
+%%%         version but most of the main results of the current paper have
+%%%         already been (essentially) stated in the conference version);
+%%%   A preliminary version (if the current version contains significant
+%%%         new results or significant improvements over the results
+%%%         stated in the conference version);
+%%%   A conference version (in all other cases).
+%%% Appropriately modify this text if the paper descends from more than one
+%%% conference paper.   Make sure to include the conference version(s)
+%%% in the .bib file.
+
+\title{Complexity of Linear Operators\titlefootnote{An extended abstract of
+this paper appeared in the
+\href{https://drops.dagstuhl.de/opus/portals/lipics/index.php?semnr=16131}{Proceedings
+of the 30th International Symposium on Algorithms and Computation~(ISAAC),
+2019}~\cite{isaac-2019-version}.}}
+
+%%% !!! AUTHOR List all authors. In brackets include the author's
+%%% **last name** in lower case with no special characters; this
+%%% will be used as the unique tag (author ID) to associate
+%%% the author with the correct bio sketch at the end of the paper.
+
+%%% List grant acknowledgements in \thanks.
+
+\author[kulikov]{Alexander S. Kulikov}
+\author[mikhailin]{Ivan Mikhailin}
+\author[mokhov]{Andrey Mokhov}
+\author[podolskii]{Vladimir V. Podolskii}
+
+%%%  !!! AUTHOR Abstract goes here
+%%%  limit your Abstract to 1920 characters to satisfy the arXiv standard
+%%%  no \cite{...} commands in Abstract; citation format in abstract:
+%%%   (Jones and Kumar, STOC'14)
+%%%   if more than two authors: (Jones et al., STOC'14)
+%%%   if journal: (Jones et al., SICOMP 2014)
+\begin{abstract}
+    Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones
+    and $x$ be an~$n$-dimensional vector of formal variables over a~semigroup
+    $(S, \circ)$. How many semigroup operations are required to compute the
+    linear operator $Ax$?
+
+    It is easy to compute $Ax$ using $O(u)$ semigroup operations. The main
+    question studied in this paper is: can $Ax$~be computed using $O(z)$
+    semigroup operations? We prove that in general this is not possible: there
+    exists a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in
+    every row (hence $z=2n$) whose complexity is $\Theta(n\alpha(n))$ where
+    $\alpha(n)$ is the inverse Ackermann function. However, for the case when
+    the semigroup is commutative, we give a~constructive proof of an~$O(z)$
+    upper bound. This implies that in commutative settings, complements of
+    sparse matrices can be processed as efficiently as sparse matrices (though
+    the corresponding algorithms are more involved). This covers the cases of
+    Boolean and tropical semirings that have numerous applications, e.g., in
+    graph theory.
+
+    As a~simple application of the presented linear-size construction, we show
+    how to multiply two $n\times n$ matrices over an arbitrary semiring in
+    $O(n^2)$ time if one of these matrices is a~0/1-matrix with $O(n)$~zeroes
+    (i.e., a~complement of a~sparse matrix).
+\end{abstract}
+
+\iffalse % DON'T TOUCH THIS LINE
+%%%  AUTHOR: Choose the arXiv category that best fits your article.
+%%%  A complete list of computer science categories is available here:
+%%%     http://arxiv.org/archive/cs
+%%%  and in math
+%%%     http://arxiv.org/archive/math
+%%%  Common categories include:
+%%%     cs.CC - Computational Complexity
+%%%     cs.CR - Cryptography and Security
+%%%     cs.DS - Data Structures and Algorithms
+%%%     cs.LG - Learning
+%%%     cs.IT - Information Theory
+%%%     cs.DM - Discrete Mathematics
+%%%     quant-ph - Quantum Physics
+%%%     math.PR - Probability
+%%%     math.CO - Combinatorics
+%%%  You must include at least one category. If you include more than one category,
+%%%  the first one will serve as your main category, and the others will be used for
+%%%  crosslisting.
+%%%
+%%%  Example:
+%%%  \tocarxivcategory{cs.CC,quant-ph}
+
+\tocarxivcategory{cs.CC}
+
+\fi % DON'T TOUCH THIS LINE
+
+\end{frontmatter}
+
+%%%
+%%% !!! AUTHOR
+%%% Paper goes here...
+
+%\clearpage
+%\tableofcontents
+%\clearpage
+
+\section{Introduction}
+\subsection{Problem Statement and New Results}
+
+Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes
+and $u$~ones, and $x=(x_1, \dotsc, x_n)$~be an~$n$-dimensional vector
+of formal variables over a~semigroup~$(S, \circ)$. In this paper,
+we study the
+complexity of the \emph{linear operator}~$Ax$,
+i.e., how many semigroup
+operations are required to compute a~vector whose $i$-th element is
+\[
+\sum_{1 \le j \le n\,\bigwedge\,A_{ij}=1}x_j
+\]
+where the summation is over the semigroup operation~$\circ$.\footnote{Note that
+the result of summation is undefined in case of an all-zero row, because
+semigroups have no neutral element in general. One can trivially sidestep this
+technical issue by adding an all-one column~$n+1$ to the matrix~$A$, as well as
+the neutral element $x_{n+1}$ into the vector. Alternatively, we could switch
+from semigroups to \emph{monoids}, but we choose not to do that, since we have
+no use for the neutral element and associated laws in the rest of the paper.}
+More specifically, we are interested in lower and
+upper bounds involving~$z$ and~$u$.
+Matrices with $u=O(n)$ are usually called \emph{sparse},
+whereas matrices with $z=O(n)$
+are called \emph{complements of sparse matrices}.
+Computing all $n$~outputs
+of~$Ax$ directly (i.e. using the above definition) takes
+$O(u)$ semigroup operations.
+The main question studied in this paper is:
+can $Ax$~be computed using $O(z)$ semigroup
+operations? Note that it is easy to achieve $O(z)$ complexity if $\circ$ has an
+inverse. Indeed, in this case $Ax$~can be computed via subtraction:
+$Ax = (U-\overline{A})x = Ux - \overline{A}x$, where $U$ is the all-ones matrix
+whose linear operator can be computed trivially using $O(n)$ semigroup
+operations, and $\overline{A}$ is the complement of~$A$ and therefore has only
+$z = O(n)$ ones.
+
+\subsubsection{Commutative Case}
+Our first main result shows that in the commutative case, complements
+of sparse matrices can be processed as
+efficiently as sparse matrices. Specifically, we prove
+that if the semigroup is commutative, $Ax$ can be computed in $O(z)$ semigroup
+operations; or, more formally, there exists
+a~circuit of size $O(z)$ that uses $x=(x_1, \dotsc, x_n)$ as
+an~input and computes $Ax$ by only applying the semigroup
+operation~$\circ$ (we provide the formal definition of the
+computational model in Section~\ref{subsec:circuits}). Moreover,
+the constructed circuits are \emph{uniform} in the sense that they
+can be generated by an~efficient algorithm. Hence, our circuits
+correspond to an~elementary algorithm that uses no tricks like examining the
+values $x_j$, i.e., the semigroup operation $\circ$ is applied in a~(carefully
+chosen) order that is independent of the specific input~$x$.
+
+\begin{restatable}{theorem}{upperthm}
+\label{thm:upperbound}
+Let $(S, \circ)$~be a~commutative semigroup,
+and $A \in \{0,1\}^{n \times n}$ be a~matrix
+with~$z=\Omega(n)$ zeroes.
+There exists a~circuit of size $O(z)$ that uses
+a~vector $x = (x_1,\ldots, x_n)$ of formal variables as an input,
+uses only the semigroup operation~$\circ$ at internal gates,
+and outputs $Ax$. Moreover, there exists a~randomized
+algorithm that takes the positions of $z$~zeroes of~$A$
+as an input and outputs such a~circuit in time $O(z)$
+with probability at least $1-\frac{O(\log^5n)}{n}$. There also
+exists a~deterministic algorithm with running time $O(z+n\log^4n)$.
+\end{restatable}
+
+\newpage
+We state the result for square matrices to simplify the presentation.
+Theorem~\ref{thm:upperbound} generalizes easily to show that $Ax$ for a~matrix
+$A \in \{0,1\}^{m \times n}$ with $z=\Omega(n)$ zeroes can be computed using
+$O(m+z)$ semigroup operations. Also, we assume that $z=\Omega(n)$ to be able to
+state an upper bound $O(z)$ instead of $O(z+n)$. Note that when $z<n$, the
+matrix~$A$ is forced to contain all-one rows that can be computed trivially.
+
+The following corollary generalizes Theorem~\ref{thm:upperbound}
+from vectors to matrices.
+
+\begin{restatable}{corollary}{matrixmultcor}
+\label{cor:matrixmultiplication}
+Let $(S, \circ)$ be a~commutative semigroup.
+There exists a~deterministic algorithm that takes
+a~matrix $A \in \{0,1\}^{n \times n}$ with
+$z=O(n)$ zeroes
+and a~matrix $B \in S^{n \times n}$ and computes
+the product $AB$ in time~$O(n^2)$.
+\end{restatable}
+
+\subsubsection{Non-commutative Case}
+As our second main result, we show that \emph{commutativity is essential}: for
+a~faithful non-commutative semigroup~$S$
+(the notion of faithful non-commutative semigroup  is made formal
+later in the text), the minimum number of semigroup operations
+required to compute $Ax$ for a~matrix
+$A \in \{0,1\}^{n \times n}$ with $z=O(n)$ zeroes is
+$\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
+
+\begin{restatable}{theorem}{lowerthm}
+\label{thm:lowerbound}
+Let $(S, \circ)$ be a~semigroup, $x$ be
+a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
+$A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
+computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
+is the inverse Ackermann function. Moreover, if $(S, \circ)$ is faithful non-commutative then there exists
+a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes
+in every row such that the minimum number of semigroup
+operations
+required to compute~$Ax$ is $\Omega(n\alpha(n))$.
+\end{restatable}
+
+
+\subsection{Motivation}
+The complexity of linear operators is interesting for many reasons, some of
+which are listed below.
+
+\textbf{Range queries.} In the \emph{range queries} problem,
+given a~vector~$x=(x_1, \dotsc, x_n)$ over a~semigroup $(S, \circ)$ and
+multiple queries of the form~$(l,r)$, one is required to
+output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$
+for each query. It~is a~classical problem in data structures and
+algorithms with applications in many fields, such as bioinformatics and
+string algorithms, computational geometry, image analysis, real-time
+systems, and others.
+We review some of the less straightforward applications
+as well as a~rich variety of algorithmic techniques for the problem in
+Sections~\ref{subseq:rmqapp} and~\ref{subsec:approaches}.
+
+The linear operator problem is a~natural generalization of the range queries
+problem: each row of the matrix~$A$ defines a~subset of the elements of~$x$
+that need to be summed up and this subset is not required to be
+a~contiguous range. The algorithms (Theorem~\ref{thm:upperbound} and
+Corollary~\ref{cor:matrixmultiplication}) and hardness results
+(Theorem~\ref{thm:lowerbound}) for the linear operator problem presented in this
+paper are indeed inspired by some of the known results for the range queries
+problem.
+
+\textbf{Graph algorithms.} Various graph path/reachability
+problems can be reduced naturally to matrix multiplication.
+Two classic examples are: (i) the all-pairs shortest path problem (APSP) is
+reducible to min-plus matrix multiplication, and (ii) the number of triangles
+in an undirected graph can be found by computing the third power of its
+adjacency matrix.
+It is natural to ask what happens if
+a~graph has $O(n)$ edges or $O(n)$ anti-edges
+(as usual, by~$n$ we denote the number of nodes).
+In many cases, an efficient algorithm
+for sparse graphs ($O(n)$ edges) is straightforward
+whereas an algorithm with the same efficiency
+for complements of sparse graphs ($O(n)$ anti-edges) is not. For
+example, it is easy to solve APSP and triangle counting on sparse graphs in
+time $O(n^2)$, but achieving the same time complexity for complements of sparse
+graphs is more complicated.
+Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication} give
+a~black-box way to solve these two problems on complements of sparse graphs in
+time $O(n^2)$.
+
+\textbf{Matrix multiplication over semirings.} Fast matrix
+multiplication methods rely essentially on the ring structure of the underlying
+set of elements. The first such algorithm was given by~Strassen,
+the current record upper bound is
+$O(n^{2.373})$~\cite{DBLP:conf/stoc/Williams12, DBLP:conf/issac/Gall14a}.
+The removal of the inverse operation often drastically increases the complexity
+of algorithmic problems over algebraic structures, and even the complexity of
+standard computational tasks are not well understood over tropical and
+Boolean semirings (see, e.g.~\cite{Williams14,GrigorievP15}).
+For various important semirings,
+we still do not know an $n^{3-\varepsilon}$ (for a~constant~$\varepsilon>0$)
+upper bound for matrix multiplication, e.g., the strongest known upper bound for
+min-plus matrix multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}.
+
+The interest in computations over such algebraic structures has
+recently grew substantially throughout the
+Computer Science community with the cases of Boolean and
+tropical semirings being of the main interest (see, for
+example,~\cite{Jukna16,Williams14,butkovic10systems}).
+From this perspective, the computation complexity over sparse and complements of
+sparse matrices is one of the most basic questions.
+Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}
+therefore characterise natural special
+cases when efficient computations are possible.
+
+\textbf{Functional programming.}
+Algebraic data structures for graphs developed in the functional programming
+community~\cite{mokhov2017algebraic} can be used for representing and processing
+densely-connected graphs in linear (in the number of vertices) time and memory.
+As we discuss in Section~\ref{sec-dense-graph}, Theorem~\ref{thm:upperbound}
+yields an algorithm for deriving a~linear-size algebraic graph representation
+for complements of sparse graphs.
+
+\textbf{Circuit complexity.} Computing linear operators over
+the Boolean semiring $(\{0,1\}, \lor)$ is a~well-studied problem
+in circuit complexity. The corresponding computational model is known
+as~\emph{rectifier networks}. An overview of known lower and upper bounds for
+such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
+Theorem~\ref{thm:upperbound} states that very dense linear operators have
+linear rectifier network complexity.
+
+\subsection{Organization and earlier publication}
+
+Background definitions are introduced in Section~\ref{sec:background}. The main
+results are presented in Section~\ref{sec-commutative} (the commutative case)
+and Section~\ref{sec-non-commutative} (the non-commutative case).
+This paper extends an earlier conference publication~\cite{isaac-2019-version}
+by providing complete proofs of all claimed results in
+Sections~\ref{sec-commutative}~and~\ref{sec-non-commutative}.
+
+\section{Background} \label{sec:background}
+\subsection{Semigroups and Semirings}
+A~\emph{semigroup} $(S, \circ)$ is an algebraic structure, where
+the operation
+$\circ$~is~\emph{closed}, i.e., $\circ : S\times S \rightarrow S$,
+and
+\emph{associative}, i.e.,
+$x \circ (y \circ z) = (x \circ y) \circ z$ for all~$x$, $y$,~and~$z$
+in~$S$.
+\emph{Commutative} (or \emph{abelian}) semigroups introduce
+one extra requirement: $x \circ y = y \circ x$ for all $x$ and $y$
+in~$S$.
+
+A~commutative semigroup $(S, \circ)$ can often be extended to
+a~\emph{semiring} $(S, \circ, \bullet)$ by introducing
+another associative (but not necessarily
+commutative)
+operation $\bullet$ that \emph{distributes} over~$\circ$, that is
+\[
+x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)~~~~~~\text{and}~~~~~~(x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z).
+\]
+hold for all~$x$, $y$,~and~$z$ in~$S$.
+Since $\circ$~and~$\bullet$ behave
+similarly to numeric addition and multiplication, it is common to
+give~$\bullet$ a~higher precedence to avoid
+unnecessary parentheses, and even omit~$\bullet$~from
+formulas altogether, replacing it by juxtaposition.
+This gives a terser and
+more convenient notation, e.g., the left distributivity law becomes:
+$x (y \circ z) = x y \circ x z$. We will use this notation,
+insofar as this does not lead to ambiguity. See Section~\ref{subsec:algstr} for
+an overview of commonly used semigroups and semirings.
+
+\subsection{Range Queries Problem and Linear Operator Problem}
+In the {\em range queries problem}, one is given
+a~sequence $x_1, x_2, \dotsc, x_n$ of
+elements of a~fixed semigroup $(S, \circ)$.
+Then, a~\emph{range query} is
+specified by a~pair of indices $(l,r)$, such that $1 \le l \le r \le n$.
+The answer to such a~query is the result of applying the semigroup
+operation to the
+corresponding range, i.e., $x_l \circ x_{l+1} \circ \dotsb \circ x_r$.
+The range queries problem is then to simply answer all given range
+queries.
+There are two
+regimes: online and offline. In the {\em online regime}, one is given
+a~sequence of {\em values}
+$x_1=v_1, x_2=v_2, \dotsc, x_n=v_n$ and is asked to preprocess
+it so that to
+answer efficiently any subsequent query.
+By ``efficiently'' one usually
+means in time independent of the length of the range
+(i.e., $r-l+1$, the time
+of a~naive algorithm), say, in time $O(\log n)$ or $O(1)$.
+In this paper, we
+focus on the {\em offline} version, where one is given a~sequence
+together with
+all the queries, and are interested in the minimum number of
+semigroup
+operations needed to answer all the queries. Moreover, we study
+a~more general
+problem: we assume that $x_1, \dotsc, x_n$ are formal variables
+rather than
+actual semigroup values. That is, we study the {\em circuit size} of
+the corresponding
+computational problem.
+
+The {\em linear operator} problem generalizes the range
+queries problem: now, instead of contiguous ranges one wants
+to compute sums over arbitrary subsets. These subsets are
+given as rows of a~0/1-matrix~$A$.
+
+\subsection{Circuits}\label{subsec:circuits}
+We consider circuits whose input consists of $n$~formal variables
+$\{x_1, \dotsc, x_n\}$. We are interested in the minimum number of semigroup
+operations needed to compute all given words $\{w_1, \dotsc, w_m\}$ (e.g., for
+the range queries problem, each word has a~form $x_l\circ x_{l+1}\circ \dotsb \circ x_r$). We use
+the following natural {\em circuit} model. A~circuit computing all these queries
+is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They
+are labelled with $\{1, \dotsc, n\}$ and are called {\em input gates}. All
+other nodes have positive in-degree and are called {\em gates}. Finally, some
+$m$~gates have out-degree~0 and are labelled with $\{1, \dotsc, m\}$; they are called {\em output gates}. The
+{\em size} of a~circuit is its number of edges (also called {\em wires}). Each
+gate of a~circuit computes a~word defined in a~natural way: input gates compute
+just $\{x_1, \dotsc, x_n\}$; any other gate of in-degree~$r$ computes a~word
+$f_1 \circ f_2 \circ \dotsb \circ f_r$ where $\{f_1, \dotsc, f_r\}$ are words
+computed at its predecessors (therefore, we assume that there is an underlying
+order on the incoming wires for each gate). We say that the circuit computes the
+words $\{w_1, \dotsc, w_m\}$ if the words computed at the output gates are
+equivalent to $\{w_1, \dotsc, w_m\}$ over the considered semigroup.
+
+\newpage
+For example, the circuit below computes range queries
+$(l_1,r_1)=(1,4)$,
+$(l_2,r_2)=(2,5)$, and
+$(l_3,r_3)=(4,5)$
+over inputs $\{x_1, \dotsc, x_5\}$ or, equivalently, the
+linear operator $Ax$ where the matrix $A$~is given below.
+
+\vspace{5mm}
+\begin{center}
+\begin{tikzpicture}[yscale=0.5]
+%\draw[help lines] (0,0) grid (10,6);
+\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/2.5/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
+  \node[inner sep=0mm,circle,draw,minimum size=5mm] (\n) at (\x,\y) {$\t$};
+\foreach \s/\t in {x2/a, x3/a, x4/a, x1/b, a/b, x5/c, a/c, x4/d, x5/d}
+  \draw[->] (\s) -- (\t);
+
+\node at (8,3) {$A=\begin{pmatrix}1&1&1&1&0\\0&1&1&1&1\\0&0&0&1&1\end{pmatrix}$};
+\end{tikzpicture}
+\end{center}
+\vspace{5mm}
+
+For a~0/1-matrix~$A$, by $C(A)$ we denote the minimum size of
+a~circuit computing the linear operator $Ax$.
+
+
+A~{\em binary circuit} is a~circuit having no gates of fan-in more than two. It
+is not difficult to see that any circuit can be converted into a~binary circuit
+of size at most twice the size of the original circuit. For this, one just
+replaces every gate of fan-in~$k$, for $k>2$, by a~binary tree with $2k-2$ wires
+(such a~tree contains $k$~leaves hence $k-1$ inner nodes and $2k-2$ edges).
+In~the binary circuit the number of gates does not exceed its size
+(i.e., the number of wires). And the number of gates in a~binary
+circuit is exactly the minimum number of semigroup operations needed to
+compute the corresponding function.
+
+%Note that we can view circuits as computations over some semigroup $(S,\circ)$,
+%meaning that we can substitute instead of the variables elements of the
+%semigroup $S$. If we fix some semigroup $(S,\circ)$ we can actually consider a
+%circuit as a computation in the semigroups $X_S$.{\todo{Andrey, Volodya, a davaite vmesto etogo vezde pisat', chto $x \in S^n$ is a vector of formal variables over $S$?}} Moreover, we can forget about
+%the original semigroup $S$ and consider the computations in the circuit as
+%computations in an arbitrary semigroup~$X$ with generators
+%$\{x_1, \ldots, x_n\}$.
+We call a~circuit~$C$ computing $A$ \emph{regular} if for every pair $(i,j)$
+such that $A_{ij}=1$, there exists exactly one path from the input~$j$ to the
+output~$i$. A~convenient property of regular circuits is the following
+observation.
+
+\begin{observation}\label{obs:transpose}
+Let $C$~be a~regular circuit computing a~0/1-matrix~$A$ over a~commutative
+semigroup. Then, by reversing all the wires in~$C$ one gets a~circuit
+computing~$A^T$.
+\end{observation}
+
+Instead of giving a~formal proof, we provide an example of a~reversed circuit
+from the example given above. It is because of this observation that we require
+circuit outputs to be gates of out-degree zero (so that when reversing all the
+wires the inputs and the outputs exchange places).
+
+\begin{center}
+\begin{tikzpicture}[yscale=0.5]
+\foreach \x/\y/\n/\t in {0/4/x1/1, 1/4/x2/2, 2/4/x3/3, 3/4/x4/4, 4/4/x5/5, 2/2.5/a/~, 1/2/b/1, 3/2/c/2, 4/2/d/3}
+  \node[inner sep=0mm,circle,draw,minimum size=6mm] (\n) at (\x,\y) {$\t$};
+\foreach \s/\t in {x2/a, x3/a, x4/a, x1/b, a/b, x5/c, a/c, x4/d, x5/d}
+  \draw[<-] (\s) -- (\t);
+
+\node at (8,3) {$A^T=\begin{pmatrix}1&0&0\\1&1&0\\1&1&0\\1&1&1\\0&1&1\end{pmatrix}$};
+\end{tikzpicture}
+\end{center}
+
+Note also that commutativity is not essential for this observation, it just
+allows us not to worry about the order of the incoming wires for each gate.
+
+
+%\section{Motivation and Applications}\label{sec-applications}
+%
+%In this section we discuss our motivation and demonstrate two applications of
+%the presented linear-size construction for a dense linear operator: fast
+%multiplication of dense and \emph{boring} matrices over arbitrary semirings
+%(Section~\ref{sec-boring-matrices}) and compact algebraic representation of
+%dense graphs (Section~\ref{sec-dense-graph}).
+%
+%\subsection{Dense Operators}
+%
+%Throughout this section we consider $n \times n$ matrices over an arbitrary
+%semiring $(S, \circ, \bullet)$, where the operations $\circ$ and $\bullet$ have
+%identities 0 and 1, respectively.
+%
+%A matrix is \emph{sparse} if most of its elements are 0. To be more precise, we
+%further assume that a sparse matrix has $O(n)$ non-zero elements. Sparse
+%matrices arise in many applications, and can be multiplied by arbitrary vectors
+%in $O(n)$ time and arbitrary matrices in $O(n^2)$ time (multiplication
+%by an $n\times n$ matrix can be thought of as multiplication by $n$ vectors).
+%% Note that these complexity bounds are exact, as they match the time required to
+%% read the input.
+%
+%A \emph{0/1 matrix} is a matrix whose elements belong to the set $\{0,1\}$. A
+%0/1 matrix is \emph{dense} if it has $O(n)$ zero elements, i.e. most of its
+%elements are 1.
+%
+%Note that multiplication of dense matrices by vectors can be viewed as a special
+%case of the Range Queries problem. Indeed, we can split the rows of a dense
+%matrix into $O(n)$ ranges, compute answers to these range queries, and then
+%recover the rows by combining the constituent ranges.
+%
+%As mentioned above, computations on dense matrices over algebraic structures
+%with inverse operations can often be reduced to computations on sparse matrices.
+%However, the situation changes for computations over semigroups or semirings,
+%which lack inverse operations. In such cases, the computation complexity of
+%various matrix operations can differ significantly from more classical settings,
+%which is a recurring topic in the recent years (see, for
+%example,~\cite{AkianGG12,Williams14,GrigorievP15}). This paper provides further
+%insight on this topic. As far as we know, the complexity of the problem under
+%consideration was not known even for the simplest semigroups like
+%$(\mathbb{B},\vee)$.
+
+%\subsection{Dense and boring matrix multiplication}\label{sec-boring-matrices}
+%
+%Out first main result presented in Section~\ref{sec-commutative} allows us to
+%obtain a linear-size circuit for multiplying a 0/1~dense matrix of size
+%$n \times n$ by a vector in an arbitrary semiring. Our construction is explicit
+%and the corresponding algorithm takes $O(n^2)$ time\footnote{Faster
+%implementations are possible if the input matrix is provided in a compressed
+%form.}. As a consequence, we can multiply a 0/1~dense matrix $A$ by an arbitrary
+%matrix $B$ in $O(n^2)$ time as follows:
+%
+%\begin{itemize}
+%  \item Construct a linear-size circuit for the dense linear operator
+%  $A\mathbf{x}$. Time complexity: $O(n^2)$.
+%  \item Evaluate the circuit on all $n$ columns of the matrix $B$. Each
+%  evaluation takes $O(n)$ time, hence the overall time complexity of this step
+%  is also $O(n^2)$.
+%\end{itemize}
+%
+%Furthermore, by combining the algorithms for sparse and dense matrix
+%multiplication, one can obtain an efficient algorithm for the multiplication of
+%so-called \emph{boring} matrices.
+%
+%A matrix is \emph{boring} if most of its elements are equal to some element~$b$ from
+%the semiring. To be more precise, we further assume that a boring matrix has
+%$O(n)$ elements that are not equal to~$b$. Boring matrices are a natural
+%generalisation of sparse and dense matrices: both are just special cases with
+%$b=0$ and $b=1$, respectively.
+%
+%To multiply a boring matrix $A$ by a vector $\mathbf{x}$, we decompose the
+%matrix into two components $A_0$ and $A_1$, such that $A = A_0 \circ b A_1$,
+%$A_0$ is sparse, and $A_1$ is dense\footnote{Note that here the operations
+%$\circ$ and $\bullet$ (the latter is represented by juxtaposition) are lifted to
+%matrices.}. Now we can compute $A \mathbf{x}$ thanks to various semiring laws:
+%
+%\[
+%\begin{array}{rcll}
+%A \mathbf{x} & = & (A_0 \circ b A_1) \mathbf{x} & \text{(sparse-dense decomposition)}\\
+% & = & A_0 \mathbf{x} \circ (b A_1) \mathbf{x} & \text{(distributivity and commutativity)}\\
+% & = & A_0 \mathbf{x} \circ b (A_1 \mathbf{x}) & \text{(associativity)}\\
+%\end{array}
+%\]
+%
+%\noindent
+%Both $A_0 \mathbf{x}$ and $A_1 \mathbf{x}$ can be computed using sparse and
+%dense matrix-vector multiplication, respectively; the results are further
+%combined using scalar multiplication by $b$ and vector addition $\circ$, both of
+%which take linear time and have linear-size circuits. Note that the second step
+%in the above equation relies on commutativity in a crucial way: elements of the
+%original matrix $A$ are partitioned into elements of $A_0$ and $A_1$ in an
+%arbitrary order. As in the dense case, this immediately leads to $O(n^2)$-time
+%boring matrix multiplication.
+
+
+%\section{Computational Model}
+
+%In this section we define our computational model, which includes a few less
+%commonly known notions related to semigroups, as well as semigroup circuits.
+
+
+
+%In an~important special case of the Boolean semigroup $(\{0,1\}, \lor)$,
+%circuits we are discussing are known as {\em rectifier networks}. An overview of
+%known lower and upper bounds for such circuits is given by Jukna
+%in~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
+
+%\section{Formal Statements of the Main Results} \label{sec:statement}
+%
+%Our first main result is the linear circuit for dense matrices over commutative semirings. We formulate it here in the full generality.
+%
+%\begin{theorem}\label{thm:main_statement}
+%Suppose $S$ is a commutative semigroup. A~matrix $A \in \{0,1\}^{n \times n}$
+%with $k$~zeroes can be computed by a~circuit of size $O(n+k)$.
+%\end{theorem}
+%
+%
+%Our second result shows that such a circuit is impossible over strongly non-commutative semirings.
+%
+%\begin{theorem}\label{thm:noncommlowerbound_statement}
+%For any strongly non-commutative semigroup $X$ there is a circuit to compute any dense operator of size $O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function. On the other hand, there exist dense matrices~$A$ such that any circuit computing $Ax$ must have size $\Omega(n\alpha(n))$.
+%\end{theorem}
+%
+%In the next two sections we provide the detailed proofs of these two theorems.
+
+\section{Commutative Case}\label{sec-commutative}
+
+This section is devoted to the proofs of Theorem~\ref{thm:upperbound} and
+Corollary~\ref{cor:matrixmultiplication}, which we remind below.
+
+\upperthm*
+
+\matrixmultcor*
+
+We start by proving two simpler statements to show how commutativity is
+important.
+
+\begin{lemma}\label{lemma:easy}
+Let $S$~be a semigroup (not necessarily commutative) and let
+$A \in \{0,1\}^{n \times n}$ contain at most
+one zero in every row. Then
+$C(A) = O(n)$.
+\end{lemma}
+
+\begin{proof}
+To compute the linear operator $Ax$, we first
+precompute all prefixes and suffixes of $x=(x_1, \dotsc, x_n)$.
+Concretely, let $p_i=x_1 \circ x_2 \circ \dotsb \circ x_i$. All $p_i$'s can be
+computed using $(n-1)$ binary gates as follows:
+\[
+p_1=x_1, p_2=p_1 \circ x_2, p_3=p_2 \circ x_3, \dotsc, p_i=p_{i-1} \circ x_i, \dotsc, p_n=p_{n-1}\circ x_n.
+\]
+Similarly, we compute all suffixes
+$s_j=x_j \circ x_{j+1} \dotsb \circ x_n$ using
+$(n-1)$ binary gates. From these prefixes and suffixes
+all outputs can be
+computed as follows: if a~row of~$A$ contains no zeroes,
+the corresponding
+output is~$p_n$; otherwise if a~row contains a~zero at position~$i$, the
+output is $p_{i-1} \circ s_{i+1}$ (for $i=1$ and $i=n$, we omit the redundant
+term).
+\end{proof}
+
+In the rest of the section, we assume that the
+underlying semigroup is
+commutative. Allowing at most two zeroes per row already leads to a~non-trivial
+problem. We give only a~sketch of the solution below, since we will further
+prove a~more general result. It is interesting to compare the following lemma
+with Theorem~\ref{thm:lowerbound} that states that in the
+non-commutative setting matrices with two zeroes per row are already hard.
+
+\begin{lemma} \label{lem:at_most_2}
+Let $A \in \{0,1\}^{n \times n}$ contain at most two zeroes in every row. Then
+$C(A) = O(n)$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+Consider an undirected graph with the set of nodes $\{1,2,\dotsc,n\}$, where
+two nodes $i$ and $j$ are connected by an edge if there is a~row having zeroes
+in columns~$i$ and~$j$. In the worst case (all rows are different and contain
+exactly two zeroes), the graph has exactly $n$~edges and hence it contains a cut
+$(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into
+two parts ($L$ and $R$). Now let us also split the rows into two parts: the top
+part $T$~contains all columns that have exactly one zero in each $L$ and $R$;
+the bottom part $B$ contains all the remaining rows. What is nice about the top
+part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$
+gates (using Lemma~\ref{lemma:easy}). For the bottom part, let us cut all-1
+columns out of it and make a recursive call (note that this requires the
+commutativity). The corresponding recurrence relation is $T(n) \le cn + T(n/2)$
+for a fixed constant $c$, implying $T(n)=O(n)$, and hence $C(A) = O(n)$.
+\end{proof}
+
+
+We now state a~few auxiliary lemmas that will be
+used as building blocks in the proof of Theorem~\ref{thm:upperbound}.
+
+%It is easy to see that the hardest case is when $X_S$ is a free commutative
+%semigroup, since the corresponding circuit can be used for any semigroup $X$.
+%Thus from now on in the proof of Theorem~\ref{thm:main} we concentrate on the
+%case of a free commutative semigroup $X_S$. We build the required circuit out
+%of the basic building blocks described below. We first show how to use these
+%blocks and then prove their existence.
+
+\begin{lemma}\label{lemma:decompose}
+There exists a~binary regular circuit of size $O(n\log n)$ such that
+any range can be computed in a~single additional binary gate
+using two gates of the circuit. It can be generated in time
+$O(n\log n)$.
+\end{lemma}
+
+\begin{lemma}\label{lemma:blocks}
+There exists a~binary regular circuit of size $O(n)$ such
+that any range
+of length at least $\log n$ can be computed in two binary
+additional gates from the gates of the circuit.
+It can be generated by an algorithm in time $O(n)$.
+\end{lemma}
+
+\begin{lemma}\label{lemma:permute}
+Let $m \le n$ and $A \in \{0,1\}^{m \times n}$
+be a~matrix with $z=\Omega(n)$ zeroes and at most $\log n$ zeroes in every row.
+There exists a~circuit of size $O(z)$ computing $Ax$. Moreover, there exists
+a~randomized $O(z)$ time algorithm that takes as input the positions of
+$z$~zeros and outputs a~circuit computing $Ax$ with probability at least
+$1-\frac{O(\log^5n)}{n}$. There also exists a~deterministic algorithm with
+running time $O(n\log^4n)$.
+\end{lemma}
+
+
+\begin{proof}[Proof of Theorem~\ref{thm:upperbound}]
+Denote the set of rows and the set of columns of~$A$ by~$R$
+and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
+having at least $\log n$ zeroes and $R_1=R \setminus R_0$.
+Every row of~$A$ can be decomposed into (maximal) contiguous ranges of ones. We
+will call them simply ranges of~$A$. We will compute all of them. From these
+ranges, it takes $O(z)$ additional binary gates to compute all the outputs.
+
+We compute the matrices $R_0 \times C$ and $R_1 \times C$
+separately. The main idea is that $R_0 \times C$ is easy to compute
+because it has a~small number of rows (at most $z/\log n$), while $R_1 \times C$
+is easy to compute because it has a~small number of zeroes in every row (at most
+$\log n$).
+
+The matrix $R_1 \times C$ can be computed using Lemma~\ref{lemma:permute}. To
+compute $R_0 \times C$, it suffices to compute $C \times R_0$ by a~regular
+circuit, thanks to the Observation~\ref{obs:transpose}.
+Let $|R_0|=t$. Clearly, $t \le z/\log n$.
+Using Lemma~\ref{lemma:decompose}, one can compute all
+ranges of $C \times R_0$ by a~circuit of size
+\[O(t\log t+z)=O\left(\frac{z}{\log n} \cdot \log z+z\right)=O(z+n)=O(z)\, ,\]
+since $z =O(n^2)$.
+
+The algorithm for generating the circuit is just a~combination
+of the algorithms from Lemmas~\ref{lemma:decompose} and~\ref{lemma:permute}.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lemma:decompose}]
+We adopt the divide-and-conquer construction by~Alon and
+Schieber~\cite{Alon87optimalpreprocessing}. Split the input range $(1,n)$ into
+two half-ranges of length~$n/2$:
+$(1,n/2)$ and $(n/2+1,n)$.
+Compute all suffixes of the left half and all prefixes of
+the right half.
+Using these precomputed suffixes and
+prefixes one can answer any query $(l,r)$ such that $l \le n/2
+\le r$ in a~single additional gate. It remains to be able to answer
+queries that lie entirely in one of the halves. We do this by
+constructing recursively circuits for both halves. The resulting
+recurrence relation $T(n) \le 2T(n/2)+O(n)$ implies that the
+resulting circuit has size at most $O(n\log n)$.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lemma:blocks}]
+We use the block decomposition technique for
+constructing the required circuit.
+Partition the input range $(1,n)$ into $n/\log n$ ranges
+of length $\log n$ and call them blocks. Compute the range
+corresponding to each block (in total size $O(n)$).
+Build a~circuit from Lemma~\ref{lemma:decompose} on
+top of these blocks. The size of this circuit is $O(n)$ since the
+number of blocks is $n/\log n$.
+Compute all prefixes and all suffixes of every block. Since
+the blocks partition the input range $(1,n)$, this also can be done
+with an $O(n)$ size circuit.
+
+Consider any range of length at least $\log n$. Note that it
+cannot lie entirely inside the block. Hence, any such range can be
+decomposed into three subranges: a~suffix of a~block, a~range
+of blocks, and a~prefix of a~block
+(where any of the three components may be empty). For example, for $n=16$,
+a~range $(3,13)$ is decomposed into a~suffix $(3,4)$ of the
+first block,
+a~range $(2,3)$ of blocks $(B_1, B_2, B_3, B_4)$, and a~prefix $(13,13)$ of
+the last block:
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+\foreach \x in {1,...,16}
+  \node at (\x,2) {\x};
+\draw[draw=white,fill=gray!20!white] (2.5,0.5) rectangle (13.5,1.5);
+\foreach \x in {1,...,15}
+  \draw (\x+0.5,0.5) -- (\x+0.5,1.5);
+\draw (0.5,0.5) rectangle (16.5,1.5);
+\foreach \x in {4,8,12}
+  \draw[line width=.5mm] (\x+0.5,0.4) -- (\x+0.5,1.6);
+\foreach \x/\i in {2/1, 6/2, 10/3, 14/4}
+  \node at (\x+0.5,0) {$B_{\i}$};
+\end{tikzpicture}
+\end{center}
+It remains to note that all these three components are already precomputed.
+\end{proof}
+
+\input deterministic_algorithm
+
+% \begin{proof}[Proof of Lemma~\ref{lemma:permute}.]
+% All the $z$~zeroes of~$A$ break its rows into ranges.
+% Let us call a~range {\em short} is its length is at most $\log n$.
+% We will show that it is possible to permute the columns of~$A$
+% so that the total length of all short ranges is at most $O(\frac{n}{\log n})$. Then, all such short ranges can be computed by a~circuit of size $O(\frac{\log n}{n} \cdot n)=O(n)=O(z)$.
+% All the remaining ranges can be computed by a~circuit of size $O(n)$ using Lemma~\ref{lemma:blocks}.
+
+% It is easy to construct the required permutation randomly. For this, one just
+% estimates the expected total length of all short ranges in a~random permutation. It is then possible to derandomize this approach using a~greedy algorithm. We provide all formal details %in Subsection~\ref{sec:deterministic}.
+% the full version of the paper~\cite{DBLP:journals/eccc/KulikovMMP19}.
+
+%\begin{description}
+%\item[Randomized algorithm.]
+%
+%Permute the columns randomly. A~uniform random permutation
+%of $n$~objects can be generated in time~$O(n)$~\cite[Algorithm~P (Shuffling)]{DBLP:books/lib/Knuth98}.
+%Let us compute the expectation of
+%the total length of short ranges.
+%Let us focus on a~single row and a~particular cell in it. Denote the number of zeroes in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
+%\begin{enumerate}
+%\item The cell lies close to the border, i.e., it belongs to
+%the first $\log n$ cells or to the last~$\log n$ cells
+%(the number of such cells is $2\log n$). Then,
+%this cell belongs to a~short range iff there is at least one zero
+%in $\log n$ cells close to it (on the side opposite to the border).
+%Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeroes may be anywhere.
+%The probability is then at most
+%\[\log n \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}}=\log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
+%\item It is not close to the border (the number of such cells is $n-2\log n$). Then, there must be a~zero on both sides of the
+%cell. The probability is then at most
+%\[\log^2 n \cdot \frac{\binom{n}{t-2}}{\binom{n}{t}}=\log^2n \cdot \frac{t(t-1)}{(n-t+1)(n-t+2)}=O\left(\frac{\log^4 n}{n^2}\right) \, .\]
+%\end{enumerate}
+%Hence, the expected total length of short ranges in one row is
+%\[O\left( 2\log n \cdot \frac{\log^2 n}{n} + (n-2\log n) \cdot \frac{\log^4 n}{n^2}\right)=O\left(\frac{\log^4 n}{n}\right) \, .\]
+%Thus, the expected length of short ranges in the whole
+%matrix~$A$ is $O(\log^4n)$. By Markov inequality, the probability that
+%the length of all short ranges is larger than $\frac{n}{\log n}$ is
+%at most $O(\frac{\log^5 n}{n})$.
+%\end{description}
+%
+%We provide a deterministic algorithm in Appendix~\ref{sec:deterministic}.
+
+% \end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:matrixmultiplication}]
+One deterministically generates a~circuit for~$A$ of size $O(n)$ in time
+$O(n\log^4n)=O(n^2)$ by Theorem~\ref{thm:upperbound}.
+This circuit can be used to multiply~$A$ by any column of~$B$
+in time~$O(n)$. For this, one constructs a~topological ordering of the gates of
+the circuits and computes the values of all gates in this order. Hence, $AB$ can
+be computed in time~$O(n^2)$.
+\end{proof}
+
+
+\section{Non-commutative Case}\label{sec-non-commutative}
+
+In the previous section, we have shown that for commutative semigroups dense
+linear operators can be computed by linear size circuits. A~closer look at the
+circuit constructions reveals that we use commutativity crucially: it is
+important that we may reorder the columns of the matrix (we do this in the proof
+of Lemma~\ref{lemma:permute}). In this section, we show that this trick is
+unavoidable: for non-commutative semigroups, it is not possible to construct
+linear size circuits for dense linear operators. Namely, we prove
+Theorem~\ref{thm:lowerbound}.
+
+\lowerthm*
+
+\subsection{Faithful semigroups}
+
+We consider computations over general semigroups that are not necessarily
+commutative. In particular, we will establish a lower bound for a large class of
+semigroups and our lower bound does not hold for commutative semigroups. This
+requires a formal definition that captures semigroups with rich enough structure
+and in particular requires that a semigroup is substantially non-commutative.
+
+Previously lower bounds in the circuit model for a large class of semigroups
+were known for the range queries
+problem~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}. These
+results were proven for a large class of commutative semigroups called
+\emph{faithful} (we provide a formal definition below). Since we are dealing
+with the non-commutative case, we need to generalize the notion of faithfulness
+to non-commutative semigroups.
+
+To provide a formal definition of faithfulness it is convenient to introduce the
+following notation. Suppose $(S, \circ)$ is a
+semigroup. Let $X_{S,n}$ be a semigroup with generators $\{x_1,\ldots, x_n\}$
+and with the equivalence relation consisting of identities in variables
+$\{x_1,\ldots, x_n\}$ over~$(S,\circ)$. That is, for two words $W$ and $W'$ in
+the alphabet $\{x_1,\ldots,x_n\}$ we have $W\sim W'$ in $X_{S,n}$ iff no matter
+which elements of the semigroup~$S$ we substitute for $\{x_1,\ldots, x_n\}$ we
+obtain a~correct equation over~$S$. In particular, note that if $S$~is
+commutative (respectively, idempotent), then $X_{S,n}$ is also commutative
+(respectively, idempotent).
+The semigroup $X_{S,n}$ is studied in algebra under the name of relatively free
+semigroup of rank $n$ of a variety generated by semigroup
+$S$~\cite{neumann2012varieties}. We will often omit the subscript $n$ and write
+simply $X_S$ since the number of generators will be clear from the context.
+
+Below we will use the following notation. Let $W$ be a word in the alphabet
+$\{x_1,\ldots, x_n\}$. Denote by $\var(W)$ the set of letters that are present
+in $W$.
+
+We are now ready to introduce the definition of a commutative faithful
+semigroup.
+
+\begin{definition}[\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}]
+A commutative semigroup $(S, \circ)$ is \emph{faithful commutative} if for any
+equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
+\end{definition}
+
+Note that this definition does not pose any restrictions on the cardinality of
+each letter in $W$ and $W'$. This allows to capture in this definition
+important cases of idempotent semigroups. For example, semigroups
+$(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ are commutative faithful.
+
+We need to study the non-commutative case, and moreover, our results
+establish the difference between commutative and non-commutative cases. Thus,
+we need to extend the notion of faithfulness to non-commutative semigroups to
+capture their non-commutativity in the whole power. At the same time we would
+like to keep the case of idempotency. We introduce the notion of faithfulness
+for the non-commutative case inspired by the properties of free idempotent
+semigroups~\cite{GreenR52}. To introduce this notion we need several
+definitions.
+
+The \emph{initial mark} of $W$ is the letter that is present in $W$ such that
+its first appearance is farthest to the right. Let $U$ be the prefix of $W$
+consisting of letters preceding the initial mark. That is, $U$ is the maximal
+prefix of $W$ with a smaller number of generators. We call $U$ the
+\emph{initial} of $W$. Analogously we define the \emph{terminal mark} of $W$ and
+the \emph{terminal} of $W$.
+
+\begin{definition}\label{def:strong_non_commutativity}
+We say that a semigroup $X$ with generators $\{x_1,\ldots, x_n\}$ is
+\emph{strongly non-commutative} if for any words $W$ and $W'$ in the
+alphabet $\{x_1,\ldots, x_n\}$ the equivalence $W\sim W'$ holds in $X$ only if
+the initial marks of $W$ and $W'$ are the same, terminal marks are the same,
+the equivalence $U \sim U'$ holds in $X$, where $U$ and $U'$ are the initials of
+$W$ and $W'$, respectively, and the equivalence $V \sim V'$ holds in $X$, where
+$V$ and $V'$ are the terminals of $W$ and $W'$, respectively.
+\end{definition}
+
+In other words, this definition states that the first and the last occurrences
+of generators in the equivalence separates the parts of the equivalence that
+cannot be affected by the rest of the generators and must therefore be
+equivalent themselves. We also note that this definition exactly captures the
+idempotent case: for a free idempotent semigroup the condition in this
+definition is ``if and only if''\cite{GreenR52}.
+
+\begin{definition} \label{def:faithful}
+A semigroup $(S, \circ)$ is \emph{faithful non-commutative} if $X_S$ is strongly
+non-commutative.
+\end{definition}
+
+We note that this notion of faithfulness is relatively general and is true for
+semigroups $(S,\circ)$ with considerable degree of non-commutativity in their
+structure. It clearly captures free semigroups with at least two generators. It
+is also easy to see that the
+requirements in Definition~\ref{def:faithful} are satisfied for the free
+idempotent semigroup with $n$ generators (if $S$ is idempotent, then $X_{S,n}$
+is also clearly idempotent and no other relations are holding in $X_{S,n}$ since
+we can substitute generators of $S$ for $x_1, \ldots, x_n$).
+
+Next we observe some properties of strongly non-commutative semigroups that we
+need in our constructions.
+
+\begin{lemma} \label{lem:prefix_equivalence}
+Suppose $X$ is strongly non-commutative. Suppose the equivalence $W \sim W'$
+holds in~$X$ and $|\var(W)|=|\var(W')|=k$. Suppose $U$~and~$U'$ are minimal
+(maximal) prefixes of $W$ and $W'$ such that $|\var(U)| = |\var(U')| = l\leq k$.
+Then the equivalence $U \sim U'$ holds in $X$. The same is true for suffixes.
+\end{lemma}
+
+\begin{proof}
+The proof is by induction on the decreasing $l$. Consider the maximal prefixes
+first. For $l=k$ and maximal prefixes we just have $U=W$ and $U'=W'$. Suppose
+the statement is true for some $l$, and denote the corresponding prefixes by $U$
+and $U'$, respectively. Then note that the maximal prefixes with $l-1$ variables
+are initials of $U$ and $U'$. And the statement follows by
+Definition~\ref{def:strong_non_commutativity}.
+
+The proof of the statement for minimal prefixes is completely analogous. Note
+that on the step of induction the prefixes differ from the previous case by one
+letter that are initial marks of the corresponding prefixes. So these additional
+letters are also equal by the Definition~\ref{def:strong_non_commutativity}.
+
+The case of suffixes is completely analogous.
+\end{proof}
+
+The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
+\begin{lemma} \label{lem:variables_order}
+Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X$. Let
+us write down the letters of $W$ in the order in which they appear first time in
+$W$ when we read it from left to right. Let's do the same for $W'$. Then we
+obtain exactly the same sequences of letters.
+%
+The same is true if we read the words from right to left.
+\end{lemma}
+
+\subsection{Proof Strategy}
+
+We now proceed to the proof of Theorem~\ref{thm:lowerbound}. The upper bound
+follows easily by a naive algorithm: split all rows of $A$ into ranges, compute
+all ranges by a circuit of size $O(n\alpha(n))$ using Yao's
+construction~\cite{DBLP:conf/stoc/Yao82}, then combine ranges into rows of $A$
+using $O(n)$ gates.
+
+Thus, we focus on lower bounds. We will view the computation of the circuit as a
+computation in a strongly non-commutative semigroup $X=X_S$.
+
+We will use the following proof strategy. First we observe that it is enough to
+prove the lower bound for the case of idempotent strongly non-commutative
+semigroups $X$. Indeed, if $X$ is not idempotent, we can factorize it by
+idempotency relations and obtain a strongly non-commutative idempotent semigroup
+$X_{id}$. A lower bound for the case of $X_{id}$ implies lower bound for the
+case of $X$. We provide a detailed explanation in
+Section~\ref{sec:noncommutative_extension}.
+
+Hence, from this point we can assume that $X$ is idempotent and strongly
+non-commutative. Next for idempotent case we show that our problem is equivalent
+to the commutative version of the range query problem.
+
+For a semigroup $X$ with generators $\{x_1,\ldots, x_n\}$ denote by $X_{sym}$
+its factorization under commutativity relations
+$x_i x_j \sim x_j x_i$ for all $i,j$. Note that if $X$ is idempotent and
+strongly non-commutative, then $X_{sym}$ is just the semigroup in which
+$W \sim W'$ iff $\var(W)=\var(W')$ (this is free idempotent commutative
+semigroup).
+
+\begin{theorem}\label{thm:equivalence}
+For an idempotent strongly non-commutative $X$ and for any $s=\Omega(n)$ we have
+that (commutative) range queries problem over $X_{sym}$ has size $O(s)$ circuits
+iff (non-commutative) dense linear operator problem over $X$ has size $O(s)$
+circuits.
+\end{theorem}
+
+Using this theorem, it is straightforward to finish the proof of
+Theorem~\ref{thm:lowerbound}.
+\begin{proof}[Proof of Theorem~\ref{thm:lowerbound}]
+By Theorem~\ref{thm:equivalence} if non-commutative dense linear
+operator problem has size $s$ circuit, then the commutative range queries
+problem also does. However, for the latter problem it is proved by Chazelle and
+Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that $s=\Omega(n \alpha(n))$.
+Moreover, in our construction for the proof of Theorem~\ref{thm:equivalence} it
+is enough to consider dense linear operators with exactly two zeroes in every
+row. From this the second part of Theorem~\ref{thm:lowerbound} follows.
+\end{proof}
+
+Note that for the proof of Theorem~\ref{thm:lowerbound} only one direction of
+Theorem~\ref{thm:equivalence} is needed. However, we think that the equivalence
+in Theorem~\ref{thm:equivalence} might be of independent interest, so we provide
+the proof for both directions.
+
+Thus, it remains to prove Theorem~\ref{thm:equivalence}. We do this by showing
+the following equivalences for any $s = \Omega(n)$.
+
+\vspace{2mm}
+\begin{center}
+\begin{tikzpicture}[scale=0.84,transform shape]
+%\draw[help lines] (0,0) grid (16,6);
+\tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=33mm,above right,minimum height=20mm]
+
+\node[v] (a) at (0,0) {(commutative) range queries problem over $X_{sym}$ has $O(s)$ size circuits};
+\node[v] (b) at (5.8,0) {(non-commutative) range queries problem over $X$ has $O(s)$ size circuits};
+\node[v] (c) at (11.9,0) {(non-commutative) dense linear operator problem over $X$ has $O(s)$ size circuits};
+
+\path (a.10) edge[->] node[above] {Lemma~\ref{lem:intervals}} (b.170);
+\path (b.190) edge[->] node[below] {special case} (a.-10);
+\path (b.10) edge[->] node[above] {straightforward} (c.170);
+\path (c.190) edge[->] node[below] {Lemma~\ref{lem:dense_matrices}} (b.-10);
+\end{tikzpicture}
+\end{center}
+\vspace{2mm}
+
+In these equivalences, non-commutative problems are considered over an arbitrary
+strongly non-commutative semigroup and the commutative problem is considered
+over free idempotent commutative semigroup $X_{sym}$. Recall that
+if we factorize any strongly non-commutative idempotent semigroup over
+commutativity equivalences, we obtain exactly free idempotent commutative
+semigroup.
+
+Note that two of the reductions on this diagram are trivial. The other two are
+formulated in the following lemmas.
+
+%To show the theorem we introduce an intermediate problem: computing non-commutative intervals by $O(n)$-size circuit.
+%
+%Clearly, this problem subsumes both of our problems. Indeed, if we can compute non-commutative intervals, we can compute commutative intervals by the same circuit.
+%On the other hand, if we can compute non-commutative intervals, then given non-commutative dense matrix we can split it into intervals, compute them separately, then join them together in $O(n)$.
+%
+%Thus, it remains to show the following two lemmas.
+
+\begin{lemma} \label{lem:dense_matrices}
+If the (non-commutative) dense linear operator problem over $X$ has size $s$
+circuit then the (non-commutative) range queries problem over $X$ has size
+$O(s)$ circuit.
+%If we can compute non-commutative dense matrices by a linear size circuit, we can also compute non-commutative intervals.
+\end{lemma}
+
+\begin{lemma} \label{lem:intervals}
+If the (commutative) version of the range queries problem over $X_{sym}$ has
+size $s$ circuits then the (non-commutative) version over $X$ also does.
+%If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
+\end{lemma}
+
+The proofs of these lemmas are presented in
+Sections~\ref{sec:operators_to_queries}
+and~\ref{sec:non-commutative_to_commutative} respectively.
+
+\input non_commutative_proofs
+
+\section{Open Problems}
+There are several natural problems left open.
+\begin{enumerate}
+\item Design a~deterministic $O(z)$ time algorithm for generating
+a~circuit in the commutative case.
+For this, it suffices to design an $O(n)$ deterministic algorithm for the
+following problem: given a~list of positions of $n$~zeroes of an $n \times n$
+0/1-matrix with at most $\log n$ zeroes in every row, permute its columns so
+that the total length of all segments of length at most $O(\log n)$ is
+$O(\frac{n}{\log n})$.
+\item Determine the asymptotic complexity of the linear operator in terms of the number of zeroes in the non-commutative case.
+\item After the preliminary version of our paper Stasys Jukna posed a question on how large can the gap between the complexity of the operators $Ax$ and $\overline{A}x$ can be over $(\mathbb{N},+)$ semiring, where $A \in \{0,1\}^{n\times n}$ and $\overline{A}$ is a bit-wise negation of $A$. Our result rules out the possibility of achieving super-constant (multiplicative) gap with sparse matrix $A$.
+
+\end{enumerate}
+
+
+\section*{Acknowledgments}
+We thank Pawel Gawrychowski for pointing us out to the
+paper~\cite{DBLP:journals/ijcga/ChazelleR91}. We thank Alexey Talambutsa for
+fruitful discussions on the theory of semigroups.
+
+\clearpage
+
+\appendix
+\section{Review}
+\input algebraic_structures
+\input range_queries_applications
+\input approaches
+\input dense_graph_repr
+
+\bibliographystyle{tocplain}
+\bibliography{references}
+
+%%% !!! AUTHOR
+%%% Include a short description of each author's affiliation
+%%% following the structure below. Use the same unique ID used
+%%% previously (presumably lower case last name).
+%%% Use \tocat{} and \tocdot{} instead of "@" and "." in emails
+% \begin{tocinfo}[surname]
+%     Firstname Surname\\
+%     Assistant professor\\
+%     Department of Computer Science and\\
+%     Department of Immunology\\
+%     Exemplar University\\
+%     Town, State/Province, Country\\
+%     name\tocat{}cs\tocdot{}exemplar\tocdot{}edu \\   %% email address here
+%     \url{http://cs.exemplar.edu/~surname}      %% your home page here
+%    \end{tocinfo}
+
+\begin{tocauthors}
+\begin{tocinfo}[kulikov]
+    Alexander S. Kulikov\\
+    Steklov Mathematical Institute at St.~Petersburg\\
+    Russian Academy of Sciences and St.~Petersburg State University\\
+    kulikov\tocat{}logic\tocdot{}pdmi\tocdot{}ras\tocdot{}ru\\
+    \url{https://logic.pdmi.ras.ru/\~kulikov/}
+\end{tocinfo}
+\begin{tocinfo}[mikhailin]
+    Ivan Mikhailin\\
+    University of California, San Diego\\
+    imikhail\tocat{}eng\tocdot{}ucsd\tocdot{}edu
+\end{tocinfo}
+\begin{tocinfo}[mokhov]
+    Andrey Mokhov\\
+    School of Engineering, Newcastle University, United Kingdom\\
+    andrey.mokhov\tocat{}ncl\tocdot{}ac\tocdot{}uk
+\end{tocinfo}
+\begin{tocinfo}[podolskii]
+    Vladimir V. Podolskii\\
+    Steklov Mathematical Institute\\
+    Russian Academy of Sciences\\
+    podolskii\tocat{}mi-ras\tocdot{}ru\\
+    \url{http://www.mi-ras.ru/\~podolskii/}
+\end{tocinfo}
+\end{tocauthors}
+
+\end{document}
