@@ -47,7 +47,7 @@
 %%
 %% Version 4.2:  Removes definition of the algorithm theorem type to
 %% avoid clashes with, e.g., the algorithmicx class which invokes the
-%% float class with a float called algorithm. 
+%% float class with a float called algorithm.
 %%
 %% Version 4.2 compatibility warning: may not be backward compatible.
 %%
@@ -163,7 +163,7 @@
 \RequirePackage{graphicx}
 
 % Load the eXtensible Metadata Platform package, so that we can include licensing information in our .pdf files.
-\RequirePackage{hyperxmp}
+% \RequirePackage{hyperxmp}
 
 % Load the hyperref package. As loaded, it uses the default hpdftex
 % driver code; this appears to be fine.  The colors selected are
@@ -211,10 +211,10 @@
 % Our current strategy is maximize text layout area, subject to a
 % one-inch lower bound on all margins. A4 pages are 210mmx297mm =
 % 597.5ptx845pt; letter pages are 8.5inx11in = 614.3ptx795pt.
-% Accounting for 2in=144.5pt total left and right margins leaves 
-% us with min(597.5pt,614.3pt)-144.5pt = 453pt of total textwidth. 
-% Similarly, we can afford min(845pt,795pt)-144.5pt = 650.5pt of 
-% total text height, into which we must pack headers, text, and 
+% Accounting for 2in=144.5pt total left and right margins leaves
+% us with min(597.5pt,614.3pt)-144.5pt = 453pt of total textwidth.
+% Similarly, we can afford min(845pt,795pt)-144.5pt = 650.5pt of
+% total text height, into which we must pack headers, text, and
 % footers.
 \setlength{\voffset}{0pt}
 \setlength{\hoffset}{0pt}
@@ -353,9 +353,9 @@
 \newcommand{\tocpdfauthor}[1]{\renewcommand{\toc@pdfauthor}{#1}}
 
 % Embed license data in the xmp block.
-\hypersetup{%
- pdfcopyright={This document is licensed under a Creative Commons Attribution 3.0 license},%
- pdflicenseurl={\toc@cclicenseurl}}
+% \hypersetup{%
+%  pdfcopyright={This document is licensed under a Creative Commons Attribution 3.0 license},%
+%  pdflicenseurl={\toc@cclicenseurl}}
 
 % Embed remaining data after user has set it in preamble.
 \AtBeginDocument{%
@@ -409,7 +409,7 @@ under a Creative Commons Attribution License (CC-BY)}}}
 
 \newcommand\toc@bannertexta%
 {\href{\toc@journaldoiaddress}{\toc@bannerjournalname}}
- 
+
 \newcommand\toc@bannertextb%
            {\fontsize{11}{13}\usefont{OT1}{ptm}{m}{it}
             \selectfont{\toc@journaladdress}}
@@ -422,7 +422,7 @@ under a Creative Commons Attribution License (CC-BY)}}}
     \centering \toc@bannertexta\\ \toc@bannertextb\\
    \vspace{2mm} \hrule\vspace{1pt}\hrule%
  \end{minipage}}
-  
+
 % Define the date box. If \toc@received is
 % undefined, this will simply print
 % the current date, as does the article class.
@@ -442,7 +442,7 @@ under a Creative Commons Attribution License (CC-BY)}}}
 \newcommand{\toc@classificationbox}{%
  \parbox[t]{\textwidth}{%
  \ifex{\toc@acmclassification}{\@empty}{}
- \else{\noindent \textbf{ACM Classification: }\toc@acmclassification% 
+ \else{\noindent \textbf{ACM Classification: }\toc@acmclassification%
        \par \medskip}
  \fi
 %
@@ -485,7 +485,7 @@ under a Creative Commons Attribution License (CC-BY)}}}
 % Set up the 2ff. page style.
 \renewcommand{\ps@headings}{%
 \renewcommand{\@oddhead}
-             {\hfil\toc@headerlayout{\toc@runningtitle}\hfil}%    
+             {\hfil\toc@headerlayout{\toc@runningtitle}\hfil}%
 \renewcommand{\@evenhead}
              {\hfil\toc@headerlayout{\toc@runningauthor}\hfil}%
 \renewcommand{\@oddfoot}
@@ -624,7 +624,7 @@ under a Creative Commons Attribution License (CC-BY)}}}
 
 \newenvironment{frontmatter}[1][]{
   \title{\toc@title}
-  
+
  % Default position is to float
  \newcommand{\toc@floatclass}{float}
  \define@key{frontmatter}{classification}{\renewcommand{\toc@floatclass}{##1}}
@@ -708,14 +708,14 @@ under a Creative Commons Attribution License (CC-BY)}}}
 \def\toc@titlefootnote@display{\xdef\@thefnmark{}\@footnotetext}
 
 % Generic hyperref construct
-\newcommand{\expref}[2]{\texorpdfstring{\hyperref[#2]{#1~\ref{#2}}}{#1~\ref{#2}}} 
-\newcommand{\expeqref}[2]{\texorpdfstring{\hyperref[#2]{#1~\eqref{#2}}}{#1~\eqref{#2}}} 
+\newcommand{\expref}[2]{\texorpdfstring{\hyperref[#2]{#1~\ref{#2}}}{#1~\ref{#2}}}
+\newcommand{\expeqref}[2]{\texorpdfstring{\hyperref[#2]{#1~\eqref{#2}}}{#1~\eqref{#2}}}
 \newcommand{\exprefsilent}[2]{\texorpdfstring{\hyperref[#2]{#1}}{#1}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% \tocauthor and \tocaboutauthor environments
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Predefined e-mail punctuation.
 \IfFileExists{tocat.png}{%
@@ -733,7 +733,7 @@ under a Creative Commons Attribution License (CC-BY)}}}
 \newenvironment{tocauthors}{ % Beginning of environment
 
                      % Initialise an empty tocabout command
-\newcommand{\tocabout}{\@empty}  
+\newcommand{\tocabout}{\@empty}
 
 % Define tocinfo environment
  \newenvironment{tocinfo}[1][\@empty]{%
@@ -797,7 +797,7 @@ under a Creative Commons Attribution License (CC-BY)}}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\toc@setup@predefines}{%
-% Theorems, lemmata, corollaries, etc. are interleaved 
+% Theorems, lemmata, corollaries, etc. are interleaved
 % and numbered by section.
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
@@ -838,8 +838,8 @@ under a Creative Commons Attribution License (CC-BY)}}}
 \newcommand{\cproblem}[1]{{\normalfont\textsc{##1}}}
 %
 %%% Predefined Abbreviations
-\newcommand{\ie}{i.\,e.} 
-\newcommand{\Ie}{I.\,e.} 
+\newcommand{\ie}{i.\,e.}
+\newcommand{\Ie}{I.\,e.}
 \newcommand{\eg}{e.\,g.}
 \newcommand{\Eg}{E.\,g.}
 \newcommand{\phd}{Ph.\,D.}
