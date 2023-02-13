@@ -41,13 +41,13 @@ at most $O(\frac{\log^5 n}{n})$.
 
 \textbf{Deterministic algorithm.}
 It will prove convenient to assume that $A$ is a~$t \times t$ matrix with
-exactly~$t$ zeros with at most $\log t$ zeroes in every row. For this, we let
+exactly~$t$ zeros with at most $\log t$ zeroes in every row. To~do this, we let
 $t=\max\{n, z\}$ and add a~number of all-ones rows and columns if needed. This
 enlargement of the matrix does not make the computation simpler: additional rows
 mean additional outputs that can be ignored and additional columns correspond to
 redundant variables that can be removed (substituted by~0) once the circuit is
 constructed. Below, we show how to deterministically construct a~circuit of size
-$O(t)$ for~$A$. For this, we present a~greedy algorithm for permuting the
+$O(t)$ for~$A$. To~do this, we present a~greedy algorithm for permuting the
 columns of~$A$ in such a~way that the total length of all short segments
 is $O(\log^4n)$. This will follow from the fact that all short ranges in the
 resulting matrix~$A$ will lie within the last $O(\log^2 t)$ columns.
@@ -94,7 +94,7 @@ time $O(t\log^2t)$: if $c_1, \dotsc, c_t$ are the numbers of zeros in the
 columns, then sorting the corresponding arrays takes time
 \[\sum_{i=1}^{t}c_i \log c_i \le \log(t \log t) \cdot \sum_{i=1}^{t}c_i \le \log(t \log t) \cdot t\log t \, .\]
 
-At every iteration, we need to update the set~$R$. For this, we need to remove
+At every iteration, we need to update the set~$R$. To~do this, we need to remove
 some rows from it (from the column that no longer belongs to the stripe of
 columns of width $\log t$) and to add the rows of the newly added column. Since
 the size of~$|R|$ is always at most~$t$ and the total number of zeros is
@@ -104,7 +104,7 @@ representing~$R$).
 
 If $|R| > \log t$, one just takes an all-one column (all such columns
 can be stored in a~list). If $|R| \le \log t$, we need to find a~column outside
-of the set~$F$. For this, we just scan the list of the yet unpicked columns. For
+of the set~$F$. To~do this, we just scan the list of the yet unpicked columns. For
 each column, we first check whether it belongs to the set~$F$. This can be
 checked in time $O(\log^2t)$: for every row in~$|R|$, one checks whether this
 row belongs to the sorted array of the considered column using binary search in
