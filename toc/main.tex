@@ -64,7 +64,7 @@
 % \usepackage{amsmath}
 \usepackage{amssymb}
 % \usepackage{fullpage}
-\usepackage[colorinlistoftodos,color=green!20]{todonotes}
+\usepackage[colorinlistoftodos, color=green!20]{todonotes}
 % \usepackage{amsthm}
 \usepackage{thm-restate}
 
@@ -103,11 +103,9 @@
 \newcommand{\mmax}{\texttt{MAX}}
 \newcommand{\var}{\texttt{Var}}
 
-\newcommand{\stodo}[1]{\todo[inline, color=red!20]{[Sasha] #1}}
-\newcommand{\atodo}[1]{\todo[inline, color=red!20]{[Andrey] #1}}
+\newcommand{\stodo}[1]{\todo[inline, color=yellow!20]{[Sasha] #1}}
+\newcommand{\atodo}[1]{\todo[inline, color=blue!20]{[Andrey] #1}}
 \newcommand{\vtodo}[1]{\todo[inline, color=red!20]{[Volodya] #1}}
-
-% \listoftodos
 
 % \title{Complexity of Linear Operators
 % \thanks{This is an extended version of an earlier conference publication~\cite{isaac-2019-version}.
@@ -120,6 +118,7 @@
 % \ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm
 
 \begin{document}
+\listoftodos
 
 \begin{frontmatter}%%[classification=text] << EDITOR.
 
@@ -170,6 +169,8 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 %%%   if more than two authors: (Jones et al., STOC'14)
 %%%   if journal: (Jones et al., SICOMP 2014)
 \begin{abstract}
+	\vtodo{Reviewer~2: ``The lower bounds result in the Abstract is stated without reference to the faithful semigroup. It is worth making that explicit for clarity. \\ The order of the results listed in the Abstract is different from the order in the body of the paper. Specifically, the paper presents the results (1), (2) and (3) in order but discusses (2), (3) and (1) in that order in the Abstract. This is nitpicky but keeping them consistent will help.''}
+	
     Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones
     and $x$ be an~$n$-dimensional vector of formal variables over a~semigroup
     $(S, \circ)$. How many semigroup operations are required to compute the
@@ -251,7 +252,6 @@ technical issue by adding an all-one column~$n+1$ to the matrix~$A$, as well as
 the neutral element $x_{n+1}$ into the vector. Alternatively, we could switch
 from semigroups to \emph{monoids}, but we choose not to do that, since we have
 no use for the neutral element and associated laws in the rest of the paper.}
-\atodo{Sasha: Should we just state everywhere that we assume that the matrix does not contain empty rows and delete the footnote?}
 
 \todo[inline]{Added an~example below}
 To~give an~example, consider a~complement $A \in \{0,1\}^{6 \times 6}$ of~the identity matrix. In~this case, the $i$-th output~$y_i$ (for $i=1, \dotsc, 6$) is~equal to the sum of~all input variables $x_1, \dotsc, x_6$ except for $x_i$.
@@ -406,6 +406,11 @@ the product $AB$ in time~$O(n^2)$.
 \end{restatable}
 
 \subsubsection{Non-commutative Case}
+
+\vtodo{Reviewer~1: ``At first, I had the confusion that the same algorithm / circuit has to work for any ``faithful non-commutative'' semigroup, as in the commutative section, and the lower bound rules out small circuits of this kind. It would be good to emphasize that the lower bound works even if the circuit can be constructed based on~$S$.}
+
+\vtodo{Reviewer~1: ``The part where you define faithful non-commutative semigroup and state basic properties is hard to digest. Is there a natural non-commutative semigroup that is faithful non-commutative and is not the free idempo- tent semigroup or the free semigroup? For the free semigroup case, it is trivial to prove the reduction, as any non-range gate is useless(?). Ideally, it would be helpful to provide a few concrete (and natural) examples that have more structures than the free idempotent semigroup. If such examples are not easy to describe or natural, I would suggest arranging the proofs and definitions such that the reader will have $S$ being the free idempotent semigroup in mind when reading all the proofs. This can be done by either explicitly stating (and emphasize) that it is recommended to think that $S$ is the free idempotent semigroup, or first proving the result for this case then define the faithful non-commutative semigroups and remark that the whole proof works for any such semigroup.''}
+
 As our second main result, we show that \emph{commutativity is essential}: for
 a~faithful non-commutative semigroup~$S$
 (the notion of faithful non-commutative semigroup  is made formal
@@ -427,10 +432,22 @@ operations
 required to compute~$Ax$ is $\Omega(n\alpha(n))$.
 \end{restatable}
 
+\vtodo{Reviewer~2: ``Theorem 1.3 can be split into two parts — one stating the lower bound and the other stating the upper bounds. The proof of the upper bound is short and straightforward from [21], and the main result is the lower bound.''}
+
+\vtodo{Reviewer~2: ``The result from [6] used in the proof of Theorem 1.3 must be explicitly stated. ''}
+
+
+
 
 \subsection{Motivation}
 The complexity of linear operators is interesting for many reasons, some of
 which are listed below.
+
+\atodo{Reviewer~2: ``The paragraphs on Range Queries and Graph Algorithms in Section 1.2 need references to literature. Additionally and more importantly, Range Queries should discuss data structures in the Group model because their lower bound proof relies on [6], which proves a lower bound for a problem in the Group model for data structures.''}
+
+\atodo{Reviewer~2: ``To reiterate the above comment, I think the authors should expand on “”The algorithms (Theorem 1.1 and Corollary 1.2) and hardness results (Theorem 1.3) for the linear operator problem presented in this paper are indeed inspired by some of the known results for the range queries problem.” to discuss [6] and other related work.''}
+
+\atodo{Reviewer~2: ``It will be nice to discuss Algorithms by Yao and by Alon and Schieber from A.3 in the main body of the paper as their upper bound results rely on them.''}
 
 
 \begin{description}
@@ -456,6 +473,8 @@ paper are indeed inspired by some of the known results for the range queries
 problem. The connection to~range queries is~straightforward:
 zeros in a~row split this row into a~collection of~ranges
 in a~natural way.
+
+\todo[inline]{Added a picture}
 
 \begin{mypic}
 	\begin{scope}[scale=.2]
@@ -492,7 +511,7 @@ in a~natural way.
 problems can be reduced naturally to matrix multiplication.
 Two classic examples are: (i) the all-pairs shortest path problem (APSP) is
 reducible to min-plus matrix multiplication, and (ii) the number of triangles
-in an undirected graph can be found by computing the third power of its
+in an undirected graph can be found by computing the third power (over the integers) of its
 adjacency matrix.
 It is natural to ask what happens if
 a~graph has $O(n)$ edges or $O(n)$ anti-edges
@@ -507,6 +526,9 @@ graphs is more complicated.
 Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication} give
 a~black-box way to solve these two problems on complements of sparse graphs in
 time $O(n^2)$.
+
+\todo[inline]{Reviewer~1: ``I’m not sure if it’s fair to say that triangle counting on complement of sparse graphs is more complicated, as triangle counting reduces to standard matrix multiplication, where subtraction exists.''~--- We mean here that designing an $O(n^2)$ time algorithm for triangle counting for graphs with $O(n)$ edges seems to be
+easier than for graphs with $O(n)$ antiedges.}
 
 \item[Matrix multiplication over semirings.] Fast matrix
 multiplication methods rely essentially on the ring structure of the underlying
@@ -651,7 +673,6 @@ order on the incoming wires for each gate). We say that the circuit computes the
 words $\{w_1, \dotsc, w_m\}$ if the words computed at the output gates are
 equivalent to $\{w_1, \dotsc, w_m\}$ over the considered semigroup.
 
-\newpage
 For example, the circuit below computes range queries
 $(l_1,r_1)=(1,4)$,
 $(l_2,r_2)=(2,5)$, and
@@ -721,8 +742,10 @@ wires the inputs and the outputs exchange places).
 \end{tikzpicture}
 \end{center}
 
-Note also that commutativity is not essential for this observation, it just
-allows us not to worry about the order of the incoming wires for each gate.
+\todo[inline]{Reviewer~1: ``Why is commutativity not essential? For non-commutative semigroups, each gate needs to specify the order in which the input wires are summed up. What is the order after reversing all wires?''~--- Right! We've removed the corresponding sentence.}
+
+%Note also that commutativity is not essential for this observation, it just
+%allows us not to worry about the order of the incoming wires for each gate.
 
 
 %\section{Motivation and Applications}\label{sec-applications}
@@ -863,7 +886,7 @@ We start by proving two simpler statements to show how commutativity is
 important.
 
 \begin{lemma}\label{lemma:easy}
-Let $S$~be a semigroup (not necessarily commutative) and let
+Let $S$~be a~(not necessarily commutative) semigroup and let
 $A \in \{0,1\}^{n \times n}$ contain at most
 one zero in every row. Then
 $C(A) = O(n)$.
@@ -871,15 +894,15 @@ $C(A) = O(n)$.
 
 \begin{proof}
 To compute the linear operator $Ax$, we first
-precompute all prefixes and suffixes of $x=(x_1, \dotsc, x_n)$.
-Concretely, let $p_i=x_1 \circ x_2 \circ \dotsb \circ x_i$. All $p_i$'s can be
+precompute all prefix and suffix sums of $x=(x_1, \dotsc, x_n)$.
+Specifically, let $p_i=x_1 \circ x_2 \circ \dotsb \circ x_i$. All $p_i$'s can be
 computed using $(n-1)$ binary gates as follows:
 \[
 p_1=x_1, p_2=p_1 \circ x_2, p_3=p_2 \circ x_3, \dotsc, p_i=p_{i-1} \circ x_i, \dotsc, p_n=p_{n-1}\circ x_n.
 \]
-Similarly, we compute all suffixes
+Similarly, we compute all suffix sums
 $s_j=x_j \circ x_{j+1} \dotsb \circ x_n$ using
-$(n-1)$ binary gates. From these prefixes and suffixes
+$(n-1)$ binary gates. From these prefix and suffix sums
 all outputs can be
 computed as follows: if a~row of~$A$ contains no zeroes,
 the corresponding
@@ -900,25 +923,40 @@ non-commutative setting matrices with two zeroes per row are already hard.
 Let $A \in \{0,1\}^{n \times n}$ contain at most two zeroes in every row. Then
 $C(A) = O(n)$.
 \end{lemma}
+
+\stodo{Reviewer~2: ``The algorithm is interesting. For Lemma 3.3, it will be helpful to see a picture of the matrix split into the different blocks — this can potentially replace some of the formal details as they only provide a sketch of the proof here.''}
+
 \begin{proof}[Proof sketch]
+\stodo{Reviewer~3: ``In the proof sketch of Lemma 3.3, first I believe that it should say "The top part T contains all *rows* that have exactly one zero in each L and R" ("rows" instead of "columns"). Furthermore, I was unable to follow the last step, where a recursive call is made after cutting all-1 columns out of the bottom part of the matrix. In particular, I believe there are cases where there are no all-1 columns to be removed, which seems like a problem. Despite this being intended as a proof sketch, as it's currently written the sketch was unable to convince me that the lemma is true.''}	
+	
+	
 Consider an undirected graph with the set of nodes $\{1,2,\dotsc,n\}$, where
 two nodes $i$ and $j$ are connected by an edge if there is a~row having zeroes
 in columns~$i$ and~$j$. In the worst case (all rows are different and contain
 exactly two zeroes), the graph has exactly $n$~edges and hence it contains a cut
 $(L,R)$ of size at least $n/2$. This cut splits the columns of the matrix into
-two parts ($L$ and $R$). Now let us also split the rows into two parts: the top
+two parts, $L$~and~$R$. Thanks to~commutativity,
+we~can handle the submatrices spanned by~$L$ and~$R$
+separately and then merge the results.
+
+Let us split the rows into two parts: the top
 part $T$~contains all columns that have exactly one zero in each $L$ and $R$;
 the bottom part $B$ contains all the remaining rows. What is nice about the top
 part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$
 gates (using Lemma~\ref{lemma:easy}). For the bottom part, let us cut all-1
-columns out of it and make a recursive call (note that this requires the
-commutativity). The corresponding recurrence relation is $T(n) \le cn + T(n/2)$
+columns out of it and make a recursive call. 
+\todo[inline]{Reviewer~1: ``“note that this requires the commutativity”, this is true, but doesn’t the top part already require commutativity, because L and R may not necessarily be sets of consecutive integers?''~--- Right! Fixed.}
+The corresponding recurrence relation is $T(n) \le cn + T(n/2)$
 for a fixed constant $c$, implying $T(n)=O(n)$, and hence $C(A) = O(n)$.
 \end{proof}
 
 
-We now state a~few auxiliary lemmas that will be
-used as building blocks in the proof of Theorem~\ref{thm:upperbound}.
+Below, we~state two auxiliary lemmas that will 
+be~used as~building blocks in the proof of Theorem~\ref{thm:upperbound}. 
+We~prove Lemma~\ref{lemma:permute}
+in~Section~\ref{sec:deterministic}.
+
+\todo[inline]{Reviewer~1: ``Lemma 3.4--3.6 are stated all at once with proofs deferred, and only 3.4 and 3.6 are used in the proof of Theorem 1.1. It feels hard to remember what will be used when reading the proof of 1.1. Consider deferring the statement of Lemma 3.5 and possibly moving the proof of Lemma 3.4 forward (as it is short).''~--- Done!}
 
 %It is easy to see that the hardest case is when $X_S$ is a free commutative
 %semigroup, since the corresponding circuit can be used for any semigroup $X$.
@@ -934,13 +972,23 @@ using two gates of the circuit. It can be generated in time
 $O(n\log n)$.
 \end{lemma}
 
-\begin{lemma}\label{lemma:blocks}
-There exists a~binary regular circuit of size $O(n)$ such
-that any range
-of length at least $\log n$ can be computed in two binary
-additional gates from the gates of the circuit.
-It can be generated by an algorithm in time $O(n)$.
-\end{lemma}
+\begin{proof}%[Proof of Lemma~\ref{lemma:decompose}]
+	We adopt the divide-and-conquer construction by~Alon and
+	Schieber~\cite{Alon87optimalpreprocessing}. Split the input range $(1,n)$ into
+	two half-ranges of length~$n/2$:
+	$(1,n/2)$ and $(n/2+1,n)$.
+	Compute all suffixes of the left half and all prefixes of
+	the right half.
+	Using these precomputed suffixes and
+	prefixes one can answer any query $(l,r)$ such that $l \le n/2
+	\le r$ in a~single additional gate. It remains to be able to answer
+	queries that lie entirely in one of the halves. We do this by
+	constructing recursively circuits for both halves. The resulting
+	recurrence relation $T(n) \le 2T(n/2)+O(n)$ implies that the
+	resulting circuit has size at most $O(n\log n)$.
+\end{proof}
+
+
 
 \begin{lemma}\label{lemma:permute}
 Let $m \le n$ and $A \in \{0,1\}^{m \times n}$
@@ -958,8 +1006,13 @@ Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
 having at least $\log n$ zeroes and $R_1=R \setminus R_0$.
 Every row of~$A$ can be decomposed into (maximal) contiguous ranges of ones. We
-will call them simply ranges of~$A$. We will compute all of them. From these
-ranges, it takes $O(z)$ additional binary gates to compute all the outputs.
+call them \emph{ranges of~$A$}. 
+Below, we~show that all the ranges of~$A$
+can be~computed by a~circuit of~size $O(z)$.
+From these
+ranges, it takes $O(z)$ additional binary gates to compute all the outputs of~$Ax$.
+
+\todo[inline]{Reviewer~3: ``The proof of Theorem 1.1 spends some time talking about decomposing the rows of A into maximal ranges of ones, but it's not mentioned again in the rest of the proof. I think it should either be made more clear why this part is connected to the rest or this part should be edited out.''~--- We stated more clearly why we consider the ranges of~$A$ above.}
 
 We compute the matrices $R_0 \times C$ and $R_1 \times C$
 separately. The main idea is that $R_0 \times C$ is easy to compute
@@ -980,60 +1033,6 @@ The algorithm for generating the circuit is just a~combination
 of the algorithms from Lemmas~\ref{lemma:decompose} and~\ref{lemma:permute}.
 \end{proof}
 
-\begin{proof}[Proof of Lemma~\ref{lemma:decompose}]
-We adopt the divide-and-conquer construction by~Alon and
-Schieber~\cite{Alon87optimalpreprocessing}. Split the input range $(1,n)$ into
-two half-ranges of length~$n/2$:
-$(1,n/2)$ and $(n/2+1,n)$.
-Compute all suffixes of the left half and all prefixes of
-the right half.
-Using these precomputed suffixes and
-prefixes one can answer any query $(l,r)$ such that $l \le n/2
-\le r$ in a~single additional gate. It remains to be able to answer
-queries that lie entirely in one of the halves. We do this by
-constructing recursively circuits for both halves. The resulting
-recurrence relation $T(n) \le 2T(n/2)+O(n)$ implies that the
-resulting circuit has size at most $O(n\log n)$.
-\end{proof}
-
-\begin{proof}[Proof of Lemma~\ref{lemma:blocks}]
-We use the block decomposition technique for
-constructing the required circuit.
-Partition the input range $(1,n)$ into $n/\log n$ ranges
-of length $\log n$ and call them blocks. Compute the range
-corresponding to each block (in total size $O(n)$).
-Build a~circuit from Lemma~\ref{lemma:decompose} on
-top of these blocks. The size of this circuit is $O(n)$ since the
-number of blocks is $n/\log n$.
-Compute all prefixes and all suffixes of every block. Since
-the blocks partition the input range $(1,n)$, this also can be done
-with an $O(n)$ size circuit.
-
-Consider any range of length at least $\log n$. Note that it
-cannot lie entirely inside the block. Hence, any such range can be
-decomposed into three subranges: a~suffix of a~block, a~range
-of blocks, and a~prefix of a~block
-(where any of the three components may be empty). For example, for $n=16$,
-a~range $(3,13)$ is decomposed into a~suffix $(3,4)$ of the
-first block,
-a~range $(2,3)$ of blocks $(B_1, B_2, B_3, B_4)$, and a~prefix $(13,13)$ of
-the last block:
-\begin{mypic}
-	\begin{scope}[scale=.6]
-		\foreach \x in {1,...,16}
-		  \node at (\x,2) {\x};
-		\draw[draw=white,fill=gray!20!white] (2.5,0.5) rectangle (13.5,1.5);
-		\foreach \x in {1,...,15}
-		  \draw (\x+0.5,0.5) -- (\x+0.5,1.5);
-		\draw (0.5,0.5) rectangle (16.5,1.5);
-		\foreach \x in {4,8,12}
-		  \draw[line width=.5mm] (\x+0.5,0.4) -- (\x+0.5,1.6);
-		\foreach \x/\i in {2/1, 6/2, 10/3, 14/4}
-		  \node at (\x+0.5,0) {$B_{\i}$};
-	\end{scope}
-\end{mypic}
-It remains to note that all these three components are already precomputed.
-\end{proof}
 
 \input deterministic_algorithm
 
@@ -1147,10 +1146,14 @@ A commutative semigroup $(S, \circ)$ is \emph{faithful commutative} if for any
 equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
 \end{definition}
 
+\vtodo{Reviewer~3: ``In section 4 after definition 4.1 when the term "initial mark" is defined, my comments are that 1) the definition of "initial mark" and "initial" should be made its own definition (e.g. definition 4.2) and 2) the definition of "initial mark" and "initial" would benefit greatly from one or two simple examples, which shouldn't take much space or time to present.''}
+
 Note that this definition does not pose any restrictions on the cardinality of
-each letter in $W$ and $W'$. This allows to capture in this definition
+each letter in $W$ and $W'$. This allows~us to capture in this definition
 important cases of idempotent semigroups. For example, semigroups
 $(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ are commutative faithful.
+
+\vtodo{Reviewer~1: ``“This allows to capture in this definition important cases of idempotent semigroups.” I’m not sure if I understand this sentence. This definition does not imply idempotence, nor is implied by idempotence.''}
 
 We need to study the non-commutative case, and moreover, our results
 establish the difference between commutative and non-commutative cases. Thus,
@@ -1227,15 +1230,19 @@ The case of suffixes is completely analogous.
 
 The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
 \begin{lemma} \label{lem:variables_order}
+	\vtodo{Reviewer~1: ``The statement is too casual, consider rephrasing it''}
+	
 Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X$. Let
 us write down the letters of $W$ in the order in which they appear first time in
-$W$ when we read it from left to right. Let's do the same for $W'$. Then we
+$W$ when we read it from left to right. We do the same for $W'$. Then we
 obtain exactly the same sequences of letters.
 %
 The same is true if we read the words from right to left.
 \end{lemma}
 
 \subsection{Proof Strategy}
+
+\vtodo{Reviewer~3: ``I found the arrangement of sections 4.2, 4.3, and 4.4 quite difficult to follow, as there are many cases of lemmas or theorems being stated and then proven out of order and in completely different sections. For example, Lemma 4.7 is stated in section 4.2 and is proven all the way back in section 4.4 after Lemma 4.9 is both stated and proved. I'm not sure what a better arrangement would be, but reading and understanding the current version involved lots of flipping back and forth and jumping between sections.''}
 
 We now proceed to the proof of Theorem~\ref{thm:lowerbound}. The upper bound
 follows easily by a naive algorithm: split all rows of $A$ into ranges, compute
@@ -1275,6 +1282,9 @@ circuits.
 Using this theorem, it is straightforward to finish the proof of
 Theorem~\ref{thm:lowerbound}.
 \begin{proof}[Proof of Theorem~\ref{thm:lowerbound}]
+	\vtodo{Reviewer~1: ``Technically, Theorem 1.3 is stated for general strongly non-commutative semigroups, while Theorem 4.6 is stated for idempotent X. Consider integrating the argument in section 4.3 to the proof, or moving it to an earlier place.''}
+	
+	
 By Theorem~\ref{thm:equivalence} if non-commutative dense linear
 operator problem has size $s$ circuit, then the commutative range queries
 problem also does. However, for the latter problem it is proved by Chazelle and
@@ -1366,6 +1376,7 @@ $O(\frac{n}{\log n})$.
 We thank Pawel Gawrychowski for pointing us out to the
 paper~\cite{DBLP:journals/ijcga/ChazelleR91}. We thank Alexey Talambutsa for
 fruitful discussions on the theory of semigroups.
+\atodo{Please add a nice acknowledgment to the reviewers.}
 
 \clearpage
 

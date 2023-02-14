@@ -31,7 +31,9 @@ Consider a semigroup $X_{id}$ as introduced above. By Lemma~\ref{lem:idempotisat
 \subsection{Reducing Dense Linear Operator to Range Queries} \label{sec:operators_to_queries}
 In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the natural order. This intuition is formalized in Lemma~\ref{lemma:correctorder} below. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeroes in positions $l-1$ and $r+1$ (hence, this row consists of three ranges: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the natural order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
 
-It should be mentioned, at the same time, that the semigroup $X$ might be complicated. In particular, the idempotency is tricky. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
+It should be mentioned, at the same time, that the semigroup $X$ might be complicated. 
+\vtodo{Reviewer~1: ``At first, I wasn’t sure what this paragraph is trying to say. Later, I realized that this paragraph is trying to justify that non-increasing or non-range circuits can make sense. Make it more explicit.'' (Sasha: perhaps, he means a different place. Please check the review.)}
+In particular, the idempotency is tricky. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
 This is not extremely impressive, since to get $xyz$ we multiply by $xyz$, but the point is that this is possible in principle.
 
 We proceed to the formal proofs. Let's call a word $W$ in the alphabet $\{x_1,\ldots,x_n\}$ \emph{increasing} if it is a product of variables in the increasing order. A~binary circuit is called an~{\em increasing circuit} if each of its gates computes a word equivalent in $X$ to increasing~word.
@@ -96,12 +98,14 @@ Note that if $x_i$ and $x_{i'}$ are both contained in $G$, $i<i'$, and $x_i$ is 
 
 Consider the largest good variable in $G$ (if there is one), denote it by $x_k$ ($x_k$ is actually just the largest variable in~$G$, unless of course there are no good variables in $G$). Let us focus on the first occurrence of $x_k$ in~$G$.
 
+\vtodo{Reviewer~1: ``Claim 4.12, 4.13, 4.14: avoid nested proofs.''}
+
 \begin{claim}
 All first occurrences of other good variables in~$G$ must be to the left of the first occurrence of $x_k$.
 \end{claim}
 
 \begin{proof}
-Suppose that a~good variable $x_i$ has the first occurrence to the right of (the first occurrence of) $x_k$. Consider an output gate $H$ such that there is a~path from~$G$ to~$H$ and along this path there are no multiplications of $G$ from the left by words containing variables greater than~$x_i$. Then we have $H \sim LGR$, where all variables of~$L$ are smaller then~$x_i$. Then in $H$ the variable $x_i$ appears before $x_k$ when we read from left to right, but at the same time we have that $x_k$ appears before $x_i$ in $LGR$. This contradicts Lemma~\ref{lem:variables_order}.
+Suppose that a~good variable $x_i$ has the first occurrence to the right of (the first occurrence of) $x_k$. Consider an output gate $H$ such that there is a~path from~$G$ to~$H$ and along this path there are no multiplications of $G$ from the left by words containing variables greater than~$x_i$. Then we have $H \sim LGR$, where all variables of~$L$ are smaller than~$x_i$. Then in $H$ the variable $x_i$ appears before $x_k$ when we read from left to right, but at the same time we have that $x_k$ appears before $x_i$ in $LGR$. This contradicts Lemma~\ref{lem:variables_order}.
 \end{proof}
 
 Now, for a~gate~$G$, define two words $\mmin_G$ and $\mmax_G$. Both these words are products of variables in the increasing order: $\mmin_G$ is the product of good variables of $G$ in the increasing order, $\mmax_G$ is the product (in the increasing order) of all variables that has first occurrences before (the first occurrence of) $x_k$. Note that $\mmin_G$ is
@@ -122,7 +126,7 @@ There are no gap variables for $\mmax_H$ in~$F$.
 \end{claim}
 
 \begin{proof}
-Suppose that some variable $x_i$ in~$F$ is a~gap variable for $\mmax_H$. Consider an output $U$ such that there is a path from~$G$ to~$U$ and along this path there are no multiplications of $G$ from the left by words containing variables greater than~$x_k$. Then we have $U \sim LGR$ where all variables of $L$ are smaller then~$x_k$. Consider the prefix $P$ of $U$ preceding the variable~$x_k$ and the prefix~$Q$ of $LG$ preceding the variable $x_k$.
+Suppose that some variable $x_i$ in~$F$ is a~gap variable for $\mmax_H$. Consider an output $U$ such that there is a path from~$G$ to~$U$ and along this path there are no multiplications of $G$ from the left by words containing variables greater than~$x_k$. Then we have $U \sim LGR$ where all variables of $L$ are smaller than~$x_k$. Consider the prefix $P$ of $U$ preceding the variable~$x_k$ and the prefix~$Q$ of $LG$ preceding the variable $x_k$.
 Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. Let us now read $P$ and $Q$ from right to left (note that we switch the order here, previously we read the words from left to right). By Lemma~\ref{lem:variables_order} the variables in~$P$ and~$Q$ should appear in the same order. But this is not true (the variable in~$P$ are in the decreasing order and in~$Q$ the variable $x_i$ is not on its place), a~contradiction.
 \end{proof}
 
@@ -131,12 +135,12 @@ There are no gap variables for $\mmax_F$ in~$H$.
 \end{claim}
 
 \begin{proof}
-Suppose that a~variable $x_i$ in~$H$ is a~gap variable for $\mmax_F$. Consider an output~$U$ such that there is a~path from~$G$ to~$U$ and along this path there are no multiplications of~$G$ from the left by words containing variables greater than $x_l$, the largest variable of~$F$. Then we have $U \sim LGR$, where all variables of~$L$ are smaller then $x_l$. Consider the prefix~$P$ of~$U$ preceding $x_l$ and the prefix $Q$ of $LG$ preceding $x_l$.
+Suppose that a~variable $x_i$ in~$H$ is a~gap variable for $\mmax_F$. Consider an output~$U$ such that there is a~path from~$G$ to~$U$ and along this path there are no multiplications of~$G$ from the left by words containing variables greater than $x_l$, the largest variable of~$F$. Then we have $U \sim LGR$, where all variables of~$L$ are smaller than $x_l$. Consider the prefix~$P$ of~$U$ preceding $x_l$ and the prefix $Q$ of $LG$ preceding $x_l$.
 Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. But then the variables of~$P$ and~$Q$ appear in the same order if we read the words from right to left. But this is not true (the variables in~$P$ are in the decreasing order and in~$Q$ the variable $x_i$ is not on its place), a~contradiction.
 \end{proof}
 
 We are now ready to complete the proof of Lemma~\ref{lemma:correctorder}.
-Consider $P_F$ and $P_H$. By Claims~\ref{cl: h is good} and~\ref{cl: f is good}, we know that they are ranges in the same sequence of variables $\var(P_F)\cup \var(P_H)$. We know that the largest variables of $P_H$ is greater than all variables of $P_f$. Then either $P_F$ is contained in $P_H$, and then we can let $P_G=P_H$ (it contains all good variables of~$G$), or we have $P_F =PQ$ and $P_H=QR$ for some words $P, Q, R$. In this case we let $P_G = P_F \circ P_H = PQQR=PQR$. Clearly, $\mmin_G$ is the suffix of $P_G$ and $P_G$ itself is the suffix of $\mmax_G$.
+Consider $P_F$ and $P_H$. By Claims~\ref{cl: h is good} and~\ref{cl: f is good}, we know that they are ranges in the same sequence of variables $\var(P_F)\cup \var(P_H)$. We know that the largest variables of $P_H$ is greater than all variables of $P_F$. Then either $P_F$ is contained in $P_H$, and then we can let $P_G=P_H$ (it contains all good variables of~$G$), or we have $P_F =PQ$ and $P_H=QR$ for some words $P, Q, R$. In this case we let $P_G = P_F \circ P_H = PQQR=PQR$. Clearly, $\mmin_G$ is the suffix of $P_G$ and $P_G$ itself is the suffix of $\mmax_G$.
 \end{proof}
 
 
@@ -144,21 +148,21 @@ Consider $P_F$ and $P_H$. By Claims~\ref{cl: h is good} and~\ref{cl: f is good},
 \subsection{Reducing Non-commutative Range Queries to Commutative Range Queries} \label{sec:non-commutative_to_commutative}
 %{Proof of Lemma~\ref{lem:intervals}}
 
-In this subsection we prove Lemma~\ref{lem:intervals}.
+In this subsection, we prove Lemma~\ref{lem:intervals}.
 
 \begin{proof}[Proof of Lemma~\ref{lem:intervals}]
-We will show that any computation of ranges over $X_{sym}$ can be reconstructed without increase in the number of gates in such a way that each gate computes a range (recall, that we call this a range circuit). It is easy to see that then this circuit can be reconstructed as a circuit over $X$ each gate of which computes the same range with the variables in the increasing order. Indeed, we need to make sure that each gate computes a range in such a way that all variables are in the increasing order and this is easy to do by induction. Each gate computes a product of two ranges $a$ and $b$. If one of them is contained in the other, we simplify the circuit, since the gate just computes the same range as one of its inputs (due to idempotency and commutativity). It is impossible that $a$ and $b$ are non-intersecting and have a gap between them, since then our gate does not compute a range (in a range circuit). So, if $a$ and  $b$ are non-intersecting, then they are consecutive and we just need to multiply them in the right order. If the ranges are intersecting, we just multiply then in the right order and apply idempotency.
+We will show that any computation of ranges over $X_{sym}$ can be reconstructed without increase in the number of gates in such a way that each gate computes a range (recall, that we call this a range circuit). It is easy to see that then this circuit can be reconstructed as a circuit over $X$ each gate of which computes the same range with the variables in the increasing order. Indeed, we need to make sure that each gate computes a range in such a way that all variables are in the increasing order and this is easy to do by induction. Each gate computes a product of two ranges $a$ and $b$. If one of them is contained in the other, we simplify the circuit, since the gate just computes the same range as one of its inputs (due to idempotency and commutativity). It is impossible that $a$ and $b$ are non-intersecting and have a gap between them, since then our gate does not compute a range (in a range circuit). So, if $a$ and  $b$ are non-intersecting, then they are consecutive and we just need to multiply them in the right order. If the ranges are intersecting, we just multiply them in the right order and apply idempotency.
 
 Thus it remains to show that each circuit for range query problem over $X_{sym}$ can be reconstructed into a range circuit. For this we will need some notation.
 
-Suppose we have some circuit ${\cal C}$. For each gate $G$ denote by $\lef(G)$ the smallest index of the variable in $G$ (the leftmost variable). Analogously denote by $\righ(G)$ the largest index of the variable in $G$. Denote by $\gap(G)$ the smallest $i$ such that $x_i$ is not in $G$, but there are some $j,k$ such that $j<i<k$ and $x_j$ and $x_k$ (the smallest index of the variable that is in the gap in $G$).
+Suppose we have some circuit ${\cal C}$. For each gate $G$ denote by $\lef(G)$ the smallest index of the variable in $G$ (the leftmost variable). Analogously denote by $\righ(G)$ the largest index of the variable in $G$. Denote by $\gap(G)$ the smallest $i$ such that $x_i$ is not in $G$, but there are some $j,k$ such that $j<i<k$ and $x_j$ and $x_k$ are in~$G$ (the smallest index of the variable that is in the gap in~$G$).
 %If there is no such variable (that is, $g$ computes an interval), then $\gap(g)=n+1$.
 Next, fix some topological ordering of gates in ${\cal C}$ (the ordering should be proper, that is inputs to any gate should have smaller numbers). Denote by $\num(G)$ the number of a gate in this ordering. Finally, by $\out(G)$ denote the out-degree of $G$.
 
 For each gate that computes a non-range consider the tuple
 $$
 \tup(G)=(\lef(G),\gap(G),\num(G),-\out(G)).
-$$ For the circuit ${\cal C}$ consider $\tup({\cal C}) = \min_G \tup(G)$, where the minimum is considered in the lexicographic order and is taken over all non-range gates. If there are no non-range gates we let $\tup({\cal C})=\infty$. This is our semi-invariant, we will show that if we have a circuits that is not a range circuit, we can reconstruct it to increase  its $\tup$ (in the lexicographic order) without increasing its size. Since $\tup$ ranges over a finite set, we can reconstruct the circuit repeatedly and end up with a range circuit.
+$$ For the circuit ${\cal C}$ consider $\tup({\cal C}) = \min_G \tup(G)$, where the minimum is considered in the lexicographic order and is taken over all non-range gates. If there are no non-range gates we let $\tup({\cal C})=\infty$. This is our semi-invariant, we will show that if we have a~circuit that is not a range circuit, we can reconstruct it to increase  its $\tup$ (in the lexicographic order) without increasing its size. Since $\tup$ ranges over a finite set, we can reconstruct the circuit repeatedly and end up with a range circuit.
 
 Now we are ready to describe a reconstruction of a circuit. Consider a circuit ${\cal C}$ that is not a range circuit. And consider a gate $G$ such that $\tup(G)=\tup({\cal C})$ (it is clearly unique). Denote by $A$ and $B$ two inputs of $G$ (see Figure~\ref{fig:before}). Let $i=\lef(G)$ and $j=\gap(G)$, that is $x_i$ is the variable with the smallest index in $G$ and $x_j$ is the first gap variable of $G$ (it is not contained in $G$).
 
