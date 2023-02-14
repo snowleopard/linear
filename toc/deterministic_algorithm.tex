@@ -53,15 +53,15 @@
 
 
 \begin{proof}[Proof of Lemma~\ref{lemma:permute}]
-All the $z$~zeroes of~$A$ break its rows into ranges.
+The $z$~zeroes of~$A$ break its rows into ranges.
 Let us call a~range {\em short} is its length is at most $\log n$.
-We will show that it is possible to permute the columns of~$A$
-so that the total length of all short ranges is at most $O(\frac{n}{\log n})$.
+Below, we~show that it is possible to permute the columns of~$A$
+so that the total length of all short ranges is at most $o(n)$.
 Then, all such short ranges can be computed by a~circuit of size
-$O(\frac{\log n}{n} \cdot n)=O(n)=O(z)$. All the remaining ranges can be
+$o(n)=O(n)=O(z)$. All the remaining ranges can be
 computed by a~circuit of size $O(n)$ using Lemma~\ref{lemma:blocks}.
 
-\atodo{Reviewer~3: ``In the beginning of the proof of Lemma 3.6, I was unable to follow the step from "the total length of all short ranges is at most $O(n/\log n)$" to "all such short ranges can be computed by a circuit of size $O(\log n/n \cdot n)$."'' (Sasha: something is wrong in the paragraph above indeed)}
+\todo[inline]{Reviewer~3: ``In the beginning of the proof of Lemma 3.6, I was unable to follow the step from "the total length of all short ranges is at most $O(n/\log n)$" to "all such short ranges can be computed by a circuit of size $O(\log n/n \cdot n)$."''~--- Fixed!}
 
 \textbf{Randomized algorithm.}
 Permute the columns randomly. A~uniform random permutation
