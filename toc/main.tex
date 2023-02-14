@@ -224,13 +224,6 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 
 \end{frontmatter}
 
-%%%
-%%% !!! AUTHOR
-%%% Paper goes here...
-
-%\clearpage
-%\tableofcontents
-%\clearpage
 
 \section{Introduction}
 \subsection{Problem Statement and New Results}
@@ -882,6 +875,60 @@ Corollary~\ref{cor:matrixmultiplication}, which we remind below.
 
 \matrixmultcor*
 
+\subsection{Main Ideas of~the Proof}
+
+\todo[inline]{Added an overview of the proof below}
+
+Consider a~matrix $A \in \{0,1\}^{n \times n}$
+with $z=\Omega(n)$ zeros (left picture below).
+Zeros split every row of~$A$ into ranges.
+We~construct a~circuit of~size~$O(z)$ that computes all these ranges. Then, by~using additional $O(z)$ gates one can
+compute all outputs of~$Ax$. It~is ranges of~length at~most $\log n$ (middle picture) that make the problem difficult:
+we~prove that one can compute 
+all ranges of length at~least $\log n$ using $O(z)$ gates.
+Using this observation, we~proceed as~follows.
+We~partition the rows into two parts (right picture): every row in the top part contains at~most $\log n$ zeroes, whereas every row in the bottom part contains more than $\log n$ zeroes. The bottom part contains at~most $z/\log n$, we~transpose~it and compute in~time $O(\frac{z}{\log n} \cdot \log n)=O(z)$. For the top part, we~employ the commutativity and shuffle the columns. Then, the expected total length of all short ranges is $o(n)$ and one can
+compute all of them directly.
+
+
+\begin{mypic}
+	\begin{scope}[scale=.2]
+		\begin{scope}
+			\draw[rectangle,fill=mcf] (0,0) rectangle (20,20);
+			\foreach \y in {0,...,19}
+			\draw (0,\y) rectangle (20,\y+1);
+			
+			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} 
+			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
+		\end{scope}
+		
+		\begin{scope}[xshift=25cm]
+			\draw[rectangle,fill=mcf] (0,0) rectangle (20,20);
+			\foreach \y in {0,...,19}
+			\draw (0,\y) rectangle (20,\y+1);
+			
+			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} 
+			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
+			
+			\foreach \y/\a/\b in {0/-1/3, 0/11/15, 1/11/15, 1/15/17, 1/17/20, 2/-1/3, 3/7/10, 4/8/12, 4/12/16, 4/16/20, 6/-1/3, 6/5/8, 6/17/20, 8/14/17, 8/17/20, 9/-1/2, 9/2/6, 10/16/20, 11/-1/1, 12/18/20, 13/0/4, 13/5/9, 13/16/20, 15/-1/1, 16/-1/2, 17/-1/1, 17/1/4, 17/17/19}
+			\draw[fill=mc] (\a+1,\y) rectangle (\b,\y+1);
+		\end{scope}
+		
+		\begin{scope}[xshift=50cm]	
+			\draw[rectangle,fill=mcf] (0,0) rectangle (20,20);
+			\foreach \y in {0,...,19}
+			\draw (0,\y) rectangle (20,\y+1);	
+			\foreach \x/\y in {0/0, 10/0, 11/0, 15/0, 17/0, 3/1, 4/1, 5/1, 8/1, 17/1, 17/1, 0/2, 4/2, 5/2, 9/2, 16/2, 1/3, 4/3, 10/3, 17/3, 19/3, 3/4, 11/4, 15/4, 3/5, 8/5, 8/5, 7/6, 10/6, 8/7, 12/7, 16/7, 9/8, 10/8, 4/10, 13/10, 14/10, 17/10, 2/11, 6/11, 8/12, 9/12, 16/12, 16/12, 1/13, 9/13, 9/13, 0/14, 7/14, 8/14, 18/14, 1/16, 12/16, 2/17, 7/17, 11/18, 11/18, 18/18, 19/18, 15/19} 
+			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
+			
+			\draw[line width=2pt] (-1,4) -- (21,4);
+		\end{scope}
+	\end{scope}
+\end{mypic}
+
+
+
+\subsection{Formal Proof}
 We start by proving two simpler statements to show how commutativity is
 important.
 
@@ -1033,61 +1080,17 @@ The algorithm for generating the circuit is just a~combination
 of the algorithms from Lemmas~\ref{lemma:decompose} and~\ref{lemma:permute}.
 \end{proof}
 
+\begin{proof}[Proof of Corollary~\ref{cor:matrixmultiplication}]
+	One deterministically generates a~circuit for~$A$ of size $O(n)$ in time
+	$O(n\log^4n)=O(n^2)$ by Theorem~\ref{thm:upperbound}.
+	This circuit can be used to multiply~$A$ by any column of~$B$
+	in time~$O(n)$. For this, one constructs a~topological ordering of the gates of
+	the circuits and computes the values of all gates in this order. Hence, $AB$ can
+	be computed in time~$O(n^2)$.
+\end{proof}
+
 
 \input deterministic_algorithm
-
-% \begin{proof}[Proof of Lemma~\ref{lemma:permute}.]
-% All the $z$~zeroes of~$A$ break its rows into ranges.
-% Let us call a~range {\em short} is its length is at most $\log n$.
-% We will show that it is possible to permute the columns of~$A$
-% so that the total length of all short ranges is at most $O(\frac{n}{\log n})$. Then, all such short ranges can be computed by a~circuit of size $O(\frac{\log n}{n} \cdot n)=O(n)=O(z)$.
-% All the remaining ranges can be computed by a~circuit of size $O(n)$ using Lemma~\ref{lemma:blocks}.
-
-% It is easy to construct the required permutation randomly. For this, one just
-% estimates the expected total length of all short ranges in a~random permutation. It is then possible to derandomize this approach using a~greedy algorithm. We provide all formal details %in Subsection~\ref{sec:deterministic}.
-% the full version of the paper~\cite{DBLP:journals/eccc/KulikovMMP19}.
-
-%\begin{description}
-%\item[Randomized algorithm.]
-%
-%Permute the columns randomly. A~uniform random permutation
-%of $n$~objects can be generated in time~$O(n)$~\cite[Algorithm~P (Shuffling)]{DBLP:books/lib/Knuth98}.
-%Let us compute the expectation of
-%the total length of short ranges.
-%Let us focus on a~single row and a~particular cell in it. Denote the number of zeroes in the row by~$t$. What is the probability that the cell belongs to a~short segment? There are two cases to consider.
-%\begin{enumerate}
-%\item The cell lies close to the border, i.e., it belongs to
-%the first $\log n$ cells or to the last~$\log n$ cells
-%(the number of such cells is $2\log n$). Then,
-%this cell belongs to a~short range iff there is at least one zero
-%in $\log n$ cells close to it (on the side opposite to the border).
-%Hence, one zero must belong to a~set of $\log n$ cells while the remaining $t-1$ zeroes may be anywhere.
-%The probability is then at most
-%\[\log n \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}}=\log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
-%\item It is not close to the border (the number of such cells is $n-2\log n$). Then, there must be a~zero on both sides of the
-%cell. The probability is then at most
-%\[\log^2 n \cdot \frac{\binom{n}{t-2}}{\binom{n}{t}}=\log^2n \cdot \frac{t(t-1)}{(n-t+1)(n-t+2)}=O\left(\frac{\log^4 n}{n^2}\right) \, .\]
-%\end{enumerate}
-%Hence, the expected total length of short ranges in one row is
-%\[O\left( 2\log n \cdot \frac{\log^2 n}{n} + (n-2\log n) \cdot \frac{\log^4 n}{n^2}\right)=O\left(\frac{\log^4 n}{n}\right) \, .\]
-%Thus, the expected length of short ranges in the whole
-%matrix~$A$ is $O(\log^4n)$. By Markov inequality, the probability that
-%the length of all short ranges is larger than $\frac{n}{\log n}$ is
-%at most $O(\frac{\log^5 n}{n})$.
-%\end{description}
-%
-%We provide a deterministic algorithm in Appendix~\ref{sec:deterministic}.
-
-% \end{proof}
-
-\begin{proof}[Proof of Corollary~\ref{cor:matrixmultiplication}]
-One deterministically generates a~circuit for~$A$ of size $O(n)$ in time
-$O(n\log^4n)=O(n^2)$ by Theorem~\ref{thm:upperbound}.
-This circuit can be used to multiply~$A$ by any column of~$B$
-in time~$O(n)$. For this, one constructs a~topological ordering of the gates of
-the circuits and computes the values of all gates in this order. Hence, $AB$ can
-be computed in time~$O(n^2)$.
-\end{proof}
 
 
 \section{Non-commutative Case}\label{sec-non-commutative}
