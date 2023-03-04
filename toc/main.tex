@@ -169,7 +169,18 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 %%%   if more than two authors: (Jones et al., STOC'14)
 %%%   if journal: (Jones et al., SICOMP 2014)
 \begin{abstract}
-	\todo[inline]{Reviewer~2: ``The lower bounds result in the Abstract is stated without reference to the faithful semigroup. It is worth making that explicit for clarity. \\ The order of the results listed in the Abstract is different from the order in the body of the paper. Specifically, the paper presents the results (1), (2) and (3) in order but discusses (2), (3) and (1) in that order in the Abstract. This is nitpicky but keeping them consistent will help.''~--- We added faithful non-commutative semigroups in the lower bound statement. We changed the order of the results in the abstract, now upper bounds are stated first. We still would like to keep more general upper bound to be the first one in the abstract and the second one discussed in the paper. We believe that on this level the optimal order of results might be different depending on the space constraints.}
+	\todo[inline]{Reviewer~2: ``The lower bounds result in the Abstract is
+	stated without reference to the faithful semigroup. It is worth making that
+	explicit for clarity. \\ The order of the results listed in the Abstract is
+	different from the order in the body of the paper. Specifically, the paper
+	presents the results (1), (2) and (3) in order but discusses (2), (3) and
+	(1) in that order in the Abstract. This is nitpicky but keeping them
+	consistent will help.''~--- We added faithful non-commutative semigroups in
+	the lower bound statement. We changed the order of the results in the
+	abstract, now upper bounds are stated first. We still would like to keep
+	more general upper bound to be the first one in the abstract and the second
+	one discussed in the paper. We believe that on this level the optimal order
+	of results might be different depending on the space constraints.}
 
     Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones
     and $x$ be an~$n$-dimensional vector of formal variables over a~semigroup
@@ -179,11 +190,14 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
     It is easy to compute $Ax$ using $O(u)$ semigroup operations. The main
     question studied in this paper is: can $Ax$~be computed using $O(z)$
     semigroup operations?
-	For the case when the semigroup is commutative, we give a~constructive proof of an~$O(z)$ upper bound. This implies that in commutative settings, complements of sparse matrices can be processed as efficiently as sparse matrices (though
-	the corresponding algorithms are more involved). This covers the cases of
-	Boolean and tropical semirings that have numerous applications, e.g., in
-	graph theory.
-    On the other hand, we prove that in general this is not possible: for faithful non-commutative semigroups there
+	For the case when the semigroup is commutative, we give a~constructive proof
+	of an~$O(z)$ upper bound. This implies that in commutative settings,
+	complements of sparse matrices can be processed as efficiently as sparse
+	matrices, though the corresponding algorithms are more involved. This covers
+	the cases of Boolean and tropical semirings that have numerous applications,
+	e.g., in graph theory.
+    On the other hand, we prove that in general this is not possible: for
+	faithful non-commutative semigroups there
     exists a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in
     every row (hence $z=2n$) whose complexity is $\Theta(n\alpha(n))$ where
     $\alpha(n)$ is the inverse Ackermann function.
@@ -227,16 +241,14 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 \section{Introduction}
 \subsection{Problem Statement and New Results}
 
-Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes
-and $u$~ones, and $x=(x_1, \dotsc, x_n)$~be an~$n$-dimensional vector
-of formal variables over a~semigroup~$(S, \circ)$. In this paper,
-we study the
-complexity of the \emph{linear operator}~$Ax$,
-i.e., how many semigroup
-operations are required to compute a~vector whose $i$-th element is
-\[
+Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones, and
+$x=(x_1, \dotsc, x_n)$~be an~$n$-dimensional vector of formal variables over
+a~semigroup~$(S, \circ)$. In this paper, we study the complexity of the
+\emph{linear operator}~$Ax$, i.e., how many semigroup operations are required to
+compute a~vector whose $i$-th element is
+\begin{equation}\label{eq-multiplication}
 \sum_{1 \le j \le n\,\bigwedge\,A_{ij}=1}x_j
-\]
+\end{equation}
 where the summation is over the semigroup operation~$\circ$.\footnote{Note that
 the result of summation is undefined in case of an all-zero row, because
 semigroups have no neutral element in general. One can trivially sidestep this
@@ -273,14 +285,13 @@ To~give an~example, consider a~complement $A \in \{0,1\}^{6 \times 6}$ of~the id
 	\end{scope}
 \end{mypic}
 %
-\todo[inline]{changed `semiring' to `semigroup' once in the paragraph below.}
-What is~the minimum number of~semigroup operations needed
-to~compute these six sums? The answer depends on~the properties of~the underlying semigroup $(S, \circ)$.
-For example, if $S=(\{0,1\}, \oplus)$, then one way is~to compute the sum of~all input variables first and then to~cancel every variable. However this strategy
-does not work for $S=(\{0,1\}, \lor)$.
-For this semigroup,
-one can start by~computing all prefix and suffix
-sums and then, for every output, to~combine the corresponding prefix and suffix.
+How many operations are required to~compute these six sums? The answer depends
+on~the properties of~the semigroup~S. For example, if $S=(\{0,1\}, \oplus)$,
+then one can first compute the sum of~all input variables~$a$ and then let
+$y_i = a \oplus x_i$. However, this strategy does not work for $S=(\{0,1\}, \lor)$.
+For this semigroup, one can first compute all prefix~$p_i$ and suffix~$s_i$ sums
+and then let $y_i = p_{i-1} \lor s_{i+1}$, with appropriate adjustments at the
+boundaries. See the resulting circuits below.
 
 \begin{mypic}
 	\begin{scope}[scale=.6]
@@ -329,23 +340,24 @@ sums and then, for every output, to~combine the corresponding prefix and suffix.
 	\end{scope}
 \end{mypic}
 
-In~this paper,
-we are interested in lower and
-upper bounds involving~$z$ and~$u$.
-Matrices with $u=O(n)$ are usually called \emph{sparse},
-whereas matrices with $z=O(n)$
-are called \emph{complements of sparse matrices}.
-Computing all $n$~outputs
-of~$Ax$ directly (i.e. using the above definition) takes
-$O(u)$ semigroup operations.
-The main question we~study is:
-can $Ax$~be computed using $O(z)$ semigroup
-operations? Note that it is easy to achieve $O(z)$ complexity if $\circ$ has an
-inverse. Indeed, in this case $Ax$~can be computed via subtraction:
+In~this paper, we are interested in lower and upper bounds involving~$z$ and~$u$.
+% Andrey: I commented out the remarks below because they (1) break the flow of
+% the paragraph, and (2) seem unnecessary. Feel free to revert if you disagree.
+%
+% Matrices with $u=O(n)$ are usually called \emph{sparse}, whereas matrices with
+% $z=O(n)$ are called \emph{complements of sparse matrices}.
+Computing all $n$~outputs of~$Ax$ directly, i.e., using the above
+definition~(\ref{eq-multiplication}), takes $O(u)$ semigroup operations.
+The main question we~study is: can $Ax$~be computed using $O(z)$ semigroup
+operations?
+
+Note that it is easy to achieve $O(z)$ complexity if $\circ$ has an inverse.
+Indeed, in this case $Ax$~can be computed via subtraction:
 $Ax = (U-\overline{A})x = Ux - \overline{A}x$, where $U$ is the all-ones matrix
 whose linear operator can be computed trivially using $O(n)$ semigroup
 operations, and $\overline{A}$ is the complement of~$A$ and therefore has only
-$z = O(n)$ ones.
+$O(n)$ ones. Our solution for the above example involving $S=(\{0,1\}, \oplus)$
+is obtained in precisely this way, by noticing that $\oplus$ is its own inverse.
 
 \subsubsection{Commutative Case}
 Our first main result shows that in the commutative case, complements
