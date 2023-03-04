@@ -170,7 +170,7 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 %%%   if journal: (Jones et al., SICOMP 2014)
 \begin{abstract}
 	\todo[inline]{Reviewer~2: ``The lower bounds result in the Abstract is stated without reference to the faithful semigroup. It is worth making that explicit for clarity. \\ The order of the results listed in the Abstract is different from the order in the body of the paper. Specifically, the paper presents the results (1), (2) and (3) in order but discusses (2), (3) and (1) in that order in the Abstract. This is nitpicky but keeping them consistent will help.''~--- We added faithful non-commutative semigroups in the lower bound statement. We changed the order of the results in the abstract, now upper bounds are stated first. We still would like to keep more general upper bound to be the first one in the abstract and the second one discussed in the paper. We believe that on this level the optimal order of results might be different depending on the space constraints.}
-	
+
     Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones
     and $x$ be an~$n$-dimensional vector of formal variables over a~semigroup
     $(S, \circ)$. How many semigroup operations are required to compute the
@@ -178,15 +178,15 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 
     It is easy to compute $Ax$ using $O(u)$ semigroup operations. The main
     question studied in this paper is: can $Ax$~be computed using $O(z)$
-    semigroup operations? 
+    semigroup operations?
 	For the case when the semigroup is commutative, we give a~constructive proof of an~$O(z)$ upper bound. This implies that in commutative settings, complements of sparse matrices can be processed as efficiently as sparse matrices (though
 	the corresponding algorithms are more involved). This covers the cases of
 	Boolean and tropical semirings that have numerous applications, e.g., in
-	graph theory.    
+	graph theory.
     On the other hand, we prove that in general this is not possible: for faithful non-commutative semigroups there
     exists a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in
     every row (hence $z=2n$) whose complexity is $\Theta(n\alpha(n))$ where
-    $\alpha(n)$ is the inverse Ackermann function. 
+    $\alpha(n)$ is the inverse Ackermann function.
 
     As a~simple application of the presented linear-size construction, we show
     how to multiply two $n\times n$ matrices over an arbitrary semiring in
@@ -252,32 +252,32 @@ To~give an~example, consider a~complement $A \in \{0,1\}^{6 \times 6}$ of~the id
 	\begin{scope}[scale=.5]
 		\foreach \i in {1,...,6}
 		\node[above] at (\i-0.5,6) {$x_{\i}$};
-		
+
 		\node[right] at (6.5,5.5) {$y_1=x_2 \circ x_3 \circ x_4 \circ x_5 \circ x_6$};
 		\node[right] at (6.5,4.5) {$y_2=x_1 \circ x_3 \circ x_4 \circ x_5 \circ x_6$};
 		\node[right] at (6.5,3.5) {$y_3=x_1 \circ x_2 \circ x_4 \circ x_5 \circ x_6$};
 		\node[right] at (6.5,2.5) {$y_4=x_1 \circ x_2 \circ x_3 \circ x_5 \circ x_6$};
 		\node[right] at (6.5,1.5) {$y_5=x_1 \circ x_2 \circ x_3 \circ x_4 \circ x_6$};
 		\node[right] at (6.5,0.5) {$y_6=x_1 \circ x_2 \circ x_3 \circ x_4 \circ x_5$};
-		
+
 		\foreach \x in {0,...,5}
 		\foreach \y in {0,...,5} {
 			\draw[fill=mcf] (\x,\y) rectangle (\x+1, \y+1);
-			\node at (\x+0.5,\y+0.5) {1};  
+			\node at (\x+0.5,\y+0.5) {1};
 		}
-		
+
 		\foreach \x/\y in {0/5, 1/4, 2/3, 3/2, 4/1, 5/0} {
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
-			\node at (\x+0.5,\y+0.5) {0}; 
+			\node at (\x+0.5,\y+0.5) {0};
 		}
 	\end{scope}
 \end{mypic}
 %
 \todo[inline]{changed `semiring' to `semigroup' once in the paragraph below.}
-What is~the minimum number of~semigroup operations needed 
-to~compute these six sums? The answer depends on~the properties of~the underlying semigroup $(S, \circ)$. 
-For example, if $S=(\{0,1\}, \oplus)$, then one way is~to compute the sum of~all input variables first and then to~cancel every variable. However this strategy 
-does not work for $S=(\{0,1\}, \lor)$. 
+What is~the minimum number of~semigroup operations needed
+to~compute these six sums? The answer depends on~the properties of~the underlying semigroup $(S, \circ)$.
+For example, if $S=(\{0,1\}, \oplus)$, then one way is~to compute the sum of~all input variables first and then to~cancel every variable. However this strategy
+does not work for $S=(\{0,1\}, \lor)$.
 For this semigroup,
 one can start by~computing all prefix and suffix
 sums and then, for every output, to~combine the corresponding prefix and suffix.
@@ -286,13 +286,13 @@ sums and then, for every output, to~combine the corresponding prefix and suffix.
 	\begin{scope}[scale=.6]
 		\foreach \i in {1,...,6}
 			\node (\i) at (2*\i, 6) {$x_{\i}$};
-		
+
 		\foreach \n/\x/\y/\s/\t in {7/3/5/1/2, 8/11/5/5/6, 9/5/4/7/3, 10/9/4/8/4, 11/7/3/9/10} {
 			\node[gate] (\n) at (\x,\y) {$\oplus$};
 			\draw[->] (\s) -- (\n);
 			\draw[->] (\t) -- (\n);
-		}  
-		
+		}
+
 		\foreach \i in {1,...,6} {
 			\node[gate,label=below:$y_\i$] (y\i) at (2*\i, 1) {$\oplus$};
 			\draw[->] (11) -- (y\i);
@@ -303,33 +303,33 @@ sums and then, for every output, to~combine the corresponding prefix and suffix.
 	\begin{scope}[scale=.6, xshift=130mm]
 		\foreach \i in {1,...,6}
 			\node (\i) at (2*\i, 6) {$x_{\i}$};
-		
-		\foreach \n/\x/\y/\s/\t/\l in {7/2/5/1/2/~, 8/3/4.5/7/3/~, 9/4/4/8/4/~, 10/5/3.5/9/5/y_6, 11/12/5/5/6/~, 12/11/4.5/11/4/~, 
+
+		\foreach \n/\x/\y/\s/\t/\l in {7/2/5/1/2/~, 8/3/4.5/7/3/~, 9/4/4/8/4/~, 10/5/3.5/9/5/y_6, 11/12/5/5/6/~, 12/11/4.5/11/4/~,
 			13/10/4/12/3/~, 14/9/3.5/13/2/y_1} {
 			\node[gate,label=below:$\l$] (\n) at (\x,\y) {$\lor$};
 			\draw[->] (\s) -- (\n);
 			\draw[->] (\t) -- (\n);
 		}
-		
+
 		\node[gate,label=below:$y_2$] (15) at (4,1) {$\lor$};
 		\path (1) edge[->,draw,out=-135,in=135] (15);
 		\path (13) edge[->,draw,out=-105,in=45] (15);
-		
+
 		\node[gate,label=below:$y_3$] (16) at (6,1) {$\lor$};
 		\path (7) edge[->,draw,out=-90,in=135] (16);
 		\path (12) edge[->,draw,out=-90,in=45] (16);
-		
+
 		\node[gate,label=below:$y_4$] (17) at (8,1) {$\lor$};
 		\path (8) edge[->,draw,out=-90,in=135] (17);
 		\path (11) edge[->,draw,out=-90,in=45] (17);
-		
+
 		\node[gate,label=below:$y_5$] (18) at (10,1) {$\lor$};
 		\path (6) edge[->,draw,out=-40,in=45] (18);
 		\path (9) edge[->,draw,out=-75,in=135] (18);
 	\end{scope}
 \end{mypic}
 
-In~this paper, 
+In~this paper,
 we are interested in lower and
 upper bounds involving~$z$ and~$u$.
 Matrices with $u=O(n)$ are usually called \emph{sparse},
@@ -427,7 +427,7 @@ It is not hard to show that this lower bound is tight.
 	a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
 	$A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
 	computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
-	is the inverse Ackermann function. 
+	is the inverse Ackermann function.
 \end{restatable}
 
 \todo[inline]{Reviewer~2: ``Theorem 1.3 can be split into two parts — one stating the lower bound and the other stating the upper bounds. The proof of the upper bound is short and straightforward from [21], and the main result is the lower bound.'~--- Done.}
@@ -476,26 +476,26 @@ in a~natural way.
 		\foreach \x in {0,...,19}
 		\foreach \y in {0,...,19} {
 			\draw[fill=mcf] (\x,\y) rectangle (\x+1, \y+1);
-			\node[scale=.3] at (\x+0.5,\y+0.5) {1};  
+			\node[scale=.3] at (\x+0.5,\y+0.5) {1};
 		}
-		
+
 		\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} {
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
-			\node[scale=.3] at (\x+0.5,\y+0.5) {0}; 
+			\node[scale=.3] at (\x+0.5,\y+0.5) {0};
 		}
 	\end{scope}
-	
+
 	\begin{scope}[scale=.2, xshift=30cm]
 		\foreach \x in {0,...,19}
 		\foreach \y in {0,...,19} {
 			\draw[fill=mcf] (\x,\y) rectangle (\x+1, \y+1);
-			\node[scale=.3] at (\x+0.5,\y+0.5) {1};  
+			\node[scale=.3] at (\x+0.5,\y+0.5) {1};
 		}
-		
+
 		\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} {
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
 		}
-		
+
 		\foreach \y/\a/\b in {0/-1/3, 0/3/11, 0/11/15, 0/15/20, 1/0/10, 1/11/15, 1/15/17, 1/17/20, 2/-1/3, 2/3/8, 2/8/20, 3/-1/7, 3/7/10, 3/10/20, 4/-1/8, 4/8/12, 4/12/16, 4/16/20, 5/-1/9, 5/10/20, 6/-1/3, 6/5/8, 6/8/17, 6/17/20, 7/-1/20, 8/-1/4, 8/4/13, 8/14/17, 8/17/20, 9/-1/2, 9/2/6, 9/6/20, 10/-1/8, 10/9/16, 10/16/20, 11/-1/1, 11/1/9, 11/9/20, 12/0/7, 12/8/18, 12/18/20, 13/0/4, 13/5/9, 13/9/16, 13/16/20, 14/-1/20, 15/-1/1, 15/1/12, 15/12/20, 16/-1/2, 16/2/7, 16/7/20, 17/-1/1, 17/1/4, 17/4/10, 17/10/17, 17/17/19, 18/-1/11, 18/11/18, 19/-1/15, 19/15/20}
 		\draw[fill=mc] (\a+1,\y) rectangle (\b,\y+1);
 	\end{scope}
@@ -886,7 +886,7 @@ with $z=\Omega(n)$ zeros (left picture below).
 Zeros split every row of~$A$ into ranges.
 We~construct a~circuit of~size~$O(z)$ that computes all these ranges. Then, by~using additional $O(z)$ gates one can
 compute all outputs of~$Ax$. It~is ranges of~length at~most $\log n$ (middle picture) that make the problem difficult:
-we~prove that one can compute 
+we~prove that one can compute
 all ranges of length at~least $\log n$ using $O(z)$ gates.
 Using this observation, we~proceed as~follows.
 We~partition the rows into two parts (right picture): every row in the top part contains at~most $\log n$ zeroes, whereas every row in the bottom part contains more than $\log n$ zeroes. The bottom part contains at~most $z/\log n$, we~transpose~it and compute in~time $O(\frac{z}{\log n} \cdot \log n)=O(z)$. For the top part, we~employ the commutativity and shuffle the columns. Then, the expected total length of all short ranges is $o(n)$ and one can
@@ -899,30 +899,30 @@ compute all of them directly.
 			\draw[rectangle,fill=mcf] (0,0) rectangle (20,20);
 			\foreach \y in {0,...,19}
 			\draw (0,\y) rectangle (20,\y+1);
-			
-			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} 
+
+			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19}
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
 		\end{scope}
-		
+
 		\begin{scope}[xshift=25cm]
 			\draw[rectangle,fill=mcf] (0,0) rectangle (20,20);
 			\foreach \y in {0,...,19}
 			\draw (0,\y) rectangle (20,\y+1);
-			
-			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} 
+
+			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19}
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
-			
+
 			\foreach \y/\a/\b in {0/-1/3, 0/11/15, 1/11/15, 1/15/17, 1/17/20, 2/-1/3, 3/7/10, 4/8/12, 4/12/16, 4/16/20, 6/-1/3, 6/5/8, 6/17/20, 8/14/17, 8/17/20, 9/-1/2, 9/2/6, 10/16/20, 11/-1/1, 12/18/20, 13/0/4, 13/5/9, 13/16/20, 15/-1/1, 16/-1/2, 17/-1/1, 17/1/4, 17/17/19}
 			\draw[fill=mc] (\a+1,\y) rectangle (\b,\y+1);
 		\end{scope}
-		
-		\begin{scope}[xshift=50cm]	
+
+		\begin{scope}[xshift=50cm]
 			\draw[rectangle,fill=mcf] (0,0) rectangle (20,20);
 			\foreach \y in {0,...,19}
-			\draw (0,\y) rectangle (20,\y+1);	
-			\foreach \x/\y in {0/0, 10/0, 11/0, 15/0, 17/0, 3/1, 4/1, 5/1, 8/1, 17/1, 17/1, 0/2, 4/2, 5/2, 9/2, 16/2, 1/3, 4/3, 10/3, 17/3, 19/3, 3/4, 11/4, 15/4, 3/5, 8/5, 8/5, 7/6, 10/6, 8/7, 12/7, 16/7, 9/8, 10/8, 4/10, 13/10, 14/10, 17/10, 2/11, 6/11, 8/12, 9/12, 16/12, 16/12, 1/13, 9/13, 9/13, 0/14, 7/14, 8/14, 18/14, 1/16, 12/16, 2/17, 7/17, 11/18, 11/18, 18/18, 19/18, 15/19} 
+			\draw (0,\y) rectangle (20,\y+1);
+			\foreach \x/\y in {0/0, 10/0, 11/0, 15/0, 17/0, 3/1, 4/1, 5/1, 8/1, 17/1, 17/1, 0/2, 4/2, 5/2, 9/2, 16/2, 1/3, 4/3, 10/3, 17/3, 19/3, 3/4, 11/4, 15/4, 3/5, 8/5, 8/5, 7/6, 10/6, 8/7, 12/7, 16/7, 9/8, 10/8, 4/10, 13/10, 14/10, 17/10, 2/11, 6/11, 8/12, 9/12, 16/12, 16/12, 1/13, 9/13, 9/13, 0/14, 7/14, 8/14, 18/14, 1/16, 12/16, 2/17, 7/17, 11/18, 11/18, 18/18, 19/18, 15/19}
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
-			
+
 			\draw[line width=2pt] (-1,4) -- (21,4);
 		\end{scope}
 	\end{scope}
@@ -976,9 +976,9 @@ $C(A) = O(n)$.
 \stodo{Reviewer~2: ``The algorithm is interesting. For Lemma 3.3, it will be helpful to see a picture of the matrix split into the different blocks — this can potentially replace some of the formal details as they only provide a sketch of the proof here.''}
 
 \begin{proof}[Proof sketch]
-\stodo{Reviewer~3: ``In the proof sketch of Lemma 3.3, first I believe that it should say "The top part T contains all *rows* that have exactly one zero in each L and R" ("rows" instead of "columns"). Furthermore, I was unable to follow the last step, where a recursive call is made after cutting all-1 columns out of the bottom part of the matrix. In particular, I believe there are cases where there are no all-1 columns to be removed, which seems like a problem. Despite this being intended as a proof sketch, as it's currently written the sketch was unable to convince me that the lemma is true.''}	
-	
-	
+\stodo{Reviewer~3: ``In the proof sketch of Lemma 3.3, first I believe that it should say "The top part T contains all *rows* that have exactly one zero in each L and R" ("rows" instead of "columns"). Furthermore, I was unable to follow the last step, where a recursive call is made after cutting all-1 columns out of the bottom part of the matrix. In particular, I believe there are cases where there are no all-1 columns to be removed, which seems like a problem. Despite this being intended as a proof sketch, as it's currently written the sketch was unable to convince me that the lemma is true.''}
+
+
 Consider an undirected graph with the set of nodes $\{1,2,\dotsc,n\}$, where
 two nodes $i$ and $j$ are connected by an edge if there is a~row having zeroes
 in columns~$i$ and~$j$. In the worst case (all rows are different and contain
@@ -993,15 +993,15 @@ part $T$~contains all columns that have exactly one zero in each $L$ and $R$;
 the bottom part $B$ contains all the remaining rows. What is nice about the top
 part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$
 gates (using Lemma~\ref{lemma:easy}). For the bottom part, let us cut all-1
-columns out of it and make a recursive call. 
+columns out of it and make a recursive call.
 \todo[inline]{Reviewer~1: ``“note that this requires the commutativity”, this is true, but doesn’t the top part already require commutativity, because L and R may not necessarily be sets of consecutive integers?''~--- Right! Fixed.}
 The corresponding recurrence relation is $T(n) \le cn + T(n/2)$
 for a fixed constant $c$, implying $T(n)=O(n)$, and hence $C(A) = O(n)$.
 \end{proof}
 
 
-Below, we~state two auxiliary lemmas that will 
-be~used as~building blocks in the proof of Theorem~\ref{thm:upperbound}. 
+Below, we~state two auxiliary lemmas that will
+be~used as~building blocks in the proof of Theorem~\ref{thm:upperbound}.
 We~prove Lemma~\ref{lemma:permute}
 in~Section~\ref{sec:deterministic}.
 
@@ -1055,7 +1055,7 @@ Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
 having at least $\log n$ zeroes and $R_1=R \setminus R_0$.
 Every row of~$A$ can be decomposed into (maximal) contiguous ranges of ones. We
-call them \emph{ranges of~$A$}. 
+call them \emph{ranges of~$A$}.
 Below, we~show that all the ranges of~$A$
 can be~computed by a~circuit of~size $O(z)$.
 From these
@@ -1242,7 +1242,7 @@ The case of suffixes is completely analogous.
 The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
 \begin{lemma} \label{lem:variables_order}
 	\vtodo{Reviewer~1: ``The statement is too casual, consider rephrasing it''}
-	
+
 Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X$. Let
 us write down the letters of $W$ in the order in which they appear first time in
 $W$ when we read it from left to right. We do the same for $W'$. Then we
@@ -1296,8 +1296,8 @@ Theorem~\ref{thm:lowerbound}.
 \vtodo{Reviewer~2: ``The result from [6] used in the proof of Theorem 1.3 must be explicitly stated. ''}
 \begin{proof}[Proof of Theorem~\ref{thm:lowerbound}]
 	\vtodo{Reviewer~1: ``Technically, Theorem 1.3 is stated for general strongly non-commutative semigroups, while Theorem 4.6 is stated for idempotent X. Consider integrating the argument in section 4.3 to the proof, or moving it to an earlier place.''}
-	
-	
+
+
 By Theorem~\ref{thm:equivalence} if non-commutative dense linear
 operator problem has size $s$ circuit, then the commutative range queries
 problem also does. However, for the latter problem it is proved by Chazelle and
