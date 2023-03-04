@@ -246,7 +246,7 @@ $x=(x_1, \dotsc, x_n)$~be an~$n$-dimensional vector of formal variables over
 a~semigroup~$(S, \circ)$. In this paper, we study the complexity of the
 \emph{linear operator}~$Ax$, i.e., how many semigroup operations are required to
 compute a~vector whose $i$-th element is
-\begin{equation}\label{eq-multiplication}
+\begin{equation}\label{eq-problem-statement}
 \sum_{1 \le j \le n\,\bigwedge\,A_{ij}=1}x_j
 \end{equation}
 where the summation is over the semigroup operation~$\circ$.\footnote{Note that
@@ -347,7 +347,7 @@ In~this paper, we are interested in lower and upper bounds involving~$z$ and~$u$
 % Matrices with $u=O(n)$ are usually called \emph{sparse}, whereas matrices with
 % $z=O(n)$ are called \emph{complements of sparse matrices}.
 Computing all $n$~outputs of~$Ax$ directly, i.e., using the above
-definition~(\ref{eq-multiplication}), takes $O(u)$ semigroup operations.
+definition~(\ref{eq-problem-statement}), takes $O(u)$ semigroup operations.
 The main question we~study is: can $Ax$~be computed using $O(z)$ semigroup
 operations?
 
@@ -356,7 +356,7 @@ Indeed, in this case $Ax$~can be computed via subtraction:
 $Ax = (U-\overline{A})x = Ux - \overline{A}x$, where $U$ is the all-ones matrix
 whose linear operator can be computed trivially using $O(n)$ semigroup
 operations, and $\overline{A}$ is the complement of~$A$ and therefore has only
-$O(n)$ ones. Our solution for the above example involving $S=(\{0,1\}, \oplus)$
+$z$ ones. Our solution for the above example involving $S=(\{0,1\}, \oplus)$
 is obtained in precisely this way, by noticing that $\oplus$ is its own inverse.
 
 \subsubsection{Commutative Case}
