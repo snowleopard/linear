@@ -169,7 +169,7 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 %%%   if more than two authors: (Jones et al., STOC'14)
 %%%   if journal: (Jones et al., SICOMP 2014)
 \begin{abstract}
-	\vtodo{Reviewer~2: ``The lower bounds result in the Abstract is stated without reference to the faithful semigroup. It is worth making that explicit for clarity. \\ The order of the results listed in the Abstract is different from the order in the body of the paper. Specifically, the paper presents the results (1), (2) and (3) in order but discusses (2), (3) and (1) in that order in the Abstract. This is nitpicky but keeping them consistent will help.''}
+	\todo[inline]{Reviewer~2: ``The lower bounds result in the Abstract is stated without reference to the faithful semigroup. It is worth making that explicit for clarity. \\ The order of the results listed in the Abstract is different from the order in the body of the paper. Specifically, the paper presents the results (1), (2) and (3) in order but discusses (2), (3) and (1) in that order in the Abstract. This is nitpicky but keeping them consistent will help.''~--- We added faithful non-commutative semigroups in the lower bound statement. We changed the order of the results in the abstract, now upper bounds are stated first. We still would like to keep more general upper bound to be the first one in the abstract and the second one discussed in the paper. We believe that on this level the optimal order of results might be different depending on the space constraints.}
 	
     Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones
     and $x$ be an~$n$-dimensional vector of formal variables over a~semigroup
@@ -178,16 +178,15 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 
     It is easy to compute $Ax$ using $O(u)$ semigroup operations. The main
     question studied in this paper is: can $Ax$~be computed using $O(z)$
-    semigroup operations? We prove that in general this is not possible: there
+    semigroup operations? 
+	For the case when the semigroup is commutative, we give a~constructive proof of an~$O(z)$ upper bound. This implies that in commutative settings, complements of sparse matrices can be processed as efficiently as sparse matrices (though
+	the corresponding algorithms are more involved). This covers the cases of
+	Boolean and tropical semirings that have numerous applications, e.g., in
+	graph theory.    
+    On the other hand, we prove that in general this is not possible: for faithful non-commutative semigroups there
     exists a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in
     every row (hence $z=2n$) whose complexity is $\Theta(n\alpha(n))$ where
-    $\alpha(n)$ is the inverse Ackermann function. However, for the case when
-    the semigroup is commutative, we give a~constructive proof of an~$O(z)$
-    upper bound. This implies that in commutative settings, complements of
-    sparse matrices can be processed as efficiently as sparse matrices (though
-    the corresponding algorithms are more involved). This covers the cases of
-    Boolean and tropical semirings that have numerous applications, e.g., in
-    graph theory.
+    $\alpha(n)$ is the inverse Ackermann function. 
 
     As a~simple application of the presented linear-size construction, we show
     how to multiply two $n\times n$ matrices over an arbitrary semiring in
@@ -274,10 +273,12 @@ To~give an~example, consider a~complement $A \in \{0,1\}^{6 \times 6}$ of~the id
 	\end{scope}
 \end{mypic}
 %
+\todo[inline]{changed `semiring' to `semigroup' once in the paragraph below.}
 What is~the minimum number of~semigroup operations needed 
 to~compute these six sums? The answer depends on~the properties of~the underlying semigroup $(S, \circ)$. 
 For example, if $S=(\{0,1\}, \oplus)$, then one way is~to compute the sum of~all input variables first and then to~cancel every variable. However this strategy 
-does not work for $S=(\{0,1\}, \lor)$. For this semiring,
+does not work for $S=(\{0,1\}, \lor)$. 
+For this semigroup,
 one can start by~computing all prefix and suffix
 sums and then, for every output, to~combine the corresponding prefix and suffix.
 
@@ -400,12 +401,10 @@ the product $AB$ in time~$O(n^2)$.
 
 \subsubsection{Non-commutative Case}
 
-\vtodo{Reviewer~1: ``At first, I had the confusion that the same algorithm / circuit has to work for any ``faithful non-commutative'' semigroup, as in the commutative section, and the lower bound rules out small circuits of this kind. It would be good to emphasize that the lower bound works even if the circuit can be constructed based on~$S$.}
-
-\vtodo{Reviewer~1: ``The part where you define faithful non-commutative semigroup and state basic properties is hard to digest. Is there a natural non-commutative semigroup that is faithful non-commutative and is not the free idempo- tent semigroup or the free semigroup? For the free semigroup case, it is trivial to prove the reduction, as any non-range gate is useless(?). Ideally, it would be helpful to provide a few concrete (and natural) examples that have more structures than the free idempotent semigroup. If such examples are not easy to describe or natural, I would suggest arranging the proofs and definitions such that the reader will have $S$ being the free idempotent semigroup in mind when reading all the proofs. This can be done by either explicitly stating (and emphasize) that it is recommended to think that $S$ is the free idempotent semigroup, or first proving the result for this case then define the faithful non-commutative semigroups and remark that the whole proof works for any such semigroup.''}
+\todo[inline]{Reviewer~1: ``At first, I had the confusion that the same algorithm / circuit has to work for any ``faithful non-commutative'' semigroup, as in the commutative section, and the lower bound rules out small circuits of this kind. It would be good to emphasize that the lower bound works even if the circuit can be constructed based on~$S$.''~--- We reformulated Theorem 1.3 and slightly modified the preceding text.}
 
 As our second main result, we show that \emph{commutativity is essential}: for
-a~faithful non-commutative semigroup~$S$
+any faithful non-commutative semigroup~$S$
 (the notion of faithful non-commutative semigroup  is made formal
 later in the text), the minimum number of semigroup operations
 required to compute $Ax$ for a~matrix
@@ -414,21 +413,24 @@ $\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
 
 \begin{restatable}{theorem}{lowerthm}
 \label{thm:lowerbound}
-Let $(S, \circ)$ be a~semigroup, $x$ be
-a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
-$A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
-computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
-is the inverse Ackermann function. Moreover, if $(S, \circ)$ is faithful non-commutative then there exists
+There exists
 a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes
-in every row such that the minimum number of semigroup
+in every row such that for any $(S, \circ)$ faithful non-commutative semigroup the minimum number of semigroup
 operations
 required to compute~$Ax$ is $\Omega(n\alpha(n))$.
 \end{restatable}
 
-\vtodo{Reviewer~2: ``Theorem 1.3 can be split into two parts — one stating the lower bound and the other stating the upper bounds. The proof of the upper bound is short and straightforward from [21], and the main result is the lower bound.''}
+It is not hard to show that this lower bound is tight.
+\begin{restatable}{lemma}{non-com-upper}
+	\label{thm:lowerbound}
+	Let $(S, \circ)$ be a~semigroup, $x$ be
+	a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
+	$A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
+	computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
+	is the inverse Ackermann function. 
+\end{restatable}
 
-\vtodo{Reviewer~2: ``The result from [6] used in the proof of Theorem 1.3 must be explicitly stated. ''}
-
+\todo[inline]{Reviewer~2: ``Theorem 1.3 can be split into two parts — one stating the lower bound and the other stating the upper bounds. The proof of the upper bound is short and straightforward from [21], and the main result is the lower bound.'~--- Done.}
 
 
 
@@ -1149,14 +1151,14 @@ A commutative semigroup $(S, \circ)$ is \emph{faithful commutative} if for any
 equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
 \end{definition}
 
-\vtodo{Reviewer~3: ``In section 4 after definition 4.1 when the term "initial mark" is defined, my comments are that 1) the definition of "initial mark" and "initial" should be made its own definition (e.g. definition 4.2) and 2) the definition of "initial mark" and "initial" would benefit greatly from one or two simple examples, which shouldn't take much space or time to present.''}
+
 
 Note that this definition does not pose any restrictions on the cardinality of
-each letter in $W$ and $W'$. This allows~us to capture in this definition
-important cases of idempotent semigroups. For example, semigroups
-$(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ are commutative faithful.
+each letter in $W$ and $W'$. In particular, it captures cases of idempotent semigroups $(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ that are important for us.
 
-\vtodo{Reviewer~1: ``“This allows to capture in this definition important cases of idempotent semigroups.” I’m not sure if I understand this sentence. This definition does not imply idempotence, nor is implied by idempotence.''}
+\todo[inline]{Reviewer~1: ``“This allows to capture in this definition important cases of idempotent semigroups.” I’m not sure if I understand this sentence. This definition does not imply idempotence, nor is implied by idempotence.''~--- Fixed.}
+
+\vtodo{Reviewer~1: ``The part where you define faithful non-commutative semigroup and state basic properties is hard to digest. Is there a natural non-commutative semigroup that is faithful non-commutative and is not the free idempo- tent semigroup or the free semigroup? For the free semigroup case, it is trivial to prove the reduction, as any non-range gate is useless(?). Ideally, it would be helpful to provide a few concrete (and natural) examples that have more structures than the free idempotent semigroup. If such examples are not easy to describe or natural, I would suggest arranging the proofs and definitions such that the reader will have $S$ being the free idempotent semigroup in mind when reading all the proofs. This can be done by either explicitly stating (and emphasize) that it is recommended to think that $S$ is the free idempotent semigroup, or first proving the result for this case then define the faithful non-commutative semigroups and remark that the whole proof works for any such semigroup.''}
 
 We need to study the non-commutative case, and moreover, our results
 establish the difference between commutative and non-commutative cases. Thus,
@@ -1167,12 +1169,18 @@ for the non-commutative case inspired by the properties of free idempotent
 semigroups~\cite{GreenR52}. To introduce this notion, we need several
 definitions.
 
+\todo[inline]{Reviewer~3: ``In section 4 after definition 4.1 when the term "initial mark" is defined, my comments are that 1) the definition of "initial mark" and "initial" should be made its own definition (e.g. definition 4.2) and 2) the definition of "initial mark" and "initial" would benefit greatly from one or two simple examples, which shouldn't take much space or time to present.''~--- Done.}
+
+\begin{definition}
 The \emph{initial mark} of $W$ is the letter that is present in $W$ such that
 its first appearance is farthest to the right. Let $U$ be the prefix of $W$
 consisting of letters preceding the initial mark. That is, $U$ is the maximal
 prefix of $W$ with a smaller number of generators. We call $U$ the
 \emph{initial} of $W$. Analogously we define the \emph{terminal mark} of $W$ and
 the \emph{terminal} of $W$.
+\end{definition}
+
+For example, for $W = abbacabca$, the initial mark is the first letter $c$, the initial is the prefix $abba$, the terminal mark is the last letter $b$ and the terminal is the suffix $ca$.
 
 \begin{definition}\label{def:strong_non_commutativity}
 We say that a semigroup $X$ with generators $\{x_1,\ldots, x_n\}$ is
@@ -1284,6 +1292,8 @@ circuits.
 
 Using this theorem, it is straightforward to finish the proof of
 Theorem~\ref{thm:lowerbound}.
+
+\vtodo{Reviewer~2: ``The result from [6] used in the proof of Theorem 1.3 must be explicitly stated. ''}
 \begin{proof}[Proof of Theorem~\ref{thm:lowerbound}]
 	\vtodo{Reviewer~1: ``Technically, Theorem 1.3 is stated for general strongly non-commutative semigroups, while Theorem 4.6 is stated for idempotent X. Consider integrating the argument in section 4.3 to the proof, or moving it to an earlier place.''}
 	
