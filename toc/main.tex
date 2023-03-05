@@ -536,8 +536,8 @@ zeros in a~row split this row into a~collection of~ranges in a~natural way.
 We review applications as well as a~rich variety of algorithmic techniques for
 the range queries problem in Sections~\ref{subseq:rmqapp} and~\ref{subsec:approaches}.
 
-\item[Graph algorithms.] Various graph path and reachability
-problems can be reduced naturally to matrix multiplication.
+\item[Graph algorithms.] Many graph problems can be reduced to matrix
+multiplication.
 Two classic examples are: (i) the all-pairs shortest path problem (APSP) is
 reducible to min-plus matrix multiplication~\cite{DBLP:conf/focs/FischerM71},
 and (ii) the number of triangles in an undirected graph can be found by
@@ -576,8 +576,8 @@ min-plus matrix multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}.
 The interest in computations over such algebraic structures has
 recently grew substantially throughout the
 Computer Science community with the cases of Boolean and
-tropical semirings being of the main interest (see, for
-example,~\cite{Jukna16,Williams14,butkovic10systems}).
+tropical semirings being of main interest (see,
+e.g.~,~\cite{Jukna16,Williams14,butkovic10systems}).
 From this perspective, the computation complexity over sparse and complements of
 sparse matrices is one of the most basic questions.
 Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}
@@ -597,8 +597,8 @@ the Boolean semiring $(\{0,1\}, \lor)$ is a~well-studied problem
 in circuit complexity. The corresponding computational model is known
 as~\emph{rectifier networks}. An overview of known lower and upper bounds for
 such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
-Theorem~\ref{thm:upperbound} states that very dense linear operators have
-linear rectifier network complexity.
+Theorem~\ref{thm:upperbound} states that linear operators on complements of
+sparse matrices have linear rectifier network complexity.
 
 \end{description}
 
@@ -630,19 +630,30 @@ another associative (but not necessarily
 commutative)
 operation $\bullet$ that \emph{distributes} over~$\circ$, that is
 \[
-x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)~~~~~~\text{and}~~~~~~(x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z).
+x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)~~~~~~~~~~~~~~~~(x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z).
 \]
 hold for all~$x$, $y$,~and~$z$ in~$S$.
+Furthermore, \emph{zero} $0 \in S$ and \emph{one} $1 \in S$ are the
+\emph{additive} and \emph{multiplicative identities} of the two operators,
+and zero is \emph{annihilating}:
+\[
+0 \circ x = x \circ 0=x~~~~~~~~~~~~1 \bullet x = x \bullet 1 = x~~~~~~~~~~~~0 \bullet x = x \bullet 0 = 0.
+\]
 Since $\circ$~and~$\bullet$ behave
 similarly to numeric addition and multiplication, it is common to
 give~$\bullet$ a~higher precedence to avoid
 unnecessary parentheses, and even omit~$\bullet$~from
 formulas altogether, replacing it by juxtaposition.
-This gives a terser and
-more convenient notation, e.g., the left distributivity law becomes:
-$x (y \circ z) = x y \circ x z$. We will use this notation,
-insofar as this does not lead to ambiguity. See Section~\ref{subsec:algstr} for
-an overview of commonly used semigroups and semirings.
+This gives a terser and more convenient notation, for example, the left
+distributivity law becomes: $x (y \circ z) = x y \circ x z$. We will use this
+notation, insofar as it does not lead to ambiguity.
+
+See Section~\ref{subsec:algstr} for an overview of commonly used semigroups and
+semirings.
+
+% Using the language of semirings, the linear operator $Ax$ on a matrix
+% $A \in \{0,1\}^{n \times n}$ can be defined as...
+
 
 \subsection{Range Queries Problem and Linear Operator Problem}
 In the {\em range queries problem}, one is given
@@ -1394,10 +1405,11 @@ $O(\frac{n}{\log n})$.
 
 
 \section*{Acknowledgments}
-We thank Pawel Gawrychowski for pointing us out to the
-paper~\cite{DBLP:journals/ijcga/ChazelleR91}. We thank Alexey Talambutsa for
+We thank Pawel Gawrychowski for pointing us to the
+paper~\cite{DBLP:journals/ijcga/ChazelleR91}, and Alexey Talambutsa for
 fruitful discussions on the theory of semigroups.
-\atodo{Please add a nice acknowledgment to the reviewers.}
+We are also grateful to the reviewers for their thorough reviews that helped us
+improve the final version of the paper.
 
 \clearpage
 
