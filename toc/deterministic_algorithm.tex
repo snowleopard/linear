@@ -1,3 +1,4 @@
+%!TEX root = main.tex
 \subsection{Deterministic Algorithm and the Proof of Lemma~\ref{lemma:permute}}\label{sec:deterministic}
 
 \begin{lemma}\label{lemma:blocks}
@@ -20,7 +21,7 @@
 	Compute all prefixes and all suffixes of every block. Since
 	the blocks partition the input range $(1,n)$, this also can be done
 	with an $O(n)$ size circuit.
-	
+
 	Consider any range of length at least $\log n$. Note that it
 	cannot lie entirely inside the block. Hence, any such range can be
 	decomposed into three subranges: a~suffix of a~block, a~range
@@ -44,10 +45,10 @@
 			\node at (\x+0.5,0) {$B_{\i}$};
 		\end{scope}
 	\end{mypic}
-	
+
 	\todo[inline]{Reviewer~1: ``Technically, one needs three additional binary gates to sum up the four parts (the range of blocks is a sum of two)''.~--- Oh, right! We fixed this in the statement and made it clearer in the proof.}
-	
-	It remains to note that all these three components are already precomputed. One needs an~additional binary gate 
+
+	It remains to note that all these three components are already precomputed. One needs an~additional binary gate
 	to~compute the range of~blocks, one more gate to add a~suffix of a~block, and one additional gate to add a~prefix of a~block.
 \end{proof}
 
@@ -109,18 +110,28 @@ columns of~$A$ in such a~way that the total length of all short segments
 is $O(\log^4n)$. This will follow from the fact that all short ranges in the
 resulting matrix~$A$ will lie within the last $O(\log^2 t)$ columns.
 
-\atodo{Reviewer~3: ``For the deterministic part of the proof of 3.6 I have a comment specific to my own reading experience. After reading up to the sentence beginning "The process will work for at least $t - \log^2 t$ steps," something about the wording and lack of transition to the next paragraph led me to to assume that this was the end of the thought and the following paragraph would be on a different part of the proof. Instead of reading the following explanation, I stopped to wonder why the process would work for $t - \log^2 t$ steps.''}
+\todo[inline]{Reviewer~3: ``For the deterministic part of the proof of 3.6 I have a
+comment specific to my own reading experience. After reading up to the sentence
+beginning "The process will work for at least $t - \log^2 t$ steps," something
+about the wording and lack of transition to the next paragraph led me to to
+assume that this was the end of the thought and the following paragraph would be
+on a different part of the proof. Instead of reading the following explanation,
+I stopped to wonder why the process would work for $t - \log^2 t$ steps.''
+~\\
+--- Thanks, we've revised the text to make the transition clearer.}
 
 We construct the required permutation of columns step by step by a~greedy
-algorithm. After step~$r$ we will have a~sequence of the first~$r$ columns
+algorithm. After step~$r$, we will have a~sequence of the first~$r$ columns
 chosen and we will maintain the following properties:
 \begin{itemize}
 \item For each $i \leq r$, the first $i$~columns contain at least $i$ zeros.
-\item There are no short ranges within the first~$r$ rows (apart from those,
+\item There are no short ranges within the first~$r$ rows (apart from those
 that can be extended by adding columns on the right).
 \end{itemize}
-The process will work for at least $t - \log^2 t$ steps, so short ranges are
-only possible within the last $\log^2 t + \log t = O(\log^2 t)$ columns.
+
+After $t - \log^2 t$ steps, short ranges will only be possible within the last
+$\log^2 t + \log t = O(\log^2 t)$ columns. The algorithm itself is presented
+below.
 
 On the first step, we pick any column that has a zero in it. Suppose
 we have reached step~$r$. We explain how to add a~column on
