@@ -169,8 +169,19 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 %%%   if more than two authors: (Jones et al., STOC'14)
 %%%   if journal: (Jones et al., SICOMP 2014)
 \begin{abstract}
-	\vtodo{Reviewer~2: ``The lower bounds result in the Abstract is stated without reference to the faithful semigroup. It is worth making that explicit for clarity. \\ The order of the results listed in the Abstract is different from the order in the body of the paper. Specifically, the paper presents the results (1), (2) and (3) in order but discusses (2), (3) and (1) in that order in the Abstract. This is nitpicky but keeping them consistent will help.''}
-	
+	\todo[inline]{Reviewer~2: ``The lower bounds result in the Abstract is
+	stated without reference to the faithful semigroup. It is worth making that
+	explicit for clarity. \\ The order of the results listed in the Abstract is
+	different from the order in the body of the paper. Specifically, the paper
+	presents the results (1), (2) and (3) in order but discusses (2), (3) and
+	(1) in that order in the Abstract. This is nitpicky but keeping them
+	consistent will help.''~--- We added faithful non-commutative semigroups in
+	the lower bound statement. We changed the order of the results in the
+	abstract, now upper bounds are stated first. We still would like to keep
+	more general upper bound to be the first one in the abstract and the second
+	one discussed in the paper. We believe that on this level the optimal order
+	of results might be different depending on the space constraints.}
+
     Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones
     and $x$ be an~$n$-dimensional vector of formal variables over a~semigroup
     $(S, \circ)$. How many semigroup operations are required to compute the
@@ -178,16 +189,18 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 
     It is easy to compute $Ax$ using $O(u)$ semigroup operations. The main
     question studied in this paper is: can $Ax$~be computed using $O(z)$
-    semigroup operations? We prove that in general this is not possible: there
+    semigroup operations?
+	For the case when the semigroup is commutative, we give a~constructive proof
+	of an~$O(z)$ upper bound. This implies that in commutative settings,
+	complements of sparse matrices can be processed as efficiently as sparse
+	matrices, though the corresponding algorithms are more involved. This covers
+	the cases of Boolean and tropical semirings that have numerous applications,
+	e.g., in graph theory.
+    On the other hand, we prove that in general this is not possible: for
+	faithful non-commutative semigroups there
     exists a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in
     every row (hence $z=2n$) whose complexity is $\Theta(n\alpha(n))$ where
-    $\alpha(n)$ is the inverse Ackermann function. However, for the case when
-    the semigroup is commutative, we give a~constructive proof of an~$O(z)$
-    upper bound. This implies that in commutative settings, complements of
-    sparse matrices can be processed as efficiently as sparse matrices (though
-    the corresponding algorithms are more involved). This covers the cases of
-    Boolean and tropical semirings that have numerous applications, e.g., in
-    graph theory.
+    $\alpha(n)$ is the inverse Ackermann function.
 
     As a~simple application of the presented linear-size construction, we show
     how to multiply two $n\times n$ matrices over an arbitrary semiring in
@@ -228,16 +241,14 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 \section{Introduction}
 \subsection{Problem Statement and New Results}
 
-Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes
-and $u$~ones, and $x=(x_1, \dotsc, x_n)$~be an~$n$-dimensional vector
-of formal variables over a~semigroup~$(S, \circ)$. In this paper,
-we study the
-complexity of the \emph{linear operator}~$Ax$,
-i.e., how many semigroup
-operations are required to compute a~vector whose $i$-th element is
-\[
+Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones, and
+$x=(x_1, \dotsc, x_n)$~be an~$n$-dimensional vector of formal variables over
+a~semigroup~$(S, \circ)$. In this paper, we study the complexity of the
+\emph{linear operator}~$Ax$, i.e., how many semigroup operations are required to
+compute a~vector whose $i$-th element is
+\begin{equation}\label{eq-problem-statement}
 \sum_{1 \le j \le n\,\bigwedge\,A_{ij}=1}x_j
-\]
+\end{equation}
 where the summation is over the semigroup operation~$\circ$.\footnote{Note that
 the result of summation is undefined in case of an all-zero row, because
 semigroups have no neutral element in general. One can trivially sidestep this
@@ -253,45 +264,46 @@ To~give an~example, consider a~complement $A \in \{0,1\}^{6 \times 6}$ of~the id
 	\begin{scope}[scale=.5]
 		\foreach \i in {1,...,6}
 		\node[above] at (\i-0.5,6) {$x_{\i}$};
-		
+
 		\node[right] at (6.5,5.5) {$y_1=x_2 \circ x_3 \circ x_4 \circ x_5 \circ x_6$};
 		\node[right] at (6.5,4.5) {$y_2=x_1 \circ x_3 \circ x_4 \circ x_5 \circ x_6$};
 		\node[right] at (6.5,3.5) {$y_3=x_1 \circ x_2 \circ x_4 \circ x_5 \circ x_6$};
 		\node[right] at (6.5,2.5) {$y_4=x_1 \circ x_2 \circ x_3 \circ x_5 \circ x_6$};
 		\node[right] at (6.5,1.5) {$y_5=x_1 \circ x_2 \circ x_3 \circ x_4 \circ x_6$};
 		\node[right] at (6.5,0.5) {$y_6=x_1 \circ x_2 \circ x_3 \circ x_4 \circ x_5$};
-		
+
 		\foreach \x in {0,...,5}
 		\foreach \y in {0,...,5} {
 			\draw[fill=mcf] (\x,\y) rectangle (\x+1, \y+1);
-			\node at (\x+0.5,\y+0.5) {1};  
+			\node at (\x+0.5,\y+0.5) {1};
 		}
-		
+
 		\foreach \x/\y in {0/5, 1/4, 2/3, 3/2, 4/1, 5/0} {
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
-			\node at (\x+0.5,\y+0.5) {0}; 
+			\node at (\x+0.5,\y+0.5) {0};
 		}
 	\end{scope}
 \end{mypic}
 %
-What is~the minimum number of~semigroup operations needed 
-to~compute these six sums? The answer depends on~the properties of~the underlying semigroup $(S, \circ)$. 
-For example, if $S=(\{0,1\}, \oplus)$, then one way is~to compute the sum of~all input variables first and then to~cancel every variable. However this strategy 
-does not work for $S=(\{0,1\}, \lor)$. For this semiring,
-one can start by~computing all prefix and suffix
-sums and then, for every output, to~combine the corresponding prefix and suffix.
+How many operations are required to~compute these six sums? The answer depends
+on~the properties of~the semigroup~S. For example, if $S=(\{0,1\}, \oplus)$,
+then one can first compute the sum of~all input variables~$a$ and then let
+$y_i = a \oplus x_i$. However, this strategy does not work for $S=(\{0,1\}, \lor)$.
+For this semigroup, one can first compute all prefix~$p_i$ and suffix~$s_i$ sums
+and then let $y_i = p_{i-1} \lor s_{i+1}$, with appropriate adjustments at the
+boundaries. See the resulting circuits below.
 
 \begin{mypic}
 	\begin{scope}[scale=.6]
 		\foreach \i in {1,...,6}
 			\node (\i) at (2*\i, 6) {$x_{\i}$};
-		
+
 		\foreach \n/\x/\y/\s/\t in {7/3/5/1/2, 8/11/5/5/6, 9/5/4/7/3, 10/9/4/8/4, 11/7/3/9/10} {
 			\node[gate] (\n) at (\x,\y) {$\oplus$};
 			\draw[->] (\s) -- (\n);
 			\draw[->] (\t) -- (\n);
-		}  
-		
+		}
+
 		\foreach \i in {1,...,6} {
 			\node[gate,label=below:$y_\i$] (y\i) at (2*\i, 1) {$\oplus$};
 			\draw[->] (11) -- (y\i);
@@ -302,49 +314,54 @@ sums and then, for every output, to~combine the corresponding prefix and suffix.
 	\begin{scope}[scale=.6, xshift=130mm]
 		\foreach \i in {1,...,6}
 			\node (\i) at (2*\i, 6) {$x_{\i}$};
-		
-		\foreach \n/\x/\y/\s/\t/\l in {7/2/5/1/2/~, 8/3/4.5/7/3/~, 9/4/4/8/4/~, 10/5/3.5/9/5/y_6, 11/12/5/5/6/~, 12/11/4.5/11/4/~, 
+
+		\foreach \n/\x/\y/\s/\t/\l in {7/2/5/1/2/~, 8/3/4.5/7/3/~, 9/4/4/8/4/~, 10/5/3.5/9/5/y_6, 11/12/5/5/6/~, 12/11/4.5/11/4/~,
 			13/10/4/12/3/~, 14/9/3.5/13/2/y_1} {
 			\node[gate,label=below:$\l$] (\n) at (\x,\y) {$\lor$};
 			\draw[->] (\s) -- (\n);
 			\draw[->] (\t) -- (\n);
 		}
-		
+
 		\node[gate,label=below:$y_2$] (15) at (4,1) {$\lor$};
 		\path (1) edge[->,draw,out=-135,in=135] (15);
 		\path (13) edge[->,draw,out=-105,in=45] (15);
-		
+
 		\node[gate,label=below:$y_3$] (16) at (6,1) {$\lor$};
 		\path (7) edge[->,draw,out=-90,in=135] (16);
 		\path (12) edge[->,draw,out=-90,in=45] (16);
-		
+
 		\node[gate,label=below:$y_4$] (17) at (8,1) {$\lor$};
 		\path (8) edge[->,draw,out=-90,in=135] (17);
 		\path (11) edge[->,draw,out=-90,in=45] (17);
-		
+
 		\node[gate,label=below:$y_5$] (18) at (10,1) {$\lor$};
 		\path (6) edge[->,draw,out=-40,in=45] (18);
 		\path (9) edge[->,draw,out=-75,in=135] (18);
 	\end{scope}
 \end{mypic}
 
-In~this paper, 
-we are interested in lower and
-upper bounds involving~$z$ and~$u$.
-Matrices with $u=O(n)$ are usually called \emph{sparse},
-whereas matrices with $z=O(n)$
-are called \emph{complements of sparse matrices}.
-Computing all $n$~outputs
-of~$Ax$ directly (i.e. using the above definition) takes
-$O(u)$ semigroup operations.
+In~this paper, we are interested in lower and upper bounds involving~$z$ and~$u$.
+% Andrey: I commented out the remarks below because they (1) break the flow of
+% the paragraph, and (2) seem unnecessary. Feel free to revert if you disagree.
+%
+% Matrices with $u=O(n)$ are usually called \emph{sparse}, whereas matrices with
+% $z=O(n)$ are called \emph{complements of sparse matrices}.
+Computing all $n$~outputs of~$Ax$ directly, i.e., using the above
+definition~(\ref{eq-problem-statement}), takes $O(u)$ semigroup operations.
 The main question we~study is:
-can $Ax$~be computed using $O(z)$ semigroup
-operations? Note that it is easy to achieve $O(z)$ complexity if $\circ$ has an
-inverse. Indeed, in this case $Ax$~can be computed via subtraction:
+
+\vspace{2mm}
+\emph{Can $Ax$~be computed using $O(z)$ semigroup operations?}
+\vspace{2mm}
+
+\noindent
+Note that it is easy to achieve $O(z)$ complexity if $\circ$ has an inverse.
+Indeed, in this case $Ax$~can be computed via subtraction:
 $Ax = (U-\overline{A})x = Ux - \overline{A}x$, where $U$ is the all-ones matrix
 whose linear operator can be computed trivially using $O(n)$ semigroup
 operations, and $\overline{A}$ is the complement of~$A$ and therefore has only
-$z = O(n)$ ones.
+$z$ ones. Our solution for the above example involving $S=(\{0,1\}, \oplus)$
+is obtained in precisely this way, by noticing that $\oplus$ is its own inverse.
 
 \subsubsection{Commutative Case}
 Our first main result shows that in the commutative case, complements
@@ -359,7 +376,7 @@ computational model in Section~\ref{subsec:circuits}). Moreover,
 the constructed circuits are \emph{uniform} in the sense that they
 can be generated by an~efficient algorithm. Hence, our circuits
 correspond to an~elementary algorithm that uses no tricks like examining the
-values $x_j$, i.e., the semigroup operation $\circ$ is applied in a~(carefully
+values $x_i$, i.e., the semigroup operation~$\circ$ is applied in a~(carefully
 chosen) order that is independent of the specific input~$x$.
 
 \begin{restatable}{theorem}{upperthm}
@@ -367,7 +384,7 @@ chosen) order that is independent of the specific input~$x$.
 Let $(S, \circ)$~be a~commutative semigroup,
 and $A \in \{0,1\}^{n \times n}$ be a~matrix
 with~$z=\Omega(n)$ zeroes.
-There exists a~circuit of size $O(z)$ that uses
+There exists a~circuit of size $O(z)$ that takes
 a~vector $x = (x_1,\ldots, x_n)$ of formal variables as an input,
 uses only the semigroup operation~$\circ$ at internal gates,
 and outputs $Ax$. Moreover, there exists a~randomized
@@ -390,22 +407,17 @@ from vectors to matrices.
 
 \begin{restatable}{corollary}{matrixmultcor}
 \label{cor:matrixmultiplication}
-Let $(S, \circ)$ be a~commutative semigroup.
-There exists a~deterministic algorithm that takes
-a~matrix $A \in \{0,1\}^{n \times n}$ with
-$z=O(n)$ zeroes
-and a~matrix $B \in S^{n \times n}$ and computes
-the product $AB$ in time~$O(n^2)$.
+Let $S$ be a~semiring. There exists a~deterministic algorithm that takes a~matrix
+\linebreak${A \in \{0,1\}^{n \times n}}$ with $z=O(n)$ zeroes and a~matrix
+$B \in S^{n \times n}$ and computes the product $AB$ in time~$O(n^2)$.
 \end{restatable}
 
 \subsubsection{Non-commutative Case}
 
-\vtodo{Reviewer~1: ``At first, I had the confusion that the same algorithm / circuit has to work for any ``faithful non-commutative'' semigroup, as in the commutative section, and the lower bound rules out small circuits of this kind. It would be good to emphasize that the lower bound works even if the circuit can be constructed based on~$S$.}
-
-\vtodo{Reviewer~1: ``The part where you define faithful non-commutative semigroup and state basic properties is hard to digest. Is there a natural non-commutative semigroup that is faithful non-commutative and is not the free idempo- tent semigroup or the free semigroup? For the free semigroup case, it is trivial to prove the reduction, as any non-range gate is useless(?). Ideally, it would be helpful to provide a few concrete (and natural) examples that have more structures than the free idempotent semigroup. If such examples are not easy to describe or natural, I would suggest arranging the proofs and definitions such that the reader will have $S$ being the free idempotent semigroup in mind when reading all the proofs. This can be done by either explicitly stating (and emphasize) that it is recommended to think that $S$ is the free idempotent semigroup, or first proving the result for this case then define the faithful non-commutative semigroups and remark that the whole proof works for any such semigroup.''}
+\todo[inline]{Reviewer~1: ``At first, I had the confusion that the same algorithm / circuit has to work for any ``faithful non-commutative'' semigroup, as in the commutative section, and the lower bound rules out small circuits of this kind. It would be good to emphasize that the lower bound works even if the circuit can be constructed based on~$S$.''~--- We reformulated Theorem 1.3 and slightly modified the preceding text.}
 
 As our second main result, we show that \emph{commutativity is essential}: for
-a~faithful non-commutative semigroup~$S$
+any faithful non-commutative semigroup~$S$
 (the notion of faithful non-commutative semigroup  is made formal
 later in the text), the minimum number of semigroup operations
 required to compute $Ax$ for a~matrix
@@ -414,21 +426,24 @@ $\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
 
 \begin{restatable}{theorem}{lowerthm}
 \label{thm:lowerbound}
-Let $(S, \circ)$ be a~semigroup, $x$ be
-a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
-$A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
-computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
-is the inverse Ackermann function. Moreover, if $(S, \circ)$ is faithful non-commutative then there exists
+There exists
 a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes
-in every row such that the minimum number of semigroup
-operations
-required to compute~$Ax$ is $\Omega(n\alpha(n))$.
+in every row such that for any faithful non-commutative semigroup $(S, \circ)$
+the minimum number of semigroup operations required to compute~$Ax$ is
+$\Omega(n\alpha(n))$.
 \end{restatable}
 
-\vtodo{Reviewer~2: ``Theorem 1.3 can be split into two parts — one stating the lower bound and the other stating the upper bounds. The proof of the upper bound is short and straightforward from [21], and the main result is the lower bound.''}
+It is not hard to show that this lower bound is tight.
+\begin{restatable}{lemma}{non-com-upper}
+	\label{lem:upperbound}
+	Let $(S, \circ)$ be a~semigroup, $x$ be
+	a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
+	$A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
+	computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
+	is the inverse Ackermann function.
+\end{restatable}
 
-\vtodo{Reviewer~2: ``The result from [6] used in the proof of Theorem 1.3 must be explicitly stated. ''}
-
+\todo[inline]{Reviewer~2: ``Theorem 1.3 can be split into two parts — one stating the lower bound and the other stating the upper bounds. The proof of the upper bound is short and straightforward from [21], and the main result is the lower bound.'~--- Done.}
 
 
 
@@ -436,12 +451,23 @@ required to compute~$Ax$ is $\Omega(n\alpha(n))$.
 The complexity of linear operators is interesting for many reasons, some of
 which are listed below.
 
-\atodo{Reviewer~2: ``The paragraphs on Range Queries and Graph Algorithms in Section 1.2 need references to literature. Additionally and more importantly, Range Queries should discuss data structures in the Group model because their lower bound proof relies on [6], which proves a lower bound for a problem in the Group model for data structures.''}
-
-\atodo{Reviewer~2: ``To reiterate the above comment, I think the authors should expand on “”The algorithms (Theorem 1.1 and Corollary 1.2) and hardness results (Theorem 1.3) for the linear operator problem presented in this paper are indeed inspired by some of the known results for the range queries problem.” to discuss [6] and other related work.''}
-
-\atodo{Reviewer~2: ``It will be nice to discuss Algorithms by Yao and by Alon and Schieber from A.3 in the main body of the paper as their upper bound results rely on them.''}
-
+\todo[inline]{Reviewer~2: ``The paragraphs on Range Queries and Graph Algorithms in
+Section 1.2 need references to literature. Additionally and more importantly,
+Range Queries should discuss data structures in the Group model because their
+lower bound proof relies on [6], which proves a lower bound for a problem in
+the Group model for data structures.''
+~\\
+Reviewer~2: ``To reiterate the above comment, I think the authors should expand
+on “”The algorithms (Theorem 1.1 and Corollary 1.2) and hardness results
+(Theorem 1.3) for the linear operator problem presented in this paper are indeed
+inspired by some of the known results for the range queries problem.” to
+discuss [6] and other related work.''
+~\\
+Reviewer~2: ``It will be nice to discuss Algorithms by Yao and by Alon and
+Schieber from A.3 in the main body of the paper as their upper bound results
+rely on them.''
+~\\
+--- Done. }
 
 \begin{description}
 	\item[Range queries.] In the \emph{range queries} problem,
@@ -449,23 +475,31 @@ given a~vector~$x=(x_1, \dotsc, x_n)$ over a~semigroup $(S, \circ)$ and
 multiple queries of the form~$(l,r)$, one is required to
 output the result $x_l \circ x_{l+1} \circ \dotsb \circ x_r$
 for each query. It~is a~classical problem in data structures and
-algorithms with applications in many fields, such as bioinformatics and
-string algorithms, computational geometry, image analysis, real-time
-systems, and others.
-We review some of the less straightforward applications
-as well as a~rich variety of algorithmic techniques for the problem in
-Sections~\ref{subseq:rmqapp} and~\ref{subsec:approaches}.
+algorithms with applications in many fields.
+
+Yao~\cite{DBLP:conf/stoc/Yao82} showed that, for any semigroup, it is possible
+to preprocess the input vector in time $O(n)$ so that to further answer any
+query in time $O(\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function
+and proved a~matching lower bound. Later, Alon and
+Schieber~\cite{Alon87optimalpreprocessing} studied a~more specific question:
+what is the minimum number of semigroup operations needed at the preprocessing
+stage for being able to then answer any query in at most $k$~steps? They proved
+matching lower and upper bounds for every~$k$. As a~special case, they showed
+how to preprocess the input sequence in time $O(n\log n)$ so that to answer any
+subsequent query by applying at most one semigroup operation.
+Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} studied the
+commutative version of the problem. They proved the $\Omega(n \alpha(n))$ lower
+bound on the number of commutative semigroup operations required to answer all
+queries.
 
 The linear operator problem is a~natural generalization of the range queries
 problem: each row of the matrix~$A$ defines a~subset of the elements of~$x$
 that needs to be summed up and this subset is not required to be
-a~contiguous range. The algorithms (Theorem~\ref{thm:upperbound} and
-Corollary~\ref{cor:matrixmultiplication}) and hardness results
-(Theorem~\ref{thm:lowerbound}) for the linear operator problem presented in this
-paper are indeed inspired by some of the known results for the range queries
-problem. The connection to~range queries is~straightforward:
-zeros in a~row split this row into a~collection of~ranges
-in a~natural way.
+a~contiguous range. The algorithms (Theorem~\ref{thm:upperbound}) and hardness
+results (Theorem~\ref{thm:lowerbound}) for the linear operator problem presented
+in this paper are very much inspired by the above-mentioned classic results for
+the range queries problem. The connection to~range queries is~straightforward:
+zeros in a~row split this row into a~collection of~ranges in a~natural way.
 
 \todo[inline]{Added a picture}
 
@@ -474,39 +508,41 @@ in a~natural way.
 		\foreach \x in {0,...,19}
 		\foreach \y in {0,...,19} {
 			\draw[fill=mcf] (\x,\y) rectangle (\x+1, \y+1);
-			\node[scale=.3] at (\x+0.5,\y+0.5) {1};  
+			\node[scale=.3] at (\x+0.5,\y+0.5) {1};
 		}
-		
+
 		\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} {
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
-			\node[scale=.3] at (\x+0.5,\y+0.5) {0}; 
+			\node[scale=.3] at (\x+0.5,\y+0.5) {0};
 		}
 	\end{scope}
-	
+
 	\begin{scope}[scale=.2, xshift=30cm]
 		\foreach \x in {0,...,19}
 		\foreach \y in {0,...,19} {
 			\draw[fill=mcf] (\x,\y) rectangle (\x+1, \y+1);
-			\node[scale=.3] at (\x+0.5,\y+0.5) {1};  
+			\node[scale=.3] at (\x+0.5,\y+0.5) {1};
 		}
-		
+
 		\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} {
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
 		}
-		
+
 		\foreach \y/\a/\b in {0/-1/3, 0/3/11, 0/11/15, 0/15/20, 1/0/10, 1/11/15, 1/15/17, 1/17/20, 2/-1/3, 2/3/8, 2/8/20, 3/-1/7, 3/7/10, 3/10/20, 4/-1/8, 4/8/12, 4/12/16, 4/16/20, 5/-1/9, 5/10/20, 6/-1/3, 6/5/8, 6/8/17, 6/17/20, 7/-1/20, 8/-1/4, 8/4/13, 8/14/17, 8/17/20, 9/-1/2, 9/2/6, 9/6/20, 10/-1/8, 10/9/16, 10/16/20, 11/-1/1, 11/1/9, 11/9/20, 12/0/7, 12/8/18, 12/18/20, 13/0/4, 13/5/9, 13/9/16, 13/16/20, 14/-1/20, 15/-1/1, 15/1/12, 15/12/20, 16/-1/2, 16/2/7, 16/7/20, 17/-1/1, 17/1/4, 17/4/10, 17/10/17, 17/17/19, 18/-1/11, 18/11/18, 19/-1/15, 19/15/20}
 		\draw[fill=mc] (\a+1,\y) rectangle (\b,\y+1);
 	\end{scope}
 \end{mypic}
 
+We review applications as well as a~rich variety of algorithmic techniques for
+the range queries problem in Sections~\ref{subseq:rmqapp} and~\ref{subsec:approaches}.
 
-\item[Graph algorithms.] Various graph path and reachability
-problems can be reduced naturally to matrix multiplication.
+\item[Graph algorithms.] Many graph problems can be reduced to matrix
+multiplication.
 Two classic examples are: (i) the all-pairs shortest path problem (APSP) is
-reducible to min-plus matrix multiplication, and (ii) the number of triangles
-in an undirected graph can be found by computing the third power (over the integers) of its
-adjacency matrix.
-It is natural to ask what happens if
+reducible to min-plus matrix multiplication~\cite{DBLP:conf/focs/FischerM71},
+and (ii) the number of triangles in an undirected graph can be found by
+computing the third power (over the integers) of its adjacency
+matrix~\cite{Itai_Rodeh_siam,Williams2009TriangleDV}. It is natural to ask what happens if
 a~graph has $O(n)$ edges or $O(n)$ anti-edges
 (as usual, by~$n$ we denote the number of nodes).
 In many cases, an efficient algorithm
@@ -540,8 +576,8 @@ min-plus matrix multiplication is $n^3/\exp(\sqrt{\log n})$~\cite{Williams14}.
 The interest in computations over such algebraic structures has
 recently grew substantially throughout the
 Computer Science community with the cases of Boolean and
-tropical semirings being of the main interest (see, for
-example,~\cite{Jukna16,Williams14,butkovic10systems}).
+tropical semirings being of main interest (see,
+e.g.~,~\cite{Jukna16,Williams14,butkovic10systems}).
 From this perspective, the computation complexity over sparse and complements of
 sparse matrices is one of the most basic questions.
 Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication}
@@ -561,8 +597,8 @@ the Boolean semiring $(\{0,1\}, \lor)$ is a~well-studied problem
 in circuit complexity. The corresponding computational model is known
 as~\emph{rectifier networks}. An overview of known lower and upper bounds for
 such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
-Theorem~\ref{thm:upperbound} states that very dense linear operators have
-linear rectifier network complexity.
+Theorem~\ref{thm:upperbound} states that linear operators on complements of
+sparse matrices have linear rectifier network complexity.
 
 \end{description}
 
@@ -594,19 +630,30 @@ another associative (but not necessarily
 commutative)
 operation $\bullet$ that \emph{distributes} over~$\circ$, that is
 \[
-x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)~~~~~~\text{and}~~~~~~(x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z).
+x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)~~~~~~~~~~~~~~~~(x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z).
 \]
 hold for all~$x$, $y$,~and~$z$ in~$S$.
+Furthermore, \emph{zero} $0 \in S$ and \emph{one} $1 \in S$ are the
+\emph{additive} and \emph{multiplicative identities} of the two operators,
+and zero is \emph{annihilating}:
+\[
+0 \circ x = x \circ 0=x~~~~~~~~~~~~1 \bullet x = x \bullet 1 = x~~~~~~~~~~~~0 \bullet x = x \bullet 0 = 0.
+\]
 Since $\circ$~and~$\bullet$ behave
 similarly to numeric addition and multiplication, it is common to
 give~$\bullet$ a~higher precedence to avoid
 unnecessary parentheses, and even omit~$\bullet$~from
 formulas altogether, replacing it by juxtaposition.
-This gives a terser and
-more convenient notation, e.g., the left distributivity law becomes:
-$x (y \circ z) = x y \circ x z$. We will use this notation,
-insofar as this does not lead to ambiguity. See Section~\ref{subsec:algstr} for
-an overview of commonly used semigroups and semirings.
+This gives a terser and more convenient notation, for example, the left
+distributivity law becomes: $x (y \circ z) = x y \circ x z$. We will use this
+notation, insofar as it does not lead to ambiguity.
+
+See Section~\ref{subsec:algstr} for an overview of commonly used semigroups and
+semirings.
+
+% Using the language of semirings, the linear operator $Ax$ on a matrix
+% $A \in \{0,1\}^{n \times n}$ can be defined as...
+
 
 \subsection{Range Queries Problem and Linear Operator Problem}
 In the {\em range queries problem}, one is given
@@ -835,36 +882,10 @@ wires the inputs and the outputs exchange places).
 %arbitrary order. As in the dense case, this immediately leads to $O(n^2)$-time
 %boring matrix multiplication.
 
-
-%\section{Computational Model}
-
-%In this section we define our computational model, which includes a few less
-%commonly known notions related to semigroups, as well as semigroup circuits.
-
-
-
 %In an~important special case of the Boolean semigroup $(\{0,1\}, \lor)$,
 %circuits we are discussing are known as {\em rectifier networks}. An overview of
 %known lower and upper bounds for such circuits is given by Jukna
 %in~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
-
-%\section{Formal Statements of the Main Results} \label{sec:statement}
-%
-%Our first main result is the linear circuit for dense matrices over commutative semirings. We formulate it here in the full generality.
-%
-%\begin{theorem}\label{thm:main_statement}
-%Suppose $S$ is a commutative semigroup. A~matrix $A \in \{0,1\}^{n \times n}$
-%with $k$~zeroes can be computed by a~circuit of size $O(n+k)$.
-%\end{theorem}
-%
-%
-%Our second result shows that such a circuit is impossible over strongly non-commutative semirings.
-%
-%\begin{theorem}\label{thm:noncommlowerbound_statement}
-%For any strongly non-commutative semigroup $X$ there is a circuit to compute any dense operator of size $O(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function. On the other hand, there exist dense matrices~$A$ such that any circuit computing $Ax$ must have size $\Omega(n\alpha(n))$.
-%\end{theorem}
-%
-%In the next two sections we provide the detailed proofs of these two theorems.
 
 \section{Commutative Case}\label{sec-commutative}
 
@@ -884,7 +905,7 @@ with $z=\Omega(n)$ zeros (left picture below).
 Zeros split every row of~$A$ into ranges.
 We~construct a~circuit of~size~$O(z)$ that computes all these ranges. Then, by~using additional $O(z)$ gates one can
 compute all outputs of~$Ax$. It~is ranges of~length at~most $\log n$ (middle picture) that make the problem difficult:
-we~prove that one can compute 
+we~prove that one can compute
 all ranges of length at~least $\log n$ using $O(z)$ gates.
 Using this observation, we~proceed as~follows.
 We~partition the rows into two parts (right picture): every row in the top part contains at~most $\log n$ zeroes, whereas every row in the bottom part contains more than $\log n$ zeroes. The bottom part contains at~most $z/\log n$, we~transpose~it and compute in~time $O(\frac{z}{\log n} \cdot \log n)=O(z)$. For the top part, we~employ the commutativity and shuffle the columns. Then, the expected total length of all short ranges is $o(n)$ and one can
@@ -897,30 +918,30 @@ compute all of them directly.
 			\draw[rectangle,fill=mcf] (0,0) rectangle (20,20);
 			\foreach \y in {0,...,19}
 			\draw (0,\y) rectangle (20,\y+1);
-			
-			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} 
+
+			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19}
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
 		\end{scope}
-		
+
 		\begin{scope}[xshift=25cm]
 			\draw[rectangle,fill=mcf] (0,0) rectangle (20,20);
 			\foreach \y in {0,...,19}
 			\draw (0,\y) rectangle (20,\y+1);
-			
-			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19} 
+
+			\foreach \x/\y in {3/0, 11/0, 15/0, 0/1, 10/1, 11/1, 15/1, 17/1, 3/2, 8/2, 8/2, 7/3, 10/3, 8/4, 12/4, 16/4, 9/5, 10/5, 3/6, 4/6, 5/6, 8/6, 17/6, 17/6, 4/8, 13/8, 14/8, 17/8, 2/9, 6/9, 8/10, 9/10, 16/10, 16/10, 1/11, 9/11, 9/11, 0/12, 7/12, 8/12, 18/12, 0/13, 4/13, 5/13, 9/13, 16/13, 1/15, 12/15, 2/16, 7/16, 1/17, 4/17, 10/17, 17/17, 19/17, 11/18, 11/18, 18/18, 19/18, 15/19}
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
-			
+
 			\foreach \y/\a/\b in {0/-1/3, 0/11/15, 1/11/15, 1/15/17, 1/17/20, 2/-1/3, 3/7/10, 4/8/12, 4/12/16, 4/16/20, 6/-1/3, 6/5/8, 6/17/20, 8/14/17, 8/17/20, 9/-1/2, 9/2/6, 10/16/20, 11/-1/1, 12/18/20, 13/0/4, 13/5/9, 13/16/20, 15/-1/1, 16/-1/2, 17/-1/1, 17/1/4, 17/17/19}
 			\draw[fill=mc] (\a+1,\y) rectangle (\b,\y+1);
 		\end{scope}
-		
-		\begin{scope}[xshift=50cm]	
+
+		\begin{scope}[xshift=50cm]
 			\draw[rectangle,fill=mcf] (0,0) rectangle (20,20);
 			\foreach \y in {0,...,19}
-			\draw (0,\y) rectangle (20,\y+1);	
-			\foreach \x/\y in {0/0, 10/0, 11/0, 15/0, 17/0, 3/1, 4/1, 5/1, 8/1, 17/1, 17/1, 0/2, 4/2, 5/2, 9/2, 16/2, 1/3, 4/3, 10/3, 17/3, 19/3, 3/4, 11/4, 15/4, 3/5, 8/5, 8/5, 7/6, 10/6, 8/7, 12/7, 16/7, 9/8, 10/8, 4/10, 13/10, 14/10, 17/10, 2/11, 6/11, 8/12, 9/12, 16/12, 16/12, 1/13, 9/13, 9/13, 0/14, 7/14, 8/14, 18/14, 1/16, 12/16, 2/17, 7/17, 11/18, 11/18, 18/18, 19/18, 15/19} 
+			\draw (0,\y) rectangle (20,\y+1);
+			\foreach \x/\y in {0/0, 10/0, 11/0, 15/0, 17/0, 3/1, 4/1, 5/1, 8/1, 17/1, 17/1, 0/2, 4/2, 5/2, 9/2, 16/2, 1/3, 4/3, 10/3, 17/3, 19/3, 3/4, 11/4, 15/4, 3/5, 8/5, 8/5, 7/6, 10/6, 8/7, 12/7, 16/7, 9/8, 10/8, 4/10, 13/10, 14/10, 17/10, 2/11, 6/11, 8/12, 9/12, 16/12, 16/12, 1/13, 9/13, 9/13, 0/14, 7/14, 8/14, 18/14, 1/16, 12/16, 2/17, 7/17, 11/18, 11/18, 18/18, 19/18, 15/19}
 			\draw[fill=white] (\x,\y) rectangle (\x+1, \y+1);
-			
+
 			\draw[line width=2pt] (-1,4) -- (21,4);
 		\end{scope}
 	\end{scope}
@@ -974,9 +995,9 @@ $C(A) = O(n)$.
 \stodo{Reviewer~2: ``The algorithm is interesting. For Lemma 3.3, it will be helpful to see a picture of the matrix split into the different blocks — this can potentially replace some of the formal details as they only provide a sketch of the proof here.''}
 
 \begin{proof}[Proof sketch]
-\stodo{Reviewer~3: ``In the proof sketch of Lemma 3.3, first I believe that it should say "The top part T contains all *rows* that have exactly one zero in each L and R" ("rows" instead of "columns"). Furthermore, I was unable to follow the last step, where a recursive call is made after cutting all-1 columns out of the bottom part of the matrix. In particular, I believe there are cases where there are no all-1 columns to be removed, which seems like a problem. Despite this being intended as a proof sketch, as it's currently written the sketch was unable to convince me that the lemma is true.''}	
-	
-	
+\stodo{Reviewer~3: ``In the proof sketch of Lemma 3.3, first I believe that it should say "The top part T contains all *rows* that have exactly one zero in each L and R" ("rows" instead of "columns"). Furthermore, I was unable to follow the last step, where a recursive call is made after cutting all-1 columns out of the bottom part of the matrix. In particular, I believe there are cases where there are no all-1 columns to be removed, which seems like a problem. Despite this being intended as a proof sketch, as it's currently written the sketch was unable to convince me that the lemma is true.''}
+
+
 Consider an undirected graph with the set of nodes $\{1,2,\dotsc,n\}$, where
 two nodes $i$ and $j$ are connected by an edge if there is a~row having zeroes
 in columns~$i$ and~$j$. In the worst case (all rows are different and contain
@@ -991,15 +1012,15 @@ part $T$~contains all columns that have exactly one zero in each $L$ and $R$;
 the bottom part $B$ contains all the remaining rows. What is nice about the top
 part of the matrix ($T \times (L \cup R)$) is that it can be computed by $O(n)$
 gates (using Lemma~\ref{lemma:easy}). For the bottom part, let us cut all-1
-columns out of it and make a recursive call. 
+columns out of it and make a recursive call.
 \todo[inline]{Reviewer~1: ``“note that this requires the commutativity”, this is true, but doesn’t the top part already require commutativity, because L and R may not necessarily be sets of consecutive integers?''~--- Right! Fixed.}
 The corresponding recurrence relation is $T(n) \le cn + T(n/2)$
 for a fixed constant $c$, implying $T(n)=O(n)$, and hence $C(A) = O(n)$.
 \end{proof}
 
 
-Below, we~state two auxiliary lemmas that will 
-be~used as~building blocks in the proof of Theorem~\ref{thm:upperbound}. 
+Below, we~state two auxiliary lemmas that will
+be~used as~building blocks in the proof of Theorem~\ref{thm:upperbound}.
 We~prove Lemma~\ref{lemma:permute}
 in~Section~\ref{sec:deterministic}.
 
@@ -1053,7 +1074,7 @@ Denote the set of rows and the set of columns of~$A$ by~$R$
 and~$C$, respectively. Let $R_0 \subseteq R$ be all the rows
 having at least $\log n$ zeroes and $R_1=R \setminus R_0$.
 Every row of~$A$ can be decomposed into (maximal) contiguous ranges of ones. We
-call them \emph{ranges of~$A$}. 
+call them \emph{ranges of~$A$}.
 Below, we~show that all the ranges of~$A$
 can be~computed by a~circuit of~size $O(z)$.
 From these
@@ -1149,14 +1170,14 @@ A commutative semigroup $(S, \circ)$ is \emph{faithful commutative} if for any
 equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
 \end{definition}
 
-\vtodo{Reviewer~3: ``In section 4 after definition 4.1 when the term "initial mark" is defined, my comments are that 1) the definition of "initial mark" and "initial" should be made its own definition (e.g. definition 4.2) and 2) the definition of "initial mark" and "initial" would benefit greatly from one or two simple examples, which shouldn't take much space or time to present.''}
+
 
 Note that this definition does not pose any restrictions on the cardinality of
-each letter in $W$ and $W'$. This allows~us to capture in this definition
-important cases of idempotent semigroups. For example, semigroups
-$(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ are commutative faithful.
+each letter in $W$ and $W'$. In particular, it captures cases of idempotent semigroups $(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ that are important for us.
 
-\vtodo{Reviewer~1: ``“This allows to capture in this definition important cases of idempotent semigroups.” I’m not sure if I understand this sentence. This definition does not imply idempotence, nor is implied by idempotence.''}
+\todo[inline]{Reviewer~1: ``“This allows to capture in this definition important cases of idempotent semigroups.” I’m not sure if I understand this sentence. This definition does not imply idempotence, nor is implied by idempotence.''~--- Fixed.}
+
+\vtodo{Reviewer~1: ``The part where you define faithful non-commutative semigroup and state basic properties is hard to digest. Is there a natural non-commutative semigroup that is faithful non-commutative and is not the free idempo- tent semigroup or the free semigroup? For the free semigroup case, it is trivial to prove the reduction, as any non-range gate is useless(?). Ideally, it would be helpful to provide a few concrete (and natural) examples that have more structures than the free idempotent semigroup. If such examples are not easy to describe or natural, I would suggest arranging the proofs and definitions such that the reader will have $S$ being the free idempotent semigroup in mind when reading all the proofs. This can be done by either explicitly stating (and emphasize) that it is recommended to think that $S$ is the free idempotent semigroup, or first proving the result for this case then define the faithful non-commutative semigroups and remark that the whole proof works for any such semigroup.''}
 
 We need to study the non-commutative case, and moreover, our results
 establish the difference between commutative and non-commutative cases. Thus,
@@ -1167,12 +1188,18 @@ for the non-commutative case inspired by the properties of free idempotent
 semigroups~\cite{GreenR52}. To introduce this notion, we need several
 definitions.
 
+\todo[inline]{Reviewer~3: ``In section 4 after definition 4.1 when the term "initial mark" is defined, my comments are that 1) the definition of "initial mark" and "initial" should be made its own definition (e.g. definition 4.2) and 2) the definition of "initial mark" and "initial" would benefit greatly from one or two simple examples, which shouldn't take much space or time to present.''~--- Done.}
+
+\begin{definition}
 The \emph{initial mark} of $W$ is the letter that is present in $W$ such that
 its first appearance is farthest to the right. Let $U$ be the prefix of $W$
 consisting of letters preceding the initial mark. That is, $U$ is the maximal
 prefix of $W$ with a smaller number of generators. We call $U$ the
 \emph{initial} of $W$. Analogously we define the \emph{terminal mark} of $W$ and
 the \emph{terminal} of $W$.
+\end{definition}
+
+For example, for $W = abbacabca$, the initial mark is the first letter $c$, the initial is the prefix $abba$, the terminal mark is the last letter $b$ and the terminal is the suffix $ca$.
 
 \begin{definition}\label{def:strong_non_commutativity}
 We say that a semigroup $X$ with generators $\{x_1,\ldots, x_n\}$ is
@@ -1234,7 +1261,7 @@ The case of suffixes is completely analogous.
 The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
 \begin{lemma} \label{lem:variables_order}
 	\vtodo{Reviewer~1: ``The statement is too casual, consider rephrasing it''}
-	
+
 Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X$. Let
 us write down the letters of $W$ in the order in which they appear first time in
 $W$ when we read it from left to right. We do the same for $W'$. Then we
@@ -1284,10 +1311,12 @@ circuits.
 
 Using this theorem, it is straightforward to finish the proof of
 Theorem~\ref{thm:lowerbound}.
+
+\vtodo{Reviewer~2: ``The result from [6] used in the proof of Theorem 1.3 must be explicitly stated. ''}
 \begin{proof}[Proof of Theorem~\ref{thm:lowerbound}]
 	\vtodo{Reviewer~1: ``Technically, Theorem 1.3 is stated for general strongly non-commutative semigroups, while Theorem 4.6 is stated for idempotent X. Consider integrating the argument in section 4.3 to the proof, or moving it to an earlier place.''}
-	
-	
+
+
 By Theorem~\ref{thm:equivalence} if non-commutative dense linear
 operator problem has size $s$ circuit, then the commutative range queries
 problem also does. However, for the latter problem it is proved by Chazelle and
@@ -1376,10 +1405,11 @@ $O(\frac{n}{\log n})$.
 
 
 \section*{Acknowledgments}
-We thank Pawel Gawrychowski for pointing us out to the
-paper~\cite{DBLP:journals/ijcga/ChazelleR91}. We thank Alexey Talambutsa for
+We thank Pawel Gawrychowski for pointing us to the
+paper~\cite{DBLP:journals/ijcga/ChazelleR91}, and Alexey Talambutsa for
 fruitful discussions on the theory of semigroups.
-\atodo{Please add a nice acknowledgment to the reviewers.}
+We are also grateful to the reviewers for their thorough reviews that helped us
+improve the final version of the paper.
 
 \clearpage
 
