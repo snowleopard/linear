@@ -1,0 +1,3 @@
+Ivan Mihajlin is a researcher at St. Petersburg Department of Steklov
+Mathematical Institute. His research areas are circuit complexity,
+fine-grained complexity, and algorithmic theory.
