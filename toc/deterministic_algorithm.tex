@@ -74,21 +74,32 @@ Let us focus on a~single row and a~particular cell in it. Denote the number of
 zeroes in the row by~$t$. What is the probability that the cell belongs to
 a~short segment? There are two cases to consider.
 
-\atodo{Reviewer~3: ``In the proof of Lemma 3.6, I disagree with the analysis of the random permutations of the columns. Specifically, it seems like in cases 1 and 2 the proof is not counting the probability of being in a segment of length at most $\log n$, but instead of length at most $2\log n$. For example, in case 1, if our cell is the $\log n$-th cell from the left and the nearest zero is another $\log n$ cells to the right, then our cell is sitting in a segment of length $2\log n$, not $\log n$ as the proof states.''}
+\todo[inline]{Reviewer~3: ``In the proof of Lemma 3.6, I disagree with the analysis of
+the random permutations of the columns. Specifically, it seems like in cases 1
+and 2 the proof is not counting the probability of being in a segment of length
+at most $\log n$, but instead of length at most $2\log n$. For example, in
+case 1, if our cell is the $\log n$-th cell from the left and the nearest zero
+is another $\log n$ cells to the right, then our cell is sitting in a segment of
+length $2\log n$, not $\log n$ as the proof states.''~--- Thanks, indeed! Fixed.}
 
 \begin{enumerate}
-\item The cell lies close to the border, i.e., it belongs to
-the first $\log n$ cells or to the last~$\log n$ cells
+\item The cell is within distance $1 \le k \le \log n$ from the border, i.e.,
+it belongs to the first $\log n$ cells or to the last~$\log n$ cells
 (the number of such cells is $2\log n$). Then,
-this cell belongs to a~short range iff there is at least one zero
-in $\log n$ cells close to it (on the side opposite to the border).
-Hence, one zero must belong to a~set of $\log n$ cells while the remaining
-$t-1$ zeroes may be anywhere. The probability is then at most
-\[\log n \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}}=\log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
+this cell belongs to a~short range if there is at least one zero
+in $\log n - k + 1$ cells close to it (on the side opposite to the border).
+Hence, one zero must belong to the set of $\log n - k + 1$ cells while the
+remaining $t-1$ zeroes may be anywhere. The probability is then at most
+
+\[\sum_{1 \le k \le \log n}(\log n - k + 1) \cdot \frac{\binom{n}{t-1}}{\binom{n}{t}} \le \log n \cdot \frac{t}{n-t+1}=O\left(\frac{\log^2n}{n}\right) \, .\]
+
 \item It is not close to the border (the number of such cells is $n-2\log n$).
-Then, there must be a~zero on both sides of the cell. The probability is then
-at most
-\[\log^2 n \cdot \frac{\binom{n}{t-2}}{\binom{n}{t}}=\log^2n \cdot \frac{t(t-1)}{(n-t+1)(n-t+2)}=O\left(\frac{\log^4 n}{n^2}\right) \, .\]
+Then, there must be a~zero on both sides of the cell: one at
+distance $1 \le k < \log n$ on the left and another at distance $\log n - k$
+on the right. The probability is then at most
+
+\[\sum_{1 \le k < \log n}(\log n - k) \cdot \frac{\binom{n}{t-2}}{\binom{n}{t}} \le \log^2n \cdot \frac{t(t-1)}{(n-t+1)(n-t+2)}=O\left(\frac{\log^4 n}{n^2}\right) \, .\]
+
 \end{enumerate}
 Hence, the expected total length of short ranges in one row is
 \[O\left( 2\log n \cdot \frac{\log^2 n}{n} + (n-2\log n) \cdot \frac{\log^4 n}{n^2}\right)=O\left(\frac{\log^4 n}{n}\right) \, .\]
