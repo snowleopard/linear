@@ -432,19 +432,22 @@ a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes
 in every row such that for any faithful non-commutative semigroup $(S, \circ)$
 the minimum number of semigroup operations required to compute~$Ax$ is
 $\Omega(n\alpha(n))$.
+This lower bound is tight: $Ax$ is	computable using $O(n\alpha(n))$ semigroup operations for any $(S, \circ)$ and $A\in \{0,1\}^{n \times n}$.
 \end{restatable}
 
-It is not hard to show that this lower bound is tight.
-\begin{restatable}{lemma}{non-com-upper}
-	\label{lem:upperbound}
-	Let $(S, \circ)$ be a~semigroup, $x$ be
-	a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
-	$A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
-	computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
-	is the inverse Ackermann function.
-\end{restatable}
+The upper bound in this theorem follows straightforwardly from the results in~\cite{DBLP:conf/stoc/Yao82} and the lower bound is the main result for non-commutative case.
 
-\todo[inline]{Reviewer~2: ``Theorem 1.3 can be split into two parts — one stating the lower bound and the other stating the upper bounds. The proof of the upper bound is short and straightforward from [21], and the main result is the lower bound.'~--- Done.}
+%It is not hard to show that this lower bound is tight.
+%\begin{restatable}{lemma}{non-com-upper}
+%	\label{lem:upperbound}
+%	Let $(S, \circ)$ be a~semigroup, $x$ be
+%	a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
+%	$A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
+%	computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
+%	is the inverse Ackermann function.
+%\end{restatable}
+
+\todo[inline]{Reviewer~2: ``Theorem 1.3 can be split into two parts — one stating the lower bound and the other stating the upper bounds. The proof of the upper bound is short and straightforward from [21], and the main result is the lower bound.'~--- We prefer to keep it as one statement: we would like to make more visible the fact that we have tight lower and upper bounds. We rephrased the theorem to move the main result forward and we added a comment after the theorem mentioning that the upper bound is easy to prove.}.
 
 
 
@@ -1258,7 +1261,6 @@ each letter in $W$ and $W'$. In particular, it captures cases of idempotent semi
 
 \todo[inline]{Reviewer~1: ``“This allows to capture in this definition important cases of idempotent semigroups.” I’m not sure if I understand this sentence. This definition does not imply idempotence, nor is implied by idempotence.''~--- Fixed.}
 
-\vtodo{Reviewer~1: ``The part where you define faithful non-commutative semigroup and state basic properties is hard to digest. Is there a natural non-commutative semigroup that is faithful non-commutative and is not the free idempo- tent semigroup or the free semigroup? For the free semigroup case, it is trivial to prove the reduction, as any non-range gate is useless(?). Ideally, it would be helpful to provide a few concrete (and natural) examples that have more structures than the free idempotent semigroup. If such examples are not easy to describe or natural, I would suggest arranging the proofs and definitions such that the reader will have $S$ being the free idempotent semigroup in mind when reading all the proofs. This can be done by either explicitly stating (and emphasize) that it is recommended to think that $S$ is the free idempotent semigroup, or first proving the result for this case then define the faithful non-commutative semigroups and remark that the whole proof works for any such semigroup.''}
 
 We need to study the non-commutative case, and moreover, our results
 establish the difference between commutative and non-commutative cases. Thus,
@@ -1304,6 +1306,8 @@ A semigroup $(S, \circ)$ is \emph{faithful non-commutative} if $X_S$ is strongly
 non-commutative.
 \end{definition}
 
+\todo[inline]{Reviewer~1: ``The part where you define faithful non-commutative semigroup and state basic properties is hard to digest. Is there a natural non-commutative semigroup that is faithful non-commutative and is not the free idempo- tent semigroup or the free semigroup? For the free semigroup case, it is trivial to prove the reduction, as any non-range gate is useless(?). Ideally, it would be helpful to provide a few concrete (and natural) examples that have more structures than the free idempotent semigroup. If such examples are not easy to describe or natural, I would suggest arranging the proofs and definitions such that the reader will have $S$ being the free idempotent semigroup in mind when reading all the proofs. This can be done by either explicitly stating (and emphasize) that it is recommended to think that $S$ is the free idempotent semigroup, or first proving the result for this case then define the faithful non-commutative semigroups and remark that the whole proof works for any such semigroup.''~--- It is rather hard to come up with another simple and instructive example that would fit into the text. We have an example of binary relations on large enough set with the composition operation. But to explain this example and to prove that it is indeed faithful non-commutative would take about two more pages and we feel that this is a substantial sidestep in the exposition of the proof. We encourage the reader to keep an example of free idempotent semigroup in mind.}
+
 We note that this notion of faithfulness is relatively general and is true for
 semigroups $(S,\circ)$ with considerable degree of non-commutativity in their
 structure. It clearly captures free semigroups with at least two generators. It
@@ -1312,6 +1316,8 @@ requirements in Definition~\ref{def:faithful} are satisfied for the free
 idempotent semigroup with $n$ generators (if $S$ is idempotent, then $X_{S,n}$
 is also clearly idempotent and no other relations are holding in $X_{S,n}$ since
 we can substitute generators of $S$ for $x_1, \ldots, x_n$).
+
+When reading through the proof of Theorem~\ref{thm:lowerbound} it is instuctive to keep an example of the free idempotent semigroup in mind. In fact, the very first step of the proof of the lower bound reduces arbitrary semigroup to an idempotent semigroup.
 
 Next we observe some properties of strongly non-commutative semigroups that we
 need in our constructions.
@@ -1334,26 +1340,24 @@ Definition~\ref{def:strong_non_commutativity}.
 The proof of the statement for minimal prefixes is completely analogous. Note
 that on the step of induction the prefixes differ from the previous case by one
 letter that are initial marks of the corresponding prefixes. So these additional
-letters are also equal by the Definition~\ref{def:strong_non_commutativity}.
+letters are also equal by the Definition~\ref{def:strong_non_commutativity}. 
 
 The case of suffixes is completely analogous.
 \end{proof}
 
 The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
+\todo[inline]{Reviewer~1: ``The statement is too casual, consider rephrasing it''~--- We rephrased the lemma.}
 \begin{lemma} \label{lem:variables_order}
-	\vtodo{Reviewer~1: ``The statement is too casual, consider rephrasing it''}
 
-Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X$. Let
-us write down the letters of $W$ in the order in which they appear first time in
-$W$ when we read it from left to right. We do the same for $W'$. Then we
-obtain exactly the same sequences of letters.
+Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X$. Consider a permutation $\sigma_W$ of the letters of $W$ in the order in which they appear first time in $W$ when we read it from left to right. Consider analogous permutation $\sigma_{W'}$ for $W'$. Then $\sigma_W = \sigma_{W'}$.
 %
 The same is true if we read the words from right to left.
+
 \end{lemma}
 
 \subsection{Proof Strategy}
 
-\vtodo{Reviewer~3: ``I found the arrangement of sections 4.2, 4.3, and 4.4 quite difficult to follow, as there are many cases of lemmas or theorems being stated and then proven out of order and in completely different sections. For example, Lemma 4.7 is stated in section 4.2 and is proven all the way back in section 4.4 after Lemma 4.9 is both stated and proved. I'm not sure what a better arrangement would be, but reading and understanding the current version involved lots of flipping back and forth and jumping between sections.''}
+\todo[inline]{Reviewer~3: ``I found the arrangement of sections 4.2, 4.3, and 4.4 quite difficult to follow, as there are many cases of lemmas or theorems being stated and then proven out of order and in completely different sections. For example, Lemma 4.7 is stated in section 4.2 and is proven all the way back in section 4.4 after Lemma 4.9 is both stated and proved. I'm not sure what a better arrangement would be, but reading and understanding the current version involved lots of flipping back and forth and jumping between sections.''~--- We moved the statements of the key lemmas to the corresponding sections.}
 
 We now proceed to the proof of Theorem~\ref{thm:lowerbound}. The upper bound
 follows easily by a naive algorithm: split all rows of $A$ into ranges, compute
@@ -1366,10 +1370,20 @@ computation in a strongly non-commutative semigroup $X=X_S$.
 
 We will use the following proof strategy. First we observe that it is enough to
 prove the lower bound for the case of idempotent strongly non-commutative
-semigroups $X$. Indeed, if $X$ is not idempotent, we can factorize it by
-idempotency relations and obtain a strongly non-commutative idempotent semigroup
-$X_{id}$. A lower bound for the case of $X_{id}$ implies lower bound for the
-case of $X$. We provide a detailed explanation in
+semigroups $X$. Indeed, 
+consider an arbitrary semigroup $X$. Consider a new semigroup $X_{id}$ over the same set of generators that is a factorization of $X$ by idempotency relations $W^2\sim W$ for all words $W$ in the alphabet $\{x_1,\ldots, x_n\}$.
+%if $X$ is not idempotent, we can factorize it by idempotency relations and obtain a strongly non-commutative idempotent semigroup $X_{id}$. 
+We prove the following lemma.
+\begin{lemma} \label{lem:idempotent_is_hardest}
+	\begin{enumerate}
+		\item If $X$ is strongly non-commutative, then $X_{id}$ is also strongly non-commutative.
+		\item If the dense linear operator problem over $X$ has size $s$
+		circuit the dense linear operator problem over $X_{id}$ has size
+		$s$ circuit as well.
+	\end{enumerate}
+\end{lemma}
+As a result a lower bound for the case of $X_{id}$ implies the same lower bound for the case of $X$. 
+We provide a proof of Lemma~\ref{lem:idempotent_is_hardest} in
 Section~\ref{sec:noncommutative_extension}.
 
 Hence, from this point we can assume that $X$ is idempotent and strongly
@@ -1390,21 +1404,28 @@ iff (non-commutative) dense linear operator problem over $X$ has size $O(s)$
 circuits.
 \end{theorem}
 
-Using this theorem, it is straightforward to finish the proof of
+For commutative case it is known that the range queries problem is hard.
+
+\begin{theorem}[\cite{DBLP:journals/ijcga/ChazelleR91}]\label{thm:chazelle}
+	There is a set of $n$ ranges over $X_{sym}$ such that any circuit
+	computing these ranges has size  at least $\Omega(n \alpha(n))$.
+\end{theorem}
+
+Using these results, it is straightforward to finish the proof of
 Theorem~\ref{thm:lowerbound}.
 
-\vtodo{Reviewer~2: ``The result from [6] used in the proof of Theorem 1.3 must be explicitly stated. ''}
+\todo[inline]{Reviewer~2: ``The result from [6] used in the proof of Theorem 1.3 must be explicitly stated. ''~--- Done.}
 \begin{proof}[Proof of Theorem~\ref{thm:lowerbound}]
-	\vtodo{Reviewer~1: ``Technically, Theorem 1.3 is stated for general strongly non-commutative semigroups, while Theorem 4.6 is stated for idempotent X. Consider integrating the argument in section 4.3 to the proof, or moving it to an earlier place.''}
+	\todo[inline]{Reviewer~1: ``Technically, Theorem 1.3 is stated for general strongly non-commutative semigroups, while Theorem 4.6 is stated for idempotent X. Consider integrating the argument in section 4.3 to the proof, or moving it to an earlier place.''~--- We formulated the reduction to idempotent case as a separate lemma and updated the proof of the theorem accordingly.}
 
 
+By Lemma~\ref{lem:idempotent_is_hardest} it is enough to prove the result for an idempotent strongly non-commutative $X$.
 By Theorem~\ref{thm:equivalence} if non-commutative dense linear
 operator problem has size $s$ circuit, then the commutative range queries
-problem also does. However, for the latter problem it is proved by Chazelle and
-Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that $s=\Omega(n \alpha(n))$.
+problem also does. However, by Theorem~\ref{thm:chazelle} for the latter problem $s=\Omega(n \alpha(n))$.
 Moreover, in our construction for the proof of Theorem~\ref{thm:equivalence} it
 is enough to consider dense linear operators with exactly two zeroes in every
-row. From this the second part of Theorem~\ref{thm:lowerbound} follows.
+row. From this the lower bound in Theorem~\ref{thm:lowerbound} follows.
 \end{proof}
 
 Note that for the proof of Theorem~\ref{thm:lowerbound} only one direction of
@@ -1440,8 +1461,7 @@ if we factorize any strongly non-commutative idempotent semigroup over
 commutativity equivalences, we obtain exactly free idempotent commutative
 semigroup.
 
-Note that two of the reductions on this diagram are trivial. The other two are
-formulated in the following lemmas.
+Note that two of the reductions on this diagram are trivial. Thus it remains to prove the other two directions.
 
 %To show the theorem we introduce an intermediate problem: computing non-commutative intervals by $O(n)$-size circuit.
 %
@@ -1450,22 +1470,17 @@ formulated in the following lemmas.
 %
 %Thus, it remains to show the following two lemmas.
 
-\begin{lemma} \label{lem:dense_matrices}
-If the (non-commutative) dense linear operator problem over $X$ has size $s$
-circuit then the (non-commutative) range queries problem over $X$ has size
-$O(s)$ circuit.
-%If we can compute non-commutative dense matrices by a linear size circuit, we can also compute non-commutative intervals.
-\end{lemma}
 
-\begin{lemma} \label{lem:intervals}
-If the (commutative) version of the range queries problem over $X_{sym}$ has
-size $s$ circuits then the (non-commutative) version over $X$ also does.
-%If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
-\end{lemma}
+\begin{enumerate}
+	\item If the (non-commutative) dense linear operator problem over $X$ has size $s$
+	circuit then the (non-commutative) range queries problem over $X$ has size
+	$O(s)$ circuit.
+	\item If the (commutative) version of the range queries problem over $X_{sym}$ has
+	size $s$ circuits then the (non-commutative) version over $X$ also does.
+\end{enumerate}
 
-The proofs of these lemmas are presented in
-Sections~\ref{sec:operators_to_queries}
-and~\ref{sec:non-commutative_to_commutative} respectively.
+The first of these statements is proved in Sections~\ref{sec:operators_to_queries} and~\ref{sec:increasing_circuits}.
+The second statement is proved in Section~\ref{sec:non-commutative_to_commutative}.
 
 \input non_commutative_proofs
 

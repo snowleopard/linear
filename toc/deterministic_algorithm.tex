@@ -48,6 +48,7 @@
 
 	\todo[inline]{Reviewer~1: ``Technically, one needs three additional binary gates to sum up the four parts (the range of blocks is a sum of two)''.~--- Oh, right! We fixed this in the statement and made it clearer in the proof.}
 
+	\atodo{Volodya: it seems that technically the next phrase is not true now and should be modified. The middle part is not completely precomputed}
 	It remains to note that all these three components are already precomputed. One needs an~additional binary gate
 	to~compute the range of~blocks, one more gate to add a~suffix of a~block, and one additional gate to add a~prefix of a~block.
 \end{proof}
@@ -82,6 +83,7 @@ case 1, if our cell is the $\log n$-th cell from the left and the nearest zero
 is another $\log n$ cells to the right, then our cell is sitting in a segment of
 length $2\log n$, not $\log n$ as the proof states.''~--- Thanks, indeed! Fixed.}
 
+\atodo{Volodya: I think in the next phrase instead of `within distance $1 \le k \le \log n$' we should say at distance $k$ for $1 \le k \le \log n$. In case 2 instead of `at distance $\log n - k$' we should say `at distance at most $\log n - k$'}
 \begin{enumerate}
 \item The cell is within distance $1 \le k \le \log n$ from the border, i.e.,
 it belongs to the first $\log n$ cells or to the last~$\log n$ cells

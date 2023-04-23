@@ -2,15 +2,10 @@
 
 \subsection{From Idempotent Semigroups to General Semigroups}\label{sec:noncommutative_extension}
 
-In this section we provide a detailed explanation of the reduction in Theorem~\ref{thm:lowerbound} from general semigroups to idempotent semigroups.
+In this section we provide a proof for Lemma~\ref{lem:idempotent_is_hardest}.
 
-Consider an arbitrary strongly non-commutative semigroup $X$. Consider a new semigroup $X_{id}$ over the same set of generators that is a factorization of $X$ by idempotency relations $W^2\sim W$ for all words $W$ in the alphabet $\{x_1,\ldots, x_n\}$.
 
-\begin{lemma} \label{lem:idempotisation}
-If $X$ is strongly non-commutative, then $X_{id}$ is also strongly non-commutative.
-\end{lemma}
-
-\begin{proof}
+First we show that if $X$ is strongly non-commutative, then $X_{id}$ is also strongly non-commutative.
 Suppose $W$ and $W'$ are words in the alphabet $\{x_1,\ldots, x_n\}$ and $W \sim W'$ in $X_{id}$. This means that there is a sequence $W_0,\ldots, W_k$ of words in the same alphabet such that $W=W_0$, $W'=W_k$ and for each $i$ either $W_i \sim W_{i+1}$ in $X$, or $W_{i+1}$ is obtained from $W_i$ by one application of the idempotency equivalence to some subword of $W_i$. Clearly, it is enough to check that the conditions of Definition~\ref{def:strong_non_commutativity} are satisfied in $X_{id}$ for each consecutive pair $W_i$ and $W_{i+1}$.
 
 If $W_i \sim W_{i+1}$ in $X$, then the conditions of Definition~\ref{def:strong_non_commutativity} follows from the strong non-commutativity of $X$.
@@ -20,20 +15,27 @@ Suppose now that $W_{i+1}$ is obtained from $W_{i}$ by substituting some subword
 Suppose $A$ lies to the left of initial mark in $W_i$ and we substitute $A$ by $A^2$. Then the initial mark is unaltered and in the initial $U_i$ we also substitute $A$ by $A^2$. Thus in this case $U_{i+1}$ is obtained from $U_i$ by idempotency relation.
 
 Suppose $A$ contains initial mark of $W_i$ or lies to the right of it. Then after the substitution of $A$ by $A^2$ the initial mark is still the same and the initial $U_i$ also does not change.
-\end{proof}
 
-Now we outline the reduction of the lower bound in Theorem~\ref{thm:lowerbound} from idempotent semigroup to the general case.
 
-Suppose $X$ is strongly non-commutative and suppose that for $X$ all dense operators can be computed by circuits of size at most $s$.
-
-Consider a semigroup $X_{id}$ as introduced above. By Lemma~\ref{lem:idempotisation} $X_{id}$ is also strongly non-commutative. On the other hand, since $X_{id}$ is a factorization of $X$ any circuit computing dense operator over $X$ also computes the same dense operator over $X_{id}$. Thus, by our assumption there are circuits of size at most $s$ for all dense operators over $X_{id}$. Finally, $X_{id}$ is idempotent, so by the special case of our theorem we have $s = \Omega(n \alpha(n))$ and we are done.
+For the second part of the lemma, suppose $X$ is strongly non-commutative and suppose that for $X$ there is a circuit of size at most $s$ computing some dense linear operator.
+Since $X_{id}$ is a factorization of $X$ any circuit computing dense operator over $X$ also computes the same dense operator over $X_{id}$. Thus there is a  circuit of size at most $s$ computing the same dense operator over $X_{id}$. 
+%Finally, $X_{id}$ is idempotent, so by the special case of our theorem we have $s = \Omega(n \alpha(n))$ and we are done.
 
 \subsection{Reducing Dense Linear Operator to Range Queries} \label{sec:operators_to_queries}
-In this subsection, we prove Lemma~\ref{lem:dense_matrices}. Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the natural order. This intuition is formalized in Lemma~\ref{lemma:correctorder} below. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeroes in positions $l-1$ and $r+1$ (hence, this row consists of three ranges: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the natural order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
+In this subsection, we prove the following lemma. 
 
+\begin{lemma} \label{lem:dense_matrices}
+	If the (non-commutative) dense linear operator problem over $X$ has size $s$
+	circuit then the (non-commutative) range queries problem over $X$ has size
+	$O(s)$ circuit.
+	%If we can compute non-commutative dense matrices by a linear size circuit, we can also compute non-commutative intervals.
+\end{lemma}
+
+Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the natural order. This intuition is formalized in Lemma~\ref{lemma:correctorder} below. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeroes in positions $l-1$ and $r+1$ (hence, this row consists of three ranges: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the natural order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
+
+\todo[inline]{Reviewer~1: ``At first, I wasn’t sure what this paragraph is trying to say. Later, I realized that this paragraph is trying to justify that non-increasing or non-range circuits can make sense. Make it more explicit.''~--- Thank you, we added clarification.}
 It should be mentioned, at the same time, that the semigroup $X$ might be complicated. 
-\vtodo{Reviewer~1: ``At first, I wasn’t sure what this paragraph is trying to say. Later, I realized that this paragraph is trying to justify that non-increasing or non-range circuits can make sense. Make it more explicit.'' (Sasha: perhaps, he means a different place. Please check the review.)}
-In particular, the idempotency is tricky. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
+In particular, the idempotency is tricky and allows for computations using `unnatural' order in multiplications. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
 This is not extremely impressive, since to get $xyz$ we multiply by $xyz$, but the point is that this is possible in principle.
 
 We proceed to the formal proofs. Let's call a word $W$ in the alphabet $\{x_1,\ldots,x_n\}$ \emph{increasing} if it is a product of variables in the increasing order. A~binary circuit is called an~{\em increasing circuit} if each of its gates computes a word equivalent in $X$ to increasing~word.
@@ -55,10 +57,12 @@ Given an~increasing circuit computing~$Ax$, one may transform it into a~range ci
 Given $n$~ranges, pack them into a~matrix $A \in \{0,1\}^{n \times n}$ with at most $2n$ zeroes. Take a size-$s$ circuit computing $Ax$ and convert it into a~binary circuit. Then, transform it into an~increasing circuit using Lemma~\ref{lemma:correctorder}. Finally, extract the answers to all the ranges from this circuit using Lemma~\ref{lemma:matrixranges}.
 \end{proof}
 
-Note that the second statement of Theorem~\ref{thm:lowerbound} follows because the proof of Lemma~\ref{lem:dense_matrices} deals with matrices with exactly two zeroes in every row.
+Note that the proof of Lemma~\ref{lem:dense_matrices} deals with matrices with exactly two zeroes in every row. Thus the lower bound in Theorem~\ref{thm:lowerbound} is true for the same class of matrices.
 %\begin{corollary}\label{cor:noncommutativetwo}
 %There exist matrices~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes in every row that requires circuits of size~$\Omega(n\alpha(n))$.
 %\end{corollary}
+
+Next we prove Lemma~\ref{lemma:matrixranges} and we prove Lemma~\ref{lemma:correctorder} in the next section.
 
 \begin{proof}[Proof of Lemma~\ref{lemma:matrixranges}]
 Take an~increasing circuit ${\cal C}$ computing $Ax$ and process all its gates in some topological ordering. Each gate $G$ of ${\cal C}$ computes a (word that is equivalent to an) increasing word. We split this increasing word into ranges and we put into correspondence to $G$ an ordered sequence $G_1,\ldots, G_k$ of gates of the new circuit. Each of these gates compute one of the ranges of the word computed by $G$ and $G \sim G_1\circ\ldots \circ G_k$.
@@ -90,7 +94,13 @@ For output gates of ${\cal C}$ we have gates in the new circuit that compute exa
 %To reconstruct a circuit into a linear one we need to introduce some notation. Consider a circuit $C$ and its gate $g$.
 %We will identify gates and words that they are computing. We will treat the results of the computation of the gates as words to which gates apply concatenation operation. That is, we consider these words before we apply any equivalences in the semigroup to them.
 
-\begin{proof}[Proof of Lemma~\ref{lemma:correctorder}]
+
+\subsection{Transforming Circuit Into an Increasing One}
+\label{sec:increasing_circuits}
+
+%\begin{proof}[Proof of Lemma~\ref{lemma:correctorder}]
+In this section we provide a prove for Lemma~\ref{lemma:correctorder}
+
 Consider a~binary circuit~${\cal C}$ computing~$Ax$ and its gate~$G$ together with a~variable~$x_i$ it depends on.
 We say that $x_i$ is \emph{good} in~$G$ if there is
 a~path in~${\cal C}$ from $G$ to an output gate, on which the word is never multiplied from the left by words containing variables greater than or equal to $x_i$.
@@ -98,7 +108,7 @@ Note that if $x_i$ and $x_{i'}$ are both contained in $G$, $i<i'$, and $x_i$ is 
 
 Consider the largest good variable in $G$ (if there is one), denote it by $x_k$ ($x_k$ is actually just the largest variable in~$G$, unless of course there are no good variables in $G$). Let us focus on the first occurrence of $x_k$ in~$G$.
 
-\vtodo{Reviewer~1: ``Claim 4.12, 4.13, 4.14: avoid nested proofs.''}
+\todo[inline]{Reviewer~1: ``Claim 4.12, 4.13, 4.14: avoid nested proofs.''~--- The nested proofs here are hard to avoid, since each next level of statements refers to notions that are relevant in the proof of the previous statement. To improve readability we moved the proof of Lemma 4.11 into a separate section.}
 
 \begin{claim}
 All first occurrences of other good variables in~$G$ must be to the left of the first occurrence of $x_k$.
@@ -141,16 +151,22 @@ Then by Lemma~\ref{lem:prefix_equivalence} we have $P \sim Q$. But then the vari
 
 We are now ready to complete the proof of Lemma~\ref{lemma:correctorder}.
 Consider $P_F$ and $P_H$. By Claims~\ref{cl: h is good} and~\ref{cl: f is good}, we know that they are ranges in the same sequence of variables $\var(P_F)\cup \var(P_H)$. We know that the largest variables of $P_H$ is greater than all variables of $P_F$. Then either $P_F$ is contained in $P_H$, and then we can let $P_G=P_H$ (it contains all good variables of~$G$), or we have $P_F =PQ$ and $P_H=QR$ for some words $P, Q, R$. In this case we let $P_G = P_F \circ P_H = PQQR=PQR$. Clearly, $\mmin_G$ is the suffix of $P_G$ and $P_G$ itself is the suffix of $\mmax_G$.
-\end{proof}
+%\end{proof}
 
 
 
 \subsection{Reducing Non-commutative Range Queries to Commutative Range Queries} \label{sec:non-commutative_to_commutative}
 %{Proof of Lemma~\ref{lem:intervals}}
 
-In this subsection, we prove Lemma~\ref{lem:intervals}.
+In this subsection, we prove the following lemma.
 
-\begin{proof}[Proof of Lemma~\ref{lem:intervals}]
+\begin{lemma} \label{lem:intervals}
+	If the (commutative) version of the range queries problem over $X_{sym}$ has
+	size $s$ circuits then the (non-commutative) version over $X$ also does.
+	%If we can compute commutative intervals by a linear size circuit, we can also compute non-commutative intervals.
+\end{lemma}
+
+\begin{proof}[Proof]
 We will show that any computation of ranges over $X_{sym}$ can be reconstructed without increase in the number of gates in such a way that each gate computes a range (recall, that we call this a range circuit). It is easy to see that then this circuit can be reconstructed as a circuit over $X$ each gate of which computes the same range with the variables in the increasing order. Indeed, we need to make sure that each gate computes a range in such a way that all variables are in the increasing order and this is easy to do by induction. Each gate computes a product of two ranges $a$ and $b$. If one of them is contained in the other, we simplify the circuit, since the gate just computes the same range as one of its inputs (due to idempotency and commutativity). It is impossible that $a$ and $b$ are non-intersecting and have a gap between them, since then our gate does not compute a range (in a range circuit). So, if $a$ and  $b$ are non-intersecting, then they are consecutive and we just need to multiply them in the right order. If the ranges are intersecting, we just multiply them in the right order and apply idempotency.
 
 Thus it remains to show that each circuit for range query problem over $X_{sym}$ can be reconstructed into a range circuit. For this we will need some notation.
