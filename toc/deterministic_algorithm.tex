@@ -1,6 +1,9 @@
 %!TEX root = main.tex
 \subsection{Deterministic Algorithm and the Proof of Lemma~\ref{lemma:permute}}\label{sec:deterministic}
 
+\stodo{Andrey: I can't quite understand what the current statement of the lemma
+is trying to say. Should it just claim the existence of an $O(n)$ size circuit
+without referring to "three" and some other "the circuit"?}
 \begin{lemma}\label{lemma:blocks}
 	There exists a~binary regular circuit of size $O(n)$ such
 	that any range
@@ -24,13 +27,12 @@
 
 	Consider any range of length at least $\log n$. Note that it
 	cannot lie entirely inside the block. Hence, any such range can be
-	decomposed into three subranges: a~suffix of a~block, a~range
-	of blocks, and a~prefix of a~block
+	decomposed into three components: a~suffix of a~block, a~sequence
+	of whole blocks, and a~prefix of a~block
 	(where any of the three components may be empty). For example, for $n=16$,
 	a~range $(3,13)$ is decomposed into a~suffix $(3,4)$ of the
-	first block,
-	a~range $(2,3)$ of blocks $(B_1, B_2, B_3, B_4)$, and a~prefix $(13,13)$ of
-	the last block:
+	first block, a~sequence $(B_2,B_3)$ of whole blocks, and a~prefix
+	$(13,13)$ of the last block:
 	\begin{mypic}
 		\begin{scope}[scale=.6]
 			\foreach \x in {1,...,16}
@@ -48,9 +50,11 @@
 
 	\todo[inline]{Reviewer~1: ``Technically, one needs three additional binary gates to sum up the four parts (the range of blocks is a sum of two)''.~--- Oh, right! We fixed this in the statement and made it clearer in the proof.}
 
-	\atodo{Volodya: it seems that technically the next phrase is not true now and should be modified. The middle part is not completely precomputed}
-	It remains to note that all these three components are already precomputed. One needs an~additional binary gate
-	to~compute the range of~blocks, one more gate to add a~suffix of a~block, and one additional gate to add a~prefix of a~block.
+	All sequences of blocks can be precomputed by a circuit of size $O(n)$ using
+	the construction from Lemma~\ref{lemma:decompose} (recall that the number of
+	blocks is $n / \log n$).
+	To combine these three components, one needs two~additional binary gates:
+	one to add the~suffix, and another to add the~prefix.
 \end{proof}
 
 
