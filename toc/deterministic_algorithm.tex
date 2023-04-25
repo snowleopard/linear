@@ -83,10 +83,9 @@ case 1, if our cell is the $\log n$-th cell from the left and the nearest zero
 is another $\log n$ cells to the right, then our cell is sitting in a segment of
 length $2\log n$, not $\log n$ as the proof states.''~--- Thanks, indeed! Fixed.}
 
-\atodo{Volodya: I think in the next phrase instead of `within distance $1 \le k \le \log n$' we should say at distance $k$ for $1 \le k \le \log n$. In case 2 instead of `at distance $\log n - k$' we should say `at distance at most $\log n - k$'}
 \begin{enumerate}
-\item The cell is within distance $1 \le k \le \log n$ from the border, i.e.,
-it belongs to the first $\log n$ cells or to the last~$\log n$ cells
+\item The cell is at distance $k$ for $1 \le k \le \log n$ from the border,
+i.e., it belongs to the first $\log n$ cells or to the last~$\log n$ cells
 (the number of such cells is $2\log n$). Then,
 this cell belongs to a~short range if there is at least one zero
 in $\log n - k + 1$ cells close to it (on the side opposite to the border).
@@ -97,8 +96,8 @@ remaining $t-1$ zeroes may be anywhere. The probability is then at most
 
 \item It is not close to the border (the number of such cells is $n-2\log n$).
 Then, there must be a~zero on both sides of the cell: one at
-distance $1 \le k < \log n$ on the left and another at distance $\log n - k$
-on the right. The probability is then at most
+distance $1 \le k < \log n$ on the left and another at distance at most
+$\log n - k$ on the right. The probability is then at most
 
 \[\sum_{1 \le k < \log n}(\log n - k) \cdot \frac{\binom{n}{t-2}}{\binom{n}{t}} \le \log^2n \cdot \frac{t(t-1)}{(n-t+1)(n-t+2)}=O\left(\frac{\log^4 n}{n^2}\right) \, .\]
 
