@@ -60,17 +60,11 @@
 %  doi = {10.4086/toc....},  %% format: doi = {10.4086/toc.2018.v014a009}
 }   %% END tocdetails
 
-% \usepackage[utf8]{inputenc}
-% \usepackage[english]{babel}
-% \usepackage{amsmath}
 \usepackage{amssymb}
-% \usepackage{fullpage}
-\usepackage[colorinlistoftodos, color=green!20]{todonotes}
-% \usepackage{amsthm}
+\usepackage[colorinlistoftodos, color=green!20, disable]{todonotes}
 \usepackage{thm-restate}
 
 \usepackage{tikz}
-\usetikzlibrary{calc,arrows,shapes,backgrounds,patterns,fit,decorations,decorations.pathmorphing}
 
 \newenvironment{mypic}{
 	\begin{center}
@@ -81,17 +75,11 @@
 }
 
 \tikzstyle{gate}=[draw, circle, inner sep=0mm, minimum size=4mm]
-\tikzstyle{d}=[text width=110mm, below, align=center]
 
 \colorlet{mc}{gray}
 \colorlet{mcf}{mc!20}
 
-% \newtheorem{definition}{Definition}
-% \newtheorem{lemma}{Lemma}
 \newtheorem{observation}{Observation}
-% \newtheorem{corollary}{Corollary}
-% \newtheorem{theorem}{Theorem}
-% \newtheorem{claim}{Claim}
 
 \newcommand{\lef}{\texttt{left}}
 \newcommand{\righ}{\texttt{right}}
@@ -104,10 +92,6 @@
 \newcommand{\mmax}{\texttt{MAX}}
 \newcommand{\var}{\texttt{Var}}
 
-\newcommand{\stodo}[1]{\todo[inline, color=yellow!20]{[Sasha] #1}}
-\newcommand{\atodo}[1]{\todo[inline, color=blue!20]{[Andrey] #1}}
-\newcommand{\vtodo}[1]{\todo[inline, color=red!20]{[Volodya] #1}}
-
 % \title{Complexity of Linear Operators
 % \thanks{This is an extended version of an earlier conference publication~\cite{isaac-2019-version}.
 % The results presented in Section~\ref{sec-commutative} are supported by
@@ -119,7 +103,7 @@
 % \ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm
 
 \begin{document}
-\listoftodos
+%\listoftodos
 
 \begin{frontmatter}%%[classification=text] << EDITOR.
 
