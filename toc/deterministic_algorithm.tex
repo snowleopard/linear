@@ -45,7 +45,6 @@
 		\end{scope}
 	\end{mypic}
 
-	\todo[inline]{Reviewer~1: ``Technically, one needs three additional binary gates to sum up the four parts (the range of blocks is a sum of two)''.~--- Oh, right! Fixed.}
 
 	All sequences of blocks can be precomputed by a circuit of size $O(n)$ using
 	the construction from Lemma~\ref{lemma:decompose} (recall that the number of
@@ -64,8 +63,6 @@ Then, all such short ranges can be computed by a~circuit of size
 $o(n)=O(n)=O(z)$. All the remaining ranges can be
 computed by a~circuit of size $O(n)$ using Lemma~\ref{lemma:blocks}.
 
-\todo[inline]{Reviewer~3: ``In the beginning of the proof of Lemma 3.6, I was unable to follow the step from "the total length of all short ranges is at most $O(n/\log n)$" to "all such short ranges can be computed by a circuit of size $O(\log n/n \cdot n)$."''~--- Fixed!}
-
 \textbf{Randomized algorithm.}
 Permute the columns randomly. A~uniform random permutation
 of $n$~objects can be generated in
@@ -76,13 +73,6 @@ Let us focus on a~single row and a~particular cell in it. Denote the number of
 zeroes in the row by~$t$. What is the probability that the cell belongs to
 a~short segment? There are two cases to consider.
 
-\todo[inline]{Reviewer~3: ``In the proof of Lemma 3.6, I disagree with the analysis of
-the random permutations of the columns. Specifically, it seems like in cases 1
-and 2 the proof is not counting the probability of being in a segment of length
-at most $\log n$, but instead of length at most $2\log n$. For example, in
-case 1, if our cell is the $\log n$-th cell from the left and the nearest zero
-is another $\log n$ cells to the right, then our cell is sitting in a segment of
-length $2\log n$, not $\log n$ as the proof states.''~--- Thanks, indeed! Fixed.}
 
 \begin{enumerate}
 \item The cell is at distance $k$ for $1 \le k \le \log n$ from the border,
@@ -122,16 +112,6 @@ $O(t)$ for~$A$. To~do this, we present a~greedy algorithm for permuting the
 columns of~$A$ in such a~way that the total length of all short segments
 is $O(\log^4n)$. This will follow from the fact that all short ranges in the
 resulting matrix~$A$ will lie within the last $O(\log^2 t)$ columns.
-
-\todo[inline]{Reviewer~3: ``For the deterministic part of the proof of 3.6 I have a
-comment specific to my own reading experience. After reading up to the sentence
-beginning "The process will work for at least $t - \log^2 t$ steps," something
-about the wording and lack of transition to the next paragraph led me to to
-assume that this was the end of the thought and the following paragraph would be
-on a different part of the proof. Instead of reading the following explanation,
-I stopped to wonder why the process would work for $t - \log^2 t$ steps.''
-~\\
---- Thanks, we've revised the text to make the transition clearer.}
 
 We construct the required permutation of columns step by step by a~greedy
 algorithm. After step~$r$, we will have a~sequence of the first~$r$ columns

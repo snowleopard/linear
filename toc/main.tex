@@ -1,6 +1,5 @@
 % !TeX spellcheck = en_US
 \documentclass{toc}
-\date{}
 
 %% !!! AUTHOR: Fill in meta-data below
 %% Optional items are marked %OPL, followed by explanation "if (when to use)"
@@ -8,9 +7,9 @@
 \tocdetails{%
   title = {Complexity of Linear Operators},
 %% please update the following four items when submitting revision
-  number_of_pages = {NN},
-  number_of_bibitems = {NN},
-  number_of_figures = {NN},
+  number_of_pages = {32},
+  number_of_bibitems = {24},
+  number_of_figures = {11},
   conference_version = {ISAAC19}, %% examples: {EC17},  {FSTTCS18}, {NONE}
   author = {Alexander S. Kulikov, Ivan Mikhailin, Andrey Mokhov, and Vladimir V. Podolskii},
     %% Use the format
@@ -60,8 +59,6 @@
 %  doi = {10.4086/toc....},  %% format: doi = {10.4086/toc.2018.v014a009}
 }   %% END tocdetails
 
-\usepackage{amssymb}
-\usepackage[colorinlistoftodos, color=green!20, disable]{todonotes}
 \usepackage{thm-restate}
 
 \usepackage{tikz}
@@ -92,18 +89,7 @@
 \newcommand{\mmax}{\texttt{MAX}}
 \newcommand{\var}{\texttt{Var}}
 
-% \title{Complexity of Linear Operators
-% \thanks{This is an extended version of an earlier conference publication~\cite{isaac-2019-version}.
-% The results presented in Section~\ref{sec-commutative} are supported by
-% Russian Science Foundation (18-71-10042). The results presented in
-% Section~\ref{sec-non-commutative} are supported by Russian Science Foundation
-% (16-11-10252).}}
-
-% \ccsdesc[100]{Theory of computation~Streaming, sublinear and near linear time algorithms}
-% \ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm
-
 \begin{document}
-%\listoftodos
 
 \begin{frontmatter}%%[classification=text] << EDITOR.
 
@@ -154,19 +140,6 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 %%%   if more than two authors: (Jones et al., STOC'14)
 %%%   if journal: (Jones et al., SICOMP 2014)
 \begin{abstract}
-	\todo[inline]{Reviewer~2: ``The lower bounds result in the Abstract is
-	stated without reference to the faithful semigroup. It is worth making that
-	explicit for clarity. \\ The order of the results listed in the Abstract is
-	different from the order in the body of the paper. Specifically, the paper
-	presents the results (1), (2) and (3) in order but discusses (2), (3) and
-	(1) in that order in the Abstract. This is nitpicky but keeping them
-	consistent will help.''~--- We added faithful non-commutative semigroups in
-	the lower bound statement. We changed the order of the results in the
-	abstract, now upper bounds are stated first. We still would like to keep
-	more general upper bound to be the first one in the abstract and the second
-	one discussed in the paper. We believe that on this level the optimal order
-	of results might be different depending on the space constraints.}
-
     Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones
     and $x$ be an~$n$-dimensional vector of formal variables over a~semigroup
     $(S, \circ)$. How many semigroup operations are required to compute the
@@ -242,7 +215,6 @@ the neutral element $x_{n+1}$ into the vector. Alternatively, we could switch
 from semigroups to \emph{monoids}, but we choose not to do that, since we have
 no use for the neutral element and associated laws in the rest of the paper.}
 
-\todo[inline]{Added an~example below}
 To~give an~example, consider a~complement $A \in \{0,1\}^{6 \times 6}$ of~the identity matrix. In~this case, the $i$-th output~$y_i$ (for $i=1, \dotsc, 6$) is~equal to the sum of~all input variables $x_1, \dotsc, x_6$ except for $x_i$.
 %
 \begin{mypic}
@@ -399,7 +371,6 @@ $B \in S^{n \times n}$ and computes the product $AB$ in time~$O(n^2)$.
 
 \subsubsection{Non-commutative Case}
 
-\todo[inline]{Reviewer~1: ``At first, I had the confusion that the same algorithm / circuit has to work for any ``faithful non-commutative'' semigroup, as in the commutative section, and the lower bound rules out small circuits of this kind. It would be good to emphasize that the lower bound works even if the circuit can be constructed based on~$S$.''~--- We reformulated Theorem 1.3 and slightly modified the preceding text.}
 
 As our second main result, we show that \emph{commutativity is essential}: for
 any faithful non-commutative semigroup~$S$
@@ -421,41 +392,9 @@ This lower bound is tight: $Ax$ is	computable using $O(n\alpha(n))$ semigroup op
 
 The upper bound in this theorem follows straightforwardly from the results in~\cite{DBLP:conf/stoc/Yao82} and the lower bound is the main result for non-commutative case.
 
-%It is not hard to show that this lower bound is tight.
-%\begin{restatable}{lemma}{non-com-upper}
-%	\label{lem:upperbound}
-%	Let $(S, \circ)$ be a~semigroup, $x$ be
-%	a~vector of $n$ formal variables $(x_1,\ldots, x_n)$, and
-%	$A \in \{0,1\}^{n \times n}$ be a~matrix with $O(n)$ zeroes. Then $Ax$ is
-%	computable using $O(n\alpha(n))$ semigroup operations, where $\alpha(n)$
-%	is the inverse Ackermann function.
-%\end{restatable}
-
-\todo[inline]{Reviewer~2: ``Theorem 1.3 can be split into two parts — one stating the lower bound and the other stating the upper bounds. The proof of the upper bound is short and straightforward from [21], and the main result is the lower bound.'~--- We prefer to keep it as one statement: we would like to make more visible the fact that we have tight lower and upper bounds. We rephrased the theorem to move the main result forward and we added a comment after the theorem mentioning that the upper bound is easy to prove.}.
-
-
-
 \subsection{Motivation}
 The complexity of linear operators is interesting for many reasons, some of
 which are listed below.
-
-\todo[inline]{Reviewer~2: ``The paragraphs on Range Queries and Graph Algorithms in
-Section 1.2 need references to literature. Additionally and more importantly,
-Range Queries should discuss data structures in the Group model because their
-lower bound proof relies on [6], which proves a lower bound for a problem in
-the Group model for data structures.''
-~\\
-Reviewer~2: ``To reiterate the above comment, I think the authors should expand
-on “”The algorithms (Theorem 1.1 and Corollary 1.2) and hardness results
-(Theorem 1.3) for the linear operator problem presented in this paper are indeed
-inspired by some of the known results for the range queries problem.” to
-discuss [6] and other related work.''
-~\\
-Reviewer~2: ``It will be nice to discuss Algorithms by Yao and by Alon and
-Schieber from A.3 in the main body of the paper as their upper bound results
-rely on them.''
-~\\
---- Done. }
 
 \begin{description}
 	\item[Range queries.] In the \emph{range queries} problem,
@@ -488,8 +427,6 @@ results (Theorem~\ref{thm:lowerbound}) for the linear operator problem presented
 in this paper are very much inspired by the above-mentioned classic results for
 the range queries problem. The connection to~range queries is~straightforward:
 zeros in a~row split this row into a~collection of~ranges in a~natural way.
-
-\todo[inline]{Added a picture}
 
 \begin{mypic}
 	\begin{scope}[scale=.2]
@@ -543,9 +480,6 @@ graphs is more complicated.
 Theorem~\ref{thm:upperbound} and Corollary~\ref{cor:matrixmultiplication} give
 a~black-box way to solve these two problems on complements of sparse graphs in
 time $O(n^2)$.
-
-\todo[inline]{Reviewer~1: ``I’m not sure if it’s fair to say that triangle counting on complement of sparse graphs is more complicated, as triangle counting reduces to standard matrix multiplication, where subtraction exists.''~--- We mean here that designing an $O(n^2)$ time algorithm for triangle counting for graphs with $O(n)$ edges seems to be
-easier than for graphs with $O(n)$ antiedges.}
 
 \item[Matrix multiplication over semirings.] Fast matrix
 multiplication methods rely essentially on the ring structure of the underlying
@@ -770,111 +704,6 @@ wires the inputs and the outputs exchange places).
 \end{tikzpicture}
 \end{center}
 
-\todo[inline]{Reviewer~1: ``Why is commutativity not essential? For non-commutative semigroups, each gate needs to specify the order in which the input wires are summed up. What is the order after reversing all wires?''~--- Right! We've removed the corresponding sentence.}
-
-%Note also that commutativity is not essential for this observation, it just
-%allows us not to worry about the order of the incoming wires for each gate.
-
-
-%\section{Motivation and Applications}\label{sec-applications}
-%
-%In this section we discuss our motivation and demonstrate two applications of
-%the presented linear-size construction for a dense linear operator: fast
-%multiplication of dense and \emph{boring} matrices over arbitrary semirings
-%(Section~\ref{sec-boring-matrices}) and compact algebraic representation of
-%dense graphs (Section~\ref{sec-dense-graph}).
-%
-%\subsection{Dense Operators}
-%
-%Throughout this section we consider $n \times n$ matrices over an arbitrary
-%semiring $(S, \circ, \bullet)$, where the operations $\circ$ and $\bullet$ have
-%identities 0 and 1, respectively.
-%
-%A matrix is \emph{sparse} if most of its elements are 0. To be more precise, we
-%further assume that a sparse matrix has $O(n)$ non-zero elements. Sparse
-%matrices arise in many applications, and can be multiplied by arbitrary vectors
-%in $O(n)$ time and arbitrary matrices in $O(n^2)$ time (multiplication
-%by an $n\times n$ matrix can be thought of as multiplication by $n$ vectors).
-%% Note that these complexity bounds are exact, as they match the time required to
-%% read the input.
-%
-%A \emph{0/1 matrix} is a matrix whose elements belong to the set $\{0,1\}$. A
-%0/1 matrix is \emph{dense} if it has $O(n)$ zero elements, i.e. most of its
-%elements are 1.
-%
-%Note that multiplication of dense matrices by vectors can be viewed as a special
-%case of the Range Queries problem. Indeed, we can split the rows of a dense
-%matrix into $O(n)$ ranges, compute answers to these range queries, and then
-%recover the rows by combining the constituent ranges.
-%
-%As mentioned above, computations on dense matrices over algebraic structures
-%with inverse operations can often be reduced to computations on sparse matrices.
-%However, the situation changes for computations over semigroups or semirings,
-%which lack inverse operations. In such cases, the computation complexity of
-%various matrix operations can differ significantly from more classical settings,
-%which is a recurring topic in the recent years (see, for
-%example,~\cite{AkianGG12,Williams14,GrigorievP15}). This paper provides further
-%insight on this topic. As far as we know, the complexity of the problem under
-%consideration was not known even for the simplest semigroups like
-%$(\mathbb{B},\vee)$.
-
-%\subsection{Dense and boring matrix multiplication}\label{sec-boring-matrices}
-%
-%Out first main result presented in Section~\ref{sec-commutative} allows us to
-%obtain a linear-size circuit for multiplying a 0/1~dense matrix of size
-%$n \times n$ by a vector in an arbitrary semiring. Our construction is explicit
-%and the corresponding algorithm takes $O(n^2)$ time\footnote{Faster
-%implementations are possible if the input matrix is provided in a compressed
-%form.}. As a consequence, we can multiply a 0/1~dense matrix $A$ by an arbitrary
-%matrix $B$ in $O(n^2)$ time as follows:
-%
-%\begin{itemize}
-%  \item Construct a linear-size circuit for the dense linear operator
-%  $A\mathbf{x}$. Time complexity: $O(n^2)$.
-%  \item Evaluate the circuit on all $n$ columns of the matrix $B$. Each
-%  evaluation takes $O(n)$ time, hence the overall time complexity of this step
-%  is also $O(n^2)$.
-%\end{itemize}
-%
-%Furthermore, by combining the algorithms for sparse and dense matrix
-%multiplication, one can obtain an efficient algorithm for the multiplication of
-%so-called \emph{boring} matrices.
-%
-%A matrix is \emph{boring} if most of its elements are equal to some element~$b$ from
-%the semiring. To be more precise, we further assume that a boring matrix has
-%$O(n)$ elements that are not equal to~$b$. Boring matrices are a natural
-%generalisation of sparse and dense matrices: both are just special cases with
-%$b=0$ and $b=1$, respectively.
-%
-%To multiply a boring matrix $A$ by a vector $\mathbf{x}$, we decompose the
-%matrix into two components $A_0$ and $A_1$, such that $A = A_0 \circ b A_1$,
-%$A_0$ is sparse, and $A_1$ is dense\footnote{Note that here the operations
-%$\circ$ and $\bullet$ (the latter is represented by juxtaposition) are lifted to
-%matrices.}. Now we can compute $A \mathbf{x}$ thanks to various semiring laws:
-%
-%\[
-%\begin{array}{rcll}
-%A \mathbf{x} & = & (A_0 \circ b A_1) \mathbf{x} & \text{(sparse-dense decomposition)}\\
-% & = & A_0 \mathbf{x} \circ (b A_1) \mathbf{x} & \text{(distributivity and commutativity)}\\
-% & = & A_0 \mathbf{x} \circ b (A_1 \mathbf{x}) & \text{(associativity)}\\
-%\end{array}
-%\]
-%
-%\noindent
-%Both $A_0 \mathbf{x}$ and $A_1 \mathbf{x}$ can be computed using sparse and
-%dense matrix-vector multiplication, respectively; the results are further
-%combined using scalar multiplication by $b$ and vector addition $\circ$, both of
-%which take linear time and have linear-size circuits. Note that the second step
-%in the above equation relies on commutativity in a crucial way: elements of the
-%original matrix $A$ are partitioned into elements of $A_0$ and $A_1$ in an
-%arbitrary order. As in the dense case, this immediately leads to $O(n^2)$-time
-%boring matrix multiplication.
-
-%In an~important special case of the Boolean semigroup $(\{0,1\}, \lor)$,
-%circuits we are discussing are known as {\em rectifier networks}. An overview of
-%known lower and upper bounds for such circuits is given by Jukna
-%in~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
-
 \section{Commutative Case}\label{sec-commutative}
 
 This section is devoted to the proofs of Theorem~\ref{thm:upperbound} and
@@ -885,8 +714,6 @@ Corollary~\ref{cor:matrixmultiplication}, which we remind below.
 \matrixmultcor*
 
 \subsection{Main Ideas of~the Proof}
-
-\todo[inline]{Added an overview of the proof below}
 
 Consider a~matrix $A \in \{0,1\}^{n \times n}$
 with $z=\Omega(n)$ zeros (left picture below).
@@ -982,10 +809,8 @@ Let $A \in \{0,1\}^{n \times n}$ contain at most two zeroes in every row. Then
 $C(A) = O(n)$.
 \end{lemma}
 
-\todo[inline]{Reviewer~2: ``The algorithm is interesting. For Lemma 3.3, it will be helpful to see a picture of the matrix split into the different blocks — this can potentially replace some of the formal details as they only provide a sketch of the proof here.''~--- Done!}
 
 \begin{proof}%[Proof sketch]
-\todo[inline]{Reviewer~3: ``In the proof sketch of Lemma 3.3, first I believe that it should say "The top part T contains all *rows* that have exactly one zero in each L and R" ("rows" instead of "columns"). Furthermore, I was unable to follow the last step, where a recursive call is made after cutting all-1 columns out of the bottom part of the matrix. In particular, I believe there are cases where there are no all-1 columns to be removed, which seems like a problem. Despite this being intended as a proof sketch, as it's currently written the sketch was unable to convince me that the lemma is true.''~--- We've made the proof formal}
 
 Denote by~$R$ and~$C$ the (sets~of) rows and columns of~$A$,
 respectively. Let $R=R_1 \sqcup R_2$ where every row in~$R_1$
@@ -1092,15 +917,6 @@ be~used as~building blocks in the proof of Theorem~\ref{thm:upperbound}.
 We~prove Lemma~\ref{lemma:permute}
 in~Section~\ref{sec:deterministic}.
 
-\todo[inline]{Reviewer~1: ``Lemma 3.4--3.6 are stated all at once with proofs deferred, and only 3.4 and 3.6 are used in the proof of Theorem 1.1. It feels hard to remember what will be used when reading the proof of 1.1. Consider deferring the statement of Lemma 3.5 and possibly moving the proof of Lemma 3.4 forward (as it is short).''~--- Done!}
-
-%It is easy to see that the hardest case is when $X_S$ is a free commutative
-%semigroup, since the corresponding circuit can be used for any semigroup $X$.
-%Thus from now on in the proof of Theorem~\ref{thm:main} we concentrate on the
-%case of a free commutative semigroup $X_S$. We build the required circuit out
-%of the basic building blocks described below. We first show how to use these
-%blocks and then prove their existence.
-
 \begin{lemma}\label{lemma:decompose}
 There exists a~binary regular circuit of size $O(n\log n)$ such that
 any range can be computed in a~single additional binary gate
@@ -1147,8 +963,6 @@ Below, we~show that all the ranges of~$A$
 can be~computed by a~circuit of~size $O(z)$.
 From these
 ranges, it takes $O(z)$ additional binary gates to compute all the outputs of~$Ax$.
-
-\todo[inline]{Reviewer~3: ``The proof of Theorem 1.1 spends some time talking about decomposing the rows of A into maximal ranges of ones, but it's not mentioned again in the rest of the proof. I think it should either be made more clear why this part is connected to the rest or this part should be edited out.''~--- We stated more clearly why we consider the ranges of~$A$ above.}
 
 We compute the matrices $R_0 \times C$ and $R_1 \times C$
 separately. The main idea is that $R_0 \times C$ is easy to compute
@@ -1243,7 +1057,6 @@ equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
 Note that this definition does not pose any restrictions on the cardinality of
 each letter in $W$ and $W'$. In particular, it captures cases of idempotent semigroups $(\{0,1\}, \vee)$ and $(\mathbb{Z},\min)$ that are important for us.
 
-\todo[inline]{Reviewer~1: ``“This allows to capture in this definition important cases of idempotent semigroups.” I’m not sure if I understand this sentence. This definition does not imply idempotence, nor is implied by idempotence.''~--- Fixed.}
 
 
 We need to study the non-commutative case, and moreover, our results
@@ -1255,7 +1068,6 @@ for the non-commutative case inspired by the properties of free idempotent
 semigroups~\cite{GreenR52}. To introduce this notion, we need several
 definitions.
 
-\todo[inline]{Reviewer~3: ``In section 4 after definition 4.1 when the term "initial mark" is defined, my comments are that 1) the definition of "initial mark" and "initial" should be made its own definition (e.g. definition 4.2) and 2) the definition of "initial mark" and "initial" would benefit greatly from one or two simple examples, which shouldn't take much space or time to present.''~--- Done.}
 
 \begin{definition}
 The \emph{initial mark} of $W$ is the letter that is present in $W$ such that
@@ -1289,8 +1101,6 @@ definition is ``if and only if''\cite{GreenR52}.
 A semigroup $(S, \circ)$ is \emph{faithful non-commutative} if $X_S$ is strongly
 non-commutative.
 \end{definition}
-
-\todo[inline]{Reviewer~1: ``The part where you define faithful non-commutative semigroup and state basic properties is hard to digest. Is there a natural non-commutative semigroup that is faithful non-commutative and is not the free idempo- tent semigroup or the free semigroup? For the free semigroup case, it is trivial to prove the reduction, as any non-range gate is useless(?). Ideally, it would be helpful to provide a few concrete (and natural) examples that have more structures than the free idempotent semigroup. If such examples are not easy to describe or natural, I would suggest arranging the proofs and definitions such that the reader will have $S$ being the free idempotent semigroup in mind when reading all the proofs. This can be done by either explicitly stating (and emphasize) that it is recommended to think that $S$ is the free idempotent semigroup, or first proving the result for this case then define the faithful non-commutative semigroups and remark that the whole proof works for any such semigroup.''~--- It is rather hard to come up with another simple and instructive example that would fit into the text. We have an example of binary relations on large enough set with the composition operation. But to explain this example and to prove that it is indeed faithful non-commutative would take about two more pages and we feel that this is a substantial sidestep in the exposition of the proof. We encourage the reader to keep an example of free idempotent semigroup in mind.}
 
 We note that this notion of faithfulness is relatively general and is true for
 semigroups $(S,\circ)$ with considerable degree of non-commutativity in their
@@ -1330,9 +1140,7 @@ The case of suffixes is completely analogous.
 \end{proof}
 
 The next lemma is a simple corollary of Lemma~\ref{lem:prefix_equivalence}.
-\todo[inline]{Reviewer~1: ``The statement is too casual, consider rephrasing it''~--- We rephrased the lemma.}
 \begin{lemma} \label{lem:variables_order}
-
 Suppose $X$ is strongly non-commutative. Suppose $W \sim W'$ holds in $X$. Consider a permutation $\sigma_W$ of the letters of $W$ in the order in which they appear first time in $W$ when we read it from left to right. Consider analogous permutation $\sigma_{W'}$ for $W'$. Then $\sigma_W = \sigma_{W'}$.
 %
 The same is true if we read the words from right to left.
@@ -1341,7 +1149,6 @@ The same is true if we read the words from right to left.
 
 \subsection{Proof Strategy}
 
-\todo[inline]{Reviewer~3: ``I found the arrangement of sections 4.2, 4.3, and 4.4 quite difficult to follow, as there are many cases of lemmas or theorems being stated and then proven out of order and in completely different sections. For example, Lemma 4.7 is stated in section 4.2 and is proven all the way back in section 4.4 after Lemma 4.9 is both stated and proved. I'm not sure what a better arrangement would be, but reading and understanding the current version involved lots of flipping back and forth and jumping between sections.''~--- We moved the statements of the key lemmas to the corresponding sections.}
 
 We now proceed to the proof of Theorem~\ref{thm:lowerbound}. The upper bound
 follows easily by a naive algorithm: split all rows of $A$ into ranges, compute
@@ -1398,10 +1205,7 @@ For commutative case it is known that the range queries problem is hard.
 Using these results, it is straightforward to finish the proof of
 Theorem~\ref{thm:lowerbound}.
 
-\todo[inline]{Reviewer~2: ``The result from [6] used in the proof of Theorem 1.3 must be explicitly stated. ''~--- Done.}
 \begin{proof}[Proof of Theorem~\ref{thm:lowerbound}]
-	\todo[inline]{Reviewer~1: ``Technically, Theorem 1.3 is stated for general strongly non-commutative semigroups, while Theorem 4.6 is stated for idempotent X. Consider integrating the argument in section 4.3 to the proof, or moving it to an earlier place.''~--- We formulated the reduction to idempotent case as a separate lemma and updated the proof of the theorem accordingly.}
-
 
 By Lemma~\ref{lem:idempotent_is_hardest} it is enough to prove the result for an idempotent strongly non-commutative $X$.
 By Theorem~\ref{thm:equivalence} if non-commutative dense linear
@@ -1524,7 +1328,7 @@ improve the final version of the paper.
     Alexander S. Kulikov\\
     Steklov Mathematical Institute at St.~Petersburg,     Russian Academy of~Sciences\\ and St.~Petersburg State University\\
     kulikov\tocat{}logic\tocdot{}pdmi\tocdot{}ras\tocdot{}ru\\
-    \url{https://logic.pdmi.ras.ru/\~kulikov/}
+    \url{https://alexanderskulikov.github.io/}
 \end{tocinfo}
 \begin{tocinfo}[mikhailin]
     Ivan Mikhailin\\

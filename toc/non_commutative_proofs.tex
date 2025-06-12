@@ -18,11 +18,11 @@ Suppose $A$ contains initial mark of $W_i$ or lies to the right of it. Then afte
 
 
 For the second part of the lemma, suppose $X$ is strongly non-commutative and suppose that for $X$ there is a circuit of size at most $s$ computing some dense linear operator.
-Since $X_{id}$ is a factorization of $X$ any circuit computing dense operator over $X$ also computes the same dense operator over $X_{id}$. Thus there is a  circuit of size at most $s$ computing the same dense operator over $X_{id}$. 
+Since $X_{id}$ is a factorization of $X$ any circuit computing dense operator over $X$ also computes the same dense operator over $X_{id}$. Thus there is a  circuit of size at most $s$ computing the same dense operator over $X_{id}$.
 %Finally, $X_{id}$ is idempotent, so by the special case of our theorem we have $s = \Omega(n \alpha(n))$ and we are done.
 
 \subsection{Reducing Dense Linear Operator to Range Queries} \label{sec:operators_to_queries}
-In this subsection, we prove the following lemma. 
+In this subsection, we prove the following lemma.
 
 \begin{lemma} \label{lem:dense_matrices}
 	If the (non-commutative) dense linear operator problem over $X$ has size $s$
@@ -33,8 +33,8 @@ In this subsection, we prove the following lemma.
 
 Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the natural order. This intuition is formalized in Lemma~\ref{lemma:correctorder} below. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, i.e., for a~query $(l,r)$ we introduce a~$0/1$-row having two zeroes in positions $l-1$ and $r+1$ (hence, this row consists of three ranges: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the natural order of variables (guaranteed by Lemma~\ref{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
 
-\todo[inline]{Reviewer~1: ``At first, I wasn’t sure what this paragraph is trying to say. Later, I realized that this paragraph is trying to justify that non-increasing or non-range circuits can make sense. Make it more explicit.''~--- Thank you, we added clarification.}
-It should be mentioned, at the same time, that the semigroup $X$ might be complicated. 
+
+It should be mentioned, at the same time, that the semigroup $X$ might be complicated.
 In particular, the idempotency is tricky and allows for computations using `unnatural' order in multiplications. For example, it can be used to simulate commutativity: one can turn $xy$ into $yx$, by first multiplying $xy$ by~$y$ from the left and then multiplying the result by $x$ from the right (obtaining $(y(xy))x=(yx)(yx)=yx$). Using similar ideas, one can place new variables inside of already computed products. To get $xyz$ from $xz$, one multiplies it by $xyz$ first from the left and then from the right: $(xyz)xz(xyz)=xy(zxzx)yz=xy(zx)yz=xyz$.
 This is not extremely impressive, since to get $xyz$ we multiply by $xyz$, but the point is that this is possible in principle.
 
@@ -107,8 +107,6 @@ a~path in~${\cal C}$ from $G$ to an output gate, on which the word is never mult
 Note that if $x_i$ and $x_{i'}$ are both contained in $G$, $i<i'$, and $x_i$ is good in~$G$, then $x_{i'}$ is good in~$G$, too. That is, the set of all good variables in~$G$ is closed upwards.
 
 Consider the largest good variable in $G$ (if there is one), denote it by $x_k$ ($x_k$ is actually just the largest variable in~$G$, unless of course there are no good variables in $G$). Let us focus on the first occurrence of $x_k$ in~$G$.
-
-\todo[inline]{Reviewer~1: ``Claim 4.12, 4.13, 4.14: avoid nested proofs.''~--- The nested proofs here are hard to avoid, since each next level of statements refers to notions that are relevant in the proof of the previous statement. To improve readability we moved the proof of Lemma 4.11 into a separate section.}
 
 \begin{claim}
 All first occurrences of other good variables in~$G$ must be to the left of the first occurrence of $x_k$.
