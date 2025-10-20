@@ -1,0 +1,31 @@
+\usepackage{thm-restate}
+
+\usepackage{tikz}
+
+\newenvironment{mypic}{
+    \begin{center}
+        \begin{tikzpicture}[,>=latex]
+        }{
+        \end{tikzpicture}
+    \end{center}
+}
+
+\tikzstyle{gate}=[draw, circle, inner sep=0mm, minimum size=4mm]
+
+\colorlet{mc}{gray}
+\colorlet{mcf}{mc!20}
+
+%% \newtheorem{observation}{Observation}  %% ToC edit1 included in tocbase.cls
+
+\newcommand{\lef}{\texttt{left}}
+\newcommand{\righ}{\texttt{right}}
+\newcommand{\gap}{\texttt{gap}}
+\newcommand{\num}{\texttt{num}}
+\newcommand{\out}{\texttt{out}}
+\newcommand{\tup}{\texttt{tup}}
+
+\newcommand{\mmin}{\texttt{MIN}}
+\newcommand{\mmax}{\texttt{MAX}}
+% \newcommand{\var}{\texttt{Var}}  %% ToC edit1 spills into next character -->
+\newcommand{\var}{\texttt{Var}\,}  %% <--
+
