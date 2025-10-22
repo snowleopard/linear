@@ -414,7 +414,10 @@ The complexity of linear operators is interesting for many reasons, some of
 which are listed below.
 
 \begin{description}
-\item[Range queries.] In the \emph{range queries} problem,
+\item[Range queries.] In the 
+%%\emph{range queries} problem,
+%%AU queries -> query (AK)
+\emph{range query} problem,
 %% ToC edit1 why "range queries problem" (plural)?  It is more commonly
 %% called the "range query problem."  This is more natural and better grammar.
 %% See also the Wikipedia entry "Range query (computer science)"  ATTN1
@@ -429,7 +432,9 @@ algorithms with applications in many fields.
 Yao~\cite{DBLP:conf/stoc/Yao82} showed that, for any semigroup, it is possible
 to preprocess the input vector in time $O(n)$ so that
 % to further answer any query %% ToC edit1 garbled grammar -->
-any further query can be answered %% <--
+% any further query can be answered %% <--
+%% AU further -> range (AK)
+any range query can be answered %% <--
 in time $O(\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann 
 % function and  %% ToC edit1 split long unbalanced compound sentence -->
 function.  Yao also  %% <--
@@ -450,13 +455,19 @@ commutative version of the problem. They proved the $\Omega(n \alpha(n))$ lower
 bound on the number of commutative semigroup operations required to answer all
 queries.
 
-The linear operator problem is a~natural generalization of the range queries
-problem: each row of the matrix~$A$ defines a~subset of the elements of~$x$
+The linear operator problem is a~natural generalization of the 
+%range queries problem: 
+%% AU queries -> query (AK)
+range query problem:
+each row of the matrix~$A$ defines a~subset of the elements of~$x$
 that needs to be summed up and this subset is not required to be
 a~contiguous range. The algorithms (\expref{Theorem}{thm:upperbound}) and hardness
 results (\expref{Theorem}{thm:lowerbound}) for the linear operator problem presented
 in this paper are very much inspired by the above-mentioned classic results for
-the range queries problem. The connection to~range queries is~straightforward:
+%the range queries problem. 
+%% AU queries -> query (AK)
+the range query problem.
+The connection to~range queries is~straightforward:
 zeros in a~row split this row into a~collection of~ranges in a~natural way.
 
 \begin{mypic}
@@ -490,7 +501,10 @@ zeros in a~row split this row into a~collection of~ranges in a~natural way.
 \end{mypic}
 
 We review applications as well as a~rich variety of algorithmic techniques for
-the range queries problem in \expref{Sections}{subseq:rmqapp} \expref{and}{subsec:approaches}.
+%the range queries problem 
+%% AU queries -> query (AK)
+the range query problem
+in \expref{Sections}{subseq:rmqapp} \expref{and}{subsec:approaches}.
 
 \item[Graph algorithms.] Many graph problems can be reduced to matrix
 multiplication.
@@ -622,8 +636,13 @@ semirings.
 % $A \in \{0,1\}^{n \times n}$ can be defined as...
 
 
-\subsection{Range queries problem and linear operator problem}
-In the \emph{range queries problem}, one is given
+%\subsection{Range queries problem and linear operator problem}
+%% AU queries -> query (AK)
+\subsection{Range query problem and linear operator problem}
+%In the \emph{range queries problem}, 
+%% AU queries -> query (AK)
+In the \emph{range query problem},
+one is given
 a~sequence $x_1, x_2, \dotsc, x_n$ of
 elements of a~fixed semigroup $(S, \circ)$.
 Then, a~\emph{range query} is
@@ -633,7 +652,10 @@ such that $1 \le l \le r \le n$.
 The answer to such a~query is the result of applying the semigroup
 operation to the
 corresponding range, \ie, $x_l \circ x_{l+1} \circ \dotsb \circ x_r$.
-The range queries problem is then to simply answer all given range
+%% AU queries -> query (AK)
+%The range queries problem 
+The range query problem
+is then to simply answer all given range
 queries.
 There are two
 regimes: online and offline. In the \emph{online regime}, one is given
@@ -670,7 +692,10 @@ given as rows of a~$0/1$-matrix~$A$.  %% ToC edit1 <-- put %0/1$ in math mode
 We consider circuits whose input consists of $n$~formal variables
 $\{x_1, \dotsc, x_n\}$. We are interested in the minimum number of semigroup
 operations needed to compute all given words $\{w_1, \dotsc, w_m\}$ (\eg, for
-the range queries problem, each word has a~form $x_l\circ x_{l+1}\circ \dotsb \circ x_r$).
+%% AU queries -> query
+%the range queries problem, 
+the range query problem, 
+each word has a~form $x_l\circ x_{l+1}\circ \dotsb \circ x_r$).
 We use
 the following natural \emph{circuit} model. A~circuit computing all these queries
 is a~directed acyclic graph. There are exactly $n$~nodes of zero in-degree. They
@@ -1278,7 +1303,10 @@ captures the notion   %% <--
 that a semigroup is substantially non-commutative.
 
 Previously lower bounds in the circuit model for a large class of semigroups
-were known for the range queries
+were known for 
+%% AU queries -> query
+% the range queries
+the range query
 problem~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}. These
 results were proven for a large class of commutative semigroups called
 \emph{faithful} (we provide a formal definition below). Since we are dealing
@@ -1477,7 +1505,11 @@ semigroup).
 
 \begin{theorem}\label{thm:equivalence}
 For an idempotent strongly non-commutative $X$ and for any $s=\Omega(n)$ we have
-that (commutative) range queries problem over $X_{sym}$ has size $O(s)$ circuits
+that the (commutative) 
+%% AU queries -> query
+%range queries problem 
+range query problem
+over $X_{sym}$ has size $O(s)$ circuits
 iff (non-commutative) dense linear operator problem over $X$ has size $O(s)$
 circuits.
 \end{theorem}
@@ -1489,7 +1521,11 @@ circuits.
 %% for the appearance of \alpha(n), so please name the authors.
 %
 % \begin{theorem}[\cite{DBLP:journals/ijcga/ChazelleR91}]\label{thm:chazelle} % -->
-For the commutative case it is known that the range queries problem is non-linear
+For the commutative case it is known that 
+%% AU queries -> query
+%the range queries 
+the range query
+problem is non-linear
 (Chazelle--Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}).  %% <--
 \begin{theorem}[Chazelle--Rosenberg]\label{thm:chazelle} 
 	There is a set of $n$ ranges over $X_{sym}$ such that any circuit
@@ -1503,7 +1539,10 @@ Using these results, it is straightforward to finish the proof of
 
 By \expref{Lemma}{lem:idempotent_is_hardest} it is enough to prove the result for an idempotent strongly non-commutative $X$.
 By \expref{Theorem}{thm:equivalence} if non-commutative dense linear
-operator problem has size $s$ circuit, then the commutative range queries
+operator problem has size $s$ circuit, then the commutative 
+%% AU queries -> query
+%range queries
+range query
 problem also does. However, by \expref{Theorem}{thm:chazelle} for the latter problem $s=\Omega(n \alpha(n))$.
 Moreover, in our construction for the proof of \expref{Theorem}{thm:equivalence} it
 is enough to consider dense linear operators with exactly two zeroes in every
@@ -1524,8 +1563,11 @@ the following equivalences for any $s = \Omega(n)$.
 %\draw[help lines] (0,0) grid (16,6);
 \tikzstyle{v}=[rectangle,draw,inner sep=1mm,text width=33mm,above right,minimum height=20mm]
 
-\node[v] (a) at (0,0) {(commutative) range queries problem over $X_{sym}$ has $O(s)$ size circuits};
-\node[v] (b) at (5.8,0) {(non-commutative) range queries problem over $X$ has $O(s)$ size circuits};
+%% AU queries -> query (AK) 
+%\node[v] (a) at (0,0) {(commutative) range queries problem over $X_{sym}$ has $O(s)$ size circuits};
+%\node[v] (b) at (5.8,0) {(non-commutative) range queries problem over $X$ has $O(s)$ size circuits};
+\node[v] (a) at (0,0) {(commutative) range query problem over $X_{sym}$ has $O(s)$ size circuits};
+\node[v] (b) at (5.8,0) {(non-commutative) range query problem over $X$ has $O(s)$ size circuits};
 \node[v] (c) at (11.9,0) {(non-commutative) dense linear operator problem over $X$ has $O(s)$ size circuits};
 
 \path (a.10) edge[->] node[above] {\expref{Lemma}{lem:intervals}} (b.170);
@@ -1555,9 +1597,17 @@ Note that two of the reductions on this diagram are trivial. Thus it remains to 
 
 \begin{enumerate}
 	\item If the (non-commutative) dense linear operator problem over $X$ has size $s$
-	circuit then the (non-commutative) range queries problem over $X$ has size
+	circuit then the (non-commutative) 
+	%% AU queries -> query (AK)
+	%range queries 
+	range query
+	problem over $X$ has size
 	$O(s)$ circuit.
-	\item If the (commutative) version of the range queries problem over $X_{sym}$ has
+	\item If the (commutative) version of the 
+	%% AU queries -> query (AK)
+	%range queries 
+	range query
+	problem over $X_{sym}$ has
 	size $s$ circuits then the (non-commutative) version over $X$ also does.
 \end{enumerate}
 
@@ -1590,12 +1640,20 @@ In this subsection, we prove the following lemma.
 
 \begin{lemma} \label{lem:dense_matrices}
     If the (non-commutative) dense linear operator problem over $X$ has size $s$
-    circuit then the (non-commutative) range queries problem over $X$ has size
+    circuit then the (non-commutative) 
+    %% AU queries -> query (AK)
+    % range queries 
+    range query
+    problem over $X$ has size
     $O(s)$ circuit.
     %If we can compute non-commutative dense matrices by a linear-size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
-Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the natural order. This intuition is formalized in \expref{Lemma}{lemma:correctorder} below. Given this, it is easy to reduce dense linear operator problem to the range queries problem: we just ``pack'' each range query into a~separate row, \ie, for a~query $(l,r)$ we introduce a~$0/1$-row having two zeroes in positions $l-1$ and $r+1$ (hence, this row consists of three ranges: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the natural order of variables (guaranteed by \expref{Lemma}{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
+Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the natural order. This intuition is formalized in \expref{Lemma}{lemma:correctorder} below. Given this, it is easy to reduce dense linear operator problem to the 
+%% AU queries -> query (AK)
+%range queries 
+range query
+problem: we just ``pack'' each range query into a~separate row, \ie, for a~query $(l,r)$ we introduce a~$0/1$-row having two zeroes in positions $l-1$ and $r+1$ (hence, this row consists of three ranges: $(1,l-1)$, $(l,r)$, $(r+1,n)$). Then, if a~circuit computing the corresponding linear operator has a~nice property of always using the natural order of variables (guaranteed by \expref{Lemma}{lemma:correctorder}), one may extract the answer to the query $(l,r)$ from it.
 
 
 It should be mentioned, at the same time, that the semigroup $X$ might be complicated.
@@ -1723,7 +1781,11 @@ Consider $P_F$ and $P_H$. By \expref{Claims}{cl: h is good} \expref{and}{cl: f i
 In this subsection, we prove the following lemma.
 
 \begin{lemma} \label{lem:intervals}
-    If the (commutative) version of the range queries problem over $X_{sym}$ has
+    If the (commutative) version of the 
+    %% AU queries -> query (AK)
+    %range queries 
+    range query
+    problem over $X_{sym}$ has
     size $s$ circuits then the (non-commutative) version over $X$ also does.
     %If we can compute commutative intervals by a linear-size circuit, we can also compute non-commutative intervals.
 \end{lemma}
@@ -1990,8 +2052,18 @@ $(\mathbb{B}, \wedge, \vee)$ is a semiring, too, %% ToC edit1 <-- commas added a
     example, are used for solving various path-finding problems on graphs.
 \end{itemize}
 
-\subsection{Applications of the range queries problem}\label{subseq:rmqapp}
-There are many natural applications of the range queries problem for a~collection of records in a~database: computing the total population of cities that are at most some distance away from a~given point, computing an average salary in a~given period of time, finding the minimum depth on a~given subrectangle on a~sea map, etc. Below, we review some of the less straightforward applications where efficient algorithms for the range queries problem are usually combined with other algorithmic ideas.
+%% AU queries -> query (AK)
+%\subsection{Applications of the range queries problem}\label{subseq:rmqapp}
+\subsection{Applications of the range query problem}\label{subseq:rmqapp}
+There are many natural applications of the 
+%% AU queries -> query (AK)
+%range queries 
+range query
+problem for a~collection of records in a~database: computing the total population of cities that are at most some distance away from a~given point, computing an average salary in a~given period of time, finding the minimum depth on a~given subrectangle on a~sea map, etc. Below, we review some of the less straightforward applications where efficient algorithms for the 
+%% AU queries -> query (AK)
+%range queries 
+range query
+problem are usually combined with other algorithmic ideas.
 
 \textbf{String algorithms and computational biology.}
 It is possible to preprocess a~given string in $O(n)$ time (where $n$ is its length)
@@ -2001,12 +2073,19 @@ find the longest common prefix of any two suffixes of the original string in con
 
 \textbf{Computational geometry.} Algorithms for the range % queries %% ToC edit1 -->
 query  %% <--
-problems can be used together with the scanning line technique to solve efficiently various problems like: given a~set of segments on a~line, compute the number of intersecting pairs of segments; or, given a~set of rectangles and a~set of points on a~plane, compute, for each each rectangle, the number of points it contains.
+%% AU problems -> problem (AK)
+% problems 
+problem
+can be used together with the scanning line technique to solve efficiently various problems like: given a~set of segments on a~line, compute the number of intersecting pairs of segments; or, given a~set of rectangles and a~set of points on a~plane, compute, for each each rectangle, the number of points it contains.
 
 \subsection{Known approaches to range queries}\label{subsec:approaches}
 
 In this subsection, we give a~brief overview of a~rich variety of known
-algorithms for the range queries problem. We say that an algorithm has type
+algorithms for the 
+%% AU queries -> query (AK)
+%range queries 
+range query
+problem. We say that an algorithm has type
 $(f(n), g(n))$ if it spends $f(n)$ time on preprocessing the input sequence,
 and then answers any query in time $g(n)$.
 
@@ -2098,7 +2177,11 @@ precompute the answers to all the queries in this tree in time $O(n)$. Then, it
 is possible to show that any query $(l,r)$ can be  partitioned into $O(\log n)$
 queries that are stored in the tree. This gives an $(O(n), O(\log n))$
 algorithm. It should be noted that the segment tree can also be used to solve
-the dynamic version of the range queries problem efficiently: to change the
+the dynamic version of the 
+%% AU queries -> query (AK)
+% range queries 
+range query
+problem efficiently: to change the
 value of one of the elements of the input sequence, one needs to adjust the
 answers to $O(\log n)$ queries stored in the tree.
 
@@ -2106,7 +2189,9 @@ answers to $O(\log n)$ queries stored in the tree.
 Yao~\cite{DBLP:conf/stoc/Yao82} showed that, for any semigroup, it is possible
 to preprocess the input sequence in time $O(n)$ so that
 % to further answer any query %% ToC edit1 -->
-any further query can be answered %% <--
+%% AU further -> range (AK)
+%any further query can be answered %% <--
+any range query can be answered %% <--
 %% ToC edit1 "any further query"?  what type of queries are we talking about? ATTN1
 in time $O(\alpha(n))$ where $\alpha(n)$ is the inverse Ackermann function
 and proved a~matching lower bound. Later, Alon and
