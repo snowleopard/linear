@@ -1309,7 +1309,7 @@ were known for
 the range query
 problem~\cite{DBLP:conf/stoc/Yao82,DBLP:journals/ijcga/ChazelleR91}. These
 results were proven for a large class of commutative semigroups called
-\emph{faithful} (we provide a formal definition below). Since we are dealing
+\emph{faithful} (see \expref{Definition}{def:faithfulcommutative}). Since we are dealing
 with the non-commutative case, we need to generalize the notion of faithfulness
 to non-commutative semigroups.
 
@@ -1346,7 +1346,9 @@ the definition of a commutative faithful semigroup.
 
 \begin{definition}[Yao, Chazelle--Rosenberg]  %% ToC edit1 <-- this line updated:
 %% names instead of reference numbers; the reference numbers appear just before
-%% before the definition  
+%% before the definition 
+%% AU add a label (AK) 
+\label{def:faithfulcommutative}
 A commutative semigroup $(S, \circ)$ is \emph{faithful commutative} if for any
 equivalence $W\sim W'$ in $X_S$ we have $\var(W)=\var(W')$.
 \end{definition}
@@ -1410,9 +1412,10 @@ equivalent themselves. We also note that this definition exactly captures the
 idempotent case: for a free idempotent semigroup the condition in this
 definition is ``if and only if''~\cite{GreenR52}.
 
-\begin{definition} \label{def:faithful}
-A semigroup $(S, \circ)$ is \emph{faithful non-commutative} if $X_S$ is strongly
-non-commutative.
+\begin{definition} 
+	\label{def:faithful}
+	A semigroup $(S, \circ)$ is \emph{faithful non-commutative} if $X_S$ is strongly
+	non-commutative.
 \end{definition}
 
 We note that this notion of faithfulness is relatively general and is true for
