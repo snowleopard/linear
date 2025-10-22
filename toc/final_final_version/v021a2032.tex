@@ -337,8 +337,8 @@ correspond to an~elementary algorithm that uses no tricks like examining the
 values $x_i$, \ie, the semigroup operation~$\circ$ is applied in a~(carefully
 chosen) order that is independent of the specific input~$x$.
 
-\begin{restatable}{theorem}{upperthm}
-\label{thm:upperbound}
+\begin{theorem}
+\label{thm:upperboundold}
 Let $(S, \circ)$~be a~commutative semigroup,
 and $A \in \{0,1\}^{n \times n}$ be a~matrix
 with~$z=\Omega(n)$ zeroes.
@@ -350,17 +350,17 @@ algorithm that takes the positions of $z$~zeroes of~$A$
 as an input and outputs such a~circuit in time $O(z)$
 with probability at least $1-O(\log^5n)/n$. There also
 exists a~deterministic algorithm with running time $O(z+n\log^4n)$.
-\end{restatable}
+\end{theorem}
 
 %\newpage
 We state the result for square matrices to simplify the presentation.
-\expref{Theorem}{thm:upperbound} generalizes easily to show that $Ax$ for a~matrix
+\expref{Theorem}{thm:upperboundold} generalizes easily to show that $Ax$ for a~matrix
 $A \in \{0,1\}^{m \times n}$ with $z=\Omega(n)$ zeroes can be computed using
 $O(m+z)$ semigroup operations. Also, we assume that $z=\Omega(n)$ to be able to
 state an upper bound $O(z)$ instead of $O(z+n)$. Note that when $z<n$, the
 matrix~$A$ is forced to contain all-one rows that can be computed trivially.
 
-The following corollary generalizes \expref{Theorem}{thm:upperbound}
+The following corollary generalizes \expref{Theorem}{thm:upperboundold}
 from vectors to matrices.
 
 \begin{restatable}{corollary}{matrixmultcor}
@@ -461,7 +461,7 @@ The linear operator problem is a~natural generalization of the
 range query problem:
 each row of the matrix~$A$ defines a~subset of the elements of~$x$
 that needs to be summed up and this subset is not required to be
-a~contiguous range. The algorithms (\expref{Theorem}{thm:upperbound}) and hardness
+a~contiguous range. The algorithms (\expref{Theorem}{thm:upperboundold}) and hardness
 results (\expref{Theorem}{thm:lowerbound}) for the linear operator problem presented
 in this paper are very much inspired by the above-mentioned classic results for
 %the range queries problem. 
@@ -522,7 +522,7 @@ for complements of sparse graphs ($O(n)$ anti-edges) is not. For
 example, it is easy to solve APSP and triangle counting on sparse graphs in
 time $O(n^2)$, but achieving the same time complexity for complements of sparse
 graphs is more complicated.
-\expref{Theorem}{thm:upperbound} and \expref{Corollary}{cor:matrixmultiplication} give
+\expref{Theorem}{thm:upperboundold} and \expref{Corollary}{cor:matrixmultiplication} give
 a~black-box way to solve these two problems on complements of sparse graphs in
 time $O(n^2)$.
 
@@ -556,7 +556,7 @@ computational %% <--
 complexity over % sparse and complements of sparse matrices %% ToC edit1 -->
 sparse $0/1$-matrices and their complements %% <--
 is one of the most basic questions.
-\expref{Theorem}{thm:upperbound} and \expref{Corollary}{cor:matrixmultiplication}
+\expref{Theorem}{thm:upperboundold} and \expref{Corollary}{cor:matrixmultiplication}
 therefore characterise natural special
 cases when efficient computations are possible.
 
@@ -567,7 +567,7 @@ densely-connected graphs %% ToC edit1 what does this mean?  if it is the complem
 %% of sparse graphs, that contradicts the common definition of dense graphs,
 %% see explanations1.txt
 in linear (in the number of vertices) time and memory.
-As we discuss in \expref{Section}{sec-dense-graph}, \expref{Theorem}{thm:upperbound}
+As we discuss in \expref{Section}{sec-dense-graph}, \expref{Theorem}{thm:upperboundold}
 yields an algorithm for deriving a~linear-size algebraic graph representation
 for complements of sparse graphs.
 
@@ -576,7 +576,7 @@ the Boolean semiring $(\{0,1\}, \lor)$ is a~well-studied problem
 in circuit complexity. The corresponding computational model is known
 as~\emph{rectifier networks}. An overview of known lower and upper bounds for
 such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
-\expref{Theorem}{thm:upperbound} states that linear operators on complements of
+\expref{Theorem}{thm:upperboundold} states that linear operators on complements of
 sparse matrices have linear rectifier network complexity.
 
 \end{description}
@@ -795,12 +795,25 @@ wires the inputs and the outputs exchange places).
 
 \section{Commutative case}\label{sec-commutative}
 
-This section is devoted to the proofs of \expref{Theorem}{thm:upperbound} and
+This section is devoted to the proofs of \expref{Theorem}{thm:upperboundold} and
 \expref{Corollary}{cor:matrixmultiplication}, which we % remind %% ToC edit1 -->
 restate  %% <-- you could also say "reproduce"
 below.
 
-\upperthm*
+%% AU restare the theorem explicitly (AK)
+\begin{theorem}[\expref{Theorem}{thm:upperboundold} restated]
+	Let $(S, \circ)$~be a~commutative semigroup,
+	and $A \in \{0,1\}^{n \times n}$ be a~matrix
+	with~$z=\Omega(n)$ zeroes.
+	There exists a~circuit of size $O(z)$ that takes
+	a~vector $x = (x_1,\ldots, x_n)$ of formal variables as an input,
+	uses only the semigroup operation~$\circ$ at internal gates,
+	and outputs $Ax$. Moreover, there exists a~randomized
+	algorithm that takes the positions of $z$~zeroes of~$A$
+	as an input and outputs such a~circuit in time $O(z)$
+	with probability at least $1-O(\log^5n)/n$. There also
+	exists a~deterministic algorithm with running time $O(z+n\log^4n)$.
+\end{theorem}
 
 \matrixmultcor*
 %% ToC edit1 \matrixmultcor* is intended to be numbered Cor. 2.1, but
@@ -2039,7 +2052,8 @@ semirings. % : %% ToC edit1 <-- (colon --> period)
 
 \begin{itemize}
 %% ToC edit1 "integer numbers" are simply called "integers" ATTN1 -->
-    \item The most basic and widely known semiring is that of integer numbers with
+%% AU integer numbers -> integers (AK)
+    \item The most basic and widely known semiring is that of integers with
     addition and multiplication: $(\mathbb{Z}, +, \times)$. Since every integer
     number $x\in \mathbb{Z}$ has an inverse $-x \in \mathbb{Z}$ with respect to
     the addition operation, $(\mathbb{Z}, +, \times)$ is also a ring.
