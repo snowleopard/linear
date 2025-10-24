@@ -363,12 +363,12 @@ matrix~$A$ is forced to contain all-one rows that can be computed trivially.
 The following corollary generalizes \expref{Theorem}{thm:upperboundold}
 from vectors to matrices.
 
-\begin{restatable}{corollary}{matrixmultcor}
-\label{cor:matrixmultiplication}
+\begin{corollary}
+\label{cor:matrixmultiplicationold}
 Let $S$ be a~semiring. There exists a~deterministic algorithm that takes a~matrix
 \linebreak${A \in \{0,1\}^{n \times n}}$ with $z=O(n)$ zeroes and a~matrix
 $B \in S^{n \times n}$ and computes the product $AB$ in time~$O(n^2)$.
-\end{restatable}
+\end{corollary}
 
 \subsubsection{Non-commutative case}
 
@@ -390,8 +390,8 @@ $\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
 %% or is \alpha inherited from other results.  Please clarify.  See also
 %% explanations1.txt about this issue.   ATTN1
 
-\begin{restatable}{theorem}{lowerthm}
-\label{thm:lowerbound}
+\begin{theorem}
+\label{thm:lowerboundold}
 There exists
 a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes
 in every row such that for any faithful non-commutative semigroup $(S, \circ)$
@@ -399,7 +399,7 @@ the minimum number of semigroup operations required to compute~$Ax$ is
 $\Omega(n\alpha(n))$.
 This lower bound is tight: $Ax$ is	computable using $O(n\alpha(n))$ semigroup
 operations for any $(S, \circ)$ and $A\in \{0,1\}^{n \times n}$.
-\end{restatable}
+\end{theorem}
 
 The upper bound in this theorem
 % follows straightforwardly from the results in~\cite{DBLP:conf/stoc/Yao82} and the
@@ -462,7 +462,7 @@ range query problem:
 each row of the matrix~$A$ defines a~subset of the elements of~$x$
 that needs to be summed up and this subset is not required to be
 a~contiguous range. The algorithms (\expref{Theorem}{thm:upperboundold}) and hardness
-results (\expref{Theorem}{thm:lowerbound}) for the linear operator problem presented
+results (\expref{Theorem}{thm:lowerboundold}) for the linear operator problem presented
 in this paper are very much inspired by the above-mentioned classic results for
 %the range queries problem.
 %% AU queries -> query (AK)
@@ -522,7 +522,7 @@ for complements of sparse graphs ($O(n)$ anti-edges) is not. For
 example, it is easy to solve APSP and triangle counting on sparse graphs in
 time $O(n^2)$, but achieving the same time complexity for complements of sparse
 graphs is more complicated.
-\expref{Theorem}{thm:upperboundold} and \expref{Corollary}{cor:matrixmultiplication} give
+\expref{Theorem}{thm:upperboundold} and \expref{Corollary}{cor:matrixmultiplicationold} give
 a~black-box way to solve these two problems on complements of sparse graphs in
 time $O(n^2)$.
 
@@ -556,7 +556,7 @@ computational %% <--
 complexity over % sparse and complements of sparse matrices %% ToC edit1 -->
 sparse $0/1$-matrices and their complements %% <--
 is one of the most basic questions.
-\expref{Theorem}{thm:upperboundold} and \expref{Corollary}{cor:matrixmultiplication}
+\expref{Theorem}{thm:upperboundold} and \expref{Corollary}{cor:matrixmultiplicationold}
 therefore characterise natural special
 cases when efficient computations are possible.
 
@@ -796,7 +796,7 @@ wires the inputs and the outputs exchange places).
 \section{Commutative case}\label{sec-commutative}
 
 This section is devoted to the proofs of \expref{Theorem}{thm:upperboundold} and
-\expref{Corollary}{cor:matrixmultiplication}, which we % remind %% ToC edit1 -->
+\expref{Corollary}{cor:matrixmultiplicationold}, which we % remind %% ToC edit1 -->
 restate  %% <-- you could also say "reproduce"
 below.
 
@@ -816,7 +816,7 @@ below.
 	exists a~deterministic algorithm with running time $O(z+n\log^4n)$.
 \end{theorem}
 
-\matrixmultcor*
+%\matrixmultcor*
 %% ToC edit1 \matrixmultcor* is intended to be numbered Cor. 2.1, but
 %% it prints Cor. 3.1.                                                     ATTN1
 %% REQUEST.  ToC numbers statements consecutively.  This has a reason: ease
@@ -828,6 +828,14 @@ below.
 %% \begin{theorem}[\expref{Theorem}{lowerthm} restated]
 %% and then copying the text of Thm 1.1.  I don't know how to avoid
 %% repeating the text of the theorem and still retain consecutive numbering.  ATTN1
+%% AU restate the corollary explicitly
+
+\begin{corollary}[\expref{Corollary}{cor:matrixmultiplicationold} restated]
+    \label{cor:matrixmultiplication}
+    Let $S$ be a~semiring. There exists a~deterministic algorithm that takes a~matrix
+    ${A \in \{0,1\}^{n \times n}}$ with $z=O(n)$ zeroes and a~matrix
+    $B \in S^{n \times n}$ and computes the product $AB$ in time~$O(n^2)$.
+\end{corollary}
 
 \subsection{Main ideas of~the proof}
 
@@ -920,7 +928,7 @@ problem.
 Below, we~show how to~construct a~circuit of~linear size for
 this special case (and later~on we~prove a~more general result).
 It is interesting to compare the following lemma
-with \expref{Theorem}{thm:lowerbound} that states that in the
+with \expref{Theorem}{thm:lowerboundold} that states that in the
 non-commutative setting matrices with two zeroes per row are already
 %% AU hard -> non-linear (AK)
 % hard
@@ -1310,10 +1318,21 @@ of \expref{Lemma}{lemma:permute}). In this section, we show that this trick is
 unavoidable: for non-commutative semigroups, it is not possible to construct
 linear-size circuits for dense linear operators. % Namely, %% ToC edit1 -->
 Specifically,  %% <--
-we prove \expref{Theorem}{thm:lowerbound}
+we prove \expref{Theorem}{thm:lowerboundold}
 which we restate here.  %% ToC edit1 <-- inserted
 
-\lowerthm*
+
+%% AU restate the theorem explicitly
+\begin{theorem}[\expref{Theprem}{thm:lowerbound} restated]
+    \label{thm:lowerbound}
+    There exists
+    a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes
+    in every row such that for any faithful non-commutative semigroup $(S, \circ)$
+    the minimum number of semigroup operations required to compute~$Ax$ is
+    $\Omega(n\alpha(n))$.
+    This lower bound is tight: $Ax$ is computable using $O(n\alpha(n))$ semigroup
+    operations for any $(S, \circ)$ and $A\in \{0,1\}^{n \times n}$.
+\end{theorem}
 
 \subsection{Faithful semigroups}
 
