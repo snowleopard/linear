@@ -567,7 +567,9 @@ densely-connected graphs %% ToC edit1 what does this mean?  if it is the complem
 %% of sparse graphs, that contradicts the common definition of dense graphs,
 %% see explanations1.txt
 in linear (in the number of vertices) time and memory.
-As we discuss in \expref{Section}{sec-dense-graph}, \expref{Theorem}{thm:upperboundold}
+%% AU comment out the beginning of the next sentence (AK)
+%As we discuss in \expref{Section}{sec-dense-graph},
+\expref{Theorem}{thm:upperboundold}
 yields an algorithm for deriving a~linear-size algebraic graph representation
 for complements of sparse graphs.
 
@@ -629,8 +631,9 @@ This gives a terser and more convenient notation, for example, the left
 distributivity law becomes: $x (y \circ z) = x y \circ x z$. We will use this
 notation, insofar as it does not lead to ambiguity.
 
-See \expref{Section}{subsec:algstr} for an overview of commonly used semigroups and
-semirings.
+%% AU comment out the nest sentence (AK)
+%See \expref{Section}{subsec:algstr} for an overview of commonly used semigroups and
+%semirings.
 
 % Using the language of semirings, the linear operator $Ax$ on a matrix
 % $A \in \{0,1\}^{n \times n}$ can be defined as...
@@ -1943,165 +1946,166 @@ super-constant (multiplicative) gap with sparse matrix $A$.
 \appendix
 \section{Review}
 
-\subsection{Algebraic structures}\label{subsec:algstr}
-
-A~\emph{semigroup} $(S, \circ)$ is an algebraic structure where the operation
-$\circ$ is \emph{closed}, \ie, $\circ : S\times S \rightarrow S$, and
-\emph{associative}, \ie,
-$x \circ (y \circ z) = (x \circ y) \circ z$ for all $x$, $y$, and $z$ in $S$.
-\emph{Commutative} (or \emph{abelian}) semigroups introduce one extra
-requirement: $x \circ y = y \circ x$ for all $x$ and $y$ in $S$.
-
-Commutative semigroups are ubiquitous. Below we list a few
-notable examples, starting with the most basic one, %% ToC edit1 what you
-%% list is not one but several semigroups with Z as their underlying set.
-which is, arguably, known to every person on the planet.  %% ToC edit1
-%% I would suggest to omit this "cute" comment.  Partly, it is undefined (which
-%% semigroup on Z are you referring to?), partly, negative numbers are not known
-%% to everyone
-
-\begin{itemize}
-\item % Integer numbers  %% ToC edit1 -->
-    The integers  %% <--
-    form commutative semigroups with many operations. For
-    example, the order in which numbers are \emph{added} is irrelevant, hence
-    $(\mathbb{Z}, +)$ is a commutative semigroup. So are $(\mathbb{Z}, \times)$,
-    $(\mathbb{Z}, \min)$ and $(\mathbb{Z}, \max)$.
-    %% ToC edit1 it is not clear who you think your audience is.
-    %% Please delete this discussion of subtraction.  -->
-    On the other hand, it does
-    matter in which order numbers are \emph{subtracted}, hence $(\mathbb{Z}, -)$
-    is not a commutative semigroup: $1-2 \neq 2-1$. In fact, $(\mathbb{Z}, -)$
-    is not even a semigroup, since subtraction is non-associative:
-    $1-(2-3) \neq (1-2)-3$.   %% <--
-
-    \item Booleans form commutative semigroups $(\mathbb{B}, \vee)$,
-    $(\mathbb{B}, \wedge)$, $(\mathbb{B}, \oplus)$ and $(\mathbb{B}, \equiv)$.
-    %% ToC edit1 please DEFINE \mathbb{B} !  ATTN1
-
-    \item Any commutative semigroup $(S, \circ)$ can be \emph{lifted} to the set
-      $\hat{S}$ of ``containers'' %% ToC edit1 this is not a "lifting" in
-      %% the usual sense, so you are redefining a common term.  In fact, you are
-      %% not defining it, just throwing in an unnecessary, undefined, and misleading
-      %% term.  You are also introducing the never-used and undefined term "container";
-      %% this only further loads the paper with unnecessary terminology.  In fact
-      %% it seems to me that you "containers" are special cases of the direct sum
-      %% why not simply say that direct sums of (commutative) semigroups are
-      %% (commutative) semigroups; examples inlcude vectors and matrices over S.
-      of elements $S$, \eg, vectors or matrices,
-    obtaining a commutative semigroup $(\hat{S}, \hat{\circ})$, where the lifted
-    operation~$\hat{\circ}$ is applied to the contents of containers
-    % element-wise.  ToC edit1 -->
-    elementwise.  %% <--
-
-    % The \cdot in \hat{\cdot} is a placeholder for an operation that is lifted
-    The lifting operation $\hat{\cdot}$ can often be omitted for clarity if there
-    is no ambiguity.
-
-    The \emph{average semigroup} $(\mathbb{Z} \times \mathbb{Z}, \circ)$ is a
-    simple yet not entirely trivial example of semigroup lifting. By defining
-    $(t_1, c_1) \circ (t_2, c_2) = (t_1 + t_2, c_1 + c_2)$, we can aggregate
-    partial \emph{totals} and \emph{counts} of a set of numbers, which allows us
-    to efficiently calculate their average as $\textit{avg}(t, c) = t/c$.
-    The average semigroup is commutative.
-
-    \item Set union and intersection are commutative and associative operations
-    giving rise to many set-based commutative semigroups. Here we highlight an
-    example that motivated our research: the \emph{graph overlay} operation,
-    %% ToC edit1 why call it "overlay"?  Why not simply "union"?  It is standard
-    %% to call this the union of graphs.  "Disjoint union" is customarily
-    %% and plausibly called just that.  I suggest to omit the discussion
-    %% of disjoint union.
-    defined\footnote{This definition coincides with that of the
-        \emph{graph union} operation~\cite{1969_graph_theory_harary}. Graph union
-        typically requires that
-the  %% ToC edit1 <-- inserted
-given graphs % are %% ToC edit1 -->
-be  %% <-- "requires" is followed by subjunctive mood
-non-overlapping, hence it is not
-        closed on the set of all graphs. Graph overlay does not have such a
-        requirement, and is therefore closed and forms a semigroup.} as
-    %% ToC edit1 the reasoning below is again kindergarden stuff, please delete
-    $(V_1, E_1) + (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2)$,
-    % ~where~  %% ToC edit1 -->
-    where  %% <--
-    $(V, E)$ is % a %% ToC edit1 -->
-    the  %% <--
-    standard set-based representation % for %% ToC edit1 -->
-    of  %% <--
-    directed unweighted
-    % graphs, comes   %% ToC edit1 <-- this is ungrammatical -->
-    graphs.  This example comes   %% <--
-    from an algebra of graphs used in functional programming~\cite{mokhov2017algebraic}.
-    See further details in \expref{Section}{sec-dense-graph}.
-\end{itemize}
-
-\emph{Groups} % extend %% ToC edit1 -->
-restrict  %% <--
-semigroups by requiring the existence of the \emph{identity
-    element} $0 \in S$, such that $0 \circ x = x \circ 0=x$, and the \emph{inverse
-  element} $-x \in S$ for % all %% ToC edit1 it is a different inverse for each element -->
-  each  %% <--
-$x \in S$, such that
-$(-x) \circ x = x \circ (-x) = 0$. Groups provide a natural generalisation of
-arithmetic \emph{subtraction}, whereby $x \circ (-y)$ denotes the subtraction of
-$y$ from $x$.
-
-A commutative semigroup $(S, \circ)$ can often be extended to a \emph{semiring}
-$(S, \circ, \bullet)$ by introducing another associative (but not necessarily
-commutative) operation $\bullet$ that \emph{distributes} over $\circ$, that is
-\[
-x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)\\
-\]
-\[
-(x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z)
-\]
-hold for all $x$, $y$, and $z$ in~$S$. Since $\circ$ and $\bullet$~behave
-similarly to numeric addition and multiplication, it is common to give $\bullet$
-a higher precedence to avoid unnecessary parentheses, and even omit~$\bullet$~from
-formulas altogether, replacing it by juxtaposition. This gives a terser and
-more convenient notation, \eg, the left distributivity law becomes:
-$x (y \circ z) = x y \circ x z$. We will use this notation, insofar as this does
-not lead to ambiguity.
-
-Most definitions of semirings also require that the two operations have
-identities: the \emph{additive identity}, denoted by 0, such that
-$0 \circ x = x \circ 0=x$, and the \emph{multiplicative identity}, denoted by 1,
-such that $1x=x1=x$. Furthermore, 0 is typically required to be
-\emph{annihilating}: $0x=x0=0$.
-
-A semiring $(S, \circ, \bullet)$ is also a \emph{ring} if $(S, \circ)$ is a
-group, \ie, the operation $\circ$ is invertible. One can think of rings as
-semirings with subtraction.
-
-Let us extend some of our semigroup examples to
-semirings. % : %% ToC edit1 <-- (colon --> period)
-
-\begin{itemize}
-%% ToC edit1 "integer numbers" are simply called "integers" ATTN1 -->
-%% AU integer numbers -> integers (AK)
-    \item The most basic and widely known semiring is that of integers with
-    addition and multiplication: $(\mathbb{Z}, +, \times)$. Since every integer
-    number $x\in \mathbb{Z}$ has an inverse $-x \in \mathbb{Z}$ with respect to
-    the addition operation, $(\mathbb{Z}, +, \times)$ is also a ring.
-    Interestingly, integer addition can also play the role of multiplication when
-    combined with the $\max$ operation, resulting in the \emph{tropical semiring}
-    $(\mathbb{Z}, \max, +)$, which is also known as the \emph{max-plus algebra}.
-    Unlike $+$, the $\max$ operation has no inverse, therefore
-    $(\mathbb{Z}, \max, +)$ is not a ring.
-
-    \item Booleans form the semiring $(\mathbb{B}, \vee, \wedge)$. Note that
-$(\mathbb{B}, \wedge, \vee)$ is a semiring, too, %% ToC edit1 <-- commas added around "too"
-    thanks to the duality between
-    the operations $\vee$ and $\wedge$. Furthermore,
-    $(\mathbb{B}, \oplus, \wedge)$ is a ring, where every element is its own
-    inverse: $x \oplus x = 0$ for $x \in \mathbb{B}$.
-
-    \item Semirings and rings $(S, \circ, \bullet)$ can also be lifted to the set
-    $\hat{S}$ of ``containers'' of elements $S$, most commonly matrices, obtaining
-    $(\hat{S}, \hat{\circ}, \hat{\bullet})$. Matrices over tropical semirings, for
-    example, are used for solving various path-finding problems on graphs.
-\end{itemize}
+%% AU comment out the whole subsection
+%\subsection{Algebraic structures}\label{subsec:algstr}
+%
+%A~\emph{semigroup} $(S, \circ)$ is an algebraic structure where the operation
+%$\circ$ is \emph{closed}, \ie, $\circ : S\times S \rightarrow S$, and
+%\emph{associative}, \ie,
+%$x \circ (y \circ z) = (x \circ y) \circ z$ for all $x$, $y$, and $z$ in $S$.
+%\emph{Commutative} (or \emph{abelian}) semigroups introduce one extra
+%requirement: $x \circ y = y \circ x$ for all $x$ and $y$ in $S$.
+%
+%Commutative semigroups are ubiquitous. Below we list a few
+%notable examples, starting with the most basic one, %% ToC edit1 what you
+%%% list is not one but several semigroups with Z as their underlying set.
+%which is, arguably, known to every person on the planet.  %% ToC edit1
+%%% I would suggest to omit this "cute" comment.  Partly, it is undefined (which
+%%% semigroup on Z are you referring to?), partly, negative numbers are not known
+%%% to everyone
+%
+%\begin{itemize}
+%\item % Integer numbers  %% ToC edit1 -->
+%    The integers  %% <--
+%    form commutative semigroups with many operations. For
+%    example, the order in which numbers are \emph{added} is irrelevant, hence
+%    $(\mathbb{Z}, +)$ is a commutative semigroup. So are $(\mathbb{Z}, \times)$,
+%    $(\mathbb{Z}, \min)$ and $(\mathbb{Z}, \max)$.
+%    %% ToC edit1 it is not clear who you think your audience is.
+%    %% Please delete this discussion of subtraction.  -->
+%    On the other hand, it does
+%    matter in which order numbers are \emph{subtracted}, hence $(\mathbb{Z}, -)$
+%    is not a commutative semigroup: $1-2 \neq 2-1$. In fact, $(\mathbb{Z}, -)$
+%    is not even a semigroup, since subtraction is non-associative:
+%    $1-(2-3) \neq (1-2)-3$.   %% <--
+%
+%    \item Booleans form commutative semigroups $(\mathbb{B}, \vee)$,
+%    $(\mathbb{B}, \wedge)$, $(\mathbb{B}, \oplus)$ and $(\mathbb{B}, \equiv)$.
+%    %% ToC edit1 please DEFINE \mathbb{B} !  ATTN1
+%
+%    \item Any commutative semigroup $(S, \circ)$ can be \emph{lifted} to the set
+%      $\hat{S}$ of ``containers'' %% ToC edit1 this is not a "lifting" in
+%      %% the usual sense, so you are redefining a common term.  In fact, you are
+%      %% not defining it, just throwing in an unnecessary, undefined, and misleading
+%      %% term.  You are also introducing the never-used and undefined term "container";
+%      %% this only further loads the paper with unnecessary terminology.  In fact
+%      %% it seems to me that you "containers" are special cases of the direct sum
+%      %% why not simply say that direct sums of (commutative) semigroups are
+%      %% (commutative) semigroups; examples inlcude vectors and matrices over S.
+%      of elements $S$, \eg, vectors or matrices,
+%    obtaining a commutative semigroup $(\hat{S}, \hat{\circ})$, where the lifted
+%    operation~$\hat{\circ}$ is applied to the contents of containers
+%    % element-wise.  ToC edit1 -->
+%    elementwise.  %% <--
+%
+%    % The \cdot in \hat{\cdot} is a placeholder for an operation that is lifted
+%    The lifting operation $\hat{\cdot}$ can often be omitted for clarity if there
+%    is no ambiguity.
+%
+%    The \emph{average semigroup} $(\mathbb{Z} \times \mathbb{Z}, \circ)$ is a
+%    simple yet not entirely trivial example of semigroup lifting. By defining
+%    $(t_1, c_1) \circ (t_2, c_2) = (t_1 + t_2, c_1 + c_2)$, we can aggregate
+%    partial \emph{totals} and \emph{counts} of a set of numbers, which allows us
+%    to efficiently calculate their average as $\textit{avg}(t, c) = t/c$.
+%    The average semigroup is commutative.
+%
+%    \item Set union and intersection are commutative and associative operations
+%    giving rise to many set-based commutative semigroups. Here we highlight an
+%    example that motivated our research: the \emph{graph overlay} operation,
+%    %% ToC edit1 why call it "overlay"?  Why not simply "union"?  It is standard
+%    %% to call this the union of graphs.  "Disjoint union" is customarily
+%    %% and plausibly called just that.  I suggest to omit the discussion
+%    %% of disjoint union.
+%    defined\footnote{This definition coincides with that of the
+%        \emph{graph union} operation~\cite{1969_graph_theory_harary}. Graph union
+%        typically requires that
+%the  %% ToC edit1 <-- inserted
+%given graphs % are %% ToC edit1 -->
+%be  %% <-- "requires" is followed by subjunctive mood
+%non-overlapping, hence it is not
+%        closed on the set of all graphs. Graph overlay does not have such a
+%        requirement, and is therefore closed and forms a semigroup.} as
+%    %% ToC edit1 the reasoning below is again kindergarden stuff, please delete
+%    $(V_1, E_1) + (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2)$,
+%    % ~where~  %% ToC edit1 -->
+%    where  %% <--
+%    $(V, E)$ is % a %% ToC edit1 -->
+%    the  %% <--
+%    standard set-based representation % for %% ToC edit1 -->
+%    of  %% <--
+%    directed unweighted
+%    % graphs, comes   %% ToC edit1 <-- this is ungrammatical -->
+%    graphs.  This example comes   %% <--
+%    from an algebra of graphs used in functional programming~\cite{mokhov2017algebraic}.
+%    See further details in \expref{Section}{sec-dense-graph}.
+%\end{itemize}
+%
+%\emph{Groups} % extend %% ToC edit1 -->
+%restrict  %% <--
+%semigroups by requiring the existence of the \emph{identity
+%    element} $0 \in S$, such that $0 \circ x = x \circ 0=x$, and the \emph{inverse
+%  element} $-x \in S$ for % all %% ToC edit1 it is a different inverse for each element -->
+%  each  %% <--
+%$x \in S$, such that
+%$(-x) \circ x = x \circ (-x) = 0$. Groups provide a natural generalisation of
+%arithmetic \emph{subtraction}, whereby $x \circ (-y)$ denotes the subtraction of
+%$y$ from $x$.
+%
+%A commutative semigroup $(S, \circ)$ can often be extended to a \emph{semiring}
+%$(S, \circ, \bullet)$ by introducing another associative (but not necessarily
+%commutative) operation $\bullet$ that \emph{distributes} over $\circ$, that is
+%\[
+%x \bullet (y \circ z) = (x \bullet y) \circ (x \bullet z)\\
+%\]
+%\[
+%(x \circ y) \bullet z = (x \bullet z) \circ (y \bullet z)
+%\]
+%hold for all $x$, $y$, and $z$ in~$S$. Since $\circ$ and $\bullet$~behave
+%similarly to numeric addition and multiplication, it is common to give $\bullet$
+%a higher precedence to avoid unnecessary parentheses, and even omit~$\bullet$~from
+%formulas altogether, replacing it by juxtaposition. This gives a terser and
+%more convenient notation, \eg, the left distributivity law becomes:
+%$x (y \circ z) = x y \circ x z$. We will use this notation, insofar as this does
+%not lead to ambiguity.
+%
+%Most definitions of semirings also require that the two operations have
+%identities: the \emph{additive identity}, denoted by 0, such that
+%$0 \circ x = x \circ 0=x$, and the \emph{multiplicative identity}, denoted by 1,
+%such that $1x=x1=x$. Furthermore, 0 is typically required to be
+%\emph{annihilating}: $0x=x0=0$.
+%
+%A semiring $(S, \circ, \bullet)$ is also a \emph{ring} if $(S, \circ)$ is a
+%group, \ie, the operation $\circ$ is invertible. One can think of rings as
+%semirings with subtraction.
+%
+%Let us extend some of our semigroup examples to
+%semirings. % : %% ToC edit1 <-- (colon --> period)
+%
+%\begin{itemize}
+%%% ToC edit1 "integer numbers" are simply called "integers" ATTN1 -->
+%%% AU integer numbers -> integers (AK)
+%    \item The most basic and widely known semiring is that of integers with
+%    addition and multiplication: $(\mathbb{Z}, +, \times)$. Since every integer
+%    number $x\in \mathbb{Z}$ has an inverse $-x \in \mathbb{Z}$ with respect to
+%    the addition operation, $(\mathbb{Z}, +, \times)$ is also a ring.
+%    Interestingly, integer addition can also play the role of multiplication when
+%    combined with the $\max$ operation, resulting in the \emph{tropical semiring}
+%    $(\mathbb{Z}, \max, +)$, which is also known as the \emph{max-plus algebra}.
+%    Unlike $+$, the $\max$ operation has no inverse, therefore
+%    $(\mathbb{Z}, \max, +)$ is not a ring.
+%
+%    \item Booleans form the semiring $(\mathbb{B}, \vee, \wedge)$. Note that
+%$(\mathbb{B}, \wedge, \vee)$ is a semiring, too, %% ToC edit1 <-- commas added around "too"
+%    thanks to the duality between
+%    the operations $\vee$ and $\wedge$. Furthermore,
+%    $(\mathbb{B}, \oplus, \wedge)$ is a ring, where every element is its own
+%    inverse: $x \oplus x = 0$ for $x \in \mathbb{B}$.
+%
+%    \item Semirings and rings $(S, \circ, \bullet)$ can also be lifted to the set
+%    $\hat{S}$ of ``containers'' of elements $S$, most commonly matrices, obtaining
+%    $(\hat{S}, \hat{\circ}, \hat{\bullet})$. Matrices over tropical semirings, for
+%    example, are used for solving various path-finding problems on graphs.
+%\end{itemize}
 
 %% AU queries -> query (AK)
 %\subsection{Applications of the range queries problem}\label{subseq:rmqapp}
@@ -2285,102 +2289,103 @@ even without knowing the input sequence because of the $\pm 1$ property); we
 also partition the input sequence into blocks and build a~segment tree out of
 these blocks.
 
-\subsection{Dense graph representation}\label{sec-dense-graph}
-
-Let us revisit the graph semigroup defined in \expref{Section}{subsec:algstr}.
-We will denote it by $(G_U, +)$, where $G_U$ is the set of directed graphs whose
-vertices come from a universe $U$, that is, if $(V, E) \in G_U$ then
-$V \subseteq U$ and $E \subseteq V \times V$. Recall that the graph overlay
-operation $+$ is defined as
-
-\[
-(V_1, E_1) + (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2)\,.
-\]
-
-\noindent
-The algebra of graphs presented in~\cite{mokhov2017algebraic} also defines
-the \emph{graph connect} operation $\rightarrow$:\footnote{The definition
-    coincides with that of \emph{graph join}~\cite{1969_graph_theory_harary}, but,
-    just like graph union, graph join requires that given graphs are
-    non-overlapping. The connect operation has no such requirement.}
-
-\[
-(V_1, E_1) \rightarrow (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2 \cup V_1 \times V_2)\,.
-\]
-
-This operation allows us to ``connect'' two graphs by adding edges from every
-vertex in the left-hand graph to every vertex in the right-hand graph, possibly
-introducing self-loops if $V_1 \cap V_2 \neq \emptyset$. The operation is
-associative, non-commutative and distributes over $+$. Note, however, that the
-empty graph $\varepsilon = (\emptyset, \emptyset)$ is the identity for both
-overlay and connect operations: $\varepsilon + x = x + \varepsilon = x$ and
-$\varepsilon \rightarrow x = x \rightarrow \varepsilon = x$, and consequently
-the annihilating zero property does not hold, which makes this algebraic
-structure not a~semiring according to the classic semiring definition.
-
-By using the two operations one can construct any graph starting from primitive
-single-vertex graphs. For example, let $U=\{1,2,3\}$ and $k$ stand for a
-single-vertex graph $({k}, \emptyset)$. Then:
-
-\begin{itemize}
-    \item $1 \rightarrow 2$ is the graph with a single edge $(1,2)$, \ie,
-    $1 \rightarrow 2 = (\{1,2\}, \{(1,2)\})$.
-    \item $1 \rightarrow (2 + 3)$ is the graph $(\{1,2,3\}, \{(1,2),(1,3)\})$.
-    \item $1 \rightarrow 2 \rightarrow 3$ is the graph $(\{1,2,3\}, \{(1,2),(1,3),(2,3)\})$.
-\end{itemize}
-
-\noindent
-Clearly any sparse graph $(V, E)$, \ie, a graph with a sparse
-% connectivity %% ToC edit1 The universally accepted term in graph theory is -->
-adjacency  %% <-- ATTN1
-matrix, can be constructed by a linear-size expression:
-
-\[
-(V, E) = \sum_{v \in V} v + \sum_{(u,v) \in E} u \rightarrow v\,.
-\]
-
-\noindent
-But what about complements of sparse graphs, \ie, graphs with dense
-connectivity matrices?  %% ToC edit1 a dense graph is usually defined as a graph
-%% whose edge density is bounded away form 0.  So a graph with edge density
-%% say 1/3 is dense, and so is its complement.  Your concept could be called
-%%  "co-sparse."    ATTN1
-It is not difficult to show that by applying the dense
-linear operator we can obtain a linear-size circuit comprising 2-input gates
-$+$ and $\rightarrow$ for any dense graph.
-
-Let $A$ be a dense matrix of size $n\times n$. Our goal is to construct the
-graph $G_A = (\{1, \dots, n\}, E)$ such that $(i,j) \in E$ whenever $A_{ij}=1$.
-
-First, we compute the dense linear operator $\mathbf{y} = A \mathbf{x}$ over the
-(commutative) graph semigroup~$+$, where $\mathbf{x} = (1, 2, \dots, n)$, \ie,
-$x_j$ is the primitive graph comprising a single vertex~$j$, obtaining
-graphs~$y_i$ that comprise sets of isolated vertices corresponding to the rows
-of matrix~$A$:
-
-\[
-y_i = \sum_{A_{ij}=1} j \, .
-\]
-
-The resulting graph $G_A = (\{1, \dots, n\}, E)$ can now be obtained by using
-the % connect  %% ToC edit1 -->
-``connect''  %% <--
-operation % ~$\rightarrow$ %% ToC edit1 -->
-``$\rightarrow$''  %% <--
-to connect $i$ to all vertices $y_i$,  %% ToC edit1 is this happening
-%% for all i simultaneously?
-and subsequently overlaying the results:
-
-\[
-G_A = \sum_{i=1}^{n} i \rightarrow y_i\,.
-\]
-
-Thanks to the linear-size construction for the dense linear operator, the size
-of the circuit computing $G_A$ is $O(n)$. This allows us to store dense graphs
-on $n$ vertices using $O(n)$ memory, and perform basic transformations of dense
-graphs in $O(n)$ time. We refer the reader to~\cite{mokhov2017algebraic} for
-further details about applications of algebraic graphs in functional programming
-languages.
+%% AU comment out the whole subsection (AK)
+%\subsection{Dense graph representation}\label{sec-dense-graph}
+%
+%Let us revisit the graph semigroup defined in \expref{Section}{subsec:algstr}.
+%We will denote it by $(G_U, +)$, where $G_U$ is the set of directed graphs whose
+%vertices come from a universe $U$, that is, if $(V, E) \in G_U$ then
+%$V \subseteq U$ and $E \subseteq V \times V$. Recall that the graph overlay
+%operation $+$ is defined as
+%
+%\[
+%(V_1, E_1) + (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2)\,.
+%\]
+%
+%\noindent
+%The algebra of graphs presented in~\cite{mokhov2017algebraic} also defines
+%the \emph{graph connect} operation $\rightarrow$:\footnote{The definition
+%    coincides with that of \emph{graph join}~\cite{1969_graph_theory_harary}, but,
+%    just like graph union, graph join requires that given graphs are
+%    non-overlapping. The connect operation has no such requirement.}
+%
+%\[
+%(V_1, E_1) \rightarrow (V_2, E_2) = (V_1 \cup V_2, E_1 \cup E_2 \cup V_1 \times V_2)\,.
+%\]
+%
+%This operation allows us to ``connect'' two graphs by adding edges from every
+%vertex in the left-hand graph to every vertex in the right-hand graph, possibly
+%introducing self-loops if $V_1 \cap V_2 \neq \emptyset$. The operation is
+%associative, non-commutative and distributes over $+$. Note, however, that the
+%empty graph $\varepsilon = (\emptyset, \emptyset)$ is the identity for both
+%overlay and connect operations: $\varepsilon + x = x + \varepsilon = x$ and
+%$\varepsilon \rightarrow x = x \rightarrow \varepsilon = x$, and consequently
+%the annihilating zero property does not hold, which makes this algebraic
+%structure not a~semiring according to the classic semiring definition.
+%
+%By using the two operations one can construct any graph starting from primitive
+%single-vertex graphs. For example, let $U=\{1,2,3\}$ and $k$ stand for a
+%single-vertex graph $({k}, \emptyset)$. Then:
+%
+%\begin{itemize}
+%    \item $1 \rightarrow 2$ is the graph with a single edge $(1,2)$, \ie,
+%    $1 \rightarrow 2 = (\{1,2\}, \{(1,2)\})$.
+%    \item $1 \rightarrow (2 + 3)$ is the graph $(\{1,2,3\}, \{(1,2),(1,3)\})$.
+%    \item $1 \rightarrow 2 \rightarrow 3$ is the graph $(\{1,2,3\}, \{(1,2),(1,3),(2,3)\})$.
+%\end{itemize}
+%
+%\noindent
+%Clearly any sparse graph $(V, E)$, \ie, a graph with a sparse
+%% connectivity %% ToC edit1 The universally accepted term in graph theory is -->
+%adjacency  %% <-- ATTN1
+%matrix, can be constructed by a linear-size expression:
+%
+%\[
+%(V, E) = \sum_{v \in V} v + \sum_{(u,v) \in E} u \rightarrow v\,.
+%\]
+%
+%\noindent
+%But what about complements of sparse graphs, \ie, graphs with dense
+%connectivity matrices?  %% ToC edit1 a dense graph is usually defined as a graph
+%%% whose edge density is bounded away form 0.  So a graph with edge density
+%%% say 1/3 is dense, and so is its complement.  Your concept could be called
+%%%  "co-sparse."    ATTN1
+%It is not difficult to show that by applying the dense
+%linear operator we can obtain a linear-size circuit comprising 2-input gates
+%$+$ and $\rightarrow$ for any dense graph.
+%
+%Let $A$ be a dense matrix of size $n\times n$. Our goal is to construct the
+%graph $G_A = (\{1, \dots, n\}, E)$ such that $(i,j) \in E$ whenever $A_{ij}=1$.
+%
+%First, we compute the dense linear operator $\mathbf{y} = A \mathbf{x}$ over the
+%(commutative) graph semigroup~$+$, where $\mathbf{x} = (1, 2, \dots, n)$, \ie,
+%$x_j$ is the primitive graph comprising a single vertex~$j$, obtaining
+%graphs~$y_i$ that comprise sets of isolated vertices corresponding to the rows
+%of matrix~$A$:
+%
+%\[
+%y_i = \sum_{A_{ij}=1} j \, .
+%\]
+%
+%The resulting graph $G_A = (\{1, \dots, n\}, E)$ can now be obtained by using
+%the % connect  %% ToC edit1 -->
+%``connect''  %% <--
+%operation % ~$\rightarrow$ %% ToC edit1 -->
+%``$\rightarrow$''  %% <--
+%to connect $i$ to all vertices $y_i$,  %% ToC edit1 is this happening
+%%% for all i simultaneously?
+%and subsequently overlaying the results:
+%
+%\[
+%G_A = \sum_{i=1}^{n} i \rightarrow y_i\,.
+%\]
+%
+%Thanks to the linear-size construction for the dense linear operator, the size
+%of the circuit computing $G_A$ is $O(n)$. This allows us to store dense graphs
+%on $n$ vertices using $O(n)$ memory, and perform basic transformations of dense
+%graphs in $O(n)$ time. We refer the reader to~\cite{mokhov2017algebraic} for
+%further details about applications of algebraic graphs in functional programming
+%languages.
 
 
 \section*{Acknowledgments}
