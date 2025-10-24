@@ -563,7 +563,9 @@ cases when efficient computations are possible.
 \item[Functional programming.]
 Algebraic data structures for graphs developed in the functional programming
 community~\cite{mokhov2017algebraic} can be used for representing and processing
-densely-connected graphs %% ToC edit1 what does this mean?  if it is the complements
+%% AU dense -> co-sparse (AK)
+co-sparse graphs
+% densely-connected graphs %% ToC edit1 what does this mean?  if it is the complements
 %% of sparse graphs, that contradicts the common definition of dense graphs,
 %% see explanations1.txt
 in linear (in the number of vertices) time and memory.
@@ -1313,13 +1315,20 @@ of the algorithms from \expref{Lemmas}{lemma:decompose} \expref{and}{lemma:permu
 \section{Non-commutative case}
 \label{sec-non-commutative}
 
-In the previous section, we have shown that for commutative semigroups dense
+In the previous section, we have shown that for commutative semigroups
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
 linear operators can be computed by linear-size circuits. A~closer look at the
 circuit constructions reveals that we use commutativity crucially: it is
 important that we may reorder the columns of the matrix (we do this in the proof
 of \expref{Lemma}{lemma:permute}). In this section, we show that this trick is
 unavoidable: for non-commutative semigroups, it is not possible to construct
-linear-size circuits for dense linear operators. % Namely, %% ToC edit1 -->
+linear-size circuits for
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
+linear operators. % Namely, %% ToC edit1 -->
 Specifically,  %% <--
 we prove \expref{Theorem}{thm:lowerboundold}
 which we restate here.  %% ToC edit1 <-- inserted
@@ -1536,8 +1545,16 @@ We prove the following lemma.
 \begin{lemma} \label{lem:idempotent_is_hardest}
 	\begin{enumerate}
 		\item If $X$ is strongly non-commutative, then $X_{id}$ is also strongly non-commutative.
-		\item If the dense linear operator problem over $X$ has size $s$
-		circuit the dense linear operator problem over $X_{id}$ has size
+		\item If the
+        %% AU dense -> co-sparse (AK)
+        %dense
+        co-sparse
+        linear operator problem over $X$ has size $s$
+		circuit, the
+        %% AU dense -> co-sparse (AK)
+        %dense
+        co-sparse
+        linear operator problem over $X_{id}$ has size
 		$s$ circuit as well.
 	\end{enumerate}
 \end{lemma}
@@ -1563,7 +1580,11 @@ that the (commutative)
 %range queries problem
 range query problem
 over $X_{sym}$ has size $O(s)$ circuits
-iff (non-commutative) dense linear operator problem over $X$ has size $O(s)$
+iff (non-commutative)
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
+linear operator problem over $X$ has size $O(s)$
 circuits.
 \end{theorem}
 
@@ -1591,14 +1612,22 @@ Using these results, it is straightforward to finish the proof of
 \begin{proof}[Proof of {\expref{Theorem}{thm:lowerbound}}]
 
 By \expref{Lemma}{lem:idempotent_is_hardest} it is enough to prove the result for an idempotent strongly non-commutative $X$.
-By \expref{Theorem}{thm:equivalence} if non-commutative dense linear
+By \expref{Theorem}{thm:equivalence} if non-commutative
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
+linear
 operator problem has size $s$ circuit, then the commutative
 %% AU queries -> query
 %range queries
 range query
 problem also does. However, by \expref{Theorem}{thm:chazelle} for the latter problem $s=\Omega(n \alpha(n))$.
 Moreover, in our construction for the proof of \expref{Theorem}{thm:equivalence} it
-is enough to consider dense linear operators with exactly two zeroes in every
+is enough to consider
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
+linear operators with exactly two zeroes in every
 row. From this the lower bound in \expref{Theorem}{thm:lowerbound} follows.
 \end{proof}
 
@@ -1621,7 +1650,11 @@ the following equivalences for any $s = \Omega(n)$.
 %\node[v] (b) at (5.8,0) {(non-commutative) range queries problem over $X$ has $O(s)$ size circuits};
 \node[v] (a) at (0,0) {(commutative) range query problem over $X_{sym}$ has $O(s)$ size circuits};
 \node[v] (b) at (7,0) {(non-commutative) range query problem over $X$ has $O(s)$ size circuits};
-\node[v] (c) at (14,0) {(non-commutative) dense linear operator problem over $X$ has $O(s)$ size circuits};
+\node[v] (c) at (14,0) {(non-commutative)
+    %% AU dense -> co-sparse (AK)
+    %dense
+    co-sparse
+    linear operator problem over $X$ has $O(s)$ size circuits};
 
 \path (a.10) edge[->] node[above] {\expref{Lemma}{lem:intervals}} (b.170);
 \path (b.190) edge[->] node[below] {special case} (a.-10);
@@ -1649,7 +1682,11 @@ Note that two of the reductions on this diagram are trivial. Thus it remains to 
 
 
 \begin{enumerate}
-	\item If the (non-commutative) dense linear operator problem over $X$ has size $s$
+	\item If the (non-commutative)
+    %% AU dense -> co-sparse (AK)
+    %dense
+    co-sparse
+    linear operator problem over $X$ has size $s$
 	circuit then the (non-commutative)
 	%% AU queries -> query (AK)
 	%range queries
@@ -1684,15 +1721,39 @@ Suppose $A$ lies to the left of initial mark in $W_i$ and we substitute $A$ by $
 Suppose $A$ contains initial mark of $W_i$ or lies to the right of it. Then after the substitution of $A$ by $A^2$ the initial mark is still the same and the initial $U_i$ also does not change.
 
 
-For the second part of the lemma, suppose $X$ is strongly non-commutative and suppose that for $X$ there is a circuit of size at most $s$ computing some dense linear operator.
-Since $X_{id}$ is a factorization of $X$ any circuit computing dense operator over $X$ also computes the same dense operator over $X_{id}$. Thus there is a  circuit of size at most $s$ computing the same dense operator over $X_{id}$.
+For the second part of the lemma, suppose $X$ is strongly non-commutative and suppose that for $X$ there is a circuit of size at most $s$ computing some
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
+ linear operator.
+Since $X_{id}$ is a factorization of $X$ any circuit computing
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
+operator over $X$ also computes the same
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
+operator over $X_{id}$. Thus there is a  circuit of size at most $s$ computing the same
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
+operator over $X_{id}$.
 %Finally, $X_{id}$ is idempotent, so by the special case of our theorem we have $s = \Omega(n \alpha(n))$ and we are done.
 
-\subsection{Reducing dense linear operator to range queries} \label{sec:operators_to_queries}
+\subsection{Reducing
+    %% AU dense -> co-sparse (AK)
+    %dense
+    co-sparse
+    linear operator to range queries} \label{sec:operators_to_queries}
 In this subsection, we prove the following lemma.
 
 \begin{lemma} \label{lem:dense_matrices}
-    If the (non-commutative) dense linear operator problem over $X$ has size $s$
+    If the (non-commutative)
+    %% AU dense -> co-sparse (AK)
+    %dense
+    co-sparse
+    linear operator problem over $X$ has size $s$
     circuit then the (non-commutative)
     %% AU queries -> query (AK)
     % range queries
@@ -1702,7 +1763,15 @@ In this subsection, we prove the following lemma.
     %If we can compute non-commutative dense matrices by a linear-size circuit, we can also compute non-commutative intervals.
 \end{lemma}
 
-Intuitively, the lemma holds as the best way to compute rows of a~dense matrix is to combine input variables in the natural order. This intuition is formalized in \expref{Lemma}{lemma:correctorder} below. Given this, it is easy to reduce dense linear operator problem to the
+Intuitively, the lemma holds as the best way to compute rows of
+%% AU dense -> co-sparse (AK)
+%a dense
+a~co-sparse
+matrix is to combine input variables in the natural order. This intuition is formalized in \expref{Lemma}{lemma:correctorder} below. Given this, it is easy to reduce
+%% AU dense -> co-sparse (AK)
+%dense
+co-sparse
+linear operator problem to the
 %% AU queries -> query (AK)
 %range queries
 range query
