@@ -839,7 +839,10 @@ compute all outputs of~$Ax$. It~is ranges of~length at~most $\log n$ (middle pic
 we~prove that one can compute
 all ranges of length at~least $\log n$ using $O(z)$ gates.
 Using this observation, we~proceed as~follows.
-We~partition the rows into two parts (right picture): every row in the top part contains at~most $\log n$ zeroes, whereas every row in the bottom part contains more than $\log n$ zeroes. The bottom part contains at~most $z/\log n$, we~transpose~it and compute in~time $O(z/\log n \cdot \log n)=O(z)$. For the top part, we~employ the commutativity and shuffle the columns. Then, the expected total length of all short ranges is $o(n)$ and one can
+We~partition the rows into two parts (right picture): every row in the top part contains at~most $\log n$ zeroes, whereas every row in the bottom part contains more than $\log n$ zeroes. The bottom part contains at~most $z/\log n$
+%% AU added a missing word ``rows'' below (AK)
+rows,
+we~transpose~it and compute in~time $O(z/\log n \cdot \log n)=O(z)$. For the top part, we~employ the commutativity and shuffle the columns. Then, the expected total length of all short ranges is $o(n)$ and one can
 compute all of them directly.
 
 
