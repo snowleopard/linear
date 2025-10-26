@@ -378,12 +378,17 @@ $B \in S^{n \times n}$ and computes the product $AB$ in time~$O(n^2)$.
 
 As our second main result, we show that \emph{commutativity is essential}: for
 any faithful non-commutative semigroup~$S$
+ %% AU edit2 (VP)
+%(the notion of faithful non-commutative semigroup  is made formal
+%later in the text),  %% ToC edit1 <-- please add link to the formal definition
 (the notion of faithful non-commutative semigroup  is made formal
-later in the text),  %% ToC edit1 <-- please add link to the formal definition
+later in the text in Definition~\ref{def:faithful}), %% <--
 the minimum number of semigroup operations
 required to compute $Ax$ for a~matrix
 $A \in \{0,1\}^{n \times n}$ with $z=O(n)$ zeroes is
-$\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
+ %% AU edit2 (VP)
+%$\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
+$\Theta(n\alpha(n,n))$, where $\alpha(n,n)$ is the inverse Ackermann function~\cite{Tarjan75}. For brevity further on we use the notation $\alpha(n) = \alpha(n,n)$. %% <--
 %% ToC edit1  You need to give a reference to the definition of \alpha(n).
 %% Tarjan defines \alpha(n,m) and Yao adopts that definition and notation.
 %% So please express \alpha(n) in terms of \alpha(*,*).    ATTN1
@@ -411,6 +416,8 @@ is a straightforward consequence of Yao's results~\cite{DBLP:conf/stoc/Yao82}.
 The  %% <--
 lower bound % is the main result %% ToC edit1 -->
 for the non-commutative case is our main result.  %% <-- ATTN1
+%% AU edit2 (VP)
+The $\alpha(n)$ factor in the upper bound is inherited from Yao's results~\cite{DBLP:conf/stoc/Yao82} and in the lower bound it comes from the result of Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that we rely on in the proof. %% <--
 
 \subsection{Motivation}
 The complexity of linear operators is interesting for many reasons, some of
