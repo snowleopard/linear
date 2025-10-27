@@ -409,15 +409,23 @@ This lower bound is tight: $Ax$ is	computable using $O(n\alpha(n))$ semigroup
 operations for any $(S, \circ)$ and $A\in \{0,1\}^{n \times n}$.
 \end{theorem}
 
-The upper bound in this theorem
-% follows straightforwardly from the results in~\cite{DBLP:conf/stoc/Yao82} and the
-%% ToC edit1 "straightforwardly" is an awkward word -->
-is a straightforward consequence of Yao's results~\cite{DBLP:conf/stoc/Yao82}.
-The  %% <--
-lower bound % is the main result %% ToC edit1 -->
-for the non-commutative case is our main result.  %% <-- ATTN1
-%% AU edit2 (VP)
-The $\alpha(n)$ factor in the upper bound is inherited from Yao's results~\cite{DBLP:conf/stoc/Yao82} and in the lower bound it comes from the result of Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that we rely on in the proof. %% <--
+%% AU shorten the following paragraph (AK)
+%The upper bound in this theorem
+%% follows straightforwardly from the results in~\cite{DBLP:conf/stoc/Yao82} and the
+%%% ToC edit1 "straightforwardly" is an awkward word -->
+%is a straightforward consequence of Yao's results~\cite{DBLP:conf/stoc/Yao82}.
+%The  %% <--
+%lower bound % is the main result %% ToC edit1 -->
+%for the non-commutative case is our main result.  %% <-- ATTN1
+%%% AU edit2 (VP)
+%The $\alpha(n)$ factor in the upper bound is inherited from Yao's results~\cite{DBLP:conf/stoc/Yao82} and in the lower bound it comes from the result of Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91} that we rely on in the proof. %% <--
+
+The upper bound $O(n\alpha(n))$ follows directly
+from Yao's result~\cite{DBLP:conf/stoc/Yao82}.
+Hence, our main contribution in~the non-commutative case 
+is~the lower bound $\Omega(n\alpha(n))$, 
+which we~derive from the result 
+of~Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}.
 
 \subsection{Motivation}
 The complexity of linear operators is interesting for many reasons, some of
