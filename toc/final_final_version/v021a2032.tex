@@ -2400,7 +2400,9 @@ both cases, we get a~$(O(n), O(\sqrt{n}))$-algorithm.
 
 \textbf{Sparse table.} This data structure works for idempotent semigroups
 (\emph{bands}) and has the type $(O(n\log n), O(1))$. We illustrate its main idea
-for the \emph{range minimum query} (RMQ)  (\ie, for a~semigroup
+for the \emph{range minimum query} 
+problem %% AU edit4 (AK)
+(\ie, for a~semigroup
 $(\mathbb{Z}, \min)$). One precomputes answers to $O(n\log n)$ queries---namely,
 those whose length is a~power of~2. More formally, for all $0 \le k \le \log_2n$
 and $1 \le i \le n-2^k+1$, let $S_{k,i}$ be the answer to a~query $(i, i+2^k-1)$:
