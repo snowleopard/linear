@@ -1428,7 +1428,7 @@ which we restate here.  %% ToC edit1 <-- inserted
 
 
 %% AU restate the theorem explicitly
-\begin{theorem}[\expref{Theprem}{thm:lowerbound} restated]
+\begin{theorem}[\expref{Theorem}{thm:lowerboundold} restated]
     \label{thm:lowerbound}
     There exists
     a~matrix~$A \in \{0,1\}^{n \times n}$ with exactly two zeroes
@@ -2118,8 +2118,12 @@ In this subsection, we prove the following lemma.
 
     Observe, that the circuit still computes the outputs correctly. The changes are in the gates $H_1\ldots, H_k$ (and also in $G$, but $H_1,\ldots, H_k$ are all of its outputs). $H_k$ does not change. Other $H_p$'s might have changed, they now additionally include variables of $F_k$. But note that all of these variables are in between of $\lef(H_p)$ and $\righ(H_p)$, so they must be presented in the output gates connected to $H_p$ anyway (recall that at the output gates we compute ranges).
 
-    Now, observe that $\tup(G)$ has increased (by the first coordinate). There are no new gates with smaller $\lef$. Among gates with the minimal $\lef$ there are no new gates with smaller $\gap$. Among gates with minimal $(\lef,\gap)$ all gates have larger $\num$ then $G$. Thus $\tup({\cal C})$ increased and we are done.  %% ToC edit1 <-- done with what?  a lemma, or a
+    Now, observe that $\tup(G)$ has increased (by the first coordinate). There are no new gates with smaller $\lef$. Among gates with the minimal $\lef$ there are no new gates with smaller $\gap$. Among gates with minimal $(\lef,\gap)$ all gates have larger $\num$ then $G$. Thus $\tup({\cal C})$ increased 
+    and we are done  %% ToC edit1 <-- done with what?  a lemma, or a
 %% main result (or both)? Please state %% ToC edit3 <-- you did not answer this question ATTN3
+	%% AU edit4 (AK)
+	with the proof of~\expref{Lemma}{lem:intervals}, 
+	completing the proof of~\expref{Theorem}{thm:lowerbound}.
 \end{proof}
 
 \section{Open problems}
