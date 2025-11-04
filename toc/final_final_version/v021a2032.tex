@@ -2,7 +2,15 @@
 %% File: v021a2032.tex
 %% Publication date: November 15, 2025
 %% Authors: Alexander S. Kulikov, Ivan Mikhailin, Andrey Mokhov, and Vladimir V. Podolskii
+%% Theory of Computing
+%% File: v021a2032.tex
+%% Publication date: November 15, 2025
+%% Authors: Alexander S. Kulikov, Ivan Mikhailin, Andrey Mokhov, and Vladimir V. Podolskii
 
+%% version kuli40.tex
+%% last updated LB 2025-10-31
+%% version kuli30.tex
+%% last updated AK 2025-10-28
 %% version kuli22.tex
 %% last updated LB 2025-10-07
 %% version kuli14.tex
@@ -129,8 +137,12 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 %%%   if more than two authors: (Jones et al., STOC'14)
 %%%   if journal: (Jones et al., SICOMP 2014)
 \begin{abstract}
-    Let $A \in \{0,1\}^{n \times n}$ be a~matrix with $z$~zeroes and $u$~ones
-    and $x$ be an~$n$-dimensional vector of formal variables over a~semigroup
+  Let % $A \in \{0,1\}^{n \times n}$ be a~matrix %% ToC edit3 make the Abstract
+  %% easier for typesetting in various databases -->
+  $A$ be an $n$-by-$n$ $0/1$-matrix  %% <--
+  with $z$~zeroes and $u$~ones and  
+  let %% ToC edit3 <-- inserted
+  $x$ be an~$n$-dimensional vector of formal variables over a~semigroup
     $(S, \circ)$. How many semigroup operations are required to compute the
     linear operator $Ax$?
 
@@ -138,14 +150,18 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
     question studied in this paper is: can $Ax$~be computed using $O(z)$
     semigroup operations?
 	For the case when the semigroup is commutative, we give a~constructive proof
-	of an~$O(z)$ upper bound. This implies that in commutative settings,
+	of an~$O(z)$ upper bound. This implies that in
+        the %% ToC edit3 <-- inserted 
+        commutative settings,
 	complements of sparse matrices can be processed as efficiently as sparse
 	matrices, though the corresponding algorithms are more involved. This covers
 	the cases of Boolean and tropical semirings that have numerous applications,
-	\eg, in graph theory.
+	e.\,g., in graph theory.
     On the other hand, we prove that in general this is not possible: for
 	faithful non-commutative semigroups there
-    exists a~matrix $A \in \{0,1\}^{n \times n}$ with exactly two zeroes in
+    exists % a~matrix $A \in \{0,1\}^{n \times n}$ %% ToC edit3 -->
+    an $n$-by-$n$ $0/1$-matrix  %% <--
+    with exactly two zeroes in
     every row (hence $z=2n$) whose complexity is $\Theta(n\alpha(n))$ where
     $\alpha(n)$ is the inverse Ackermann function.
 
@@ -154,8 +170,10 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
     linear-size construction presented,  %% <--
     we show
     how to multiply two $n\times n$ matrices over an arbitrary semiring in
-    $O(n^2)$ time if one of these matrices is a~0/1-matrix with $O(n)$~zeroes
-    (\ie, a~complement of a~sparse matrix).
+    $O(n^2)$ time if one of these matrices is a~$0/1$-matrix with $O(n)$~zeroes
+    (\ie, % a~complement %% ToC edit1 -->
+    the complement  %% <-- "a complement" would mean there can be more than one
+    of a~sparse matrix).
 \end{abstract}
 
 \iffalse % DON'T TOUCH THIS LINE
@@ -382,13 +400,15 @@ any faithful non-commutative semigroup~$S$
 %(the notion of faithful non-commutative semigroup  is made formal
 %later in the text),  %% ToC edit1 <-- please add link to the formal definition
 (the notion of faithful non-commutative semigroup  is made formal
-later in the text in Definition~\ref{def:faithful}), %% <--
+later in the text in % Definition~\ref{def:faithful}), %% ToC edit3 -->
+\expref{Definition}{def:faithful}), %% <--
 the minimum number of semigroup operations
 required to compute $Ax$ for a~matrix
 $A \in \{0,1\}^{n \times n}$ with $z=O(n)$ zeroes is
  %% AU edit2 (VP)
 %$\Theta(n\alpha(n))$, where $\alpha(n)$ is the inverse Ackermann function.
-$\Theta(n\alpha(n,n))$, where $\alpha(n,n)$ is the inverse Ackermann function~\cite{Tarjan75}. For brevity further on we use the notation $\alpha(n) = \alpha(n,n)$. %% <--
+$\Theta(n\alpha(n,n))$, where $\alpha(n,n)$ is the inverse Ackermann function~\cite{Tarjan75}.
+For brevity further on we use the notation $\alpha(n) = \alpha(n,n)$. %% <--
 %% ToC edit1  You need to give a reference to the definition of \alpha(n).
 %% Tarjan defines \alpha(n,m) and Yao adopts that definition and notation.
 %% So please express \alpha(n) in terms of \alpha(*,*).    ATTN1
@@ -431,8 +451,10 @@ of~Chazelle and Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}.
 The complexity of linear operators is interesting for many reasons, some of
 which are listed below.
 
-\begin{description}
-\item[Range queries.] In the
+%% ToC edit3 numbering items serves its purpose (easy referencing and search).
+%% I changed the items below to \subsubsections -->
+% \begin{description}
+\subsubsection{Range queries}  In the
 %%\emph{range queries} problem,
 %%AU queries -> query (AK)
 \emph{range query} problem,
@@ -524,19 +546,26 @@ We review applications as well as a~rich variety of algorithmic techniques for
 the range query problem
 in \expref{Sections}{subseq:rmqapp} \expref{and}{subsec:approaches}.
 
-\item[Graph algorithms.] Many graph problems can be reduced to matrix
-multiplication.
+\subsubsection{Graph algorithms} 
+Many graph problems can be reduced to matrix multiplication.
 Two classic examples are: (i) the all-pairs shortest path problem (APSP) is
 reducible to min-plus matrix multiplication~\cite{DBLP:conf/focs/FischerM71},
 and (ii) the number of triangles in an undirected graph can be found by
 computing the third power (over the integers) of its adjacency
-matrix~\cite{Itai_Rodeh_siam,Williams2009TriangleDV}. It is natural to ask what happens if
-a~graph has $O(n)$ edges or $O(n)$ anti-edges
-(as usual, by~$n$ we denote the number of nodes).
+matrix~\cite{Itai_Rodeh_siam,Williams2009TriangleDV}.
+It is natural to ask what happens if a~graph
+or its complement %% ToC edit3 <-- this line inserted for clarity and
+%% to avoid the unusual term "anti-edge" (should better be "non-edge")
+has $O(n)$ edges.  % or $O(n)$ anti-edges %% <-- deleted
+% (as usual, by~$n$ we denote the number of nodes). %% ToC edit3 -->
+(As usual, by~$n$ we denote the number of nodes.)
 In many cases, an efficient algorithm
 for sparse graphs ($O(n)$ edges) is straightforward
 whereas an algorithm with the same efficiency
-for complements of sparse graphs ($O(n)$ anti-edges) is not. For
+for complements of sparse graphs ($O(n)$ % anti-edges) %% ToC edit1 -->
+non-edges)  %% <-- best would be to simply delete this parenthetical
+%% statement, everybody understands what the edges of the complement are
+is not. For
 example, it is easy to solve APSP and triangle counting on sparse graphs in
 time $O(n^2)$, but achieving the same time complexity for complements of sparse
 graphs is more complicated.
@@ -544,7 +573,7 @@ graphs is more complicated.
 a~black-box way to solve these two problems on complements of sparse graphs in
 time $O(n^2)$.
 
-\item[Matrix multiplication over semirings.] Fast matrix
+\subsubsection{Matrix multiplication over semirings}  Fast matrix
 multiplication methods rely essentially on the ring structure of the underlying
 set of elements. The first such algorithm was given by~Strassen,
 the current record upper bound is
@@ -566,6 +595,7 @@ grown  %% <--
 substantially throughout the Computer Science community
 %% ToC edit1 "throughout" sounds like a vast overstatement.  Maybe
 %% "in several areas of Computer Science" would be more appropriate
+%% ToC edit3 <-- you ignored this comment ATTN3
 with the cases of Boolean and
 tropical semirings being of main interest (see,
 \eg, \cite{Jukna16,Williams14,butkovic10systems}).
@@ -578,22 +608,49 @@ is one of the most basic questions.
 therefore characterise natural special
 cases when efficient computations are possible.
 
-\item[Functional programming.]
-Algebraic data structures for graphs developed in the functional programming
-community~\cite{mokhov2017algebraic} can be used for representing and processing
+\subsubsection{Functional programming}
+%% ToC edit3 you never clarified whether by "graph" you mean directed or undirected
+%% Please do so whenever you speak about graphs  ATTN3
+%%
+%% ToC edit3 I take it from Andrey's message that we are talking about something
+%% very simple, maybe we can avoid this mystification by adding a paragraph. -->
+%%  
+% Algebraic data structures for graphs developed in the functional programming
+% community~\cite{mokhov2017algebraic} can be used for representing and processing
 %% AU dense -> some classes of non-sparse graphs (e.g., cliques) (AM)
-some classes of non-sparse graphs (e.g., cliques)
-% densely-connected graphs %% ToC edit1 what does this mean?  if it is the complements
-%% of sparse graphs, that contradicts the common definition of dense graphs,
-%% see explanations1.txt
-in linear (in the number of vertices) time and memory.
+% some classes of non-sparse graphs (e.g., cliques)
+% in linear (in the number of vertices) time and memory.
+One of the algebraic data structures developed in the functional programming
+community for the representation and manipulation of directed graphs   
+(digraphs) $G=(V,E)$ without self-loops is based on the following operations:
+\begin{itemize}
+\item $\langle v\rangle$\quad (the digraph with the single vertex $v$ and no edges)
+\item union: $G_1 \cup G_2 = (V_1 \cup V_2, E_1 \cup E_2)$
+\item union$+$join: $G_1\ast G_2 = G_1 \cup G_2 \cup
+  (V_1 \cup V_2, (V_1 \times V_2)\setminus \Delta(V_1\cap V_2))$,
+  %  omitting the resulting self-loops.
+  where for a set $W$ we write $\Delta(W)= \{(w,w)\mid w\in W\}$.
+\end{itemize}
+Certain classes of digraphs can be generated by these operations 
+in linear (in the number $n$ of vertices) time and memory.  These obviously
+include all sparse digraphs (digraphs with $O(n)$ edges) but they also include
+digraphs of arbitrary density.  For instance,
+$\langle 1\rangle \ast \dots \ast \langle n\rangle$ 
+is the transitively oriented complete graph
+(transitive tournament) which has density $1/2$.  It was not known whether the
+complements of sparse digraphs admit such a concise representation.
+%% ToC edit3 is it true that even the existence of such a representation 
+%% was not known?  ATTN3
+Our result gives a constructive positive answer:
 %% AU comment out the beginning of the next sentence (AK)
 %As we discuss in \expref{Section}{sec-dense-graph},
-\expref{Theorem}{thm:upperboundold}
-yields an algorithm for deriving a~linear-size algebraic graph representation
-for complements of sparse graphs.
+\expref{Theorem}{thm:upperboundold} yields an
+efficient  %% ToC edit1 <-- inserted 
+algorithm for deriving a~linear-size algebraic graph representation
+for complements of sparse % graphs.  %% ToC edit1 -->
+digraphs.  %% <--
 
-\item[Circuit complexity.] Computing linear operators over
+\subsubsection{Circuit complexity}  Computing linear operators over
 the Boolean semiring $(\{0,1\}, \lor)$ is a~well-studied problem
 in circuit complexity. The corresponding computational model is known
 as~\emph{rectifier networks}. An overview of known lower and upper bounds for
@@ -601,7 +658,7 @@ such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
 \expref{Theorem}{thm:upperboundold} states that linear operators on complements of
 sparse matrices have linear rectifier network complexity.
 
-\end{description}
+% \end{description}
 
 \subsection{Organization and earlier publication}
 
@@ -764,7 +821,7 @@ linear operator $Ax$ where the matrix $A$~is given below.
 \end{center}
 \vspace{5mm}
 
-For a~0/1-matrix~$A$, by $C(A)$ we denote the minimum size of
+For a~$0/1$-matrix~$A$, by $C(A)$ we denote the minimum size of
 a~circuit computing the linear operator $Ax$.
 
 
@@ -795,7 +852,7 @@ observation.
 %% statements in ToC articles.  The definition of "observation" was removed
 %% from aumacros.sty.
 \begin{observation}\label{obs:transpose}
-Let $C$~be a~regular circuit computing a~0/1-matrix~$A$ over a~commutative
+Let $C$~be a~regular circuit computing a~$0/1$-matrix~$A$ over a~commutative
 semigroup. Then, by reversing all the wires in~$C$ one gets a~circuit
 computing~$A^T$.
 \end{observation}
@@ -1333,7 +1390,8 @@ of the algorithms from \expref{Lemmas}{lemma:decompose} \expref{and}{lemma:permu
 \section{Non-commutative case}
 \label{sec-non-commutative}
 
-In the previous section, we have shown that for commutative semigroups
+In the previous section, we have shown that for commutative semigroups,
+%% ToC edit3 <-- comma added
 %% AU dense -> co-sparse (AK)
 %dense
 co-sparse
@@ -1405,11 +1463,15 @@ which elements of the semigroup~$S$ we substitute for $\{x_1,\ldots, x_n\}$ we
 obtain a~correct equation over~$S$.
 Let $X_{S,n}$ be a semigroup with generators $\{x_1,\ldots, x_n\}$
 and relations being all identities in variables $\{x_1,\ldots, x_n\}$ over~$(S,\circ)$. 
-On other words, $X_{S,n}$ is the quotient of the free semigroup by the congruence relation generated by the given identities.
+% On %% ToC edit3 -->
+In  %% <--
+other words, $X_{S,n}$ is the quotient of the free semigroup by the congruence relation generated by the given identities.
 %% <--
 In particular, note that if $S$~is
-commutative (respectively, idempotent), then $X_{S,n}$ is also commutative
-(respectively, idempotent).
+% commutative (respectively, idempotent), then $X_{S,n}$ is also commutative
+% (respectively, idempotent).  %% ToC edit3 improper use of "respectively" -->
+commutative or idempotent then $X_{S,n}$ is also commutative or idempotent,
+respectively.  %% <--
 The semigroup $X_{S,n}$ is studied in algebra under the name of relatively free
 semigroup of rank $n$ of a variety generated by
 the   %% ToC edit1 <-- inserted
@@ -1425,11 +1487,11 @@ in $W$.
 We are now ready to introduce,
 %% ToC edit1 adding credits by name -->
 following Yao~\cite{DBLP:conf/stoc/Yao82} and
-Chazelle--Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91}  %% <--
+Chazelle--Rosenberg~\cite{DBLP:journals/ijcga/ChazelleR91},  %% <--
 the definition of a commutative faithful semigroup.
 
 \begin{definition}[Yao, Chazelle--Rosenberg]  %% ToC edit1 <-- this line updated:
-%% names instead of reference numbers; the reference numbers appear just before
+%% names instead of reference numbers; the reference numbers appear just
 %% before the definition
 %% AU add a label (AK)
 \label{def:faithfulcommutative}
@@ -1504,7 +1566,9 @@ the equivalence $U \sim U'$ holds in $X$, where $U$ and $U'$ are the
 initial stretches %% <--
 of
 $W$ and $W'$, respectively, and the equivalence $V \sim V'$ holds in $X$, where
-$V$ and $V'$ are the terminals of $W$ and $W'$, respectively.
+$V$ and $V'$ are the % terminals %% ToC edit1 -->
+terminal stretches  %% <--
+of $W$ and $W'$, respectively.
 \end{definition}
 
 In other words, this definition states that the first and the last occurrences
@@ -1591,7 +1655,7 @@ consider an arbitrary semigroup $X$. Consider a new semigroup $X_{id}$ over the 
 We prove the following lemma.
 \begin{lemma} \label{lem:idempotent_is_hardest}
 	\begin{enumerate}
-		\item If $X$ is strongly non-commutative, then $X_{id}$ is also strongly non-commutative.
+\item If $X$ is strongly non-commutative, then $X_{id}$ is also strongly non-commutative.
 		\item If the
         %% AU dense -> co-sparse (AK)
         %dense
@@ -1798,7 +1862,8 @@ operator over $X_{id}$. Thus there is a  circuit of size at most $s$ computing t
 %dense
 co-sparse
 operator over $X_{id}$.
-%Finally, $X_{id}$ is idempotent, so by the special case of our theorem we have $s = \Omega(n \alpha(n))$ and we are done.
+%Finally, $X_{id}$ is idempotent, so by the special case of our theorem we have
+% $s = \Omega(n \alpha(n))$ and we are done.
 
 \subsection{Reducing
     %% AU dense -> co-sparse (AK)
@@ -1819,7 +1884,8 @@ In this subsection, we prove the following lemma.
     range query
     problem over $X$ has size
     $O(s)$ circuit.
-    %If we can compute non-commutative dense matrices by a linear-size circuit, we can also compute non-commutative intervals.
+    %If we can compute non-commutative dense matrices by a linear-size circuit,
+    % we can also compute non-commutative intervals.
 \end{lemma}
 
 Intuitively, the lemma holds as the best way to compute rows of
@@ -1877,13 +1943,7 @@ Next we prove \expref{Lemma}{lemma:matrixranges} and we prove \expref{Lemma}{lem
     For output gates of ${\cal C}$ we have gates in the new circuit that compute exactly ranges of output gates. Thus, in the new circuit all ranges of $A$ are computed.
 \end{proof}
 
-
-
-
-
 % to construct clauses with the correct order of variables. If this is true, then the idea is that we can extend each interval by variables on both sides (with small gaps on each side of the interval), thus obtaining a dense matrix. Then we can try to extract the computation of the intervals from the computation of the dense matrix. Since all rows of the matrix are hopefully computed by consecutively adding the variables in the correct order, we might be able to do that.
-
-
 
 %So, we consider the free idempotent semigroup with generators $\{a_1,\ldots, a_n\}$.
 %We consider the generators to be ordered from $a_1$ to $a_n$ in the increasing order. We want to compute $B \cdot \vec{a}$, where $\vec{a}=(a_1,\ldots, a_n)$ and $B$ is a boolean matrix.
@@ -1902,7 +1962,8 @@ Next we prove \expref{Lemma}{lemma:matrixranges} and we prove \expref{Lemma}{lem
 \label{sec:increasing_circuits}
 
 %\begin{proof}[Proof of \expref{Lemma}{lemma:correctorder}]
-In this section we provide a prove for \expref{Lemma}{lemma:correctorder}
+In this section we provide a prove for \expref{Lemma}{lemma:correctorder}.
+%% ToC edit3 <-- added period
 
 Consider a~binary circuit~${\cal C}$ computing~$Ax$ and its gate~$G$ together with a~variable~$x_i$ it depends on.
 We say that $x_i$ is \emph{good} in~$G$ if there is
@@ -1968,7 +2029,8 @@ In this subsection, we prove the following lemma.
     range query
     problem over $X_{sym}$ has
     size $s$ circuits then the (non-commutative) version over $X$ also does.
-    %If we can compute commutative intervals by a linear-size circuit, we can also compute non-commutative intervals.
+    %If we can compute commutative intervals by a linear-size circuit, we can also
+    % compute non-commutative intervals.
 \end{lemma}
 
 \begin{proof}[Proof]
@@ -2040,7 +2102,7 @@ In this subsection, we prove the following lemma.
     Observe, that the circuit still computes the outputs correctly. The changes are in the gates $H_1\ldots, H_k$ (and also in $G$, but $H_1,\ldots, H_k$ are all of its outputs). $H_k$ does not change. Other $H_p$'s might have changed, they now additionally include variables of $F_k$. But note that all of these variables are in between of $\lef(H_p)$ and $\righ(H_p)$, so they must be presented in the output gates connected to $H_p$ anyway (recall that at the output gates we compute ranges).
 
     Now, observe that $\tup(G)$ has increased (by the first coordinate). There are no new gates with smaller $\lef$. Among gates with the minimal $\lef$ there are no new gates with smaller $\gap$. Among gates with minimal $(\lef,\gap)$ all gates have larger $\num$ then $G$. Thus $\tup({\cal C})$ increased and we are done.  %% ToC edit1 <-- done with what?  a lemma, or a
-%% main result (or both)?  Please state
+%% main result (or both)? Please state %% ToC edit3 <-- you did not answer this question ATTN3
 \end{proof}
 
 \section{Open problems}
@@ -2050,13 +2112,13 @@ There are several natural problems left open.
 a~circuit in the commutative case.
 For this, it suffices to design an $O(n)$ deterministic algorithm for the
 following problem: given a~list of positions of $n$~zeroes of an $n \times n$
-0/1-matrix with at most $\log n$ zeroes in every row, permute its columns so
+$0/1$-matrix with at most $\log n$ zeroes in every row, permute its columns so
 that the total length of all segments of length at most $O(\log n)$ is
 $O(n/\log n)$.
 \item Determine the asymptotic complexity of the linear operator in terms of the number of zeroes in the non-commutative case.
 \item After the preliminary version of our paper
 \cite{conf-version}, %% ToC edit1 <-- inserted
-Stasys Jukna posed a question on how large % can %% ToC edit1 <-- delete "can", it appears later
+Stasys Jukna posed a question on how large % can %% ToC edit1 <--delete "can", it appears later
 the gap between the complexity of the operators $Ax$ and $\overline{A}x$ can be over
 the  %% ToC edit1 <-- inserted
 $(\mathbb{N},+)$ semiring, where $A \in \{0,1\}^{n\times n}$ and $\overline{A}$ is
@@ -2526,7 +2588,8 @@ paper~\cite{DBLP:journals/ijcga/ChazelleR91}, and Alexey Talambutsa for
 fruitful discussions on the theory of semigroups.
 We are also grateful to the reviewers for their thorough reviews that helped us
 improve the final version of the paper.
-We are grateful to László Babai for numerous suggestions that greatly improved the readability of the paper.
+We are grateful to László Babai for numerous suggestions that greatly improved the
+readability of the paper.
 
 \bibliographystyle{tocplain}
 % \bibliography{references}
@@ -2551,25 +2614,31 @@ We are grateful to László Babai for numerous suggestions that greatly improved
 \begin{tocauthors}
 \begin{tocinfo}[kulikov]
     Alexander S. Kulikov\\
-    Steklov Mathematical Institute at St.~Petersburg,     Russian Academy of~Sciences\\ and St.~Petersburg State University\\
+    Steklov Mathematical Institute at St.~Petersburg \\ %% ToC edit3 <-- broke this line
+    Russian Academy of~Sciences\\
+    and St.~Petersburg State University\\
     kulikov\tocat{}logic\tocdot{}pdmi\tocdot{}ras\tocdot{}ru\\
     \url{https://alexanderskulikov.github.io/}
 \end{tocinfo}
+%% ToC edit3 could you add URLs for the next three authors?  ATTN3
 \begin{tocinfo}[mikhailin]
     Ivan Mikhailin\\
-    Steklov Mathematical Institute at St.~Petersburg,     Russian Academy of~Sciences\\
+    Steklov Mathematical Institute at St.~Petersburg\\
+    Russian Academy of~Sciences\\  %% ToC edit3 <-- broke this line
     ivmihajlin\tocat{}gmail\tocdot{}com
 \end{tocinfo}
 \begin{tocinfo}[mokhov]
     Andrey Mokhov\\
     Jane Street Singapore\\
-    and School of Engineering, Newcastle University, United Kingdom\\
+    and School of Engineering \\  %% ToC edit3 <-- broke this line
+    Newcastle University, U.\,K.\\ % United Kingdom\\ %% ToC edit3 <-- abbreviated UK
     andrey.mokhov\tocat{}ncl\tocdot{}ac\tocdot{}uk
 \end{tocinfo}
 \begin{tocinfo}[podolskii]
     Vladimir V. Podolskii\\
     Tufts University\\
-    and Steklov Mathematical Institute, Russian Academy of Sciences\\
+    and Steklov Mathematical Institute \\
+    Russian Academy of Sciences\\
     vladimir.podolskii\tocat{}tufts\tocdot{}edu\\
 \end{tocinfo}
 \end{tocauthors}
@@ -2582,26 +2651,40 @@ We are grateful to László Babai for numerous suggestions that greatly improved
 \begin{tocaboutauthors}
 \begin{tocabout}[kulikov]
   \textsc{Alexander Kulikov}  %% add bio sketch
-  holds PhD and DrSci degrees from St.~Petersburg Department of Steklov Mathematical Institute. His scientific interests include algorithms, circuit complexity, and Computer Science education. In~his spare time, he~enjoys discussing circuit complexity of the $\operatorname{MOD}_3$ function with Alexander Golovnev.
+  holds \phd\ and Dr.\,Sci. degrees from
+the %% ToC edit3 <-- inserted
+St.~Petersburg Department of
+the %% ToC edit3 <-- inserted
+Steklov Mathematical Institute.  %% ToC edit3 <-- perhaps name your advisor?
+His scientific interests include algorithms, circuit complexity, and Computer Science education. In~his spare time, he~enjoys discussing circuit complexity of the $\operatorname{MOD}_3$ function with Alexander Golovnev.
 \end{tocabout}
 \begin{tocabout}[mikhailin]
   \textsc{Ivan Mikhailin}    %% add bio sketch
-  is a~researcher at JetBrains Research.
+  is a~researcher at JetBrains Research.   %% ToC edit3 <-- perhaps add something about
+%%   your education and degrees
+    %% advisors ?  ATTN3
   His research areas are circuit complexity,
   fine-grained complexity, and algorithmic theory.
 \end{tocabout}
 \begin{tocabout}[mokhov]
   \textsc{Andrey Mokhov}    %% add bio sketch
-  is~a~software engineer at~Jane Street Singapore, and
-  a~visiting fellow at~Newcastle University, UK. His research interests are in
-  applying abstract mathematics and functional programming to solving large-scale engineering problems. During his PhD (2005--2009), Andrey worked
+  is a software engineer at~Jane Street Singapore, and
+  a visiting fellow at Newcastle University, UK. His research interests are in
+  applying abstract mathematics and functional programming to solving large-scale engineering problems. During his \phd\
+studies  %% ToC edit3 <-- inserted (PhD is a degree, not a period of time)
+(2005--2009), Andrey worked  %% ToC edit3 <-- could you add where you studied,
+%% who was your advisor?  ATTN3
   on asynchronous circuits and concurrency theory. In~2014, he~became interested in functional programming and software build systems, which
-  eventually led him to writing more and more code, and in~2019, he switched from academia to~industry, joining Jane Street's Tools and Compilers
-  team. Andrey is~originally from Kyrgyzstan where he~helps to~run the ACM ICPC regional programming contest.
+  eventually led him to writing more and more code, and in~2019, he switched from academia to~industry, joining
+the  %% ToC edit1 <-- "the" inserted, refers to "the team"
+Jane Street's Tools and Compilers
+  team. Andrey is~originally from Kyrgyzstan where he~helps to~run the ACM ICPC regional programming contest.  %% ToC edit3 thank you for all this interesting information
 \end{tocabout}
 \begin{tocabout}[podolskii]
   \textsc{Vladimir Podolskii}   %% add bio sketch
-  defended his PhD thesis in~2009 at~Moscow State University. His research areas are circuit complexity, its applications to~databases augmented with ontologies, min-plus algebra. He is an Associate Professor at Tufts.
+defended his \phd\ thesis in~2009 at~Moscow State University. %% ToC edit3 <-- perhaps add your
+  %% advisor's name?
+His research areas are circuit complexity, its applications to~databases augmented with ontologies, min-plus algebra. He is an Associate Professor at Tufts.
 \end{tocabout}
 \end{tocaboutauthors}
 
