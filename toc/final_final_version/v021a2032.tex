@@ -153,6 +153,7 @@ of the 30th International Symposium on Algorithms and Computation~(ISAAC),
 	of an~$O(z)$ upper bound. This implies that in
         the %% ToC edit3 <-- inserted 
         commutative settings,
+	the %% AU edit4 (AK)
 	complements of sparse matrices can be processed as efficiently as sparse
 	matrices, though the corresponding algorithms are more involved. This covers
 	the cases of Boolean and tropical semirings that have numerous applications,
@@ -227,7 +228,9 @@ the neutral element $x_{n+1}$ into the vector. Alternatively, we could switch
 from semigroups to \emph{monoids}, but we choose not to do that, since we have
 no use for the neutral element and associated laws in the rest of the paper.}
 
-To~give an~example, consider a~complement $A \in \{0,1\}^{6 \times 6}$ of~the identity matrix. In~this case, the $i$-th output~$y_i$ (for $i=1, \dotsc, 6$) is~equal to the sum of~all input variables $x_1, \dotsc, x_6$ except for $x_i$.
+To~give an~example, consider 
+the %% AU edit4 (AK) a -> the
+complement $A \in \{0,1\}^{6 \times 6}$ of~the identity matrix. In~this case, the $i$-th output~$y_i$ (for $i=1, \dotsc, 6$) is~equal to the sum of~all input variables $x_1, \dotsc, x_6$ except for $x_i$.
 %
 \begin{mypic}
 	\begin{scope}[scale=.5]
@@ -340,7 +343,9 @@ $z$ ones. Our solution for the above example involving $S=(\{0,1\}, \oplus)$
 is obtained in precisely this way, by noticing that $\oplus$ is its own inverse.
 
 \subsubsection{Commutative case}
-Our first main result shows that in the commutative case, complements
+Our first main result shows that in the commutative case, 
+the %% AU edit4 (AK)
+complements
 of sparse matrices can be processed as
 efficiently as sparse matrices. Specifically, we prove
 that if the semigroup is commutative, $Ax$ can be computed in $O(z)$ semigroup
@@ -562,15 +567,21 @@ has $O(n)$ edges.  % or $O(n)$ anti-edges %% <-- deleted
 In many cases, an efficient algorithm
 for sparse graphs ($O(n)$ edges) is straightforward
 whereas an algorithm with the same efficiency
-for complements of sparse graphs ($O(n)$ % anti-edges) %% ToC edit1 -->
+for 
+the %% AU edit4 (AK)
+complements of sparse graphs ($O(n)$ % anti-edges) %% ToC edit1 -->
 non-edges)  %% <-- best would be to simply delete this parenthetical
 %% statement, everybody understands what the edges of the complement are
 is not. For
 example, it is easy to solve APSP and triangle counting on sparse graphs in
-time $O(n^2)$, but achieving the same time complexity for complements of sparse
+time $O(n^2)$, but achieving the same time complexity for 
+the %% AU edit4 (AK)
+complements of sparse
 graphs is more complicated.
 \expref{Theorem}{thm:upperboundold} and \expref{Corollary}{cor:matrixmultiplicationold} give
-a~black-box way to solve these two problems on complements of sparse graphs in
+a~black-box way to solve these two problems on 
+the %% AU edit4 (AK)
+complements of sparse graphs in
 time $O(n^2)$.
 
 \subsubsection{Matrix multiplication over semirings}  Fast matrix
@@ -647,7 +658,9 @@ Our result gives a constructive positive answer:
 \expref{Theorem}{thm:upperboundold} yields an
 efficient  %% ToC edit1 <-- inserted 
 algorithm for deriving a~linear-size algebraic graph representation
-for complements of sparse % graphs.  %% ToC edit1 -->
+for 
+the %% AU edit4 (AK)
+complements of sparse % graphs.  %% ToC edit1 -->
 digraphs.  %% <--
 
 \subsubsection{Circuit complexity}  Computing linear operators over
@@ -655,7 +668,9 @@ the Boolean semiring $(\{0,1\}, \lor)$ is a~well-studied problem
 in circuit complexity. The corresponding computational model is known
 as~\emph{rectifier networks}. An overview of known lower and upper bounds for
 such circuits is given by Jukna~\cite[Section~13.6]{DBLP:books/daglib/0028687}.
-\expref{Theorem}{thm:upperboundold} states that linear operators on complements of
+\expref{Theorem}{thm:upperboundold} states that linear operators on 
+the %% AU edit4 (AK)
+complements of
 sparse matrices have linear rectifier network complexity.
 
 % \end{description}
