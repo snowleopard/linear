@@ -6,7 +6,15 @@
 %% File: v021a2032.tex
 %% Publication date: November 15, 2025
 %% Authors: Alexander S. Kulikov, Ivan Mikhailin, Andrey Mokhov, and Vladimir V. Podolskii
+%% Theory of Computing
+%% File: v021a2032.tex
+%% Publication date: November 15, 2025
+%% Authors: Alexander S. Kulikov, Ivan Mikhailin, Andrey Mokhov, and Vladimir V. Podolskii
 
+%% version kuli43.tex
+%% last updated LB 2025-11-07
+%% version kuli41.tex
+%% last updated AK 2025-11-06
 %% version kuli40.tex
 %% last updated LB 2025-10-31
 %% version kuli30.tex
@@ -552,10 +560,19 @@ the range query problem
 in \expref{Sections}{subseq:rmqapp} \expref{and}{subsec:approaches}.
 
 \subsubsection{Graph algorithms}
+%% ToC edit5 while APSP makes sense for digraphs, the notion of "complement"
+%% would require clarification, and I think the gain is not worth it.
+%% It seems like limiting this subsubsection to undirected graphs
+%% would be reasonable.  -->
+In this paper, by ``graphs'' we mean ``simple graphs,'' \ie,
+undirected graphs without loops and parallel edges.
+
 Many graph problems can be reduced to matrix multiplication.
 Two classic examples are: (i) the all-pairs shortest path problem (APSP) is
 reducible to min-plus matrix multiplication~\cite{DBLP:conf/focs/FischerM71},
-and (ii) the number of triangles in an undirected graph can be found by
+and (ii) the number of triangles in % an undirected %% ToC edit1 -->
+a %% <--
+graph can be found by
 computing the third power (over the integers) of its adjacency
 matrix~\cite{Itai_Rodeh_siam,Williams2009TriangleDV}.
 It is natural to ask what happens if a~graph
@@ -566,8 +583,7 @@ has $O(n)$ edges.  % or $O(n)$ anti-edges %% <-- deleted
 (As usual, by~$n$ we denote the number of nodes.)
 In many cases, an efficient algorithm
 for sparse graphs ($O(n)$ edges) is straightforward
-whereas an algorithm with the same efficiency
-for
+whereas an algorithm with the same efficiency for
 the %% AU edit4 (AK)
 complements of sparse graphs
 %% AU edit4 (AK) comment out the next two lines
@@ -623,9 +639,21 @@ cases when efficient computations are possible.
 
 \subsubsection{Functional programming}
 
+%% ToC edit5 you need to clarify whether self-loops are permitted in digraphs,
+%% and what "complement" means for digraphs -->
+The \emph{diagonal} $\Delta(V)$ of the set $V$ is the set $\{(x,x)\mid x\in V\}$.
+By \emph{digraphs} (directed graphs) we mean pairs $G=(V,E)$ of sets where
+$E\subseteq V\times V$.  So, self-loops, \ie, edges in $\Delta(V)$, are
+permitted.  If we wish to exclude such edges, we speak of \emph{loop-free}
+digraphs.  The \emph{complement} of $G$ is $(V, V\times V\setminus E)$.
+The \emph{loop-free complement} of a loop-free digraph $G$ is
+$(V, V\times V \setminus \Delta(V)\setminus E)$.  Graphs can be viewed
+as loop-free digraphs where $E$ is a symmetric relation on $V$.  By the
+\emph{complement of a graph} we mean its loop-free complement.
+
 One of the algebraic data structures developed in the functional programming
-community for the representation and manipulation of directed graphs
-(digraphs) $G=(V,E)$ is based on the following operations:
+community for the representation and manipulation of digraphs
+$G=(V,E)$ is based on the following operations:
 \begin{itemize}
 \item $\langle v\rangle$\quad (the digraph with the single vertex $v$ and no edges)
 \item union: $G_1 \cup G_2 = (V_1 \cup V_2, E_1 \cup E_2)$
@@ -638,16 +666,25 @@ include all sparse digraphs (digraphs with $O(n)$ edges) but they also include
 digraphs of arbitrary density.  For instance,
 $\langle 1\rangle \ast \dots \ast \langle n\rangle$
 is the transitively oriented complete graph
-(transitive tournament) which has density $1/2$. It was not known whether the
-complements of sparse digraphs admit such a concise representation.
+(transitive tournament) which has density $1/2$.  %% ToC edit5 note: by definition,
+%% tournaments do not have self-loops.  I am not suggesting to make this comment.
+
+It was not known whether the
+complements of sparse graphs admit such a concise representation.
 %% ToC edit3 is it true that even the existence of such a representation
 %% was not known?  ATTN3
 %%
 %% AM: Yes, that is true. In fact, this specific question motivated our research.
+%% ToC edit5 This is interesting! Readers should know about this! -->
+In fact, this specific question motivated our research.  %% <-- this line added ATTN5
 Our result gives a constructive positive answer:
 \expref{Theorem}{thm:upperboundold} yields an
 efficient algorithm for deriving a~linear-size algebraic graph representation
 for the complements of sparse digraphs.
+%
+%% ToC edit5 it seems nice to add this comment from your cover letter -->
+It easily follows that the same result is true for graphs and for
+loop-free digraphs.  %% <--
 
 \subsubsection{Circuit complexity}  Computing linear operators over
 the Boolean semiring $(\{0,1\}, \lor)$ is a~well-studied problem
@@ -2649,6 +2686,9 @@ readability of the paper.
     and Steklov Mathematical Institute \\
     Russian Academy of Sciences\\
     vladimir.podolskii\tocat{}tufts\tocdot{}edu\\
+    \url{https://math.tufts.edu/people/faculty/vladimir-podolskii}
+    %% ToC edit5 <-- added this URL; if there is a better URL, please replace
+    %% I think https://facultyprofiles.tufts.edu/vladimir-podolskii is worse
 \end{tocinfo}
 \end{tocauthors}
 
@@ -2666,13 +2706,18 @@ St.~Petersburg Department of
 the %% ToC edit3 <-- inserted
 Steklov Mathematical Institute.  %% ToC edit3 <-- perhaps name your advisor?
 %% AU edit4 (AK) added:
-His \phd advisor is~Edward~A. Hirsch.
+His \phd\ advisor % is %% ToC edit5 -->
+was  %% <--
+Edward~A. Hirsch.
 Currently, Alexander is a~researcher at~JetBrains Research
-and the Head of~Computer Science and Artificial Intelligence B.Sc. program
+and the Head of the Computer Science and Artificial Intelligence B.\,Sc. program
 at~Neapolis University Pafos.
 His scientific interests include algorithms, circuit complexity, and Computer Science education.
-He~co-authored three books and sixteen massive open online courses on~algorithms and discrete mathematics with over a~million enrolled students.
-In~his spare time, he~enjoys discussing circuit complexity of the $\operatorname{MOD}_3$ function with Alexander Golovnev.
+He~coauthored %% ToC edit5 <-- (co-authored --> coauthored)
+three books and sixteen massive open online courses on~algorithms and discrete mathematics with over a~million enrolled students.
+In~his spare time, he~enjoys discussing
+the %% ToC edit5 <-- inserted
+circuit complexity of the $\operatorname{MOD}_3$ function with Alexander Golovnev.
 \end{tocabout}
 \begin{tocabout}[mikhailin]
   \textsc{Ivan Mikhailin}    %% add bio sketch
@@ -2682,7 +2727,8 @@ In~his spare time, he~enjoys discussing circuit complexity of the $\operatorname
   His research areas are circuit complexity,
   fine-grained complexity, and algorithmic theory.
   Ivan did his \phd{} studies at~the University of~California San Diego
-  under the supervision of~Russell Impagliazzo.
+  under the supervision of~Russell Impagliazzo.  %% ToC edit5 <-- years of study or year
+  %% of graduation?  ATTN5
 \end{tocabout}
 \begin{tocabout}[mokhov]
   \textsc{Andrey Mokhov} is a software engineer at~Jane Street Singapore, and
@@ -2690,17 +2736,20 @@ In~his spare time, he~enjoys discussing circuit complexity of the $\operatorname
   applying abstract mathematics and functional programming to solving large-scale engineering problems. During his \phd\
   studies (2005--2009), Andrey worked on asynchronous circuits and concurrency theory under the supervision of Alex Yakovlev.
   In~2014, he~became interested in functional programming and software build systems, which
-  eventually led him to writing more and more code, and in~2019, he switched from academia to~industry, joining
-  the Jane Street's Tools and Compilers
-  team. Andrey is~originally from Kyrgyzstan where he~helps to~run the ACM ICPC regional programming contest.
+  eventually led him to writing more and more code, and in~2019, he switched from
+  academia to~industry, joining the Jane Street's Tools and Compilers team.
+  Andrey is~originally from Kyrgyzstan where he~helps to~run the ACM ICPC 
+regional programming contest.
 \end{tocabout}
 \begin{tocabout}[podolskii]
   \textsc{Vladimir Podolskii}   %% add bio sketch
 defended his \phd\ thesis in~2009 at~Moscow State University %% ToC edit3 <-- perhaps add your
   %% advisor's name?
   %% AU edit4 (AK)
-  advised by Nikolay Vereshchagin. He defended his Dr.Sci. thesis in 2021 at Steklov Mathematical Institute.
-His research areas are circuit complexity, its applications to~databases augmented with ontologies, min-plus geometry. He is an Associate Professor at Tufts.
+advised by Nikolay Vereshchagin. He defended his Dr.\,Sci. thesis in 2021 at Steklov
+Mathematical Institute.  %% ToC edit5 <-- year?
+His research areas are circuit complexity, its applications to~databases augmented with
+ontologies, min-plus geometry. He is an Associate Professor at Tufts.
 \end{tocabout}
 \end{tocaboutauthors}
 
